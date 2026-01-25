@@ -13,6 +13,7 @@ from Bio.SeqRecord import SeqRecord
 import time
 
 # Reference sequences for genes not easily found in NCBI
+# (Kept for fallback or specific mutations if needed, but we will prefer NCBI fetch)
 REFERENCE_SEQUENCES = {
     'fosA3': {
         'protein': 'MNIVKIIGHQSGAGKTTLLNSIAGIKPNEGKVLINGKDISEDWETWKELKQIDIPIVLDSITLVPETINYADLNQKRTTLKDILTAFPVRVFHDHDMMELDKKWLDLEQEWQGMVEEAAIHMVQRFKQYLPDSGRVLMVEQKVMKLGQHFVATQPIVDKKIQAGLTLQEEILTDFKLGNEQKALRDLLKMAE',
@@ -34,16 +35,16 @@ REFERENCE_SEQUENCES = {
 
 NCBI_ACCESSIONS = {
     # FOS resistance genes
-    'fosA3': 'JX861169.1',
-    'fosA4': 'KP324830.1', 
-    'fosA5': 'KY270852.1',
+    'fosA3': 'NG_050407.1',
+    'fosA4': 'NG_050408.1',
+    'fosA5': 'NG_050409.1',
     
     # KPC variants
-    'blaKPC-2': 'AY034847.1',
-    'blaKPC-3': 'AF297554.1',
+    'blaKPC-2': 'NG_049253.1',
+    'blaKPC-3': 'NG_049257.1',
     
     # OXA-48
-    'blaOXA-48': 'AY236073.1',
+    'blaOXA-48': 'NG_049762.1',
     
     # Chromosomal genes (E. coli K-12 MG1655)
     'uhpT': 'NC_000913.3:c3680773-3679418',  # Region
