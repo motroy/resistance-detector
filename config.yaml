@@ -1,0 +1,17 @@
+# Configuration file for resistance detection Snakemake workflow
+
+# Input assemblies
+assemblies:
+  - "assemblies/sample1.fasta"
+  - "assemblies/sample2.fasta"
+  - "assemblies/sample3.fasta"
+
+# Resistance gene database
+resistance_db: "resistance_genes.fasta"
+
+# Detection thresholds
+min_identity: 90
+min_coverage: 80
+
+# Output directory
+output_dir: "resistance_results"
