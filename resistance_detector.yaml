@@ -1,0 +1,9 @@
+name: resistance_detector
+channels:
+  - bioconda
+  - conda-forge
+  - defaults
+dependencies:
+  - python>=3.6
+  - blast>=2.10
+  - biopython>=1.78

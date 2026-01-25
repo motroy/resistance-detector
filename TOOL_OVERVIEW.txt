@@ -1,0 +1,247 @@
+================================================================================
+               FOS-CAZAVI RESISTANCE DETECTOR TOOL SUITE
+                       Kleborate-style Detection
+================================================================================
+
+WHAT IT DOES:
+-------------
+Detects fosfomycin and ceftazidime-avibactam resistance genes and mutations
+from bacterial whole genome sequencing assemblies.
+
+Similar to: Kleborate, ABRicate, ResFinder
+Advantage: Specialized for FOS/CAZAVI with mutation detection
+
+
+TOOL COMPONENTS:
+----------------
+
+1. resistance_detector.py [MAIN TOOL]
+   ├─ Input: Assembly FASTA + Reference Database
+   ├─ Process: BLAST search → Extract sequences → Detect mutations
+   └─ Output: TSV results + FASTA genes + Summary + BLAST output
+
+2. create_reference_database.py [DATABASE BUILDER]
+   ├─ Downloads sequences from NCBI
+   ├─ Curates resistance gene references
+   └─ Creates BLAST-compatible database
+
+3. batch_analysis.sh [BATCH PROCESSOR]
+   ├─ Processes multiple assemblies
+   ├─ Parallel execution support
+   └─ Combined results table
+
+4. Snakemake Workflow [PIPELINE INTEGRATION]
+   ├─ Snakefile: Workflow definition
+   ├─ config.yaml: Configuration
+   └─ envs/: Conda environment
+
+
+RESISTANCE MECHANISMS DETECTED:
+--------------------------------
+
+FOSFOMYCIN (FOS):
+  Plasmid-borne:
+    • fosA3, fosA4, fosA5, fosA11 (glutathione S-transferases)
+  
+  Chromosomal:
+    • uhpB (G469R), uhpC (F384L) - transporters
+    • glpT, uhpT, uhpA - transporter genes
+    • galU (R282V), lon (Q558*) - secondary mutations
+    • cyaA, ptsI - regulatory genes
+
+CEFTAZIDIME-AVIBACTAM (CAZAVI):
+  KPC β-lactamases:
+    • blaKPC-2, blaKPC-3, blaKPC-31, blaKPC-190
+    • Key mutations: D179Y, V240G, T243M
+  
+  OXA-48 variants:
+    • blaOXA-48
+    • Key mutations: P68A, Y211S
+  
+  Chromosomal changes:
+    • ompK36, acrB, envZ, ftsI
+
+
+WORKFLOW DIAGRAM:
+-----------------
+
+  [Assembly.fasta] ──────────┐
+                             │
+  [Reference DB] ────────────┤
+                             ├──> [BLAST Search]
+  [Parameters] ──────────────┘         │
+   • min_identity (90%)                │
+   • min_coverage (80%)                ↓
+                              [Parse BLAST Hits]
+                                       │
+                    ┌──────────────────┼──────────────────┐
+                    ↓                  ↓                  ↓
+            [Extract Sequences] [Check Coverage]  [Filter by ID]
+                    │                  │                  │
+                    └──────────────────┼──────────────────┘
+                                       ↓
+                             [Detect Mutations]
+                              • Translate to protein
+                              • Check known positions
+                              • Identify novel changes
+                                       │
+                    ┌──────────────────┼──────────────────┐
+                    ↓                  ↓                  ↓
+            [results.tsv]      [genes.fasta]      [summary.txt]
+
+
+OUTPUT FILE STRUCTURE:
+----------------------
+
+results.tsv:
+  Contig    Gene      Identity%  Coverage%  Mutations
+  ───────────────────────────────────────────────────
+  contig1   blaKPC-3  99.85      100.00     D179Y,T243M
+  contig2   fosA3     100.00     99.50      -
+
+genes.fasta:
+  >contig1_blaKPC-3 identity=99.85% coverage=100.00% mutations=D179Y,T243M
+  ATGTCACTGTATCGCCTTCTCCTTATTGCTATTG...
+  >contig2_fosA3 identity=100.00% coverage=99.50% mutations=-
+  ATGAACATTGTGAAAATTATTGGGCACCAGTCTG...
+
+summary.txt:
+  =================================================================
+  FOS-CAZAVI Resistance Detection Summary
+  =================================================================
+  
+  FOSFOMYCIN RESISTANCE GENES:
+  --------------------------------------------------
+    fosA3: 100.00% identity, 99.50% coverage
+  
+  CEFTAZIDIME-AVIBACTAM RESISTANCE (KPC):
+  --------------------------------------------------
+    blaKPC-3: 99.85% identity, 100.00% coverage
+      Mutations: D179Y,T243M
+
+
+USAGE EXAMPLES:
+---------------
+
+1. BASIC USAGE:
+   $ python resistance_detector.py -a assembly.fasta -d db.fasta -o sample1
+
+2. WITH CUSTOM THRESHOLDS:
+   $ python resistance_detector.py -a assembly.fasta -d db.fasta -o sample1 \
+       --min_id 95 --min_cov 90
+
+3. BATCH ANALYSIS:
+   $ ./batch_analysis.sh -d db.fasta -i assemblies/ -o results/
+
+4. SNAKEMAKE PIPELINE:
+   $ snakemake --cores 4 --use-conda
+
+5. BUILD DATABASE:
+   $ python create_reference_database.py -e email@example.com -o db.fasta
+
+
+COMPARISON WITH OTHER TOOLS:
+-----------------------------
+
+                    This Tool    Kleborate    ABRicate    ResFinder
+                    ─────────────────────────────────────────────────
+Resistance genes         ✓            ✓           ✓          ✓
+Specific mutations       ✓            ✓           ✗          ✗
+FOS/CAZAVI focus         ✓            ✗           ✗          ✗
+FASTA output             ✓            ✗           ✗          ✗
+Batch processing         ✓            ✓           ✓          ✓
+Snakemake ready          ✓            ✓           ✓          ✗
+Custom databases         ✓            ✗           ✓          ✗
+
+
+TECHNICAL DETAILS:
+------------------
+
+Language: Python 3.6+
+Dependencies: BLAST+, Biopython
+Input: FASTA assembly files
+Database: Nucleotide sequences of resistance genes
+Algorithm:
+  1. BLAST search (blastn)
+  2. Filter by identity/coverage thresholds
+  3. Extract matching sequences
+  4. Translate to protein
+  5. Check known mutation positions
+  6. Report results in multiple formats
+
+Performance:
+  • ~10-30 seconds per assembly (typical)
+  • Scales linearly with assembly size
+  • Parallel batch processing supported
+
+
+FILES IN THIS PACKAGE:
+----------------------
+
+Core Tools:
+  ✓ resistance_detector.py          Main detection tool
+  ✓ create_reference_database.py    Database builder
+  ✓ batch_analysis.sh                Batch processor
+  ✓ example_database.fasta           Example reference database
+
+Documentation:
+  ✓ README.md                        Comprehensive manual
+  ✓ QUICK_START.md                   Quick start guide
+  ✓ TOOL_OVERVIEW.txt               This file
+
+Workflow:
+  ✓ Snakefile                        Snakemake workflow
+  ✓ config.yaml                      Configuration file
+  ✓ envs/resistance_detector.yaml   Conda environment
+
+Testing:
+  ✓ test_example.sh                  Test/demo script
+
+
+INSTALLATION CHECKLIST:
+-----------------------
+
+□ Install Python 3.6+
+□ Install BLAST+ toolkit
+□ Install Biopython
+□ Download all tool files
+□ Make scripts executable (chmod +x *.sh *.py)
+□ Build or download reference database
+□ Run test example
+□ Analyze your samples
+
+
+VALIDATION RECOMMENDATIONS:
+---------------------------
+
+1. PCR + Sanger sequencing for novel mutations
+2. Compare with phenotypic resistance testing
+3. Cross-validate with other tools (Kleborate, ABRicate)
+4. Check assemblies for quality (N50, completeness)
+5. Review extracted sequences manually
+
+
+CITATION:
+---------
+
+Tool: Motroy (motroy@post.bgu.ac.il)
+
+Resistance mechanisms - please cite:
+  • PMID: 33193186 (uhpB, uhpC mutations in FOS resistance)
+  • PMID: 28928846 (fosA variants)
+  • PMID: 28031275 (KPC mutations in CAZAVI resistance)
+  • PMID: 30700621 (OXA-48 mutations)
+
+
+SUPPORT:
+--------
+
+Email: motroy@post.bgu.ac.il
+Documentation: README.md
+Test: ./test_example.sh
+
+
+================================================================================
+                           READY TO USE!
+          Run './test_example.sh' to verify installation
+================================================================================
