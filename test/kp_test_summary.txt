@@ -1,0 +1,10 @@
+======================================================================
+FOS-CAZAVI Resistance Detection Summary
+======================================================================
+
+Assembly: test/kp.fasta
+Total genes detected: 1
+
+FOSFOMYCIN RESISTANCE GENES:
+--------------------------------------------------
+  fosA5: 97.91% identity, 84.68% coverage
