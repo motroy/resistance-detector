@@ -8,3 +8,4 @@ dependencies:
   - blast>=2.10
   - biopython>=1.78
   - seqkit>=2.3
+  - miniprot>=0.13
