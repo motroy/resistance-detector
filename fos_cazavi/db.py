@@ -1,18 +1,12 @@
-#!/usr/bin/env python3
 """
 Create reference database for FOS-CAZAVI resistance genes
 Uses AMRfinderPlus data to source sequences and mutation definitions.
 """
 
-import argparse
-import sys
-import os
 import csv
 import urllib.request
 from pathlib import Path
 from Bio import Entrez, SeqIO
-from Bio.Seq import Seq
-from Bio.SeqRecord import SeqRecord
 import time
 
 # URLs for AMRfinderPlus data
@@ -62,8 +56,6 @@ MANUAL_MUTATIONS = {
         {'pos': 68, 'ref': 'P', 'variants': ['A'], 'name': 'P68A'},
         {'pos': 211, 'ref': 'Y', 'variants': ['S'], 'name': 'Y211S'}
     ],
-    # Fallback for chromosomal if not found in AMRfinderPlus
-    # (But we prefer AMRfinderPlus if available)
 }
 
 
@@ -118,9 +110,6 @@ class DatabaseBuilder:
         for gene, info in CHROMOSOMAL_GENES.items():
             print(f"Looking up {gene} ({info['taxgroup']})...")
             
-            # Find in catalog
-            # We look for entries with matching gene symbol and taxgroup
-            # Ideally type=AMR, subtype=POINT
             candidates = [
                 row for row in self.catalog_data
                 if row['gene_family'] == gene 
@@ -130,8 +119,6 @@ class DatabaseBuilder:
             ]
             
             if not candidates:
-                # Try relaxed search (gene symbol in product name or allele?)
-                # Some genes might be listed under specific alleles e.g. murA_C115D
                 candidates = [
                     row for row in self.catalog_data
                     if gene in row['allele']
@@ -141,11 +128,8 @@ class DatabaseBuilder:
                 ]
 
             if candidates:
-                # Pick the first one as reference source
-                # Usually all mutations for a gene in a taxgroup point to the same reference accession
                 ref_entry = candidates[0]
                 
-                # Try RefSeq first, then GenBank
                 if ref_entry['refseq_nucleotide_accession']:
                     accession = ref_entry['refseq_nucleotide_accession']
                     start = int(ref_entry['refseq_start'])
@@ -163,22 +147,16 @@ class DatabaseBuilder:
                 
                 print(f"  Found reference: {accession} ({start}-{stop}, {strand})")
                 
-                # Fetch sequence
                 record = self.fetch_sequence_from_ncbi(accession, start, stop, strand, gene)
                 if record:
                     self.sequences.append(record)
-                    
-                    # Add mutations from catalog/mutation file
                     self.extract_mutations_for_gene(gene, info['taxgroup'])
             else:
                 print(f"  WARNING: {gene} not found in AMRfinderPlus catalog for {info['taxgroup']}")
-                # Here we could fall back to hardcoded if we wanted, but user said 'use them'
-                # and implied sticking to AMRfinderPlus.
 
     def fetch_sequence_from_ncbi(self, accession, start, stop, strand, gene_name):
         """Fetch sequence from NCBI"""
         try:
-            # Entrez uses 1-based coordinates
             handle = Entrez.efetch(
                 db="nucleotide",
                 id=accession,
@@ -190,14 +168,12 @@ class DatabaseBuilder:
             record = SeqIO.read(handle, "fasta")
             handle.close()
 
-            # Reverse complement if needed
             if strand == '-':
                 record.seq = record.seq.reverse_complement()
             
             record.id = gene_name
             record.description = f"{gene_name} reference sequence (AMRfinderPlus:{accession}:{start}-{stop})"
             
-            # Check for valid start codon (simple check)
             if not record.seq.startswith("ATG") and not record.seq.startswith("GTG") and not record.seq.startswith("TTG"):
                  print(f"  WARNING: Sequence for {gene_name} does not start with ATG/GTG/TTG: {record.seq[:10]}...")
 
@@ -208,11 +184,6 @@ class DatabaseBuilder:
 
     def extract_mutations_for_gene(self, gene_name, taxgroup):
         """Extract mutations from parsed mutation file"""
-        # Find all mutations for this gene in the mutation file
-        # The mutation file uses 'accession_version' (protein) to link.
-        # We need to map gene_name -> protein_accession(s) first.
-        
-        # Get protein accessions from catalog
         prot_accessions = set()
         for row in self.catalog_data:
             if gene_name in row['allele'] and taxgroup in row['whitelisted_taxa']:
@@ -222,26 +193,14 @@ class DatabaseBuilder:
         count = 0
         for row in self.mutation_defs:
             if row['accession_version'] in prot_accessions:
-                # Parse mutation: e.g. murA_L370I -> pos=370, ref=L, var=I
-                # 'mutation_position': '370'
-                # 'standard_mutation_symbol': 'murA_L370I'
-                # 'mutated_protein_name': ...
-                
                 pos = row['mutation_position']
                 symbol = row['standard_mutation_symbol']
-                # Parse symbol usually: Gene_RefPosVar
-                # But sometimes complex.
-                # Let's trust the position column.
-                # But we need ref and var.
-                # Try to parse symbol: murA_L370I
                 try:
                     mutation_part = symbol.split('_')[-1] # L370I
                     ref = mutation_part[0]
                     var = mutation_part[-1]
-                    # verify position matches
                     num = ''.join(filter(str.isdigit, mutation_part))
                     if num != pos:
-                        # Sometimes symbol is different format?
                         pass
                     
                     self.mutations.append({
@@ -261,9 +220,6 @@ class DatabaseBuilder:
         """Fetch acquired genes from AMR_CDS.fa"""
         print("Processing acquired genes...")
         
-        # Build index of AMR_CDS.fa
-        # Format: >ProtAcc|NucAcc|...|GeneSymbol|...
-        
         found_genes = set()
         
         with open(self.sequences_file, 'r') as f:
@@ -272,9 +228,7 @@ class DatabaseBuilder:
                 if len(header_parts) > 4:
                     gene_symbol = header_parts[4]
                     
-                    # Check if this gene is in our list
                     if gene_symbol in ACQUIRED_GENES:
-                        # Avoid duplicates
                         if gene_symbol not in found_genes:
                             record.id = gene_symbol
                             record.description = f"{gene_symbol} reference sequence (AMRfinderPlus)"
@@ -282,7 +236,6 @@ class DatabaseBuilder:
                             found_genes.add(gene_symbol)
                             print(f"  Found {gene_symbol}")
         
-        # Check missing
         for gene in ACQUIRED_GENES:
             if gene not in found_genes:
                 print(f"  WARNING: Acquired gene {gene} not found in AMR_CDS.fa")
@@ -296,11 +249,9 @@ class DatabaseBuilder:
                     'Gene': gene,
                     'Position': m['pos'],
                     'Ref': m['ref'],
-                    'Variant': '/'.join(m['variants']), # Support multiple variants in string?
+                    'Variant': '/'.join(m['variants']),
                     'Name': m['name']
                 })
-                # Note: resistance_detector.py needs to parse 'Variant' carefully if it contains '/'
-                # Currently it expects single char check usually, but the new logic will iterate variants.
 
     def build(self):
         self.download_files()
@@ -311,7 +262,6 @@ class DatabaseBuilder:
         self.fetch_acquired_genes()
         self.add_manual_mutations()
         
-        # Write outputs
         print(f"Writing sequences to {self.output_fasta}...")
         SeqIO.write(self.sequences, self.output_fasta, "fasta")
         
@@ -323,14 +273,6 @@ class DatabaseBuilder:
             
         print("Done!")
 
-def main():
-    parser = argparse.ArgumentParser(description='Create reference database using AMRfinderPlus data')
-    parser.add_argument('-e', '--email', required=True, help='Email for NCBI Entrez')
-    parser.add_argument('-o', '--output', default='resistance_db', help='Output prefix')
-    args = parser.parse_args()
-    
-    builder = DatabaseBuilder(args.email, args.output)
+def create_db(email, output_prefix):
+    builder = DatabaseBuilder(email, output_prefix)
     builder.build()
-
-if __name__ == '__main__':
-    main()
