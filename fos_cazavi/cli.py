@@ -4,6 +4,7 @@ from pathlib import Path
 from .db import create_db
 from .acquired import run_acquired_detection
 from .mutations import run_mutation_detection
+from .utils import setup_logger, log_tool_versions
 
 def write_summary(output_prefix, assembly, blast_results, miniprot_results, amplicon_results):
     """Write a summary of detected resistance mechanisms"""
@@ -19,7 +20,8 @@ def write_summary(output_prefix, assembly, blast_results, miniprot_results, ampl
         f.write(f"Assembly: {assembly}\n")
 
         if blast_results is not None:
-            f.write(f"Total genes detected: {len(blast_results)}\n\n")
+            f.write(f"Total genes detected: {len(blast_results)}\n")
+            f.write("Method: BLAST+\n\n")
 
             # Group by drug class
             fos_genes = [r for r in blast_results if r['gene'].startswith('fos')]
@@ -74,6 +76,7 @@ def write_summary(output_prefix, assembly, blast_results, miniprot_results, ampl
         if amplicon_results:
             f.write("\n")
             f.write("DETECTED AMPLICONS:\n")
+            f.write("Method: Seqkit/Amplicon\n")
             f.write("-" * 50 + '\n')
             for amp in amplicon_results:
                 f.write(f"  Pair: {amp['pair_id']}\n")
@@ -88,7 +91,8 @@ def write_summary(output_prefix, assembly, blast_results, miniprot_results, ampl
 
         if miniprot_results:
             f.write("\n")
-            f.write("PROTEIN MUTATION ANALYSIS (miniprot):\n")
+            f.write("PROTEIN MUTATION ANALYSIS:\n")
+            f.write("Method: Miniprot (protein-to-genome alignment)\n")
             f.write("-" * 50 + '\n')
             f.write("Reference: doi.org/10.3389/fcimb.2025.1645042\n\n")
 
@@ -117,9 +121,14 @@ def write_summary(output_prefix, assembly, blast_results, miniprot_results, ampl
                         f.write("    No mutations detected\n")
 
 def handle_create_db(args):
+    # Setup logging
+    logger = setup_logger(args.output, args)
     create_db(args.email, args.output)
 
 def handle_acquired(args):
+    logger = setup_logger(args.output, args)
+    log_tool_versions(logger)
+
     blast_results = run_acquired_detection(
         args.assembly,
         args.database,
@@ -132,6 +141,9 @@ def handle_acquired(args):
     write_summary(args.output, args.assembly, blast_results, None, None)
 
 def handle_mutations(args):
+    logger = setup_logger(args.output, args)
+    log_tool_versions(logger)
+
     # This command runs miniprot and amplicons.
     # It does not run BLAST, so amplicon cross-referencing is limited.
     miniprot_results, amplicon_results = run_mutation_detection(
@@ -144,6 +156,9 @@ def handle_mutations(args):
     write_summary(args.output, args.assembly, None, miniprot_results, amplicon_results)
 
 def handle_all(args):
+    logger = setup_logger(args.output, args)
+    log_tool_versions(logger)
+
     # Run BLAST
     blast_results = run_acquired_detection(
         args.assembly,

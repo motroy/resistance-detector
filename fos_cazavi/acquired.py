@@ -181,7 +181,7 @@ class BlastDetector:
 
         with open(report_file, 'w') as f:
             f.write('\t'.join(['Contig', 'Gene', 'Identity%', 'Coverage%',
-                              'Mutations']) + '\n')
+                              'Mutations', 'Method']) + '\n')
 
             for result in self.results:
                 f.write('\t'.join([
@@ -189,7 +189,8 @@ class BlastDetector:
                     result['gene'],
                     result['identity'],
                     result['coverage'],
-                    result['mutations']
+                    result['mutations'],
+                    'BLAST'
                 ]) + '\n')
 
         print(f"Detected {len(self.results)} resistance genes")

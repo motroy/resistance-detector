@@ -4,6 +4,7 @@ FOS-CAZAVI Resistance Detection Summary
 
 Assembly: test_genomes/ecoli_multi_resistance.fasta
 Total genes detected: 3
+Method: BLAST+
 
 FOSFOMYCIN RESISTANCE GENES:
 --------------------------------------------------

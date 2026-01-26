@@ -1,0 +1,22 @@
+2026-01-26 20:45:15 - ============================================================
+2026-01-26 20:45:15 - FOS-CAZAVI Resistance Detector Analysis Log
+2026-01-26 20:45:15 - ============================================================
+2026-01-26 20:45:15 - Date: 2026-01-26 20:45:15
+2026-01-26 20:45:15 - Command: ./fos-cazavi fos-cazavi-all -a test_genomes/ecoli_multi_resistance.fasta -d data/example_database.fasta -o example_results/ecoli_multi --proteins data/cazavi_proteins.fasta --primers data/primers.tsv
+2026-01-26 20:45:15 - ------------------------------------------------------------
+2026-01-26 20:45:15 - Parameters:
+2026-01-26 20:45:15 -   command: fos-cazavi-all
+2026-01-26 20:45:15 -   assembly: test_genomes/ecoli_multi_resistance.fasta
+2026-01-26 20:45:15 -   output: example_results/ecoli_multi
+2026-01-26 20:45:15 -   database: data/example_database.fasta
+2026-01-26 20:45:15 -   mutations: None
+2026-01-26 20:45:15 -   primers: data/primers.tsv
+2026-01-26 20:45:15 -   proteins: data/cazavi_proteins.fasta
+2026-01-26 20:45:15 -   min_id: 90.0
+2026-01-26 20:45:15 -   min_cov: 80.0
+2026-01-26 20:45:15 - ------------------------------------------------------------
+2026-01-26 20:45:15 - External Tools:
+2026-01-26 20:45:15 -   blastn: blastn: 2.12.0+
+2026-01-26 20:45:15 -   miniprot: 0.18-r281
+2026-01-26 20:45:15 -   seqkit: seqkit v2.8.2
+2026-01-26 20:45:15 - ------------------------------------------------------------
