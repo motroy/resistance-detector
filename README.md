@@ -6,6 +6,7 @@ A BLAST-based tool for detecting fosfomycin (FOS) and ceftazidime-avibactam (CAZ
 
 - **Gene Detection**: Identifies resistance genes (fosA variants, blaKPC, blaOXA-48, etc.)
 - **Mutation Detection**: Detects known resistance mutations (D179Y, V240G, T243M, etc.)
+- **Amplicon Detection**: Uses seqkit amplicon to find PCR products from primer pairs
 - **Sequence Extraction**: Outputs detected gene sequences to FASTA
 - **Multiple Output Formats**: TSV results, human-readable summary, and raw BLAST output
 
@@ -22,7 +23,7 @@ resistance-detector/
 ├── environment.yaml             # Conda environment
 ├── data/
 │   ├── example_database.fasta   # Reference database
-│   └── primers.tsv              # Primer sequences for validation
+│   └── primers.tsv              # Primer sequences for amplicon detection
 └── README.md
 ```
 
@@ -38,10 +39,13 @@ conda activate resistance_detector
 ### Option 2: Manual Installation
 
 ```bash
-# Install BLAST+
+# Install BLAST+ and seqkit
 sudo apt-get install ncbi-blast+  # Ubuntu/Debian
 # OR
-brew install blast                # macOS
+brew install blast seqkit         # macOS
+
+# Install seqkit (if not via apt/brew)
+conda install -c bioconda seqkit
 
 # Install Python dependencies
 pip install biopython
@@ -50,14 +54,91 @@ pip install biopython
 ## Quick Start
 
 ```bash
-# Run detection on your assembly
+# Basic detection (gene + mutation detection)
 python resistance_detector.py \
     -a your_assembly.fasta \
     -d data/example_database.fasta \
     -o results
 
+# With amplicon detection using primers
+python resistance_detector.py \
+    -a your_assembly.fasta \
+    -d data/example_database.fasta \
+    --primers data/primers.tsv \
+    -o results
+
 # View results
 cat results_summary.txt
+```
+
+## Amplicon Detection with Primers
+
+The tool uses **seqkit amplicon** to detect PCR products from primer pairs. This is useful for:
+- Validating the presence of mutation sites
+- Confirming gene regions targeted by diagnostic primers
+- Checking if resistance-associated regions are amplifiable
+
+### Primers File Format
+
+The primers file (`data/primers.tsv`) contains primer pairs for detecting FOS resistance mutations:
+
+| Primer | Nucleotide_sequence | Purpose | Mutation | Gene | Pair_ID |
+|--------|---------------------|---------|----------|------|---------|
+| uhpB_F | ACTGGGCGTCAGTAACGACG | Verification | - | uhpB | uhpB_ver |
+| uhpB_R | ATGGCGCATCGGCAGGCGCT | Verification | - | uhpB | uhpB_ver |
+| Mut3/uhpB_G469R/xbaI-F1p | CCGTCTAGAGGTGGATTTATTGCTCTCGCTG | Mutagenesis | uhpB G469R | uhpB | Mut3_uhpB_1 |
+
+**Included primer pairs target:**
+- uhpB G469R mutation (fosfomycin resistance)
+- uhpC F384L mutation (fosfomycin resistance)
+- galU R282V mutation (fosfomycin resistance)
+- lon Q558* mutation (fosfomycin resistance)
+
+### Running with Amplicon Detection
+
+```bash
+$ python resistance_detector.py \
+    -a sample.fasta \
+    -d data/example_database.fasta \
+    --primers data/primers.tsv \
+    -o sample_results
+
+======================================================================
+FOS-CAZAVI Resistance Detector
+======================================================================
+Running BLAST search (min_id=90.0%, min_cov=80.0%)...
+Found 2 gene hits passing thresholds
+Analyzing hits and detecting mutations...
+Loading primers from data/primers.tsv...
+Loaded 43 primers
+Detecting amplicons with seqkit...
+Found 5 amplicons
+Checking for mutations within amplicons...
+======================================================================
+Analysis complete!
+Results written to sample_results_*
+======================================================================
+```
+
+### Amplicon Output Files
+
+When using `--primers`, additional output files are generated:
+
+| File | Description |
+|------|-------------|
+| `*_amplicons.tsv` | Amplicon detection results with coordinates |
+| `*_seqkit_primers.tsv` | Primer pairs formatted for seqkit |
+
+### Example Amplicon Results
+
+```
+AMPLICON DETECTION:
+--------------------------------------------------
+  Amplicon: uhpB_ver (1250 bp)
+    Location: contig_5:125000-126250
+    Primers: uhpB_F -> uhpB_R
+    Mutations/Genes in amplicon:
+      - uhpB (G469R detected)
 ```
 
 ## Example Usage and Results
@@ -126,12 +207,12 @@ Generate test genomes with known mutations to validate the tool:
 # Create test genomes
 python create_test_genomes.py
 
-# Run detection on each
-python resistance_detector.py -a test_genomes/ecoli_negative_control.fasta \
-    -d data/example_database.fasta -o test_negative
-
-python resistance_detector.py -a test_genomes/ecoli_blaKPC3_D179Y.fasta \
-    -d data/example_database.fasta -o test_kpc
+# Run detection with amplicon analysis
+python resistance_detector.py \
+    -a test_genomes/ecoli_chromosomal_fos.fasta \
+    -d data/example_database.fasta \
+    --primers data/primers.tsv \
+    -o test_chromosomal
 ```
 
 **Validation Results:**
@@ -150,6 +231,7 @@ python resistance_detector.py -a test_genomes/ecoli_blaKPC3_D179Y.fasta \
 ```
 usage: resistance_detector.py [-h] -a ASSEMBLY -d DATABASE -o OUTPUT
                              [--min_id MIN_ID] [--min_cov MIN_COV]
+                             [--primers PRIMERS]
 
 Required arguments:
   -a, --assembly    Input assembly file (FASTA)
@@ -159,6 +241,7 @@ Required arguments:
 Optional arguments:
   --min_id          Minimum percent identity (default: 90)
   --min_cov         Minimum percent coverage (default: 80)
+  --primers         Primer file for amplicon detection (TSV format)
 ```
 
 ### Database Builder: create_reference_database.py
@@ -187,6 +270,7 @@ Optional arguments:
 | `*_genes.fasta` | FASTA sequences of detected genes |
 | `*_summary.txt` | Human-readable summary |
 | `*_blast.txt` | Raw BLAST output |
+| `*_amplicons.tsv` | Amplicon detection results (when using --primers) |
 
 ## Detected Resistance Mechanisms
 
@@ -227,6 +311,7 @@ If you use this tool, please cite:
 - FOS resistance: PMID 33193186, PMID 28928846
 - KPC mutations: PMID 28031275
 - OXA-48 mutations: PMID 30700621
+- seqkit: doi:10.1371/journal.pone.0163962
 
 ## License
 
