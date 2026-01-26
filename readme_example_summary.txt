@@ -1,0 +1,20 @@
+======================================================================
+FOS-CAZAVI Resistance Detection Summary
+======================================================================
+
+Assembly: test_genomes/ecoli_multi_resistance.fasta
+Total genes detected: 3
+
+FOSFOMYCIN RESISTANCE GENES:
+--------------------------------------------------
+  fosA3: 100.00% identity, 100.00% coverage
+
+CEFTAZIDIME-AVIBACTAM RESISTANCE (KPC):
+--------------------------------------------------
+  blaKPC-3: 99.52% identity, 100.10% coverage
+    Mutations: D179Y/N,V240Q,T243M
+
+CEFTAZIDIME-AVIBACTAM RESISTANCE (OXA):
+--------------------------------------------------
+  blaOXA-48: 100.00% identity, 100.00% coverage
+    Mutations: P68D,Y211A
