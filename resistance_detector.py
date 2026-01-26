@@ -41,6 +41,7 @@ class ResistanceDetector:
         self.results = []
         self.detected_genes = []
         self.primer_results = []
+        self.amplicon_results = []
         self.primers = {}
         
         # Initialize default mutations (fallback)
@@ -79,12 +80,16 @@ class ResistanceDetector:
                     seq = row.get('Nucleotide_sequence', row.get('seq', row.get('sequence')))
                     purpose = row.get('Purpose', row.get('purpose', ''))
                     mutation = row.get('Mutation', row.get('mutation', ''))
+                    gene = row.get('Gene', row.get('gene', ''))
+                    pair_id = row.get('Pair_ID', row.get('pair_id', ''))
 
                     if name and seq:
                         self.primers[name] = {
                             'seq': seq.strip(),
                             'purpose': purpose.strip(),
-                            'mutation': mutation.strip() if mutation and mutation.strip() != '-' else None
+                            'mutation': mutation.strip() if mutation and mutation.strip() != '-' else None,
+                            'gene': gene.strip() if gene and gene.strip() != '-' else None,
+                            'pair_id': pair_id.strip() if pair_id and pair_id.strip() != '-' else None
                         }
 
             print(f"Loaded {len(self.primers)} primers")
@@ -445,31 +450,95 @@ class ResistanceDetector:
                     contig_seq = record.seq.upper()
 
                     # Check forward strand
-                    if seq in contig_seq:
+                    start = contig_seq.find(seq)
+                    if start != -1:
                         hits.append({
                             'primer': name,
                             'contig': record.id,
                             'strand': '+',
                             'purpose': purpose,
-                            'mutation': mutation
+                            'mutation': mutation,
+                            'start': start,
+                            'end': start + len(seq)
                         })
 
                     # Check reverse strand
                     rc_seq = str(Seq(seq).reverse_complement()).upper()
-                    if rc_seq in contig_seq:
+                    start_rc = contig_seq.find(rc_seq)
+                    if start_rc != -1:
                         hits.append({
                             'primer': name,
                             'contig': record.id,
                             'strand': '-',
                             'purpose': purpose,
-                            'mutation': mutation
+                            'mutation': mutation,
+                            'start': start_rc,
+                            'end': start_rc + len(rc_seq)
                         })
 
             self.primer_results = hits
             print(f"Found {len(hits)} primer hits")
 
+            # Detect amplicons after primers
+            self.detect_amplicons()
+
         except Exception as e:
             print(f"ERROR during primer detection: {e}", file=sys.stderr)
+
+    def detect_amplicons(self):
+        """Detect amplicons based on primer pairs"""
+        print("Detecting amplicons from primer pairs...")
+        self.amplicon_results = []
+
+        # Group hits by Pair_ID
+        pair_hits = defaultdict(list)
+        for hit in self.primer_results:
+            primer_info = self.primers.get(hit['primer'])
+            if primer_info and primer_info.get('pair_id'):
+                pair_hits[primer_info['pair_id']].append(hit)
+
+        for pair_id, hits in pair_hits.items():
+            # Separate into strands/contigs
+            # Simple logic: assume 2 primers (F and R) on same contig
+            by_contig = defaultdict(list)
+            for hit in hits:
+                by_contig[hit['contig']].append(hit)
+
+            for contig, chits in by_contig.items():
+                if len(chits) >= 2:
+                    # Sort by start position
+                    chits.sort(key=lambda x: x['start'])
+
+                    # Check if we have compatible pair (Fwd ... Rev_complement)
+                    # For a standard PCR product:
+                    # Fwd primer binds to + strand (matches + strand sequence)
+                    # Rev primer binds to - strand (matches - strand sequence, so appears as RC on + strand)
+                    # Fwd start < Rev start
+
+                    # We need to identify which is which.
+                    # In our primer_results, 'strand' indicates which strand the PRIMER SEQUENCE matched.
+                    # Fwd primer matches '+'. Rev primer matches '-'.
+
+                    fwd_hits = [h for h in chits if h['strand'] == '+']
+                    rev_hits = [h for h in chits if h['strand'] == '-']
+
+                    for f in fwd_hits:
+                        for r in rev_hits:
+                            if f['end'] < r['start']:
+                                # Found a potential amplicon
+                                # Distance check? Say < 20kb
+                                dist = r['start'] - f['end']
+                                if dist < 20000:
+                                    self.amplicon_results.append({
+                                        'pair_id': pair_id,
+                                        'contig': contig,
+                                        'start': f['start'],
+                                        'end': r['end'],
+                                        'f_primer': f['primer'],
+                                        'r_primer': r['primer'],
+                                        'length': r['end'] - f['start'],
+                                        'mutations_found': [] # To be filled
+                                    })
 
     def write_primer_report(self):
         """Write primer detection results to TSV file"""
@@ -507,7 +576,9 @@ class ResistanceDetector:
                     'identity': f"{hit['identity']:.2f}",
                     'coverage': f"{hit['coverage']:.2f}",
                     'mutations': ','.join(mutations) if mutations else '-',
-                    'sequence': sequence
+                    'sequence': sequence,
+                    'start': hit['qstart'],
+                    'end': hit['qend']
                 }
                 
                 self.results.append(result)
@@ -516,7 +587,44 @@ class ResistanceDetector:
                     id=f"{hit['query_id']}_{hit['gene']}",
                     description=f"identity={hit['identity']:.2f}% coverage={hit['coverage']:.2f}% mutations={result['mutations']}"
                 ))
-    
+
+        # Analyze amplicons for overlaps with detected genes
+        self.analyze_amplicons()
+
+    def analyze_amplicons(self):
+        """Check if detected genes fall within amplicons"""
+        if not self.amplicon_results or not self.results:
+            return
+
+        print("Checking for mutations within amplicons...")
+
+        for amp in self.amplicon_results:
+            amp_contig = amp['contig']
+            amp_start = amp['start']
+            amp_end = amp['end']
+
+            for res in self.results:
+                if res['contig'] != amp_contig:
+                    continue
+
+                # Convert BLAST 1-based coords to 0-based range
+                res_start = res['start']
+                res_end = res['end']
+
+                start = min(res_start, res_end) - 1
+                end = max(res_start, res_end)
+
+                # Check overlap
+                # Overlap if max(starts) < min(ends)
+                if max(amp_start, start) < min(amp_end, end):
+                    # Overlap found
+                    # Report gene and mutations
+                    mut_str = res['mutations']
+                    if mut_str != '-':
+                        amp['mutations_found'].append(f"{res['gene']}: {mut_str}")
+                    else:
+                        amp['mutations_found'].append(f"{res['gene']}: (wildtype)")
+
     def write_report(self):
         """Write results to TSV file"""
         report_file = f"{self.output_prefix}_results.tsv"
@@ -624,6 +732,21 @@ class ResistanceDetector:
                     if res['mutation']:
                         f.write(f"    Inferred Mutation: {res['mutation']}\n")
                     f.write(f"    Contig: {res['contig']}\n")
+
+            if self.amplicon_results:
+                f.write("\n")
+                f.write("DETECTED AMPLICONS:\n")
+                f.write("-" * 50 + '\n')
+                for amp in self.amplicon_results:
+                    f.write(f"  Pair: {amp['pair_id']}\n")
+                    f.write(f"    Location: {amp['contig']}:{amp['start']}-{amp['end']} ({amp['length']} bp)\n")
+                    f.write(f"    Primers: {amp['f_primer']} -> {amp['r_primer']}\n")
+                    if amp['mutations_found']:
+                        f.write("    Mutations/Genes in amplicon:\n")
+                        for m in amp['mutations_found']:
+                            f.write(f"      - {m}\n")
+                    else:
+                        f.write("    No resistance genes/mutations detected in amplicon\n")
     
     def run(self):
         """Run the complete detection pipeline"""

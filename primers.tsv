@@ -1,43 +1,43 @@
-Primer	Nucleotide_sequence	Purpose	Mutation
-pKD4_uhpB_F	CTCCCGCTTAATTACCGTTATTGCCTGCTTTTTTATCTTCTCTGCCGGTGTAGGCTGGAGCTGCTTC	uhpB deletion	uhpB deletion
-pKD4_uhpB_R	GAGGTAGAGAAACGCTGACACGCGTGCCGTGCAGACAGGAAATGGTCCATATGAATATCCTCCTTAG	uhpB deletion (reverse)	uhpB deletion
-pKD4_uhpC_F	GTTGCCGTTTCTGAAAGCGCCTGCCGATGCGCCATTAATGACTGATAAGTGTAGGCTGGAGCTGCTTC	uhpC deletion	uhpC deletion
-pKD4_uhpC_R	TCTCGCGGTGTCTGGGCGTTCAAAAAGGGCAGTAATAGCAGTGCGGAACATATGAATATCCTCCTTAG	uhpC deletion (reverse)	uhpC deletion
-pKD4_uhpT_F	CCATGCTGGCTTTCTTAAACCAGGTTCGCAAGCCGACCCTGGACCTGTGTAGGCTGGAGCTGCTTC	uhpT deletion	uhpT deletion
-pKD4_uhpT_R	AGTTACGTTTATGCCACTGTCAACTGCTGAATTTTTTTCTCGCGGCGGACATATGAATATCCTCCTTAG	uhpT deletion (reverse)	uhpT deletion
-pKD4_galU_F	CGTTCAAAACACGAACAGTCCAGGAGAATTTAAATGGCTGCCATTAATAGTGTAGGCTGGAGCTGCTTC	galU deletion	galU deletion
-pKD4_galU_R	CCGATACGGATGTTACTTCTTAATGCCCATCTCTTCTTCAAGCCAGGCTCATATGAATATCCTCCTTAG	galU deletion (reverse)	galU deletion
-pDS132_F	CTGTTGCATGGGCATAAAGA	Verification of cloning in pDS132	-
-pDS132_R	AGGAACACTTAACGGCTGAC	Verification of cloning in pDS132 (reverse)	-
-Mut3/uhpB_G469R/xbaI-F1p	CCGTCTAGAGGTGGATTTATTGCTCTCGCTG	Site-directed mutagenesis for uhpB	uhpB G469R
-Mut3/uhpB_G469R/XbaI-R1p	CCGTCTAGAGTGCGCCGCCGACGTTATGCGC	Site-directed mutagenesis for uhpB (reverse)	uhpB G469R
-uhpB_F	ACTGGGCGTCAGTAACGACG	Verification of uhpB sequence	-
-uhpB_R	ATGGCGCATCGGCAGGCGCT	Verification of uhpB sequence (reverse)	-
-Mut4/uhpC_F384L/Xba1-F1p	CCGTCTAGAGTATGGCGATCGTCGTGGGGA	Site-directed mutagenesis for uhpC	uhpC F384L
-Mut4/uhpC_F384L/R1p	TCCCGTCGCCGCCCCTGCCGC	Site-directed mutagenesis for uhpC (reverse 1)	uhpC F384L
-Mut4/uhpC_F384L/F2p	GCGGCAGGGGCGGCGACGGGATTGTCGGCTTGTTTGCTTATC	Site-directed mutagenesis for uhpC (forward 2)	uhpC F384L
-Mut4/uhpC_F384L/XbaI-R2p	CCGTCTAGATACCCACGCCATAAGTGATG	Site-directed mutagenesis for uhpC (reverse 2)	uhpC F384L
-uhpC_F	TGTCTGCACGGCACGCGTGT	Verification of uhpC sequence	-
-uhpC_R	GATAGCGTCCAGGCAAAACCT	Verification of uhpC sequence (reverse)	-
-galU_R282V/xbaI-F1p	CCGTCTAGAGCCGCACGTGACTATTATGC	Site-directed mutagenesis for galU	galU R282V
-galU_R282V/R1p	TACCGTATTCAACGAAGGCCTG	Site-directed mutagenesis for galU (reverse 1)	galU R282V
-galU_R282V/F2p	CAGGCCTTCGTTGAATACGGTATCGTCATAACACCCTTGGCAC	Site-directed mutagenesis for galU (forward 2)	galU R282V
-galU_R282V/XbaI-R2p	CCGTCTAGAGCGCAGGCAAGAGAATGTAC	Site-directed mutagenesis for galU (reverse 2)	galU R282V
-galU_F	TATACTGGGATGCGATACAG	Verification of galU sequence	-
-galU_R	CACCGTTTCGTGGAAAACAC	Verification of galU sequence (reverse)	-
-lon_Q558X/xbaI-F1p	CCGTCTAGATTAGCTGCGTTGTGCATATTG	Site-directed mutagenesis for lon	lon Q558X
-lon_Q558X_R1	GATGGTTTGCATCAGCGTCG	Site-directed mutagenesis for lon (reverse 1)	lon Q558X
-lon_Q558X_F2	CGACGCTGATGCAAACCATCGAACGTATCGCACAAGCAT	Site-directed mutagenesis for lon (forward 2)	lon Q558X
-lon_Q558X/XbaI-R2p	CCGTCTAGAACGACCATCAACCAGCACTT	Site-directed mutagenesis for lon (reverse 2)	lon Q558X
-lon1_F	GCTTTCTACGTGTGCTGCAG	Verification of lon sequence	-
-lon1_R	GCCATTCACGCTGCTGTAGCAT	Verification of lon sequence (reverse)	-
-lon2_F	CCTTCGATGCCATTGAAGCTGA	Verification of lon sequence (2)	-
-lon2_R	TTGAAGCACGCAGGATAGCT	Verification of lon sequence (2 reverse)	-
-pBAB202_uhpB_F	CACCAAAACTGGCGCAAGGAATGG	Cloning of uhpB in pBAD202	-
-pBAB202_uhpB_R	CAGAAACGGCAACATCATCG	Cloning of uhpB in pBAD202 (reverse)	-
-pBAB202_uhpC_F	CACCGCAACACGGTTTTGGCCTTA	Cloning of uhpC in pBAD202	-
-pBAB202_uhpC_R	GATGCATCACGCTTCTCGC	Cloning of uhpC in pBAD202 (reverse)	-
-RT-qPCR_uhpT_F	ACCTACGGGTTGAGCATGAC	Quantification of uhpT expression	-
-RT-qPCR_uhpT_R	CACTGAAGCCCAGCATACAA	Quantification of uhpT expression (reverse)	-
-RT-qPCR_rrsA_F	CTCTTGCCATCGGATGTGCCCA	Quantification of rrsA expression	-
-RT-qPCR_rrsA_R	CCAGTGTGGCTGGTCATCCTCTCA	Quantification of rrsA expression (reverse)	-
+Primer	Nucleotide_sequence	Purpose	Mutation	Gene	Pair_ID
+pKD4_uhpB_F	CTCCCGCTTAATTACCGTTATTGCCTGCTTTTTTATCTTCTCTGCCGGTGTAGGCTGGAGCTGCTTC	uhpB deletion	uhpB deletion	uhpB	pKD4_uhpB
+pKD4_uhpB_R	GAGGTAGAGAAACGCTGACACGCGTGCCGTGCAGACAGGAAATGGTCCATATGAATATCCTCCTTAG	uhpB deletion (reverse)	uhpB deletion	uhpB	pKD4_uhpB
+pKD4_uhpC_F	GTTGCCGTTTCTGAAAGCGCCTGCCGATGCGCCATTAATGACTGATAAGTGTAGGCTGGAGCTGCTTC	uhpC deletion	uhpC deletion	uhpC	pKD4_uhpC
+pKD4_uhpC_R	TCTCGCGGTGTCTGGGCGTTCAAAAAGGGCAGTAATAGCAGTGCGGAACATATGAATATCCTCCTTAG	uhpC deletion (reverse)	uhpC deletion	uhpC	pKD4_uhpC
+pKD4_uhpT_F	CCATGCTGGCTTTCTTAAACCAGGTTCGCAAGCCGACCCTGGACCTGTGTAGGCTGGAGCTGCTTC	uhpT deletion	uhpT deletion	uhpT	pKD4_uhpT
+pKD4_uhpT_R	AGTTACGTTTATGCCACTGTCAACTGCTGAATTTTTTTCTCGCGGCGGACATATGAATATCCTCCTTAG	uhpT deletion (reverse)	uhpT deletion	uhpT	pKD4_uhpT
+pKD4_galU_F	CGTTCAAAACACGAACAGTCCAGGAGAATTTAAATGGCTGCCATTAATAGTGTAGGCTGGAGCTGCTTC	galU deletion	galU deletion	galU	pKD4_galU
+pKD4_galU_R	CCGATACGGATGTTACTTCTTAATGCCCATCTCTTCTTCAAGCCAGGCTCATATGAATATCCTCCTTAG	galU deletion (reverse)	galU deletion	galU	pKD4_galU
+pDS132_F	CTGTTGCATGGGCATAAAGA	Verification of cloning in pDS132	-	-	pDS132
+pDS132_R	AGGAACACTTAACGGCTGAC	Verification of cloning in pDS132 (reverse)	-	-	pDS132
+Mut3/uhpB_G469R/xbaI-F1p	CCGTCTAGAGGTGGATTTATTGCTCTCGCTG	Site-directed mutagenesis for uhpB	uhpB G469R	uhpB	Mut3_uhpB_1
+Mut3/uhpB_G469R/XbaI-R1p	CCGTCTAGAGTGCGCCGCCGACGTTATGCGC	Site-directed mutagenesis for uhpB (reverse)	uhpB G469R	uhpB	Mut3_uhpB_1
+uhpB_F	ACTGGGCGTCAGTAACGACG	Verification of uhpB sequence	-	uhpB	uhpB_ver
+uhpB_R	ATGGCGCATCGGCAGGCGCT	Verification of uhpB sequence (reverse)	-	uhpB	uhpB_ver
+Mut4/uhpC_F384L/Xba1-F1p	CCGTCTAGAGTATGGCGATCGTCGTGGGGA	Site-directed mutagenesis for uhpC	uhpC F384L	uhpC	Mut4_uhpC_1
+Mut4/uhpC_F384L/R1p	TCCCGTCGCCGCCCCTGCCGC	Site-directed mutagenesis for uhpC (reverse 1)	uhpC F384L	uhpC	Mut4_uhpC_1
+Mut4/uhpC_F384L/F2p	GCGGCAGGGGCGGCGACGGGATTGTCGGCTTGTTTGCTTATC	Site-directed mutagenesis for uhpC (forward 2)	uhpC F384L	uhpC	Mut4_uhpC_2
+Mut4/uhpC_F384L/XbaI-R2p	CCGTCTAGATACCCACGCCATAAGTGATG	Site-directed mutagenesis for uhpC (reverse 2)	uhpC F384L	uhpC	Mut4_uhpC_2
+uhpC_F	TGTCTGCACGGCACGCGTGT	Verification of uhpC sequence	-	uhpC	uhpC_ver
+uhpC_R	GATAGCGTCCAGGCAAAACCT	Verification of uhpC sequence (reverse)	-	uhpC	uhpC_ver
+galU_R282V/xbaI-F1p	CCGTCTAGAGCCGCACGTGACTATTATGC	Site-directed mutagenesis for galU	galU R282V	galU	galU_R282V_1
+galU_R282V/R1p	TACCGTATTCAACGAAGGCCTG	Site-directed mutagenesis for galU (reverse 1)	galU R282V	galU	galU_R282V_1
+galU_R282V/F2p	CAGGCCTTCGTTGAATACGGTATCGTCATAACACCCTTGGCAC	Site-directed mutagenesis for galU (forward 2)	galU R282V	galU	galU_R282V_2
+galU_R282V/XbaI-R2p	CCGTCTAGAGCGCAGGCAAGAGAATGTAC	Site-directed mutagenesis for galU (reverse 2)	galU R282V	galU	galU_R282V_2
+galU_F	TATACTGGGATGCGATACAG	Verification of galU sequence	-	galU	galU_ver
+galU_R	CACCGTTTCGTGGAAAACAC	Verification of galU sequence (reverse)	-	galU	galU_ver
+lon_Q558X/xbaI-F1p	CCGTCTAGATTAGCTGCGTTGTGCATATTG	Site-directed mutagenesis for lon	lon Q558X	lon	lon_Q558X_1
+lon_Q558X_R1	GATGGTTTGCATCAGCGTCG	Site-directed mutagenesis for lon (reverse 1)	lon Q558X	lon	lon_Q558X_1
+lon_Q558X_F2	CGACGCTGATGCAAACCATCGAACGTATCGCACAAGCAT	Site-directed mutagenesis for lon (forward 2)	lon Q558X	lon	lon_Q558X_2
+lon_Q558X/XbaI-R2p	CCGTCTAGAACGACCATCAACCAGCACTT	Site-directed mutagenesis for lon (reverse 2)	lon Q558X	lon	lon_Q558X_2
+lon1_F	GCTTTCTACGTGTGCTGCAG	Verification of lon sequence	-	lon	lon_ver1
+lon1_R	GCCATTCACGCTGCTGTAGCAT	Verification of lon sequence (reverse)	-	lon	lon_ver1
+lon2_F	CCTTCGATGCCATTGAAGCTGA	Verification of lon sequence (2)	-	lon	lon_ver2
+lon2_R	TTGAAGCACGCAGGATAGCT	Verification of lon sequence (2 reverse)	-	lon	lon_ver2
+pBAB202_uhpB_F	CACCAAAACTGGCGCAAGGAATGG	Cloning of uhpB in pBAD202	-	-	pBAB202_uhpB
+pBAB202_uhpB_R	CAGAAACGGCAACATCATCG	Cloning of uhpB in pBAD202 (reverse)	-	-	pBAB202_uhpB
+pBAB202_uhpC_F	CACCGCAACACGGTTTTGGCCTTA	Cloning of uhpC in pBAD202	-	-	pBAB202_uhpC
+pBAB202_uhpC_R	GATGCATCACGCTTCTCGC	Cloning of uhpC in pBAD202 (reverse)	-	-	pBAB202_uhpC
+RT-qPCR_uhpT_F	ACCTACGGGTTGAGCATGAC	Quantification of uhpT expression	-	uhpT	RT_uhpT
+RT-qPCR_uhpT_R	CACTGAAGCCCAGCATACAA	Quantification of uhpT expression (reverse)	-	uhpT	RT_uhpT
+RT-qPCR_rrsA_F	CTCTTGCCATCGGATGTGCCCA	Quantification of rrsA expression	-	rrsA	RT_rrsA
+RT-qPCR_rrsA_R	CCAGTGTGGCTGGTCATCCTCTCA	Quantification of rrsA expression (reverse)	-	rrsA	RT_rrsA
