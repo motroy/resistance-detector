@@ -48,7 +48,7 @@ rule detect_resistance:
         "envs/resistance_detector.yaml"
     shell:
         """
-        python3 resistance_detector.py \
+        ./fos-cazavi fos-cazavi-acquired \
             -a {input.assembly} \
             -d {input.database} \
             -o {params.prefix} \
