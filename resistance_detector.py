@@ -30,15 +30,18 @@ class ResistanceDetector:
         # But for brevity in this update, I will keep them but allow overwrite.
     }
     
-    def __init__(self, assembly, database, output_prefix, min_identity=90, min_coverage=80, mutation_db=None):
+    def __init__(self, assembly, database, output_prefix, min_identity=90, min_coverage=80, mutation_db=None, primers_file=None):
         self.assembly = assembly
         self.database = database
         self.output_prefix = output_prefix
         self.min_identity = min_identity
         self.min_coverage = min_coverage
         self.mutation_db = mutation_db
+        self.primers_file = primers_file
         self.results = []
         self.detected_genes = []
+        self.primer_results = []
+        self.primers = {}
         
         # Initialize default mutations (fallback)
         self.init_default_mutations()
@@ -52,7 +55,41 @@ class ResistanceDetector:
             if default_mut_file.exists():
                 print(f"Auto-detected mutation file: {default_mut_file}")
                 self.load_mutation_db(default_mut_file)
+
+        # Load primers if provided
+        if self.primers_file:
+            self.load_primers(self.primers_file)
+        else:
+            pass
     
+    def load_primers(self, primers_file):
+        """Load primers from TSV file"""
+        if not primers_file or not Path(primers_file).exists():
+            return
+
+        print(f"Loading primers from {primers_file}...")
+
+        try:
+            self.primers = {}
+            with open(primers_file, 'r') as f:
+                reader = csv.DictReader(f, delimiter='\t')
+                for row in reader:
+                    # Support different column naming conventions
+                    name = row.get('Primer', row.get('name'))
+                    seq = row.get('Nucleotide_sequence', row.get('seq', row.get('sequence')))
+                    purpose = row.get('Purpose', row.get('purpose', ''))
+
+                    if name and seq:
+                        self.primers[name] = {
+                            'seq': seq.strip(),
+                            'purpose': purpose.strip()
+                        }
+
+            print(f"Loaded {len(self.primers)} primers")
+
+        except Exception as e:
+            print(f"ERROR loading primers file: {e}", file=sys.stderr)
+
     def init_default_mutations(self):
         """Initialize hardcoded mutations as fallback"""
         self.KNOWN_MUTATIONS = {
@@ -384,6 +421,70 @@ class ResistanceDetector:
         
         return mutations_found
     
+    def detect_primers(self):
+        """Detect presence of specific primers in the assembly"""
+        if not self.primers:
+            return
+
+        print("Searching for specific primers...")
+
+        hits = []
+
+        try:
+            # Load assembly
+            contigs = list(SeqIO.parse(self.assembly, 'fasta'))
+
+            for name, info in self.primers.items():
+                seq = info['seq'].replace(' ', '').upper()
+                purpose = info['purpose']
+
+                for record in contigs:
+                    contig_seq = record.seq.upper()
+
+                    # Check forward strand
+                    if seq in contig_seq:
+                        hits.append({
+                            'primer': name,
+                            'contig': record.id,
+                            'strand': '+',
+                            'purpose': purpose
+                        })
+
+                    # Check reverse strand
+                    rc_seq = str(Seq(seq).reverse_complement()).upper()
+                    if rc_seq in contig_seq:
+                        hits.append({
+                            'primer': name,
+                            'contig': record.id,
+                            'strand': '-',
+                            'purpose': purpose
+                        })
+
+            self.primer_results = hits
+            print(f"Found {len(hits)} primer hits")
+
+        except Exception as e:
+            print(f"ERROR during primer detection: {e}", file=sys.stderr)
+
+    def write_primer_report(self):
+        """Write primer detection results to TSV file"""
+        report_file = f"{self.output_prefix}_primers.tsv"
+
+        print(f"Writing primer results to {report_file}...")
+
+        with open(report_file, 'w') as f:
+            # Header
+            f.write('\t'.join(['Primer', 'Purpose', 'Contig', 'Strand']) + '\n')
+
+            # Results
+            for result in self.primer_results:
+                f.write('\t'.join([
+                    result['primer'],
+                    result['purpose'],
+                    result['contig'],
+                    result['strand']
+                ]) + '\n')
+
     def analyze_hits(self, hits):
         """Analyze BLAST hits and detect mutations"""
         print("Analyzing hits and detecting mutations...")
@@ -506,6 +607,15 @@ class ResistanceDetector:
             
             if not self.results:
                 f.write("No resistance genes detected\n")
+
+            if self.primer_results:
+                f.write("\n")
+                f.write("DETECTED PRIMERS:\n")
+                f.write("-" * 50 + '\n')
+                for res in self.primer_results:
+                    f.write(f"  {res['primer']} ({res['strand']})\n")
+                    f.write(f"    Purpose: {res['purpose']}\n")
+                    f.write(f"    Contig: {res['contig']}\n")
     
     def run(self):
         """Run the complete detection pipeline"""
@@ -515,6 +625,12 @@ class ResistanceDetector:
         
         self.check_dependencies()
         self.prepare_database()
+
+        # Run primer detection
+        self.detect_primers()
+        if self.primer_results:
+            self.write_primer_report()
+
         hits = self.run_blast()
         
         if hits:
@@ -565,6 +681,8 @@ Author: Motroy
                        help='Output prefix for result files')
     parser.add_argument('--mutations',
                        help='Mutation definitions file (TSV)')
+    parser.add_argument('--primers',
+                       help='Primers definitions file (TSV)')
     parser.add_argument('--min_id', type=float, default=90.0,
                        help='Minimum percent identity (default: 90)')
     parser.add_argument('--min_cov', type=float, default=80.0,
@@ -592,7 +710,8 @@ Author: Motroy
         args.output,
         args.min_id,
         args.min_cov,
-        args.mutations
+        args.mutations,
+        args.primers
     )
     detector.run()
 
