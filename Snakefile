@@ -64,7 +64,7 @@ rule combine_results:
         os.path.join(OUTPUT_DIR, "combined_results.tsv")
     run:
         with open(output[0], 'w') as outf:
-            outf.write("Sample\tContig\tGene\tIdentity%\tCoverage%\tMutations\n")
+            outf.write("Sample\tContig\tGene\tIdentity%\tCoverage%\tMutations\tMethod\n")
             
             for result_file in input:
                 sample = Path(result_file).stem.replace("_results", "")

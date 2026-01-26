@@ -10,6 +10,7 @@ A CLI tool for detecting fosfomycin (FOS) and ceftazidime-avibactam (CAZAVI) res
 - **Amplicon Detection**: Uses seqkit amplicon to find PCR products from primer pairs and checks them for resistance mutations.
 - **Sequence Extraction**: Outputs detected gene sequences to FASTA.
 - **Multiple Output Formats**: TSV results, human-readable summary, and raw BLAST/Miniprot output.
+- **Logging**: Comprehensive logging of commands, parameters, and tool versions.
 
 ## Repository Structure
 
@@ -32,6 +33,7 @@ resistance-detector/
 │   ├── example_database.fasta   # Reference nucleotide database
 │   ├── cazavi_proteins.fasta    # CAZAVI resistance proteins for miniprot
 │   └── primers.tsv              # Primer sequences for amplicon detection
+├── example_results/         # Example outputs
 └── README.md
 ```
 
@@ -144,12 +146,15 @@ Runs the complete pipeline (acquired + mutations).
 | `*_results.tsv` | Tab-delimited gene detection results (BLAST) |
 | `*_genes.fasta` | FASTA sequences of detected genes |
 | `*_summary.txt` | Human-readable summary of all findings |
+| `*_analysis.log` | Log of command, parameters, and tool versions |
 | `*_blast.txt` | Raw BLAST output |
 | `*_amplicons.tsv` | Amplicon detection results (with --primers) |
 | `*_protein_mutations.tsv` | Protein mutation results (with --proteins) |
 | `*_miniprot.paf` | Raw miniprot PAF output (with --proteins) |
 
 ## Example Results
+
+See `example_results/` folder for full file content.
 
 ### Summary Output (`results_summary.txt`)
 
@@ -160,6 +165,7 @@ FOS-CAZAVI Resistance Detection Summary
 
 Assembly: test_genomes/ecoli_multi_resistance.fasta
 Total genes detected: 3
+Method: BLAST+
 
 FOSFOMYCIN RESISTANCE GENES:
 --------------------------------------------------
@@ -174,6 +180,15 @@ CEFTAZIDIME-AVIBACTAM RESISTANCE (OXA):
 --------------------------------------------------
   blaOXA-48: 100.00% identity, 100.00% coverage
     Mutations: P68D,Y211A
+```
+
+### BLAST Results (`results_results.tsv`)
+
+```tsv
+Contig	Gene	Identity%	Coverage%	Mutations	Method
+contig_plasmid1_fosA3	fosA3	100.00	100.00	-	BLAST
+contig_plasmid2_blaKPC3	blaKPC-3	99.52	100.10	D179Y/N,V240Q,T243M	BLAST
+contig_plasmid3_blaOXA48	blaOXA-48	100.00	100.00	P68D,Y211A	BLAST
 ```
 
 ## Snakemake Workflow

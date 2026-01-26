@@ -264,7 +264,7 @@ class MutationDetector:
 
         with open(report_file, 'w') as f:
             f.write('\t'.join(['Protein', 'Contig', 'Start', 'End', 'Identity',
-                              'Coverage', 'Mutations', 'CS_Tag']) + '\n')
+                              'Coverage', 'Mutations', 'CS_Tag', 'Method']) + '\n')
 
             for r in self.miniprot_results:
                 mutations_str = ';'.join(r['mutations']) if r['mutations'] else '-'
@@ -276,7 +276,8 @@ class MutationDetector:
                     f"{r['identity']:.2f}",
                     f"{r['coverage']:.2f}",
                     mutations_str,
-                    r['cs_tag'] or '-'
+                    r['cs_tag'] or '-',
+                    'Miniprot'
                 ]) + '\n')
 
     def write_amplicon_report(self):
@@ -290,7 +291,7 @@ class MutationDetector:
 
         with open(report_file, 'w') as f:
             f.write('\t'.join(['Pair_ID', 'Contig', 'Start', 'End', 'Length',
-                              'Mutations_Found']) + '\n')
+                              'Mutations_Found', 'Method']) + '\n')
 
             for amp in self.amplicon_results:
                 mut_str = ';'.join(amp['mutations_found']) if amp['mutations_found'] else '-'
@@ -300,7 +301,8 @@ class MutationDetector:
                     str(amp['start']),
                     str(amp['end']),
                     str(amp['length']),
-                    mut_str
+                    mut_str,
+                    'Seqkit/Amplicon'
                 ]) + '\n')
 
     def run(self, blast_results=None):

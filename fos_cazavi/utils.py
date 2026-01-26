@@ -4,6 +4,8 @@ from Bio.Seq import Seq
 from pathlib import Path
 from collections import defaultdict
 import csv
+import logging
+import datetime
 
 # Default known resistance mutations (fallback)
 KNOWN_MUTATIONS = {
@@ -83,6 +85,77 @@ KNOWN_MUTATIONS = {
         324: {'ref': 'T', 'variants': ['I', 'A'], 'name': 'T324I/A'}
     }
 }
+
+def setup_logger(output_prefix, args):
+    """Setup logging to file and console"""
+    log_file = f"{output_prefix}_analysis.log"
+
+    # Create logger
+    logger = logging.getLogger('fos_cazavi')
+    logger.setLevel(logging.INFO)
+
+    # File handler
+    fh = logging.FileHandler(log_file, mode='w')
+    fh.setLevel(logging.INFO)
+
+    # Console handler
+    ch = logging.StreamHandler()
+    ch.setLevel(logging.INFO)
+
+    # Formatter
+    formatter = logging.Formatter('%(asctime)s - %(message)s', datefmt='%Y-%m-%d %H:%M:%S')
+    fh.setFormatter(formatter)
+    ch.setFormatter(formatter)
+
+    # Add handlers
+    if not logger.handlers:
+        logger.addHandler(fh)
+        logger.addHandler(ch)
+
+    # Log run details
+    logger.info("=" * 60)
+    logger.info("FOS-CAZAVI Resistance Detector Analysis Log")
+    logger.info("=" * 60)
+    logger.info(f"Date: {datetime.datetime.now().strftime('%Y-%m-%d %H:%M:%S')}")
+    logger.info(f"Command: {' '.join(sys.argv)}")
+    logger.info("-" * 60)
+    logger.info("Parameters:")
+    for arg, value in vars(args).items():
+        if arg != 'func':
+            logger.info(f"  {arg}: {value}")
+    logger.info("-" * 60)
+
+    return logger
+
+def get_tool_version(tool):
+    """Get version of external tool"""
+    try:
+        # Try version (seqkit)
+        result = subprocess.run([tool, 'version'], capture_output=True, text=True)
+        if result.returncode == 0:
+            return result.stdout.split('\n')[0]
+
+        # Try -version first (BLAST style)
+        result = subprocess.run([tool, '-version'], capture_output=True, text=True)
+        if result.returncode == 0:
+            return result.stdout.split('\n')[0]
+
+        # Try --version (others)
+        result = subprocess.run([tool, '--version'], capture_output=True, text=True)
+        if result.returncode == 0:
+            return result.stdout.split('\n')[0]
+
+        return "Unknown"
+    except:
+        return "Not found"
+
+def log_tool_versions(logger):
+    """Log versions of dependencies"""
+    logger.info("External Tools:")
+    for tool in ['blastn', 'miniprot', 'seqkit']:
+        version = get_tool_version(tool)
+        logger.info(f"  {tool}: {version}")
+    logger.info("-" * 60)
 
 def check_dependencies(tools):
     """Check if required tools are installed"""
