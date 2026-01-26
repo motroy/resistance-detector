@@ -235,20 +235,28 @@ class ResistanceDetector:
     def check_dependencies(self):
         """Check if required tools are installed"""
         required = ['blastn', 'makeblastdb']
+        if self.primers:
+            required.append('seqkit')
+
         missing = []
         
         for tool in required:
             try:
-                subprocess.run([tool, '-version'], 
-                             capture_output=True, 
-                             check=True)
+                if tool == 'seqkit':
+                    subprocess.run([tool, 'version'],
+                                 capture_output=True,
+                                 check=True)
+                else:
+                    subprocess.run([tool, '-version'],
+                                 capture_output=True,
+                                 check=True)
             except (subprocess.CalledProcessError, FileNotFoundError):
                 missing.append(tool)
         
         if missing:
             print(f"ERROR: Missing required tools: {', '.join(missing)}", 
                   file=sys.stderr)
-            print("Please install BLAST+ toolkit", file=sys.stderr)
+            print("Please install BLAST+ toolkit and/or SeqKit", file=sys.stderr)
             sys.exit(1)
     
     def prepare_database(self):
@@ -506,12 +514,21 @@ class ResistanceDetector:
                 strand = fields[5]
                 # seq = fields[6] if len(fields) > 6 else ""
 
+                # Look up primer names for this pair
+                f_name = "Unknown"
+                r_name = "Unknown"
+                if pair_id in pairs:
+                    f_name = pairs[pair_id].get('F_name', 'Unknown')
+                    r_name = pairs[pair_id].get('R_name', 'Unknown')
+
                 self.amplicon_results.append({
                     'pair_id': pair_id,
                     'contig': contig,
                     'start': start, # 0-based
                     'end': end,     # 0-based
                     'length': end - start,
+                    'f_primer': f_name,
+                    'r_primer': r_name,
                     'mutations_found': []
                 })
 
