@@ -30,7 +30,7 @@ class ResistanceDetector:
         # But for brevity in this update, I will keep them but allow overwrite.
     }
     
-    def __init__(self, assembly, database, output_prefix, min_identity=90, min_coverage=80, mutation_db=None, primers_file=None):
+    def __init__(self, assembly, database, output_prefix, min_identity=90, min_coverage=80, mutation_db=None, primers_file=None, proteins_file=None):
         self.assembly = assembly
         self.database = database
         self.output_prefix = output_prefix
@@ -38,10 +38,12 @@ class ResistanceDetector:
         self.min_coverage = min_coverage
         self.mutation_db = mutation_db
         self.primers_file = primers_file
+        self.proteins_file = proteins_file
         self.results = []
         self.detected_genes = []
         self.primer_results = []
         self.amplicon_results = []
+        self.miniprot_results = []
         self.primers = {}
         
         # Initialize default mutations (fallback)
@@ -545,6 +547,191 @@ class ResistanceDetector:
                     mut_str
                 ]) + '\n')
 
+    def run_miniprot(self):
+        """
+        Run miniprot to detect mutations in CAZAVI resistance proteins.
+        Uses protein-to-genome alignment with cs tag parsing for mutation detection.
+        Reference: doi.org/10.3389/fcimb.2025.1645042
+        """
+        if not self.proteins_file or not Path(self.proteins_file).exists():
+            return
+
+        print(f"Running miniprot for protein mutation analysis...")
+
+        # Run miniprot with cs tag output
+        miniprot_output = f"{self.output_prefix}_miniprot.paf"
+
+        cmd = [
+            'miniprot',
+            '-c',  # Output cs tag
+            '--outs=0.95',  # High identity threshold
+            '-t', '1',
+            self.assembly,
+            self.proteins_file
+        ]
+
+        try:
+            result = subprocess.run(cmd, capture_output=True, text=True, check=True)
+
+            # Write raw output
+            with open(miniprot_output, 'w') as f:
+                f.write(result.stdout)
+
+            # Parse PAF output with cs tags
+            for line in result.stdout.strip().split('\n'):
+                if not line:
+                    continue
+
+                fields = line.split('\t')
+                if len(fields) < 12:
+                    continue
+
+                protein_name = fields[0]
+                protein_len = int(fields[1])
+                protein_start = int(fields[2])
+                protein_end = int(fields[3])
+                contig = fields[5]
+                contig_start = int(fields[7])
+                contig_end = int(fields[8])
+                matches = int(fields[9])
+                alignment_len = int(fields[10])
+
+                # Calculate identity
+                identity = (matches / alignment_len * 100) if alignment_len > 0 else 0
+                coverage = ((protein_end - protein_start) / protein_len * 100) if protein_len > 0 else 0
+
+                # Parse cs tag for mutations
+                mutations = []
+                cs_tag = None
+                for field in fields[12:]:
+                    if field.startswith('cs:Z:'):
+                        cs_tag = field[5:]
+                        break
+
+                if cs_tag:
+                    mutations = self.parse_miniprot_cs(cs_tag, protein_name)
+
+                # Store result
+                self.miniprot_results.append({
+                    'protein': protein_name,
+                    'contig': contig,
+                    'contig_start': contig_start,
+                    'contig_end': contig_end,
+                    'protein_start': protein_start,
+                    'protein_end': protein_end,
+                    'identity': identity,
+                    'coverage': coverage,
+                    'mutations': mutations,
+                    'cs_tag': cs_tag
+                })
+
+            print(f"Found {len(self.miniprot_results)} protein alignments")
+
+            # Summarize mutations found
+            for r in self.miniprot_results:
+                if r['mutations']:
+                    print(f"  {r['protein']}: {len(r['mutations'])} mutations detected")
+
+        except FileNotFoundError:
+            print("WARNING: miniprot not found, skipping protein analysis")
+        except subprocess.CalledProcessError as e:
+            print(f"WARNING: miniprot failed: {e.stderr}", file=sys.stderr)
+
+    def parse_miniprot_cs(self, cs_tag, protein_name):
+        """
+        Parse miniprot cs tag to extract mutations.
+
+        cs tag format:
+        - ":[0-9]+" represents identical amino acids
+        - "[acgtn]+[A-Z*]" represents substitution (ref codons to query aa)
+        - "+[A-Z]+" represents insertion to reference
+        - "-[acgtn]+" represents deletion from reference
+        - "~[acgtn]+[0-9]+[acgtn]+" represents intron
+        - "*[A-Z][A-Z]" represents amino acid substitution
+        """
+        import re
+        mutations = []
+        position = 1  # 1-indexed amino acid position
+
+        # Split cs tag into operations
+        # Pattern matches: :num, *XY (aa sub), +AA (ins), -nt (del), ~intron
+        pattern = r'(:[0-9]+|\*[A-Za-z][A-Za-z]|\+[A-Za-z]+|-[a-z]+|~[a-z]+[0-9]+[a-z]+|[a-z]+[A-Z\*])'
+
+        for match in re.finditer(pattern, cs_tag):
+            op = match.group(1)
+
+            if op.startswith(':'):
+                # Identical residues
+                num_identical = int(op[1:])
+                position += num_identical
+
+            elif op.startswith('*'):
+                # Amino acid substitution *XY means ref X -> query Y
+                ref_aa = op[1].upper()
+                query_aa = op[2].upper()
+                mutations.append(f"{ref_aa}{position}{query_aa}")
+                position += 1
+
+            elif op.startswith('+'):
+                # Insertion in query
+                inserted = op[1:]
+                mutations.append(f"ins{position}_{inserted}")
+                # Insertions don't advance reference position
+
+            elif op.startswith('-'):
+                # Deletion from reference
+                deleted_nt = op[1:]
+                deleted_aa_count = len(deleted_nt) // 3
+                if deleted_aa_count > 0:
+                    mutations.append(f"del{position}_{deleted_aa_count}aa")
+                position += deleted_aa_count
+
+            elif op.startswith('~'):
+                # Intron - skip
+                pass
+
+            elif op[:-1].islower() and op[-1].isupper():
+                # Codon substitution: ref codons -> query aa
+                # e.g., "gat" + "Y" means GAT -> TAT (D -> Y)
+                ref_codons = op[:-1]
+                query_aa = op[-1]
+                # This represents a substitution at this position
+                mutations.append(f"?{position}{query_aa}")
+                position += 1
+
+            elif op[-1] == '*':
+                # Stop codon
+                mutations.append(f"?{position}*")
+                position += 1
+
+        return mutations
+
+    def write_miniprot_report(self):
+        """Write miniprot mutation detection results"""
+        if not self.miniprot_results:
+            return
+
+        report_file = f"{self.output_prefix}_protein_mutations.tsv"
+        print(f"Writing protein mutation results to {report_file}...")
+
+        with open(report_file, 'w') as f:
+            # Header
+            f.write('\t'.join(['Protein', 'Contig', 'Start', 'End', 'Identity',
+                              'Coverage', 'Mutations', 'CS_Tag']) + '\n')
+
+            for r in self.miniprot_results:
+                mutations_str = ';'.join(r['mutations']) if r['mutations'] else '-'
+                f.write('\t'.join([
+                    r['protein'],
+                    r['contig'],
+                    str(r['contig_start']),
+                    str(r['contig_end']),
+                    f"{r['identity']:.2f}",
+                    f"{r['coverage']:.2f}",
+                    mutations_str,
+                    r['cs_tag'] or '-'
+                ]) + '\n')
+
     def analyze_hits(self, hits):
         """Analyze BLAST hits and detect mutations"""
         print("Analyzing hits and detecting mutations...")
@@ -721,7 +908,37 @@ class ResistanceDetector:
                             f.write(f"      - {m}\n")
                     else:
                         f.write("    No resistance genes/mutations detected in amplicon\n")
-    
+
+            if self.miniprot_results:
+                f.write("\n")
+                f.write("PROTEIN MUTATION ANALYSIS (miniprot):\n")
+                f.write("-" * 50 + '\n')
+                f.write("Reference: doi.org/10.3389/fcimb.2025.1645042\n\n")
+
+                # Group by protein type
+                porins = [r for r in self.miniprot_results if 'Omp' in r['protein']]
+                efflux = [r for r in self.miniprot_results if 'acr' in r['protein'].lower()]
+
+                if porins:
+                    f.write("Outer Membrane Porins:\n")
+                    for r in porins:
+                        f.write(f"  {r['protein']}: {r['identity']:.1f}% identity, {r['coverage']:.1f}% coverage\n")
+                        f.write(f"    Location: {r['contig']}:{r['contig_start']}-{r['contig_end']}\n")
+                        if r['mutations']:
+                            f.write(f"    Mutations: {', '.join(r['mutations'])}\n")
+                        else:
+                            f.write("    No mutations detected\n")
+
+                if efflux:
+                    f.write("\nEfflux Pump Components:\n")
+                    for r in efflux:
+                        f.write(f"  {r['protein']}: {r['identity']:.1f}% identity, {r['coverage']:.1f}% coverage\n")
+                        f.write(f"    Location: {r['contig']}:{r['contig_start']}-{r['contig_end']}\n")
+                        if r['mutations']:
+                            f.write(f"    Mutations: {', '.join(r['mutations'])}\n")
+                        else:
+                            f.write("    No mutations detected\n")
+
     def run(self):
         """Run the complete detection pipeline"""
         print("=" * 70)
@@ -741,13 +958,18 @@ class ResistanceDetector:
         if self.amplicon_results:
             self.analyze_amplicons()
 
+        # Run miniprot for protein mutation analysis
+        self.run_miniprot()
+
         # Write reports
         self.write_report()
         self.write_sequences()
         self.write_summary()
         if self.amplicon_results:
             self.write_amplicon_report()
-        
+        if self.miniprot_results:
+            self.write_miniprot_report()
+
         print("=" * 70)
         print("Analysis complete!")
         print(f"Results written to {self.output_prefix}_*")
@@ -784,11 +1006,13 @@ Author: Motroy
                        help='Mutation definitions file (TSV)')
     parser.add_argument('--primers',
                        help='Primers definitions file (TSV)')
+    parser.add_argument('--proteins',
+                       help='Protein sequences for miniprot mutation analysis (FASTA)')
     parser.add_argument('--min_id', type=float, default=90.0,
                        help='Minimum percent identity (default: 90)')
     parser.add_argument('--min_cov', type=float, default=80.0,
                        help='Minimum percent coverage (default: 80)')
-    parser.add_argument('-v', '--version', action='version', 
+    parser.add_argument('-v', '--version', action='version',
                        version='%(prog)s 1.0')
     
     args = parser.parse_args()
@@ -806,13 +1030,14 @@ Author: Motroy
     
     # Run detector
     detector = ResistanceDetector(
-        args.assembly, 
-        args.database, 
+        args.assembly,
+        args.database,
         args.output,
         args.min_id,
         args.min_cov,
         args.mutations,
-        args.primers
+        args.primers,
+        args.proteins
     )
     detector.run()
 
