@@ -25,14 +25,16 @@ class ResistanceDetector:
     
     # Known resistance mutations
     # Based on literature: fosfomycin resistance mutations and carbapenem resistance mutations
+    # Reference: PMIDs 33193186, 28928846, 35154919, 28031275, 26100712, 30700621, 40546282
     KNOWN_MUTATIONS = {
         # Carbapenem resistance - KPC mutations (ceftazidime-avibactam resistance)
+        # D179Y is the most common Ω-loop mutation; V240G is 240-loop mutation
         'blaKPC': {
             179: {'ref': 'D', 'variants': ['Y', 'N'], 'name': 'D179Y/N'},
             240: {'ref': 'V', 'variants': ['G'], 'name': 'V240G'},
             243: {'ref': 'T', 'variants': ['M'], 'name': 'T243M'}
         },
-        # OXA-48 mutations
+        # OXA-48 mutations (ceftazidime-avibactam resistance)
         'blaOXA-48': {
             68: {'ref': 'P', 'variants': ['A'], 'name': 'P68A'},
             211: {'ref': 'Y', 'variants': ['S'], 'name': 'Y211S'}
@@ -64,12 +66,12 @@ class ResistanceDetector:
             54: {'ref': 'D', 'variants': ['N', 'A'], 'name': 'D54N/A'},
             139: {'ref': 'R', 'variants': ['C', 'H'], 'name': 'R139C/H'}
         },
-        # UhpB mutations (sensor kinase)
+        # UhpB mutations (sensor kinase) - G469R causes 128-fold increase in FOS MICs
         'uhpB': {
             469: {'ref': 'G', 'variants': ['R'], 'name': 'G469R'},
             350: {'ref': 'H', 'variants': ['Y', 'Q'], 'name': 'H350Y/Q'}
         },
-        # UhpC mutations (membrane sensor)
+        # UhpC mutations (membrane sensor) - F384L causes 128-fold increase in FOS MICs
         'uhpC': {
             384: {'ref': 'F', 'variants': ['L'], 'name': 'F384L'}
         },
@@ -81,20 +83,47 @@ class ResistanceDetector:
         'ptsI': {
             191: {'ref': 'H', 'variants': ['Y', 'Q'], 'name': 'H191Y/Q'}
         },
-        # Other fosfomycin resistance genes
+        # Secondary FOS resistance mutations (2-fold MIC increase)
         'galU': {
             282: {'ref': 'R', 'variants': ['V'], 'name': 'R282V'}
         },
         'lon': {
             558: {'ref': 'Q', 'variants': ['*'], 'name': 'Q558*'}
         },
-        # FosA variants mutations
+        # FosA variants mutations - fosAKP I91V causes 8-fold MIC increase
         'fosAKP': {
             91: {'ref': 'I', 'variants': ['V'], 'name': 'I91V'}
         },
         'fosA': {
             90: {'ref': 'K', 'variants': ['E', 'Q'], 'name': 'K90E/Q'},
             119: {'ref': 'H', 'variants': ['Q', 'R'], 'name': 'H119Q/R'}
+        },
+        # CAZAVI resistance - AcrB efflux pump mutations
+        'acrB': {
+            # Common positions for efflux pump mutations affecting drug efflux
+            617: {'ref': 'G', 'variants': ['D', 'N'], 'name': 'G617D/N'},
+            626: {'ref': 'F', 'variants': ['L'], 'name': 'F626L'},
+            628: {'ref': 'A', 'variants': ['T', 'V'], 'name': 'A628T/V'}
+        },
+        # CAZAVI resistance - OmpK36 porin mutations (reduce drug permeability)
+        'ompK36': {
+            # Insertions at loop 3 and loop 7 constriction sites
+            134: {'ref': 'G', 'variants': ['D', '*'], 'name': 'G134D/*'},
+            135: {'ref': 'D', 'variants': ['*', 'N'], 'name': 'D135*/N'},
+            213: {'ref': 'G', 'variants': ['D', '*'], 'name': 'G213D/*'}
+        },
+        # CAZAVI resistance - ftsI (PBP3) mutations affecting ceftazidime target
+        'ftsI': {
+            # Penicillin-binding protein 3 mutations
+            333: {'ref': 'A', 'variants': ['V', 'T'], 'name': 'A333V/T'},
+            350: {'ref': 'Y', 'variants': ['C', 'S'], 'name': 'Y350C/S'},
+            357: {'ref': 'S', 'variants': ['N'], 'name': 'S357N'}
+        },
+        # CAZAVI resistance - EnvZ two-component system sensor mutations
+        'envZ': {
+            # Sensor histidine kinase affecting porin expression
+            244: {'ref': 'G', 'variants': ['S', 'D'], 'name': 'G244S/D'},
+            324: {'ref': 'T', 'variants': ['I', 'A'], 'name': 'T324I/A'}
         }
     }
     

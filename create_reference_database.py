@@ -84,7 +84,17 @@ NCBI_ACCESSIONS = {
     'galU': 'NC_000913.3:c904969-904043',
     'lon': 'NC_000913.3:466763-469054',
     'cyaA': 'NC_000913.3:c3563638-3560825',
-    'ptsI': 'NC_000913.3:2516651-2518450'
+    'ptsI': 'NC_000913.3:2516651-2518450',
+
+    # CAZAVI resistance genes (chromosomal, K. pneumoniae NTUH-K2044 reference)
+    # acrB: Efflux pump RND transporter
+    'acrB': 'NC_012731.1:481759-484917',
+    # ompK36: Outer membrane porin (reduces drug permeability)
+    'ompK36': 'NC_012731.1:c1098245-1097163',
+    # ftsI: Penicillin-binding protein 3 (PBP3) - ceftazidime target
+    'ftsI': 'NC_012731.1:92573-94330',
+    # envZ: Two-component sensor histidine kinase (affects porin expression)
+    'envZ': 'NC_012731.1:c3403821-3402466'
 }
 
 
