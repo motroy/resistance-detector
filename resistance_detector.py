@@ -428,136 +428,121 @@ class ResistanceDetector:
         
         return mutations_found
     
-    def detect_primers(self):
-        """Detect presence of specific primers in the assembly"""
+    def detect_amplicons(self):
+        """Detect amplicons using seqkit amplicon"""
         if not self.primers:
             return
 
-        print("Searching for specific primers...")
+        print("Detecting amplicons with seqkit...")
 
-        hits = []
+        # 1. Generate seqkit-compatible primer file
+        # Format: Name <tab> Fwd <tab> Rev
+        # We need to group primers by Pair_ID from our primers dict
+
+        # Group primers by Pair_ID
+        pairs = defaultdict(dict)
+        for name, info in self.primers.items():
+            pair_id = info.get('pair_id')
+            if not pair_id or pair_id == '-':
+                continue
+
+            # Identify if F or R based on name suffix or explicit logic
+            # Using simple heuristic: ends with _F or _R, or similar
+            if name.endswith('_F') or 'Fwd' in name or '-F' in name or '_F' in name:
+                pairs[pair_id]['F'] = info['seq']
+                pairs[pair_id]['F_name'] = name
+            elif name.endswith('_R') or 'Rev' in name or '-R' in name or '_R' in name:
+                pairs[pair_id]['R'] = info['seq']
+                pairs[pair_id]['R_name'] = name
+
+        if not pairs:
+            print("No primer pairs identified for amplicon detection")
+            return
+
+        seqkit_primer_file = f"{self.output_prefix}_seqkit_primers.tsv"
+        with open(seqkit_primer_file, 'w') as f:
+            for pair_id, p in pairs.items():
+                if 'F' in p and 'R' in p:
+                    # Seqkit expects: Name Fwd Rev
+                    f.write(f"{pair_id}\t{p['F']}\t{p['R']}\n")
+
+        # 2. Run seqkit amplicon
+        amplicon_output = f"{self.output_prefix}_amplicons.fasta"
+        # We use --bed to get coordinates easily, or just Parse FASTA headers if they contain info?
+        # seqkit amplicon outputs FASTA.
+        # But we need coordinates to check for internal mutations (BLAST hits).
+        # seqkit amplicon --bed outputs BED format.
+
+        cmd = [
+            'seqkit', 'amplicon',
+            '-p', seqkit_primer_file,
+            self.assembly,
+            '--bed'
+        ]
 
         try:
-            # Load assembly
-            contigs = list(SeqIO.parse(self.assembly, 'fasta'))
+            result = subprocess.run(cmd, capture_output=True, text=True, check=True)
 
-            for name, info in self.primers.items():
-                seq = info['seq'].replace(' ', '').upper()
-                purpose = info['purpose']
-                mutation = info.get('mutation')
+            # Parse BED output
+            # BED columns: chrom, start(0-based), end(0-based), name, score, strand, amplicon_seq?
+            # Wait, seqkit amplicon --bed:
+            # col 1: chrom
+            # col 2: start (0-based)
+            # col 3: end (0-based)
+            # col 4: primer name (pair_id)
+            # col 5: score
+            # col 6: strand
+            # col 7: amplicon sequence (if --bed is used with recent versions? checks docs: "output in BED6+1 format with amplicon as the 7th column")
 
-                for record in contigs:
-                    contig_seq = record.seq.upper()
+            for line in result.stdout.strip().split('\n'):
+                if not line: continue
+                fields = line.split('\t')
+                if len(fields) < 6: continue
 
-                    # Check forward strand
-                    start = contig_seq.find(seq)
-                    if start != -1:
-                        hits.append({
-                            'primer': name,
-                            'contig': record.id,
-                            'strand': '+',
-                            'purpose': purpose,
-                            'mutation': mutation,
-                            'start': start,
-                            'end': start + len(seq)
-                        })
+                contig = fields[0]
+                start = int(fields[1])
+                end = int(fields[2])
+                pair_id = fields[3]
+                strand = fields[5]
+                # seq = fields[6] if len(fields) > 6 else ""
 
-                    # Check reverse strand
-                    rc_seq = str(Seq(seq).reverse_complement()).upper()
-                    start_rc = contig_seq.find(rc_seq)
-                    if start_rc != -1:
-                        hits.append({
-                            'primer': name,
-                            'contig': record.id,
-                            'strand': '-',
-                            'purpose': purpose,
-                            'mutation': mutation,
-                            'start': start_rc,
-                            'end': start_rc + len(rc_seq)
-                        })
+                self.amplicon_results.append({
+                    'pair_id': pair_id,
+                    'contig': contig,
+                    'start': start, # 0-based
+                    'end': end,     # 0-based
+                    'length': end - start,
+                    'mutations_found': []
+                })
 
-            self.primer_results = hits
-            print(f"Found {len(hits)} primer hits")
+            print(f"Found {len(self.amplicon_results)} amplicons")
 
-            # Detect amplicons after primers
-            self.detect_amplicons()
-
+        except subprocess.CalledProcessError as e:
+            print(f"ERROR running seqkit: {e.stderr}", file=sys.stderr)
         except Exception as e:
-            print(f"ERROR during primer detection: {e}", file=sys.stderr)
+            print(f"ERROR processing amplicons: {e}", file=sys.stderr)
 
-    def detect_amplicons(self):
-        """Detect amplicons based on primer pairs"""
-        print("Detecting amplicons from primer pairs...")
-        self.amplicon_results = []
+    def write_amplicon_report(self):
+        """Write amplicon detection results to TSV file"""
+        report_file = f"{self.output_prefix}_amplicons.tsv"
 
-        # Group hits by Pair_ID
-        pair_hits = defaultdict(list)
-        for hit in self.primer_results:
-            primer_info = self.primers.get(hit['primer'])
-            if primer_info and primer_info.get('pair_id'):
-                pair_hits[primer_info['pair_id']].append(hit)
-
-        for pair_id, hits in pair_hits.items():
-            # Separate into strands/contigs
-            # Simple logic: assume 2 primers (F and R) on same contig
-            by_contig = defaultdict(list)
-            for hit in hits:
-                by_contig[hit['contig']].append(hit)
-
-            for contig, chits in by_contig.items():
-                if len(chits) >= 2:
-                    # Sort by start position
-                    chits.sort(key=lambda x: x['start'])
-
-                    # Check if we have compatible pair (Fwd ... Rev_complement)
-                    # For a standard PCR product:
-                    # Fwd primer binds to + strand (matches + strand sequence)
-                    # Rev primer binds to - strand (matches - strand sequence, so appears as RC on + strand)
-                    # Fwd start < Rev start
-
-                    # We need to identify which is which.
-                    # In our primer_results, 'strand' indicates which strand the PRIMER SEQUENCE matched.
-                    # Fwd primer matches '+'. Rev primer matches '-'.
-
-                    fwd_hits = [h for h in chits if h['strand'] == '+']
-                    rev_hits = [h for h in chits if h['strand'] == '-']
-
-                    for f in fwd_hits:
-                        for r in rev_hits:
-                            if f['end'] < r['start']:
-                                # Found a potential amplicon
-                                # Distance check? Say < 20kb
-                                dist = r['start'] - f['end']
-                                if dist < 20000:
-                                    self.amplicon_results.append({
-                                        'pair_id': pair_id,
-                                        'contig': contig,
-                                        'start': f['start'],
-                                        'end': r['end'],
-                                        'f_primer': f['primer'],
-                                        'r_primer': r['primer'],
-                                        'length': r['end'] - f['start'],
-                                        'mutations_found': [] # To be filled
-                                    })
-
-    def write_primer_report(self):
-        """Write primer detection results to TSV file"""
-        report_file = f"{self.output_prefix}_primers.tsv"
-
-        print(f"Writing primer results to {report_file}...")
+        print(f"Writing amplicon results to {report_file}...")
 
         with open(report_file, 'w') as f:
             # Header
-            f.write('\t'.join(['Primer', 'Purpose', 'Contig', 'Strand', 'Inferred_Mutation']) + '\n')
+            f.write('\t'.join(['Pair_ID', 'Contig', 'Start', 'End', 'Length',
+                              'Mutations_Found']) + '\n')
 
             # Results
-            for result in self.primer_results:
+            for amp in self.amplicon_results:
+                mut_str = ';'.join(amp['mutations_found']) if amp['mutations_found'] else '-'
                 f.write('\t'.join([
-                    result['primer'],
-                    result['purpose'],
-                    result['contig'],
-                    result['strand'],
-                    result['mutation'] if result['mutation'] else '-'
+                    amp['pair_id'],
+                    amp['contig'],
+                    str(amp['start']),
+                    str(amp['end']),
+                    str(amp['length']),
+                    mut_str
                 ]) + '\n')
 
     def analyze_hits(self, hits):
@@ -722,17 +707,6 @@ class ResistanceDetector:
             if not self.results:
                 f.write("No resistance genes detected\n")
 
-            if self.primer_results:
-                f.write("\n")
-                f.write("DETECTED PRIMERS:\n")
-                f.write("-" * 50 + '\n')
-                for res in self.primer_results:
-                    f.write(f"  {res['primer']} ({res['strand']})\n")
-                    f.write(f"    Purpose: {res['purpose']}\n")
-                    if res['mutation']:
-                        f.write(f"    Inferred Mutation: {res['mutation']}\n")
-                    f.write(f"    Contig: {res['contig']}\n")
-
             if self.amplicon_results:
                 f.write("\n")
                 f.write("DETECTED AMPLICONS:\n")
@@ -756,27 +730,23 @@ class ResistanceDetector:
         
         self.check_dependencies()
         self.prepare_database()
-
-        # Run primer detection
-        self.detect_primers()
-        if self.primer_results:
-            self.write_primer_report()
-
-        hits = self.run_blast()
         
+        # Run BLAST first to get acquired genes
+        hits = self.run_blast()
         if hits:
             self.analyze_hits(hits)
-            self.write_report()
-            self.write_sequences()
-            self.write_summary()
-        else:
-            print("No resistance genes detected")
-            # Still create empty output files
-            with open(f"{self.output_prefix}_results.tsv", 'w') as f:
-                f.write('\t'.join(['Contig', 'Gene', 'Identity%', 
-                                  'Coverage%', 'Mutations']) + '\n')
-            with open(f"{self.output_prefix}_summary.txt", 'w') as f:
-                f.write("No resistance genes detected\n")
+
+        # Then run amplicon detection
+        self.detect_amplicons()
+        if self.amplicon_results:
+            self.analyze_amplicons()
+
+        # Write reports
+        self.write_report()
+        self.write_sequences()
+        self.write_summary()
+        if self.amplicon_results:
+            self.write_amplicon_report()
         
         print("=" * 70)
         print("Analysis complete!")
