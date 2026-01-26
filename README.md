@@ -279,7 +279,7 @@ If you use this tool, please cite the relevant papers for the resistance mechani
 
 ## Author
 
-Motroy (motroy@post.bgu.ac.il)
+Motroy
 
 ## License
 
