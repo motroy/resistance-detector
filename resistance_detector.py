@@ -24,30 +24,77 @@ class ResistanceDetector:
     """Main class for detecting resistance genes and mutations"""
     
     # Known resistance mutations
+    # Based on literature: fosfomycin resistance mutations and carbapenem resistance mutations
     KNOWN_MUTATIONS = {
+        # Carbapenem resistance - KPC mutations (ceftazidime-avibactam resistance)
         'blaKPC': {
-            179: {'ref': 'D', 'variants': ['Y'], 'name': 'D179Y'},
+            179: {'ref': 'D', 'variants': ['Y', 'N'], 'name': 'D179Y/N'},
             240: {'ref': 'V', 'variants': ['G'], 'name': 'V240G'},
             243: {'ref': 'T', 'variants': ['M'], 'name': 'T243M'}
         },
+        # OXA-48 mutations
         'blaOXA-48': {
             68: {'ref': 'P', 'variants': ['A'], 'name': 'P68A'},
             211: {'ref': 'Y', 'variants': ['S'], 'name': 'Y211S'}
         },
-        'uhpB': {
-            469: {'ref': 'G', 'variants': ['R'], 'name': 'G469R'}
+        # Fosfomycin target enzyme - MurA mutations (D369N, L370I confer resistance)
+        'murA': {
+            369: {'ref': 'D', 'variants': ['N'], 'name': 'D369N'},
+            370: {'ref': 'L', 'variants': ['I'], 'name': 'L370I'}
         },
+        # Fosfomycin transporter - UhpT mutations (loss of function confers resistance)
+        'uhpT': {
+            # Key positions where mutations affect transporter function
+            55: {'ref': 'G', 'variants': ['D', '*'], 'name': 'G55D/*'},
+            198: {'ref': 'W', 'variants': ['*', 'R'], 'name': 'W198*/R'},
+            258: {'ref': 'E', 'variants': ['*', 'K'], 'name': 'E258*/K'},
+            350: {'ref': 'W', 'variants': ['*', 'R'], 'name': 'W350*/R'}
+        },
+        # Fosfomycin transporter - GlpT mutations (loss of function confers resistance)
+        'glpT': {
+            # Key positions where mutations affect transporter function
+            44: {'ref': 'E', 'variants': ['*', 'K'], 'name': 'E44*/K'},
+            88: {'ref': 'W', 'variants': ['*', 'R', 'G'], 'name': 'W88*/R/G'},
+            90: {'ref': 'G', 'variants': ['D', '*'], 'name': 'G90D/*'},
+            234: {'ref': 'W', 'variants': ['*', 'R'], 'name': 'W234*/R'},
+            362: {'ref': 'R', 'variants': ['C', 'H', '*'], 'name': 'R362C/H/*'}
+        },
+        # UhpA mutations (transcriptional activator)
+        'uhpA': {
+            54: {'ref': 'D', 'variants': ['N', 'A'], 'name': 'D54N/A'},
+            139: {'ref': 'R', 'variants': ['C', 'H'], 'name': 'R139C/H'}
+        },
+        # UhpB mutations (sensor kinase)
+        'uhpB': {
+            469: {'ref': 'G', 'variants': ['R'], 'name': 'G469R'},
+            350: {'ref': 'H', 'variants': ['Y', 'Q'], 'name': 'H350Y/Q'}
+        },
+        # UhpC mutations (membrane sensor)
         'uhpC': {
             384: {'ref': 'F', 'variants': ['L'], 'name': 'F384L'}
         },
+        # CyaA mutations (adenylate cyclase - affects uhpT expression)
+        'cyaA': {
+            463: {'ref': 'G', 'variants': ['D', '*'], 'name': 'G463D/*'}
+        },
+        # PtsI mutations (phosphoenolpyruvate:sugar phosphotransferase)
+        'ptsI': {
+            191: {'ref': 'H', 'variants': ['Y', 'Q'], 'name': 'H191Y/Q'}
+        },
+        # Other fosfomycin resistance genes
         'galU': {
             282: {'ref': 'R', 'variants': ['V'], 'name': 'R282V'}
         },
         'lon': {
             558: {'ref': 'Q', 'variants': ['*'], 'name': 'Q558*'}
         },
+        # FosA variants mutations
         'fosAKP': {
             91: {'ref': 'I', 'variants': ['V'], 'name': 'I91V'}
+        },
+        'fosA': {
+            90: {'ref': 'K', 'variants': ['E', 'Q'], 'name': 'K90E/Q'},
+            119: {'ref': 'H', 'variants': ['Q', 'R'], 'name': 'H119Q/R'}
         }
     }
     
