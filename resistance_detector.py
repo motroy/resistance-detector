@@ -78,11 +78,13 @@ class ResistanceDetector:
                     name = row.get('Primer', row.get('name'))
                     seq = row.get('Nucleotide_sequence', row.get('seq', row.get('sequence')))
                     purpose = row.get('Purpose', row.get('purpose', ''))
+                    mutation = row.get('Mutation', row.get('mutation', ''))
 
                     if name and seq:
                         self.primers[name] = {
                             'seq': seq.strip(),
-                            'purpose': purpose.strip()
+                            'purpose': purpose.strip(),
+                            'mutation': mutation.strip() if mutation and mutation.strip() != '-' else None
                         }
 
             print(f"Loaded {len(self.primers)} primers")
@@ -437,6 +439,7 @@ class ResistanceDetector:
             for name, info in self.primers.items():
                 seq = info['seq'].replace(' ', '').upper()
                 purpose = info['purpose']
+                mutation = info.get('mutation')
 
                 for record in contigs:
                     contig_seq = record.seq.upper()
@@ -447,7 +450,8 @@ class ResistanceDetector:
                             'primer': name,
                             'contig': record.id,
                             'strand': '+',
-                            'purpose': purpose
+                            'purpose': purpose,
+                            'mutation': mutation
                         })
 
                     # Check reverse strand
@@ -457,7 +461,8 @@ class ResistanceDetector:
                             'primer': name,
                             'contig': record.id,
                             'strand': '-',
-                            'purpose': purpose
+                            'purpose': purpose,
+                            'mutation': mutation
                         })
 
             self.primer_results = hits
@@ -474,7 +479,7 @@ class ResistanceDetector:
 
         with open(report_file, 'w') as f:
             # Header
-            f.write('\t'.join(['Primer', 'Purpose', 'Contig', 'Strand']) + '\n')
+            f.write('\t'.join(['Primer', 'Purpose', 'Contig', 'Strand', 'Inferred_Mutation']) + '\n')
 
             # Results
             for result in self.primer_results:
@@ -482,7 +487,8 @@ class ResistanceDetector:
                     result['primer'],
                     result['purpose'],
                     result['contig'],
-                    result['strand']
+                    result['strand'],
+                    result['mutation'] if result['mutation'] else '-'
                 ]) + '\n')
 
     def analyze_hits(self, hits):
@@ -615,6 +621,8 @@ class ResistanceDetector:
                 for res in self.primer_results:
                     f.write(f"  {res['primer']} ({res['strand']})\n")
                     f.write(f"    Purpose: {res['purpose']}\n")
+                    if res['mutation']:
+                        f.write(f"    Inferred Mutation: {res['mutation']}\n")
                     f.write(f"    Contig: {res['contig']}\n")
     
     def run(self):
