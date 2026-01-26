@@ -1,272 +1,336 @@
 #!/usr/bin/env python3
 """
 Create reference database for FOS-CAZAVI resistance genes
-Downloads sequences from NCBI and creates BLAST database
+Uses AMRfinderPlus data to source sequences and mutation definitions.
 """
 
 import argparse
 import sys
+import os
+import csv
+import urllib.request
 from pathlib import Path
 from Bio import Entrez, SeqIO
 from Bio.Seq import Seq
 from Bio.SeqRecord import SeqRecord
 import time
 
-# Reference sequences for genes - includes E. coli K-12 MG1655 chromosomal genes
-# for fosfomycin resistance detection (transporters and target enzyme)
-REFERENCE_SEQUENCES = {
-    # Acquired fosfomycin resistance genes
-    'fosA3': {
-        'nucleotide': 'ATGAACATTGTGAAAATTATTGGGCACCAGTCTGGCGCTGGCAAAACCACGCTGCTGAACAGCATCGCTGGCATTAAACCGAACGAAGGCAAAGTGCTGATTAACGGCAAAGATATTAG CGAAGATGATGAAACCGATAAAGAACTGAAACAGATTGATATTCCGATTGTGCTGGATAGCATTACCCTGGTGCCGGAAACCATTAACTATGCGGATCTGAACCAGAAACGTACCACCCTGAAAGATATTCTGACCGCGTTTCCGGTGCGTGTGTTTCATGATCATGACATGATGGAACTGGATAAAAAATGGCTGGATCTGGAACAGGAATGGCAGGGCATGGTGGAAGAAGCGGCGATTCATATGGTGCAGCGTTTTAAACAGTATCTGCCGGATAGCGGCCGTGTGCTGATGGTGGAACAGAAAGTGATGAAACTGGGCCAGCATTTTGTGGCGACCCAGCCGATTGTGGATAAAAAAATTCAGGCGGGCCTGACCCTGCAGGAAGAAATTCTGACCGATTTTAAACTGGGCAACGAACAGAAAGCGCTGCGTGATCTGCTGAAAATGGCGGAA'
-    },
-    # E. coli K-12 MG1655 chromosomal genes for fosfomycin resistance
-    # murA: UDP-N-acetylglucosamine enolpyruvyl transferase (fosfomycin target)
-    # Gene coordinates: NC_000913.3:3578133-3579401 (1269 bp)
-    'murA': {
-        'nucleotide': 'ATGACAATCGGTATCGGCACAATCCCAACGCTTACACCCGGTGAAAGCCTGGATGCGGCGATCCGTTATTTCGATGATGTCACGCTGCGCAGCGAGCTGATCGATCCGGTTCTGGTGGTGCCGGAAAACTATCTCGGCTGGGAGCGCGAAGCGAAAGAGTTTGGCCTGAAACTGCTGCGCGATGCCACGCTGAATCCGAACACCATGAAAATGTTCGAGCTGTCGCCACTGGAGCACGAACAAGTGATTGAAGCGATGGAAGCGTATCTGCCGGAAGTGGTTTATGAGCCGAAATCGCGCATCATCATGATGGATCCGATTCCGGTGCGTACGACCGTTGAAGAGCTGGTCGCGCTGGCAAAAGAGCTGGCGCTGGGCAAAGTGGTGCTGGTTTCTGACGAAGCCTACATGGATGCGGTGATCAGCCAGGTGGGTCAGCCGATCCTGATCAACGCGCCGGGCATCAAAGGCATGATCCTGGGCGCGAGTTATGATCCGATGGAAATCAAACTCATCATGGATGAGCTGGAAGATTTCGATCTGTTCTTCGTGCAGGCGAAAGATCTGGCGATCGGTCGCAGCGGTGAGCTGGAAGTGATTCGTCAGGATCAGCTGTTTAACCCGGATCGTCAGATGATCCTGTCGCCGGGCGATCGTTTCTATGCGGCAGCAGGTATTGGTGCAGGCGGTGTGATGATCACCTCTGAAGAGCTGGCGAAAGCGACCGGGCTGGAAGTGGCGGCAGCGGGTAAAGTTGGTCTGCCGGATGGCGCGGTCGGCAACAACGATATCTGCGCGGTGGTGCCGATGGATTACATCAACTACTTCCCGCTGGGTATTCCGCGTAAAAACCTGCTGGTGATGTCTGCGGATGGCAAATATTACTCCGACTGGATCAAAGGCAAAGCGATTGGCGTGCATCCGGCAACGCTGGAAGGCCTGAAAGCCAACGGCGCGGGTACGATGAACGTGATGATCGTGCGTGGCGATAACAACCCGAACCTGATGGTGATGCTGTCGCCGAAGATTGTCGACTACAAAGTGGATTTCGGCCTGGCAAAAGAGCTGGGTTGGGAAGCAATGCTGATCCGTGCGGGCGATAAAGTGGTGATCGCAGGCGACTACTACAAAGACTCCAGCAGCACCATCAAAGGTTGCATGTCCAACTACAACAAACTGCCGCACCCGATGCTGATTGTGGGCGTTCCGAAATCCGTTGAACCGTATCAGGTGAAAGTGCGTGAGCTGCTGGAAAACGTGTAA'
-    },
-    # uhpT: Hexose phosphate transporter (fosfomycin uptake)
-    # Gene coordinates: NC_000913.3:c3680773-3679418 (1356 bp) - complement strand
-    'uhpT': {
-        'nucleotide': 'ATGAAAATCTTTAATACCTGGCTGTTGCTGGCGGCGGCGATTTTACTGGTGGGTTTTGTCGGTAACTCTTATACCTTTGCCGTTACCGGCATTAGCGGTATTTTCCTCGGTGCGTTCCTCGGGATGTTGATGAGTTTTAACGGCGTGATTATCCCGGCGTGGATTTCCATCTACATCTTCGCCGTTGCGTACATTCTGGTGCTGACTATCTACCCGACCGATTACATCGATACCGATGCGCTGAAATCTAACAACGTGATGAAACGTAACTACGCCGACATGATGGTTGAAGATAACCCGATTTCCGATACCGGCATGATCGGTGCGATCCGTTATTTTGGTGTGACGCCGTGGCTGATGATGGGTATCTATCTGCTGACCTCCATGACGGCGATGGGCATCACTTTCGGTCCGGTGATGATCCTGGTCTATCTGCTGCTGATTCAGCCGTTCGGCTGGTTCTCCATTTTTGCCGGTTACCTGCTGCTGAAAAAACTGAAGGGCTTCCCGGTTACCAACACGCTGAACGCGATTGGTTTCAACATGTTCCTGTGGCTGGCGGTGTTGATTCTCTCCACTGAAGTCGCCGCGCTGGCGATTTCTGGCGTGTTTATGGCGGTTAAGTCCGACTGGGTTGAATCCATGAAAGCGATCAACTTCCTGTTCTTCCTGATGTTCGCGCTGACCATGATGTTCTGGTTCCCGGGCATGGTGTGGAACAGCTACTATTACTGGGGCCGTATCAAACCGATTGCGGTTCTGGCGATGTTCTCCATCGTTCTGGTGATCATCGCGGGCCTGATCCCGTTCTTCGCGACCCTGATGGCGGAAATCGTGGGCAGTTACGTGCTGGGCATGTTCTGGTTCGCGGTGTTCGACTTTATGTTCGTCATCATCATCAGCTTCTTCTCCATGCGTCGTAACGACATGCCGGTGTTCATCATGATGTTGGTTATTGCGTTAAGTTACGCGCTGGGCTATGGCCTGATGCCGGGTATCGCAGCGGTGATTATTCTGTTCTCTGCGCTGGCGGTGCAGATGATCTTCATCGTGCCGCAGACCTACTTCGGTAAAATGTCTGACTGGGCCGGTAACGCGACCATCGCAGGCTCTGCCATCGCCATGCTGCTGTTTGCGATCTTTAACGCGACTTACATCGCGATCTTTTCCATGCTGAACGCAATGATCAAAAACGATCCGAAATAA'
-    },
-    # glpT: Glycerol-3-phosphate transporter (fosfomycin uptake)
-    # Gene coordinates: NC_000913.3:c2874881-2873517 (1365 bp) - complement strand
-    'glpT': {
-        'nucleotide': 'ATGAGTACTGAAATCAAAAGAATCCGTTTTATTTTCCTGATGATCGCCGCCACGTTGCTGCTGGCGGGATTTTGCGGTAACTGTTACATCTTCGGTGTGACCGGTATTAGCGGTATTTTTCTGGGCGCGTTCATGGGGATGATGATGAGCTTTAATGGCACCATTATCCCGGCATGGATCTCTATCTATATCTTCGCGATTGCTTATATCCTGGTACTGACCATCTACCCGACTGACTATATCGACACTGATGCGCTGAAATCCAACAACGTGATGAAACGCAACTACGCCGATATGATGGTCGAAAGCAACCCGGTTTCCGACATCGGTATGATCGGCGCAATCCGTTACTTTGGTGTAACTCCGTGGCTGATGATGGGTATTTACCTGTTAACTACGATGACCGCAATGGGCATCACCTTCGGACCGGTGATGATCCTCGTTTACCTGCTGTTAATTCAACCGTTTGGTTGGTTCTCGATTTTTGCGGGATATCTGTTGTTGAAAAAGCTGAAAAATTTCCCGGTTACGAACACGCTCAACGCGATCGGCTTTAATATGTTCCTGTGGCTGGCGGTGTTGATCCTGTCGACGGATGTCGCGGCGCTGGCGATTTCTGGCGTGTTTATGGCGGTGAAATCCGACTGGGTGGAATCAATGAAAGCGATCAATTTCCTGTTCTTCCTGATGTTCGCTCTGACCATGATGTTCTGGTTCCCGGGCATGGTATGGAACAGCTATTACTACTGGGGCCGTATCAAGCCTATTGCGGTACTGGCGATGTTCTCGATTATCCTGGTGATCATCGCGGGTTTGATCCCGTTTTTCGCGACGCTGATGGCGGAAATCGTGGGTAGCTACGTGCTGGGCATGTTCTGGTTCGCGGTGTTTGACTTCATGTTCGTCATCATCATCAGCTTTTTCAGCATGCGTCGCAACGACATGCCGGTGTTCATCATGATGTTGGTTATCGCGTTAAGCTACGCGCTGGGCTATGGCCTGATGCCAGGTATCGCGGCAGTGATTATTCTGTTCTCCGCGTTAGCAGTACAGATGATCTTCATCGTACCGCAGACGTACTTCGGTAAAATGTCCGACTGGGCGGGTAACGCGACGATCGCAGGTTCTGCAATCGCAATGCTGCTGTTCGCAATTTTCAACGCGACCTATATTGCGATCTTTTCGATGCTGAACGCGATGATCAAAAACGACCCGAAATAA'
-    },
-    # uhpA: Transcriptional activator of uhpT
-    # Gene coordinates: NC_000913.3:c3680233-3678692 (690 bp) - response regulator
-    'uhpA': {
-        'nucleotide': 'ATGACCATGAAAGTTCTGATTGTGGACGATGATGATCTGGTGATGACCGATGCGGCGCAGCGTCTGATTCGTAACCATCCGCTGATGCTGGAACTGATGGAACTGTTCGATCCGGATCACCTGCTGATCTTCAATGAAGATATCGATTATTTCGCGCCGGAAGATCTGCGCGAAATGCTGGCGCGTTTTTGCCATCAGGATGTGGAACTGGTGGTTGAGGATATTGCCGATCTGCTGGCACAGGATCTGACCTGGGATCAGCTGGATCTGAAAAACAGCAAAAGCGTGTTCCTGGCAAGCGAACTGCTGAATAAAGGTGAACTGCGTCTGGCGTATGATCCGATGCGTCCGCTGCAGCAGGAACATCTGCGTCGCATGGTTGATCGCGTTGAATTTCGCAGCCAGGATCAGCTGAAAGAAGCGCTGGCACTGATGGAAGATGCGGGTATTCGTCTGGCGATTTCCCGCCATCCGGGTAACCTGCGTCCGATGTTCCGCCGTCTGCGCGAAACCATTACCGAAATTATCAACGCGCTGGCGAACGATGGTCTGCGTCTGAAAGGTCTGAGCTTCGAAGATCTGGAACGTCGTCTGTAA'
-    },
-    # uhpB: Sensor histidine kinase for uhpT regulation
-    # Gene coordinates: NC_000913.3:3678743-3680377 (1635 bp)
-    'uhpB': {
-        'nucleotide': 'ATGAAACGTCTGCTGATCGGTTTCCTGATTCTGCTGATGATCTGGCTGATCTACATCTGCCTGATCTATAAAATCCTGTTCGGTGCGCTGTGGATGATCATCCTGCTGGCGGTGTTGATCGCGCTGGTGCTGATTCGCGGTCTGCGTCGTGAACTGCTGGATCCGTATCAGATGGTGGTGATGGAAAGCGGTGTGCCGGATGGCGTGGTTCGTCTGGTTGATGAACCGATCGAAGGTTATTTCGATATCGAACTGCTGGCGAAACGTGGTCTGAACCGTTATCTGCATGAACTGAACGGTCGTCTGGATACCCTGCTGGTTGGCTATCGTCGTGATCTGAGCGCGATTATCACCGATCTGGAACGTCCGATCCTGGCGCGTCTGGCGGATCAGGATCGTCTGGATAGCCGTCTGCTGGATAGCGCGGTGGTGGAACGTCTGAACGATCAGCTGCGTGAACTGAACGAACGTCTGGCGGATCTGCTGGAAGGTTATGATCCGGATCAGCTGCGTCGTCTGGCGGAACTGCTGGATCAGCATGGTCTGGAAGTTCTGGAACAGCTGGAACGTCTGAGCGATGCGGATCGTTATCTGCATAGCCGTCTGCGTGAACTGATGCGTGAACTGCCGGAACGTGAACTGGCGCGTCTGAAAGAACATCTGGAAGAACTGCTGGAAGCGCGTGAAGCGGCGCTGGAAGAACTGAACGATCAGCTGAACGATCAGCTGGATCTGCTGGATCGTCGTCTGGAAGCGGATCTGCGTGAACTGGTTGAAGCGCTGCTGGAAGCGCGTGAACAGGATCGTCTGGATCAGCGTCTGCTGGATCAGCAGCTGGATCTGCTGGATCAGGCGCTGGATCAGCGTCTGCTGGATCAGCTGCTGGATCTGCTGGATCAGCTGCTGGAACGTCTGGAAGAACTGGAAGCGCTGCTGGATCAGCTGGAACGTCTGGATCGTCTGCTGGATGAACTGCTGGATCGTCTGCTGGATCGTCTGCTGGATCTGCTGGATCGTCTGCTGGATCTGCTGGATCGTCTGCTGGAACGTCTGGAAGAACTGCTGGATCAGCTGGAACGTCTGGATCGTCTGCTGGATGAACTGCTGGATCGTCTGCTGGATCGTCTGCTGGATCTGCTGGATCGTCTGCTGGATCTGCTGGATCGTCTGCTGGAATAA'
-    },
-    # uhpC: Membrane sensor protein for hexose phosphate
-    # Gene coordinates: NC_000913.3:3680392-3681279 (888 bp)
-    'uhpC': {
-        'nucleotide': 'ATGAAAGCGCTGATCGGTCTGATCGGTCTGCTGATTCTGCTGATGATCCTGCTGATCTACATCTGCCTGATCTATAAAATCCTGTTCGGTGCGCTGTGGATGATCATCCTGCTGGCGGTGTTGATCGCGCTGGTGCTGATTCGCGGTCTGCGTCGTGAACTGCTGGATCCGTATCAGATGGTGGTGATGGAAAGCGGTGTGCCGGATGGCGTGGTTCGTCTGGTTGATGAACCGATCGAAGGTTATTTCGATATCGAACTGCTGGCGAAACGTGGTCTGAACCGTTATCTGCATGAACTGAACGGTCGTCTGGATACCCTGCTGGTTGGCTATCGTCGTGATCTGAGCGCGATTATCACCGATCTGGAACGTCCGATCCTGGCGCGTCTGGCGGATCAGGATCGTCTGGATAGCCGTCTGCTGGATAGCGCGGTGGTGGAACGTCTGAACGATCAGCTGCGTGAACTGAACGAACGTCTGGCGGATCTGCTGGAAGGTTATGATCCGGATCAGCTGCGTCGTCTGGCGGAACTGCTGGATCAGCATGGTCTGGAAGTTCTGGAACAGCTGGAACGTCTGAGCGATGCGGATCGTTATCTGCATAGCCGTCTGCGTGAACTGATGCGTGAACTGCCGGAACGTGAACTGGCGCGTCTGAAAGAACATCTGGAAGAACTGCTGGAAGCGCGTGAAGCGGCGCTGGAAGAACTGAACGATCAGCTGAACGATCAGCTGGATCTGCTGGATCGTCGTCTGTAA'
-    }
+# URLs for AMRfinderPlus data
+AMRFINDER_URLS = {
+    'catalog': 'https://ftp.ncbi.nlm.nih.gov/pathogen/Antimicrobial_resistance/AMRFinderPlus/database/latest/ReferenceGeneCatalog.txt',
+    'sequences': 'https://ftp.ncbi.nlm.nih.gov/pathogen/Antimicrobial_resistance/AMRFinderPlus/database/latest/AMR_CDS.fa',
+    'mutations': 'https://ftp.ncbi.nlm.nih.gov/pathogen/Antimicrobial_resistance/AMRFinderPlus/database/latest/AMRProt-mutation.tsv'
 }
 
-NCBI_ACCESSIONS = {
-    # FOS resistance genes (acquired)
-    'fosA3': 'NG_050407.1',
-    'fosA4': 'NG_050408.1',
-    'fosA5': 'NG_050409.1',
-    'fosA7': 'NG_055417.1',  # fosA7 variant
+# Genes of interest
+# Chromosomal genes requiring specific reference sequences (wildtype)
+CHROMOSOMAL_GENES = {
+    # Escherichia coli genes (Fosfomycin resistance)
+    'murA': {'taxgroup': 'Escherichia'},
+    'uhpT': {'taxgroup': 'Escherichia'},
+    'glpT': {'taxgroup': 'Escherichia'},
+    'uhpA': {'taxgroup': 'Escherichia'},
+    'uhpB': {'taxgroup': 'Escherichia'},
+    'uhpC': {'taxgroup': 'Escherichia'},
+    'cyaA': {'taxgroup': 'Escherichia'},
+    'ptsI': {'taxgroup': 'Escherichia'},
+    'galU': {'taxgroup': 'Escherichia'},
+    'lon': {'taxgroup': 'Escherichia'},
+    
+    # Klebsiella pneumoniae genes (Ceftazidime-Avibactam resistance)
+    'acrB': {'taxgroup': 'Klebsiella_pneumoniae'},
+    'ompK36': {'taxgroup': 'Klebsiella_pneumoniae'},
+    'ftsI': {'taxgroup': 'Klebsiella_pneumoniae'},
+    'envZ': {'taxgroup': 'Klebsiella_pneumoniae'}
+}
 
-    # KPC variants
-    'blaKPC-2': 'NG_049253.1',
-    'blaKPC-3': 'NG_049257.1',
+# Acquired genes (fetched from AMR_CDS.fa by family/name)
+ACQUIRED_GENES = [
+    'fosA3', 'fosA4', 'fosA5', 'fosA7',
+    'blaKPC-2', 'blaKPC-3', 'blaOXA-48'
+]
 
-    # OXA-48
-    'blaOXA-48': 'NG_049762.1',
-
-    # Chromosomal genes (E. coli K-12 MG1655) - Fosfomycin target and transporters
-    # murA: UDP-N-acetylglucosamine enolpyruvyl transferase (fosfomycin target)
-    'murA': 'NC_000913.3:3578133-3579401',
-    # uhpT: Sugar phosphate transporter (fosfomycin uptake)
-    'uhpT': 'NC_000913.3:c3680773-3679418',
-    # glpT: Glycerol-3-phosphate transporter (fosfomycin uptake)
-    'glpT': 'NC_000913.3:c2874881-2873517',
-    # uhpA: Transcriptional activator of uhpT
-    'uhpA': 'NC_000913.3:c3680233-3678692',
-    # uhpB: Sensor histidine kinase
-    'uhpB': 'NC_000913.3:3678743-3680377',
-    # uhpC: Membrane sensor protein
-    'uhpC': 'NC_000913.3:3680392-3681279',
-
-    # Other FOS resistance-related chromosomal genes (E. coli K-12 MG1655)
-    'galU': 'NC_000913.3:c904969-904043',
-    'lon': 'NC_000913.3:466763-469054',
-    'cyaA': 'NC_000913.3:c3563638-3560825',
-    'ptsI': 'NC_000913.3:2516651-2518450',
-
-    # CAZAVI resistance genes (chromosomal, K. pneumoniae NTUH-K2044 reference)
-    # acrB: Efflux pump RND transporter
-    'acrB': 'NC_012731.1:481759-484917',
-    # ompK36: Outer membrane porin (reduces drug permeability)
-    'ompK36': 'NC_012731.1:c1098245-1097163',
-    # ftsI: Penicillin-binding protein 3 (PBP3) - ceftazidime target
-    'ftsI': 'NC_012731.1:92573-94330',
-    # envZ: Two-component sensor histidine kinase (affects porin expression)
-    'envZ': 'NC_012731.1:c3403821-3402466'
+# Manual mutations (for acquired genes or those missing in AMRfinderPlus)
+# Format: Gene -> Position -> {ref, variants, name}
+MANUAL_MUTATIONS = {
+    'blaKPC': [
+        {'pos': 179, 'ref': 'D', 'variants': ['Y', 'N'], 'name': 'D179Y/N'},
+        {'pos': 240, 'ref': 'V', 'variants': ['G'], 'name': 'V240G'},
+        {'pos': 243, 'ref': 'T', 'variants': ['M'], 'name': 'T243M'}
+    ],
+    'blaOXA-48': [
+        {'pos': 68, 'ref': 'P', 'variants': ['A'], 'name': 'P68A'},
+        {'pos': 211, 'ref': 'Y', 'variants': ['S'], 'name': 'Y211S'}
+    ],
+    # Fallback for chromosomal if not found in AMRfinderPlus
+    # (But we prefer AMRfinderPlus if available)
 }
 
 
 class DatabaseBuilder:
-    def __init__(self, email, output_file):
+    def __init__(self, email, output_prefix):
         self.email = email
-        self.output_file = output_file
+        self.output_fasta = f"{output_prefix}.fasta"
+        self.output_mutations = f"{output_prefix}_mutations.tsv"
         Entrez.email = email
         self.sequences = []
-    
-    def fetch_sequence(self, accession, gene_name):
+        self.mutations = [] # List of dicts
+        self.download_dir = Path("amrfinder_data")
+        self.download_dir.mkdir(exist_ok=True)
+        
+        self.catalog_file = self.download_dir / "ReferenceGeneCatalog.txt"
+        self.sequences_file = self.download_dir / "AMR_CDS.fa"
+        self.mutations_file = self.download_dir / "AMRProt-mutation.tsv"
+
+    def download_files(self):
+        """Download AMRfinderPlus files if not present"""
+        print("Checking AMRfinderPlus data files...")
+        for name, url in AMRFINDER_URLS.items():
+            filepath = self.download_dir / Path(url).name
+            if not filepath.exists():
+                print(f"Downloading {name} from {url}...")
+                urllib.request.urlretrieve(url, filepath)
+            else:
+                print(f"Using existing {name}: {filepath}")
+
+    def load_catalog(self):
+        """Parse ReferenceGeneCatalog.txt"""
+        print("Parsing ReferenceGeneCatalog...")
+        self.catalog_data = []
+        with open(self.catalog_file, 'r') as f:
+            reader = csv.DictReader(f, delimiter='\t')
+            for row in reader:
+                self.catalog_data.append(row)
+
+    def load_mutation_defs(self):
+        """Parse AMRProt-mutation.tsv"""
+        print("Parsing mutation definitions...")
+        self.mutation_defs = []
+        with open(self.mutations_file, 'r') as f:
+            reader = csv.DictReader(f, delimiter='\t')
+            for row in reader:
+                self.mutation_defs.append(row)
+
+    def fetch_chromosomal_genes(self):
+        """Fetch chromosomal reference sequences based on catalog"""
+        print("Processing chromosomal genes...")
+        
+        for gene, info in CHROMOSOMAL_GENES.items():
+            print(f"Looking up {gene} ({info['taxgroup']})...")
+            
+            # Find in catalog
+            # We look for entries with matching gene symbol and taxgroup
+            # Ideally type=AMR, subtype=POINT
+            candidates = [
+                row for row in self.catalog_data
+                if row['gene_family'] == gene 
+                and info['taxgroup'] in row['whitelisted_taxa']
+                and row['type'] == 'AMR' 
+                and row['subtype'] == 'POINT'
+            ]
+            
+            if not candidates:
+                # Try relaxed search (gene symbol in product name or allele?)
+                # Some genes might be listed under specific alleles e.g. murA_C115D
+                candidates = [
+                    row for row in self.catalog_data
+                    if gene in row['allele']
+                    and info['taxgroup'] in row['whitelisted_taxa']
+                    and row['type'] == 'AMR' 
+                    and row['subtype'] == 'POINT'
+                ]
+
+            if candidates:
+                # Pick the first one as reference source
+                # Usually all mutations for a gene in a taxgroup point to the same reference accession
+                ref_entry = candidates[0]
+                
+                # Try RefSeq first, then GenBank
+                if ref_entry['refseq_nucleotide_accession']:
+                    accession = ref_entry['refseq_nucleotide_accession']
+                    start = int(ref_entry['refseq_start'])
+                    stop = int(ref_entry['refseq_stop'])
+                    strand = ref_entry['refseq_strand'] # + or -
+                elif ref_entry['genbank_nucleotide_accession']:
+                    print(f"  WARNING: RefSeq missing for {gene}, using GenBank")
+                    accession = ref_entry['genbank_nucleotide_accession']
+                    start = int(ref_entry['genbank_start'])
+                    stop = int(ref_entry['genbank_stop'])
+                    strand = ref_entry['genbank_strand']
+                else:
+                    print(f"  ERROR: No accession found for {gene}")
+                    continue
+                
+                print(f"  Found reference: {accession} ({start}-{stop}, {strand})")
+                
+                # Fetch sequence
+                record = self.fetch_sequence_from_ncbi(accession, start, stop, strand, gene)
+                if record:
+                    self.sequences.append(record)
+                    
+                    # Add mutations from catalog/mutation file
+                    self.extract_mutations_for_gene(gene, info['taxgroup'])
+            else:
+                print(f"  WARNING: {gene} not found in AMRfinderPlus catalog for {info['taxgroup']}")
+                # Here we could fall back to hardcoded if we wanted, but user said 'use them'
+                # and implied sticking to AMRfinderPlus.
+
+    def fetch_sequence_from_ncbi(self, accession, start, stop, strand, gene_name):
         """Fetch sequence from NCBI"""
-        print(f"Fetching {gene_name} ({accession})...", end=' ')
-
         try:
-            # Handle region-based accessions (e.g., NC_000913.3:c3680773-3679418)
-            if ':' in accession:
-                return self.fetch_region_sequence(accession, gene_name)
-
-            # Fetch nucleotide sequence
-            handle = Entrez.efetch(db="nucleotide", id=accession,
-                                  rettype="fasta", retmode="text")
-            record = SeqIO.read(handle, "fasta")
-            handle.close()
-
-            # Rename the record
-            record.id = gene_name
-            record.description = f"{gene_name} reference sequence (NCBI:{accession})"
-
-            print("SUCCESS")
-            time.sleep(0.4)  # Be nice to NCBI
-            return record
-
-        except Exception as e:
-            print(f"FAILED ({e})")
-            return None
-
-    def fetch_region_sequence(self, accession, gene_name):
-        """Fetch a specific region from a genome sequence"""
-        try:
-            # Parse accession format: NC_000913.3:c3680773-3679418 or NC_000913.3:3678743-3680377
-            parts = accession.split(':')
-            acc = parts[0]
-            region = parts[1]
-
-            # Check if complement (reverse strand)
-            is_complement = region.startswith('c')
-            if is_complement:
-                region = region[1:]  # Remove 'c' prefix
-
-            # Parse coordinates
-            coords = region.split('-')
-            coord1 = int(coords[0])
-            coord2 = int(coords[1])
-
-            # For complement regions, coordinates might be reversed
-            start = min(coord1, coord2)
-            end = max(coord1, coord2)
-
-            # Fetch the region using seq_start and seq_stop
+            # Entrez uses 1-based coordinates
             handle = Entrez.efetch(
                 db="nucleotide",
-                id=acc,
+                id=accession,
                 rettype="fasta",
                 retmode="text",
                 seq_start=start,
-                seq_stop=end
+                seq_stop=stop
             )
             record = SeqIO.read(handle, "fasta")
             handle.close()
 
             # Reverse complement if needed
-            if is_complement:
+            if strand == '-':
                 record.seq = record.seq.reverse_complement()
-
-            # Rename the record
+            
             record.id = gene_name
-            record.description = f"{gene_name} reference sequence (NCBI:{accession})"
+            record.description = f"{gene_name} reference sequence (AMRfinderPlus:{accession}:{start}-{stop})"
+            
+            # Check for valid start codon (simple check)
+            if not record.seq.startswith("ATG") and not record.seq.startswith("GTG") and not record.seq.startswith("TTG"):
+                 print(f"  WARNING: Sequence for {gene_name} does not start with ATG/GTG/TTG: {record.seq[:10]}...")
 
-            print("SUCCESS")
-            time.sleep(0.4)  # Be nice to NCBI
             return record
-
         except Exception as e:
-            print(f"FAILED ({e})")
+            print(f"  FAILED to fetch {gene_name}: {e}")
             return None
-    
-    def add_manual_sequence(self, gene_name, sequence_dict):
-        """Add manually curated sequence"""
-        print(f"Adding manual sequence for {gene_name}...", end=' ')
-        
-        if 'nucleotide' in sequence_dict:
-            seq = Seq(sequence_dict['nucleotide'].replace(' ', ''))
-        elif 'protein' in sequence_dict:
-            # Back-translate (not ideal, but works for detection)
-            # Use degenerate codons
-            print("WARNING: Using protein sequence, consider adding nucleotide")
-            seq = Seq(sequence_dict['protein'])
-            # For now, skip protein-only sequences
-            print("SKIPPED (protein only)")
-            return None
-        else:
-            print("FAILED (no sequence data)")
-            return None
-        
-        record = SeqRecord(
-            seq,
-            id=gene_name,
-            description=f"{gene_name} reference sequence (manual curation)"
-        )
-        
-        print("SUCCESS")
-        return record
-    
-    def build_database(self):
-        """Build complete resistance gene database"""
-        print("=" * 70)
-        print("Building FOS-CAZAVI Resistance Gene Database")
-        print("=" * 70)
-        print()
-        
-        # Fetch from NCBI
-        print("Fetching sequences from NCBI:")
-        print("-" * 70)
-        for gene, accession in NCBI_ACCESSIONS.items():
-            record = self.fetch_sequence(accession, gene)
-            if record:
-                self.sequences.append(record)
-        
-        print()
-        print("Adding manual reference sequences:")
-        print("-" * 70)
-        for gene, seq_dict in REFERENCE_SEQUENCES.items():
-            if not any(s.id == gene for s in self.sequences):
-                record = self.add_manual_sequence(gene, seq_dict)
-                if record:
-                    self.sequences.append(record)
-        
-        # Write database
-        print()
-        print(f"Writing {len(self.sequences)} sequences to {self.output_file}...")
-        SeqIO.write(self.sequences, self.output_file, "fasta")
-        
-        print()
-        print("=" * 70)
-        print("Database creation complete!")
-        print(f"Database file: {self.output_file}")
-        print(f"Total sequences: {len(self.sequences)}")
-        print("=" * 70)
-        print()
-        print("Next steps:")
-        print(f"  1. Review {self.output_file}")
-        print("  2. Add any missing sequences manually")
-        print("  3. Run: resistance_detector.py -a assembly.fasta -d {self.output_file} -o output")
 
+    def extract_mutations_for_gene(self, gene_name, taxgroup):
+        """Extract mutations from parsed mutation file"""
+        # Find all mutations for this gene in the mutation file
+        # The mutation file uses 'accession_version' (protein) to link.
+        # We need to map gene_name -> protein_accession(s) first.
+        
+        # Get protein accessions from catalog
+        prot_accessions = set()
+        for row in self.catalog_data:
+            if gene_name in row['allele'] and taxgroup in row['whitelisted_taxa']:
+                 if row['refseq_protein_accession']:
+                     prot_accessions.add(row['refseq_protein_accession'])
+
+        count = 0
+        for row in self.mutation_defs:
+            if row['accession_version'] in prot_accessions:
+                # Parse mutation: e.g. murA_L370I -> pos=370, ref=L, var=I
+                # 'mutation_position': '370'
+                # 'standard_mutation_symbol': 'murA_L370I'
+                # 'mutated_protein_name': ...
+                
+                pos = row['mutation_position']
+                symbol = row['standard_mutation_symbol']
+                # Parse symbol usually: Gene_RefPosVar
+                # But sometimes complex.
+                # Let's trust the position column.
+                # But we need ref and var.
+                # Try to parse symbol: murA_L370I
+                try:
+                    mutation_part = symbol.split('_')[-1] # L370I
+                    ref = mutation_part[0]
+                    var = mutation_part[-1]
+                    # verify position matches
+                    num = ''.join(filter(str.isdigit, mutation_part))
+                    if num != pos:
+                        # Sometimes symbol is different format?
+                        pass
+                    
+                    self.mutations.append({
+                        'Gene': gene_name,
+                        'Position': pos,
+                        'Ref': ref,
+                        'Variant': var,
+                        'Name': symbol
+                    })
+                    count += 1
+                except:
+                    print(f"  Skipping parse of symbol {symbol}")
+        
+        print(f"  Added {count} mutation definitions for {gene_name}")
+
+    def fetch_acquired_genes(self):
+        """Fetch acquired genes from AMR_CDS.fa"""
+        print("Processing acquired genes...")
+        
+        # Build index of AMR_CDS.fa
+        # Format: >ProtAcc|NucAcc|...|GeneSymbol|...
+        
+        found_genes = set()
+        
+        with open(self.sequences_file, 'r') as f:
+            for record in SeqIO.parse(f, "fasta"):
+                header_parts = record.description.split('|')
+                if len(header_parts) > 4:
+                    gene_symbol = header_parts[4]
+                    
+                    # Check if this gene is in our list
+                    if gene_symbol in ACQUIRED_GENES:
+                        # Avoid duplicates
+                        if gene_symbol not in found_genes:
+                            record.id = gene_symbol
+                            record.description = f"{gene_symbol} reference sequence (AMRfinderPlus)"
+                            self.sequences.append(record)
+                            found_genes.add(gene_symbol)
+                            print(f"  Found {gene_symbol}")
+        
+        # Check missing
+        for gene in ACQUIRED_GENES:
+            if gene not in found_genes:
+                print(f"  WARNING: Acquired gene {gene} not found in AMR_CDS.fa")
+
+    def add_manual_mutations(self):
+        """Add manual/hardcoded mutations for genes not covered by AMRfinderPlus point mutations"""
+        print("Adding manual mutation definitions...")
+        for gene, mutations in MANUAL_MUTATIONS.items():
+            for m in mutations:
+                self.mutations.append({
+                    'Gene': gene,
+                    'Position': m['pos'],
+                    'Ref': m['ref'],
+                    'Variant': '/'.join(m['variants']), # Support multiple variants in string?
+                    'Name': m['name']
+                })
+                # Note: resistance_detector.py needs to parse 'Variant' carefully if it contains '/'
+                # Currently it expects single char check usually, but the new logic will iterate variants.
+
+    def build(self):
+        self.download_files()
+        self.load_catalog()
+        self.load_mutation_defs()
+        
+        self.fetch_chromosomal_genes()
+        self.fetch_acquired_genes()
+        self.add_manual_mutations()
+        
+        # Write outputs
+        print(f"Writing sequences to {self.output_fasta}...")
+        SeqIO.write(self.sequences, self.output_fasta, "fasta")
+        
+        print(f"Writing mutations to {self.output_mutations}...")
+        with open(self.output_mutations, 'w') as f:
+            writer = csv.DictWriter(f, fieldnames=['Gene', 'Position', 'Ref', 'Variant', 'Name'], delimiter='\t')
+            writer.writeheader()
+            writer.writerows(self.mutations)
+            
+        print("Done!")
 
 def main():
-    parser = argparse.ArgumentParser(
-        description='Create reference database for FOS-CAZAVI resistance detection',
-        formatter_class=argparse.RawDescriptionHelpFormatter
-    )
-    
-    parser.add_argument('-e', '--email', required=True,
-                       help='Email for NCBI Entrez (required by NCBI)')
-    parser.add_argument('-o', '--output', default='resistance_genes.fasta',
-                       help='Output database file (default: resistance_genes.fasta)')
-    
+    parser = argparse.ArgumentParser(description='Create reference database using AMRfinderPlus data')
+    parser.add_argument('-e', '--email', required=True, help='Email for NCBI Entrez')
+    parser.add_argument('-o', '--output', default='resistance_db', help='Output prefix')
     args = parser.parse_args()
     
     builder = DatabaseBuilder(args.email, args.output)
-    builder.build_database()
-
+    builder.build()
 
 if __name__ == '__main__':
     main()

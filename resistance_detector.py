@@ -12,6 +12,7 @@ import argparse
 import subprocess
 import sys
 import os
+import csv
 from pathlib import Path
 from Bio import SeqIO
 from Bio.Seq import Seq
@@ -23,119 +24,170 @@ import tempfile
 class ResistanceDetector:
     """Main class for detecting resistance genes and mutations"""
     
-    # Known resistance mutations
-    # Based on literature: fosfomycin resistance mutations and carbapenem resistance mutations
-    # Reference: PMIDs 33193186, 28928846, 35154919, 28031275, 26100712, 30700621, 40546282
+    # Default known resistance mutations (fallback)
     KNOWN_MUTATIONS = {
-        # Carbapenem resistance - KPC mutations (ceftazidime-avibactam resistance)
-        # D179Y is the most common Ω-loop mutation; V240G is 240-loop mutation
-        'blaKPC': {
-            179: {'ref': 'D', 'variants': ['Y', 'N'], 'name': 'D179Y/N'},
-            240: {'ref': 'V', 'variants': ['G'], 'name': 'V240G'},
-            243: {'ref': 'T', 'variants': ['M'], 'name': 'T243M'}
-        },
-        # OXA-48 mutations (ceftazidime-avibactam resistance)
-        'blaOXA-48': {
-            68: {'ref': 'P', 'variants': ['A'], 'name': 'P68A'},
-            211: {'ref': 'Y', 'variants': ['S'], 'name': 'Y211S'}
-        },
-        # Fosfomycin target enzyme - MurA mutations (D369N, L370I confer resistance)
-        'murA': {
-            369: {'ref': 'D', 'variants': ['N'], 'name': 'D369N'},
-            370: {'ref': 'L', 'variants': ['I'], 'name': 'L370I'}
-        },
-        # Fosfomycin transporter - UhpT mutations (loss of function confers resistance)
-        'uhpT': {
-            # Key positions where mutations affect transporter function
-            55: {'ref': 'G', 'variants': ['D', '*'], 'name': 'G55D/*'},
-            198: {'ref': 'W', 'variants': ['*', 'R'], 'name': 'W198*/R'},
-            258: {'ref': 'E', 'variants': ['*', 'K'], 'name': 'E258*/K'},
-            350: {'ref': 'W', 'variants': ['*', 'R'], 'name': 'W350*/R'}
-        },
-        # Fosfomycin transporter - GlpT mutations (loss of function confers resistance)
-        'glpT': {
-            # Key positions where mutations affect transporter function
-            44: {'ref': 'E', 'variants': ['*', 'K'], 'name': 'E44*/K'},
-            88: {'ref': 'W', 'variants': ['*', 'R', 'G'], 'name': 'W88*/R/G'},
-            90: {'ref': 'G', 'variants': ['D', '*'], 'name': 'G90D/*'},
-            234: {'ref': 'W', 'variants': ['*', 'R'], 'name': 'W234*/R'},
-            362: {'ref': 'R', 'variants': ['C', 'H', '*'], 'name': 'R362C/H/*'}
-        },
-        # UhpA mutations (transcriptional activator)
-        'uhpA': {
-            54: {'ref': 'D', 'variants': ['N', 'A'], 'name': 'D54N/A'},
-            139: {'ref': 'R', 'variants': ['C', 'H'], 'name': 'R139C/H'}
-        },
-        # UhpB mutations (sensor kinase) - G469R causes 128-fold increase in FOS MICs
-        'uhpB': {
-            469: {'ref': 'G', 'variants': ['R'], 'name': 'G469R'},
-            350: {'ref': 'H', 'variants': ['Y', 'Q'], 'name': 'H350Y/Q'}
-        },
-        # UhpC mutations (membrane sensor) - F384L causes 128-fold increase in FOS MICs
-        'uhpC': {
-            384: {'ref': 'F', 'variants': ['L'], 'name': 'F384L'}
-        },
-        # CyaA mutations (adenylate cyclase - affects uhpT expression)
-        'cyaA': {
-            463: {'ref': 'G', 'variants': ['D', '*'], 'name': 'G463D/*'}
-        },
-        # PtsI mutations (phosphoenolpyruvate:sugar phosphotransferase)
-        'ptsI': {
-            191: {'ref': 'H', 'variants': ['Y', 'Q'], 'name': 'H191Y/Q'}
-        },
-        # Secondary FOS resistance mutations (2-fold MIC increase)
-        'galU': {
-            282: {'ref': 'R', 'variants': ['V'], 'name': 'R282V'}
-        },
-        'lon': {
-            558: {'ref': 'Q', 'variants': ['*'], 'name': 'Q558*'}
-        },
-        # FosA variants mutations - fosAKP I91V causes 8-fold MIC increase
-        'fosAKP': {
-            91: {'ref': 'I', 'variants': ['V'], 'name': 'I91V'}
-        },
-        'fosA': {
-            90: {'ref': 'K', 'variants': ['E', 'Q'], 'name': 'K90E/Q'},
-            119: {'ref': 'H', 'variants': ['Q', 'R'], 'name': 'H119Q/R'}
-        },
-        # CAZAVI resistance - AcrB efflux pump mutations
-        'acrB': {
-            # Common positions for efflux pump mutations affecting drug efflux
-            617: {'ref': 'G', 'variants': ['D', 'N'], 'name': 'G617D/N'},
-            626: {'ref': 'F', 'variants': ['L'], 'name': 'F626L'},
-            628: {'ref': 'A', 'variants': ['T', 'V'], 'name': 'A628T/V'}
-        },
-        # CAZAVI resistance - OmpK36 porin mutations (reduce drug permeability)
-        'ompK36': {
-            # Insertions at loop 3 and loop 7 constriction sites
-            134: {'ref': 'G', 'variants': ['D', '*'], 'name': 'G134D/*'},
-            135: {'ref': 'D', 'variants': ['*', 'N'], 'name': 'D135*/N'},
-            213: {'ref': 'G', 'variants': ['D', '*'], 'name': 'G213D/*'}
-        },
-        # CAZAVI resistance - ftsI (PBP3) mutations affecting ceftazidime target
-        'ftsI': {
-            # Penicillin-binding protein 3 mutations
-            333: {'ref': 'A', 'variants': ['V', 'T'], 'name': 'A333V/T'},
-            350: {'ref': 'Y', 'variants': ['C', 'S'], 'name': 'Y350C/S'},
-            357: {'ref': 'S', 'variants': ['N'], 'name': 'S357N'}
-        },
-        # CAZAVI resistance - EnvZ two-component system sensor mutations
-        'envZ': {
-            # Sensor histidine kinase affecting porin expression
-            244: {'ref': 'G', 'variants': ['S', 'D'], 'name': 'G244S/D'},
-            324: {'ref': 'T', 'variants': ['I', 'A'], 'name': 'T324I/A'}
-        }
+        # ... (Same as before, kept as fallback/initialization)
+        # But for brevity in this update, I will keep them but allow overwrite.
     }
     
-    def __init__(self, assembly, database, output_prefix, min_identity=90, min_coverage=80):
+    def __init__(self, assembly, database, output_prefix, min_identity=90, min_coverage=80, mutation_db=None):
         self.assembly = assembly
         self.database = database
         self.output_prefix = output_prefix
         self.min_identity = min_identity
         self.min_coverage = min_coverage
+        self.mutation_db = mutation_db
         self.results = []
         self.detected_genes = []
         
+        # Initialize default mutations (fallback)
+        self.init_default_mutations()
+        
+        # Load external mutations if provided
+        if self.mutation_db:
+            self.load_mutation_db(self.mutation_db)
+        else:
+            # Try to auto-discover
+            default_mut_file = Path(str(self.database).replace('.fasta', '') + '_mutations.tsv')
+            if default_mut_file.exists():
+                print(f"Auto-detected mutation file: {default_mut_file}")
+                self.load_mutation_db(default_mut_file)
+    
+    def init_default_mutations(self):
+        """Initialize hardcoded mutations as fallback"""
+        self.KNOWN_MUTATIONS = {
+            'blaKPC': {
+                179: {'ref': 'D', 'variants': ['Y', 'N'], 'name': 'D179Y/N'},
+                240: {'ref': 'V', 'variants': ['G'], 'name': 'V240G'},
+                243: {'ref': 'T', 'variants': ['M'], 'name': 'T243M'}
+            },
+            'blaOXA-48': {
+                68: {'ref': 'P', 'variants': ['A'], 'name': 'P68A'},
+                211: {'ref': 'Y', 'variants': ['S'], 'name': 'Y211S'}
+            },
+            'murA': {
+                369: {'ref': 'D', 'variants': ['N'], 'name': 'D369N'},
+                370: {'ref': 'L', 'variants': ['I'], 'name': 'L370I'}
+            },
+            'uhpT': {
+                55: {'ref': 'G', 'variants': ['D', '*'], 'name': 'G55D/*'},
+                198: {'ref': 'W', 'variants': ['*', 'R'], 'name': 'W198*/R'},
+                258: {'ref': 'E', 'variants': ['*', 'K'], 'name': 'E258*/K'},
+                350: {'ref': 'W', 'variants': ['*', 'R'], 'name': 'W350*/R'}
+            },
+            'glpT': {
+                44: {'ref': 'E', 'variants': ['*', 'K'], 'name': 'E44*/K'},
+                88: {'ref': 'W', 'variants': ['*', 'R', 'G'], 'name': 'W88*/R/G'},
+                90: {'ref': 'G', 'variants': ['D', '*'], 'name': 'G90D/*'},
+                234: {'ref': 'W', 'variants': ['*', 'R'], 'name': 'W234*/R'},
+                362: {'ref': 'R', 'variants': ['C', 'H', '*'], 'name': 'R362C/H/*'}
+            },
+            'uhpA': {
+                54: {'ref': 'D', 'variants': ['N', 'A'], 'name': 'D54N/A'},
+                139: {'ref': 'R', 'variants': ['C', 'H'], 'name': 'R139C/H'}
+            },
+            'uhpB': {
+                469: {'ref': 'G', 'variants': ['R'], 'name': 'G469R'},
+                350: {'ref': 'H', 'variants': ['Y', 'Q'], 'name': 'H350Y/Q'}
+            },
+            'uhpC': {
+                384: {'ref': 'F', 'variants': ['L'], 'name': 'F384L'}
+            },
+            'cyaA': {
+                463: {'ref': 'G', 'variants': ['D', '*'], 'name': 'G463D/*'}
+            },
+            'ptsI': {
+                191: {'ref': 'H', 'variants': ['Y', 'Q'], 'name': 'H191Y/Q'}
+            },
+            'galU': {
+                282: {'ref': 'R', 'variants': ['V'], 'name': 'R282V'}
+            },
+            'lon': {
+                558: {'ref': 'Q', 'variants': ['*'], 'name': 'Q558*'}
+            },
+            'fosAKP': {
+                91: {'ref': 'I', 'variants': ['V'], 'name': 'I91V'}
+            },
+            'fosA': {
+                90: {'ref': 'K', 'variants': ['E', 'Q'], 'name': 'K90E/Q'},
+                119: {'ref': 'H', 'variants': ['Q', 'R'], 'name': 'H119Q/R'}
+            },
+            'acrB': {
+                617: {'ref': 'G', 'variants': ['D', 'N'], 'name': 'G617D/N'},
+                626: {'ref': 'F', 'variants': ['L'], 'name': 'F626L'},
+                628: {'ref': 'A', 'variants': ['T', 'V'], 'name': 'A628T/V'}
+            },
+            'ompK36': {
+                134: {'ref': 'G', 'variants': ['D', '*'], 'name': 'G134D/*'},
+                135: {'ref': 'D', 'variants': ['*', 'N'], 'name': 'D135*/N'},
+                213: {'ref': 'G', 'variants': ['D', '*'], 'name': 'G213D/*'}
+            },
+            'ftsI': {
+                333: {'ref': 'A', 'variants': ['V', 'T'], 'name': 'A333V/T'},
+                350: {'ref': 'Y', 'variants': ['C', 'S'], 'name': 'Y350C/S'},
+                357: {'ref': 'S', 'variants': ['N'], 'name': 'S357N'}
+            },
+            'envZ': {
+                244: {'ref': 'G', 'variants': ['S', 'D'], 'name': 'G244S/D'},
+                324: {'ref': 'T', 'variants': ['I', 'A'], 'name': 'T324I/A'}
+            }
+        }
+
+    def load_mutation_db(self, mutation_file):
+        """Load mutations from TSV file, replacing defaults"""
+        if not mutation_file or not Path(mutation_file).exists():
+            return
+            
+        print(f"Loading mutations from {mutation_file}...")
+        
+        # Clear defaults to avoid mixing incompatible coordinate systems
+        self.KNOWN_MUTATIONS = defaultdict(dict)
+        
+        try:
+            with open(mutation_file, 'r') as f:
+                reader = csv.DictReader(f, delimiter='\t')
+                for row in reader:
+                    gene = row['Gene']
+                    # Handle base gene name logic
+                    # The file should contain base names, but let's be safe
+                    
+                    pos = int(row['Position'])
+                    ref = row['Ref']
+                    var = row['Variant']
+                    
+                    # Handle variants (could be 'Y/N' or just 'Y')
+                    vars_list = var.split('/')
+                    
+                    if gene not in self.KNOWN_MUTATIONS:
+                        self.KNOWN_MUTATIONS[gene] = {}
+                    
+                    if pos not in self.KNOWN_MUTATIONS[gene]:
+                        self.KNOWN_MUTATIONS[gene][pos] = {
+                            'ref': ref,
+                            'variants': set()
+                        }
+                    
+                    # Warn on conflict but proceed
+                    if self.KNOWN_MUTATIONS[gene][pos]['ref'] != ref:
+                        # This might happen if multiple entries define same pos with different ref? 
+                        # Unlikely in valid DB, but possible if mixing sources.
+                        pass
+                    
+                    self.KNOWN_MUTATIONS[gene][pos]['variants'].update(vars_list)
+            
+            # Post-process to format names
+            for gene in self.KNOWN_MUTATIONS:
+                for pos in self.KNOWN_MUTATIONS[gene]:
+                    entry = self.KNOWN_MUTATIONS[gene][pos]
+                    variants_str = '/'.join(sorted(entry['variants']))
+                    entry['name'] = f"{entry['ref']}{pos}{variants_str}"
+                    entry['variants'] = list(entry['variants'])
+                    
+            print(f"Loaded mutation definitions for {len(self.KNOWN_MUTATIONS)} genes")
+            
+        except Exception as e:
+            print(f"ERROR loading mutation file: {e}", file=sys.stderr)
+
     def check_dependencies(self):
         """Check if required tools are installed"""
         required = ['blastn', 'makeblastdb']
@@ -243,8 +295,31 @@ class ResistanceDetector:
     def extract_gene_name(self, subject_id):
         """Extract gene name from BLAST subject ID"""
         # Handle various formats: >fosA3_reference, >gb|XXX|fosA3, etc.
-        gene = subject_id.split('|')[-1].split('_')[0]
-        return gene
+        # Updated to handle formats like >fosA3 ... or >WP_...|...|fosA3|...
+        # If headers are from our new create script, they might look like:
+        # >murA reference sequence (AMRfinderPlus:...)
+        # or >fosA3 reference sequence (AMRfinderPlus)
+        
+        # Strategy: 
+        # 1. Try splitting by pipe if present
+        if '|' in subject_id:
+            parts = subject_id.split('|')
+            # Look for gene name in parts?
+            # AMR_CDS.fa format: >Prot|Nuc|1|1|Gene|...
+            if len(parts) > 4:
+                return parts[4]
+        
+        # 2. Try splitting by space (SeqIO often keeps just ID part)
+        # 3. Try splitting by underscore if standard format
+        
+        # If ID is just "murA"
+        if '_' not in subject_id and '|' not in subject_id:
+            return subject_id
+            
+        # Fallback to taking first part before _ or space
+        # But some genes have underscores e.g. fosA_3? No usually fosA3.
+        # But subject_id might be "fosA3_reference".
+        return subject_id.split('|')[-1].split('_')[0]
     
     def extract_hit_sequence(self, hit):
         """Extract the sequence of a BLAST hit from the assembly"""
@@ -275,7 +350,12 @@ class ResistanceDetector:
         if base_gene.startswith('bla'):
             base_gene = 'bla' + base_gene[3:].rstrip('0123456789')
         
-        if base_gene not in self.KNOWN_MUTATIONS:
+        # Try exact match first
+        if gene_name in self.KNOWN_MUTATIONS:
+            mutation_dict = self.KNOWN_MUTATIONS[gene_name]
+        elif base_gene in self.KNOWN_MUTATIONS:
+            mutation_dict = self.KNOWN_MUTATIONS[base_gene]
+        else:
             return mutations_found
         
         # Translate to protein
@@ -287,7 +367,7 @@ class ResistanceDetector:
             protein = str(Seq(sequence).translate())
             
             # Check each known mutation position
-            for pos, mut_info in self.KNOWN_MUTATIONS[base_gene].items():
+            for pos, mut_info in mutation_dict.items():
                 if pos <= len(protein):
                     observed_aa = protein[pos-1]
                     ref_aa = mut_info['ref']
@@ -465,6 +545,7 @@ def main():
 Examples:
   %(prog)s -a assembly.fasta -d resistance_db.fasta -o sample1
   %(prog)s -a assembly.fasta -d resistance_db.fasta -o sample1 --min_id 95 --min_cov 90
+  %(prog)s -a assembly.fasta -d resistance_db.fasta -o sample1 --mutations resistance_db_mutations.tsv
 
 Output files:
   <prefix>_results.tsv     - Tab-delimited results
@@ -482,6 +563,8 @@ Author: Motroy
                        help='Resistance gene database (FASTA format)')
     parser.add_argument('-o', '--output', required=True,
                        help='Output prefix for result files')
+    parser.add_argument('--mutations',
+                       help='Mutation definitions file (TSV)')
     parser.add_argument('--min_id', type=float, default=90.0,
                        help='Minimum percent identity (default: 90)')
     parser.add_argument('--min_cov', type=float, default=80.0,
@@ -508,7 +591,8 @@ Author: Motroy
         args.database, 
         args.output,
         args.min_id,
-        args.min_cov
+        args.min_cov,
+        args.mutations
     )
     detector.run()
 
