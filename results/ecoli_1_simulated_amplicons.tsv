@@ -1,0 +1,7 @@
+Pair_ID	Contig	Start	End	Length	Mutations_Found	Method
+RT_rrsA	CP025573.1	226641	4932982	4706341	cyaA: S352T;lon: (wildtype);ptsI: (wildtype);uhpT: E350T;murA: C115H,L370I,D396S	Seqkit/Amplicon
+uhpB_ver	CP025573.1	4521728	4523331	1603	-	Seqkit/Amplicon
+uhpC_ver	CP025573.1	4520376	4521825	1449	-	Seqkit/Amplicon
+lon_ver1	CP025573.1	1110181	1111220	1039	-	Seqkit/Amplicon
+lon_ver2	CP025573.1	1109341	1110563	1222	-	Seqkit/Amplicon
+RT_rrsA	CP025573.1	3242787	4072059	829272	murA: C115H,L370I,D396S	Seqkit/Amplicon

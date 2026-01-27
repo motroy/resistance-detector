@@ -1,0 +1,57 @@
+======================================================================
+FOS-CAZAVI Resistance Detection Summary
+======================================================================
+
+Assembly: simulated_genomes/ecoli_2_simulated.fasta
+Total genes detected: 7
+Method: BLAST+
+
+CEFTAZIDIME-AVIBACTAM RESISTANCE (KPC):
+--------------------------------------------------
+  blaKPC-3: 99.66% identity, 100.00% coverage
+    Mutations: D179N/Y,V240Y,T243A
+  blaKPC-2: 99.55% identity, 100.00% coverage
+    Mutations: D179N/Y,V240Y,T243A
+
+OTHER RESISTANCE GENES:
+--------------------------------------------------
+  cyaA: 99.57% identity, 100.00% coverage
+    Mutations: S352V
+  lon: 99.53% identity, 100.00% coverage
+    Mutations: P403A
+  ptsI: 99.71% identity, 100.00% coverage
+    Mutations: V25S
+  uhpT: 99.42% identity, 100.00% coverage
+  murA: 98.81% identity, 100.00% coverage
+
+
+DETECTED AMPLICONS:
+Method: Seqkit/Amplicon
+--------------------------------------------------
+  Pair: uhpB_ver
+    Location: CP029242.1:33679-35282 (1603 bp)
+    Primers: uhpB_F -> uhpB_R
+    No resistance genes/mutations detected in amplicon
+  Pair: uhpC_ver
+    Location: CP029242.1:35185-36634 (1449 bp)
+    Primers: uhpC_F -> uhpC_R
+    No resistance genes/mutations detected in amplicon
+  Pair: lon_ver2
+    Location: CP029242.1:2998007-2999229 (1222 bp)
+    Primers: lon2_F -> lon2_R
+    No resistance genes/mutations detected in amplicon
+  Pair: RT_uhpT
+    Location: CP029242.1:36876-37042 (166 bp)
+    Primers: RT-qPCR_uhpT_F -> RT-qPCR_uhpT_R
+    Mutations/Genes in amplicon:
+      - uhpT: (wildtype)
+  Pair: RT_rrsA
+    Location: CP029242.1:510192-1244783 (734591 bp)
+    Primers: RT-qPCR_rrsA_F -> RT-qPCR_rrsA_R
+    Mutations/Genes in amplicon:
+      - murA: (wildtype)
+  Pair: RT_rrsA
+    Location: CP029242.1:3855008-4829704 (974696 bp)
+    Primers: RT-qPCR_rrsA_F -> RT-qPCR_rrsA_R
+    Mutations/Genes in amplicon:
+      - cyaA: S352V

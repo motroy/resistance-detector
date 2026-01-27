@@ -29,8 +29,6 @@ resistance_db_mutations.tsv
 # Simulation artifacts
 downloaded_genomes/
 simulated_genomes/
-results/
-simulation.log
 
 # Pixi
 .pixi/

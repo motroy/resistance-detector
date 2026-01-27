@@ -1,0 +1,5 @@
+Contig	Gene	Identity%	Coverage%	Mutations	Method
+NZ_CP149487.1	ftsI	99.43	100.00	V355T,L367R	BLAST
+NZ_CP149487.1	envZ	99.85	100.00	-	BLAST
+simulated_blaOXA-48	blaOXA-48	100.00	100.00	-	BLAST
+simulated_lon_mut_Q558*	lon	99.92	100.00	-	BLAST
