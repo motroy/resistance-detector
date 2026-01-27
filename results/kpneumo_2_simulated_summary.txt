@@ -1,0 +1,20 @@
+======================================================================
+FOS-CAZAVI Resistance Detection Summary
+======================================================================
+
+Assembly: simulated_genomes/kpneumo_2_simulated.fasta
+Total genes detected: 4
+Method: BLAST+
+
+CEFTAZIDIME-AVIBACTAM RESISTANCE (KPC):
+--------------------------------------------------
+  blaKPC-3: 99.66% identity, 100.00% coverage
+    Mutations: D179T,V240Y,T243M
+  blaKPC-2: 99.55% identity, 100.00% coverage
+    Mutations: D179T,V240Y,T243M
+
+OTHER RESISTANCE GENES:
+--------------------------------------------------
+  ftsI: 99.43% identity, 100.00% coverage
+    Mutations: V355T,L367R
+  envZ: 99.85% identity, 100.00% coverage

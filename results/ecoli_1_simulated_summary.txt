@@ -1,0 +1,58 @@
+======================================================================
+FOS-CAZAVI Resistance Detection Summary
+======================================================================
+
+Assembly: simulated_genomes/ecoli_1_simulated.fasta
+Total genes detected: 7
+Method: BLAST+
+
+FOSFOMYCIN RESISTANCE GENES:
+--------------------------------------------------
+  fosA3: 100.00% identity, 100.00% coverage
+  fosA4: 91.37% identity, 100.00% coverage
+
+OTHER RESISTANCE GENES:
+--------------------------------------------------
+  cyaA: 96.98% identity, 100.00% coverage
+    Mutations: S352T
+  lon: 98.98% identity, 100.00% coverage
+  ptsI: 99.48% identity, 100.00% coverage
+  uhpT: 98.13% identity, 100.00% coverage
+    Mutations: E350T
+  murA: 99.05% identity, 100.00% coverage
+    Mutations: C115H,L370I,D396S
+
+
+DETECTED AMPLICONS:
+Method: Seqkit/Amplicon
+--------------------------------------------------
+  Pair: RT_rrsA
+    Location: CP025573.1:226641-4932982 (4706341 bp)
+    Primers: RT-qPCR_rrsA_F -> RT-qPCR_rrsA_R
+    Mutations/Genes in amplicon:
+      - cyaA: S352T
+      - lon: (wildtype)
+      - ptsI: (wildtype)
+      - uhpT: E350T
+      - murA: C115H,L370I,D396S
+  Pair: uhpB_ver
+    Location: CP025573.1:4521728-4523331 (1603 bp)
+    Primers: uhpB_F -> uhpB_R
+    No resistance genes/mutations detected in amplicon
+  Pair: uhpC_ver
+    Location: CP025573.1:4520376-4521825 (1449 bp)
+    Primers: uhpC_F -> uhpC_R
+    No resistance genes/mutations detected in amplicon
+  Pair: lon_ver1
+    Location: CP025573.1:1110181-1111220 (1039 bp)
+    Primers: lon1_F -> lon1_R
+    No resistance genes/mutations detected in amplicon
+  Pair: lon_ver2
+    Location: CP025573.1:1109341-1110563 (1222 bp)
+    Primers: lon2_F -> lon2_R
+    No resistance genes/mutations detected in amplicon
+  Pair: RT_rrsA
+    Location: CP025573.1:3242787-4072059 (829272 bp)
+    Primers: RT-qPCR_rrsA_F -> RT-qPCR_rrsA_R
+    Mutations/Genes in amplicon:
+      - murA: C115H,L370I,D396S

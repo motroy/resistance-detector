@@ -1,0 +1,5 @@
+Contig	Gene	Identity%	Coverage%	Mutations	Method
+CP149487.1	ftsI	99.43	100.00	V355T,L367R	BLAST
+CP149487.1	envZ	99.85	100.00	-	BLAST
+simulated_blaKPC-3_mut_T243M	blaKPC-3	99.66	100.00	D179T,V240Y,T243M	BLAST
+simulated_blaKPC-3_mut_T243M	blaKPC-2	99.55	100.00	D179T,V240Y,T243M	BLAST

@@ -1,0 +1,18 @@
+======================================================================
+FOS-CAZAVI Resistance Detection Summary
+======================================================================
+
+Assembly: simulated_genomes/kpneumo_1_simulated.fasta
+Total genes detected: 4
+Method: BLAST+
+
+CEFTAZIDIME-AVIBACTAM RESISTANCE (OXA):
+--------------------------------------------------
+  blaOXA-48: 100.00% identity, 100.00% coverage
+
+OTHER RESISTANCE GENES:
+--------------------------------------------------
+  ftsI: 99.43% identity, 100.00% coverage
+    Mutations: V355T,L367R
+  envZ: 99.85% identity, 100.00% coverage
+  lon: 99.92% identity, 100.00% coverage

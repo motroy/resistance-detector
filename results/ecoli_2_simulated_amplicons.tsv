@@ -1,0 +1,7 @@
+Pair_ID	Contig	Start	End	Length	Mutations_Found	Method
+uhpB_ver	CP029242.1	33679	35282	1603	-	Seqkit/Amplicon
+uhpC_ver	CP029242.1	35185	36634	1449	-	Seqkit/Amplicon
+lon_ver2	CP029242.1	2998007	2999229	1222	-	Seqkit/Amplicon
+RT_uhpT	CP029242.1	36876	37042	166	uhpT: (wildtype)	Seqkit/Amplicon
+RT_rrsA	CP029242.1	510192	1244783	734591	murA: (wildtype)	Seqkit/Amplicon
+RT_rrsA	CP029242.1	3855008	4829704	974696	cyaA: S352V	Seqkit/Amplicon
