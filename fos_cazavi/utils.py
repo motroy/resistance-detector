@@ -83,6 +83,26 @@ KNOWN_MUTATIONS = {
     'envZ': {
         244: {'ref': 'G', 'variants': ['S', 'D'], 'name': 'G244S/D'},
         324: {'ref': 'T', 'variants': ['I', 'A'], 'name': 'T324I/A'}
+    },
+    'ompK35': {
+        134: {'ref': 'G', 'variants': ['D', '*'], 'name': 'G134D/*'},
+        135: {'ref': 'D', 'variants': ['*', 'N'], 'name': 'D135*/N'},
+        181: {'ref': 'D', 'variants': ['G', '*'], 'name': 'D181G/*'}
+    },
+    'blaCMY': {
+        70: {'ref': 'N', 'variants': ['T'], 'name': 'N70T'}
+    },
+    'blaSHV': {
+        238: {'ref': 'G', 'variants': ['S'], 'name': 'G238S'},
+        240: {'ref': 'E', 'variants': ['K'], 'name': 'E240K'}
+    },
+    'mexR': {
+        69: {'ref': 'W', 'variants': ['G', '*'], 'name': 'W69G/*'},
+        75: {'ref': 'A', 'variants': ['V'], 'name': 'A75V'}
+    },
+    'nalD': {
+        153: {'ref': 'Q', 'variants': ['*'], 'name': 'Q153*'},
+        174: {'ref': 'L', 'variants': ['R'], 'name': 'L174R'}
     }
 }
 

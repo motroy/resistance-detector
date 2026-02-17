@@ -1,14 +1,34 @@
 #!/usr/bin/env python3
 """
 Create synthetic test genomes for resistance detection validation.
-Simulates E. coli assemblies with resistance genes and chromosomal mutations.
+Simulates E. coli / K. pneumoniae assemblies with resistance genes and mutations.
 
-Mutations tested (from primers.tsv):
-- uhpB G469R (fosfomycin resistance)
-- uhpC F384L (fosfomycin resistance)
-- galU R282V (fosfomycin resistance)
-- lon Q558* (fosfomycin resistance - stop codon)
-- blaKPC-3 D179Y, T243M (ceftazidime-avibactam resistance)
+Genes and mutations tested (from gist motroy/c10bfb64aa1f8a5a86bb2d3986c8c724):
+
+FOS (Fosfomycin) resistance:
+  Plasmidic:
+    - fosA3, fosA4, fosA5, fosA11
+  Chromosomal:
+    - fosAKP (I91V)
+    - murA (D369N, L370I)
+    - uhpB (G469R), uhpC (F384L), uhpA, uhpT, glpT
+    - lon (Q558*), cyaA, ptsI
+    - galU (R282V)
+
+CAZAVI (Ceftazidime-Avibactam) resistance:
+  Plasmidic:
+    - blaKPC-2 (D179Y)
+    - blaKPC-3 (D179Y, V240G, D179Y/T243M)
+    - blaKPC-31 (D179Y)
+    - blaKPC-190
+    - blaOXA-48 (P68A, P68A/Y211S)
+    - blaCMY-178 (N70T)
+    - blaSHV-12
+  Chromosomal:
+    - ompK36, ompK35 (porin mutations)
+    - acrB, mexR, nalD (efflux pump regulators)
+    - ftsI/PBP3
+    - envZ
 """
 import random
 import os
@@ -19,13 +39,25 @@ from Bio.SeqRecord import SeqRecord
 # Seed for reproducibility
 random.seed(42)
 
+# Standard codon per amino acid
+AA_TO_CODON = {
+    'A': 'GCT', 'C': 'TGT', 'D': 'GAT', 'E': 'GAA', 'F': 'TTT',
+    'G': 'GGT', 'H': 'CAT', 'I': 'ATT', 'K': 'AAA', 'L': 'CTG',
+    'M': 'ATG', 'N': 'AAT', 'P': 'CCT', 'Q': 'CAA', 'R': 'CGT',
+    'S': 'TCT', 'T': 'ACT', 'V': 'GTT', 'W': 'TGG', 'Y': 'TAT',
+    '*': 'TAA'
+}
+
+
 def random_seq(length):
     """Generate random DNA sequence"""
     return ''.join(random.choices('ACGT', k=length))
 
+
 def create_contig(seq, name, description=""):
     """Create a SeqRecord for a contig"""
     return SeqRecord(Seq(seq), id=name, description=description)
+
 
 def introduce_mutation(seq, codon_pos, new_codon):
     """
@@ -34,18 +66,42 @@ def introduce_mutation(seq, codon_pos, new_codon):
     new_codon: the mutant codon to insert
     """
     start_nt = (codon_pos - 1) * 3
+    if start_nt + 3 > len(seq):
+        raise ValueError(
+            f"Codon position {codon_pos} (nt {start_nt}-{start_nt+3}) "
+            f"is beyond sequence length {len(seq)}"
+        )
     return seq[:start_nt] + new_codon + seq[start_nt + 3:]
 
-# Load reference sequences from the database
+
 def load_references(db_path):
     """Load reference sequences from FASTA database"""
     refs = {}
     for record in SeqIO.parse(db_path, "fasta"):
-        # Extract gene name (first part before underscore)
-        gene_name = record.id.split('_')[0]
         refs[record.id] = str(record.seq)
-        refs[gene_name] = str(record.seq)  # Also index by short name
+        # Short name: first part before underscore, e.g. 'fosA3'
+        gene_name = record.id.split('_')[0]
+        refs[gene_name] = str(record.seq)
+        # Also store by full id minus '_reference' suffix
+        clean = record.id.replace('_reference', '')
+        refs[clean] = str(record.seq)
     return refs
+
+
+def embed_in_contig(gene_seq, padding=50000):
+    """Embed gene sequence in random flanking sequence"""
+    return random_seq(padding) + gene_seq + random_seq(padding)
+
+
+def write_genome(contigs, filename):
+    """Write contigs to FASTA file"""
+    with open(filename, "w") as f:
+        SeqIO.write(contigs, f, "fasta")
+    total_bp = sum(len(c.seq) for c in contigs)
+    print(f"  Created {filename}: {len(contigs)} contigs, {total_bp:,} bp")
+
+
+# ─── Negative control ────────────────────────────────────────────────────────
 
 def create_negative_control():
     """Create E. coli K-12 simulation without resistance genes"""
@@ -56,178 +112,507 @@ def create_negative_control():
         contigs.append(create_contig(seq, f"contig_{i}", f"length={size}"))
     return contigs
 
-def create_positive_fosa3(refs):
-    """Create genome with fosA3 plasmid-mediated gene"""
-    contigs = []
-    fosa3 = refs.get('fosA3_reference', refs.get('fosA3'))
 
-    for i in range(1, 8):
-        size = random.randint(400000, 600000)
-        contigs.append(create_contig(random_seq(size), f"contig_{i}", f"length={size}"))
+# ─── FOS plasmidic genes ─────────────────────────────────────────────────────
 
-    # Plasmid with fosA3
-    plasmid_size = 50000
-    insert_pos = 25000
-    plasmid_seq = random_seq(insert_pos) + fosa3 + random_seq(plasmid_size - insert_pos - len(fosa3))
-    contigs.append(create_contig(plasmid_seq, "contig_plasmid_fosA3", "contains=fosA3"))
-    return contigs
-
-def create_positive_blakpc3_d179y(refs):
-    """Create genome with blaKPC-3 containing D179Y mutation"""
-    contigs = []
-    blakpc3 = refs.get('blaKPC-3_reference', refs.get('blaKPC'))
-
-    for i in range(1, 8):
-        size = random.randint(400000, 600000)
-        contigs.append(create_contig(random_seq(size), f"contig_{i}", f"length={size}"))
-
-    # D179Y mutation: codon 179 GAT (D) -> TAT (Y)
-    blakpc3_mut = introduce_mutation(blakpc3, 179, "TAT")
-
-    plasmid_size = 60000
-    insert_pos = 30000
-    plasmid_seq = random_seq(insert_pos) + blakpc3_mut + random_seq(plasmid_size - insert_pos - len(blakpc3_mut))
-    contigs.append(create_contig(plasmid_seq, "contig_plasmid_blaKPC3", "contains=blaKPC-3_D179Y"))
-    return contigs
-
-def create_chromosomal_fos_mutations(refs):
+def create_fos_plasmidic(refs, gene_ids):
     """
-    Create genome with chromosomal fosfomycin resistance mutations.
-    Mutations from primers.tsv:
-    - uhpB G469R
-    - uhpC F384L
-    - galU R282V
-    - lon Q558*
+    Create genome with one or more plasmid-mediated fosA-family genes.
+    gene_ids: list of database keys, e.g. ['fosA3_reference', 'fosA4_reference']
     """
     contigs = []
+    for i in range(1, 6):
+        size = random.randint(400000, 600000)
+        contigs.append(create_contig(random_seq(size), f"contig_{i}", f"length={size}"))
+    for gene_id in gene_ids:
+        seq = refs.get(gene_id)
+        if seq is None:
+            print(f"  WARNING: {gene_id} not found in database, skipping")
+            continue
+        plasmid_seq = embed_in_contig(seq)
+        short = gene_id.replace('_reference', '')
+        contigs.append(create_contig(plasmid_seq, f"contig_plasmid_{short}",
+                                     f"contains={short}"))
+    return contigs
 
-    # Get reference sequences
-    uhpB = refs.get('uhpB_reference', refs.get('uhpB'))
-    uhpC = refs.get('uhpC_reference', refs.get('uhpC'))
-    galU = refs.get('galU_reference', refs.get('galU'))
-    lon = refs.get('lon_reference', refs.get('lon'))
 
-    # Introduce mutations
-    # uhpB G469R: GGT (G) -> CGT (R) at position 469
-    uhpB_mut = introduce_mutation(uhpB, 469, "CGT") if uhpB and len(uhpB) >= 469*3 else uhpB
+# ─── FOS chromosomal mutations ───────────────────────────────────────────────
 
-    # uhpC F384L: TTC (F) -> CTG (L) at position 384
-    uhpC_mut = introduce_mutation(uhpC, 384, "CTG") if uhpC and len(uhpC) >= 384*3 else uhpC
-
-    # galU R282V: CGT (R) -> GTG (V) at position 282
-    galU_mut = introduce_mutation(galU, 282, "GTG") if galU and len(galU) >= 282*3 else galU
-
-    # lon Q558*: CAG (Q) -> TAG (stop) at position 558
-    lon_mut = introduce_mutation(lon, 558, "TAG") if lon and len(lon) >= 558*3 else lon
-
-    # Create chromosome-like contigs with mutant genes embedded
+def _make_fos_chromo_contigs(refs, mutations):
+    """
+    Build a set of contigs each containing one mutated chromosomal gene.
+    mutations: list of (ref_key, codon_pos, new_codon, label)
+    """
+    contigs = []
     for i in range(1, 5):
         size = random.randint(400000, 600000)
         contigs.append(create_contig(random_seq(size), f"contig_{i}", f"length={size}"))
 
-    # Contig with uhpB G469R
-    if uhpB_mut:
-        seq = random_seq(50000) + uhpB_mut + random_seq(50000)
-        contigs.append(create_contig(seq, "contig_chr_uhpB", "contains=uhpB_G469R"))
-
-    # Contig with uhpC F384L
-    if uhpC_mut:
-        seq = random_seq(50000) + uhpC_mut + random_seq(50000)
-        contigs.append(create_contig(seq, "contig_chr_uhpC", "contains=uhpC_F384L"))
-
-    # Contig with galU R282V
-    if galU_mut:
-        seq = random_seq(50000) + galU_mut + random_seq(50000)
-        contigs.append(create_contig(seq, "contig_chr_galU", "contains=galU_R282V"))
-
-    # Contig with lon Q558*
-    if lon_mut:
-        seq = random_seq(50000) + lon_mut + random_seq(50000)
-        contigs.append(create_contig(seq, "contig_chr_lon", "contains=lon_Q558*"))
-
+    for ref_key, codon_pos, new_codon, label in mutations:
+        seq = refs.get(ref_key)
+        if seq is None:
+            print(f"  WARNING: {ref_key} not found in database, skipping")
+            continue
+        try:
+            mut_seq = introduce_mutation(seq, codon_pos, new_codon)
+            contig_seq = embed_in_contig(mut_seq)
+            safe = label.replace('/', '_').replace('*', 'stop')
+            gene_name = ref_key.replace('_reference', '')
+            contigs.append(create_contig(
+                contig_seq,
+                f"contig_chr_{gene_name}_{safe}",
+                f"contains={label}"
+            ))
+        except ValueError as e:
+            print(f"  WARNING: {label} - {e}")
     return contigs
+
+
+def create_chromosomal_fos_mutations_primers(refs):
+    """
+    FOS chromosomal mutations validated by primers.tsv:
+    uhpB G469R, uhpC F384L, galU R282V, lon Q558*
+    """
+    mutations = [
+        ('uhpB_reference',  469, 'CGT', 'uhpB_G469R'),
+        ('uhpC_reference',  384, 'CTG', 'uhpC_F384L'),
+        ('galU_reference',  282, 'GTG', 'galU_R282V'),
+        ('lon_reference',   558, 'TAG', 'lon_Q558stop'),
+    ]
+    return _make_fos_chromo_contigs(refs, mutations)
+
+
+def create_chromosomal_fos_murA(refs):
+    """murA D369N and L370I (fosfomycin target)"""
+    mutations = [
+        ('murA_reference', 369, 'AAT', 'murA_D369N'),
+        ('murA_reference', 370, 'ATT', 'murA_L370I'),
+    ]
+    return _make_fos_chromo_contigs(refs, mutations)
+
+
+def create_chromosomal_fos_uhpT(refs):
+    """uhpT transport mutations (fosfomycin uptake)"""
+    mutations = [
+        ('uhpT_reference',  55, 'GAT', 'uhpT_G55D'),
+        ('uhpT_reference', 198, 'TAA', 'uhpT_W198stop'),
+        ('uhpT_reference', 258, 'TAA', 'uhpT_E258stop'),
+        ('uhpT_reference', 350, 'TAA', 'uhpT_W350stop'),
+    ]
+    return _make_fos_chromo_contigs(refs, mutations)
+
+
+def create_chromosomal_fos_glpT(refs):
+    """glpT transport mutations (fosfomycin uptake)"""
+    mutations = [
+        ('glpT_reference',  44, 'TAA', 'glpT_E44stop'),
+        ('glpT_reference',  88, 'TAA', 'glpT_W88stop'),
+        ('glpT_reference',  90, 'GAT', 'glpT_G90D'),
+        ('glpT_reference', 234, 'TAA', 'glpT_W234stop'),
+        ('glpT_reference', 362, 'TGT', 'glpT_R362C'),
+    ]
+    return _make_fos_chromo_contigs(refs, mutations)
+
+
+def create_chromosomal_fos_uhpABC(refs):
+    """uhpA, uhpB, uhpC two-component system mutations"""
+    mutations = [
+        ('uhpA_reference',  54, 'AAT', 'uhpA_D54N'),
+        ('uhpA_reference', 139, 'TGT', 'uhpA_R139C'),
+        ('uhpB_reference', 350, 'TAT', 'uhpB_H350Y'),
+        ('uhpC_reference', 384, 'CTG', 'uhpC_F384L'),
+    ]
+    return _make_fos_chromo_contigs(refs, mutations)
+
+
+def create_chromosomal_fos_lon_cyaA_ptsI(refs):
+    """lon Q558*, cyaA G463D, ptsI H191Y"""
+    mutations = [
+        ('lon_reference',  558, 'TAG', 'lon_Q558stop'),
+        ('cyaA_reference', 463, 'GAT', 'cyaA_G463D'),
+        ('ptsI_reference', 191, 'TAT', 'ptsI_H191Y'),
+    ]
+    return _make_fos_chromo_contigs(refs, mutations)
+
+
+def create_chromosomal_fosAKP(refs):
+    """fosAKP I91V (chromosomal Klebsiella fosfomycin resistance)"""
+    mutations = [
+        ('fosAKP_reference', 91, 'GTT', 'fosAKP_I91V'),
+    ]
+    return _make_fos_chromo_contigs(refs, mutations)
+
+
+# ─── CAZAVI plasmidic genes ──────────────────────────────────────────────────
+
+def create_cazavi_blakpc2_d179y(refs):
+    """blaKPC-2 with D179Y"""
+    contigs = []
+    for i in range(1, 6):
+        contigs.append(create_contig(random_seq(random.randint(400000, 600000)),
+                                     f"contig_{i}", ""))
+    seq = refs.get('blaKPC-2_reference')
+    if seq:
+        mut = introduce_mutation(seq, 179, 'TAT')   # D179Y: GAT->TAT
+        contigs.append(create_contig(embed_in_contig(mut),
+                                     'contig_plasmid_blaKPC2',
+                                     'contains=blaKPC-2_D179Y'))
+    return contigs
+
+
+def create_cazavi_blakpc3(refs):
+    """blaKPC-3 with D179Y, V240G, and D179Y/T243M"""
+    contigs = []
+    for i in range(1, 4):
+        contigs.append(create_contig(random_seq(random.randint(400000, 600000)),
+                                     f"contig_{i}", ""))
+    seq = refs.get('blaKPC-3_reference')
+    if seq:
+        # D179Y alone
+        mut_d179y = introduce_mutation(seq, 179, 'TAT')
+        contigs.append(create_contig(embed_in_contig(mut_d179y),
+                                     'contig_plasmid_blaKPC3_D179Y',
+                                     'contains=blaKPC-3_D179Y'))
+        # V240G alone
+        mut_v240g = introduce_mutation(seq, 240, 'GGT')
+        contigs.append(create_contig(embed_in_contig(mut_v240g),
+                                     'contig_plasmid_blaKPC3_V240G',
+                                     'contains=blaKPC-3_V240G'))
+        # D179Y + T243M double mutant
+        mut_double = introduce_mutation(seq, 179, 'TAT')
+        mut_double = introduce_mutation(mut_double, 243, 'ATG')
+        contigs.append(create_contig(embed_in_contig(mut_double),
+                                     'contig_plasmid_blaKPC3_D179Y_T243M',
+                                     'contains=blaKPC-3_D179Y_T243M'))
+    return contigs
+
+
+def create_cazavi_blakpc31_d179y(refs):
+    """blaKPC-31 with D179Y"""
+    contigs = []
+    for i in range(1, 4):
+        contigs.append(create_contig(random_seq(random.randint(400000, 600000)),
+                                     f"contig_{i}", ""))
+    seq = refs.get('blaKPC-31_reference')
+    if seq:
+        mut = introduce_mutation(seq, 179, 'TAT')
+        contigs.append(create_contig(embed_in_contig(mut),
+                                     'contig_plasmid_blaKPC31',
+                                     'contains=blaKPC-31_D179Y'))
+    return contigs
+
+
+def create_cazavi_blakpc190(refs):
+    """blaKPC-190 (wildtype for detection, no specific resistance mutation)"""
+    contigs = []
+    for i in range(1, 4):
+        contigs.append(create_contig(random_seq(random.randint(400000, 600000)),
+                                     f"contig_{i}", ""))
+    seq = refs.get('blaKPC-190_reference')
+    if seq:
+        contigs.append(create_contig(embed_in_contig(seq),
+                                     'contig_plasmid_blaKPC190',
+                                     'contains=blaKPC-190'))
+    return contigs
+
+
+def create_cazavi_blaoxa48(refs):
+    """blaOXA-48 with P68A and P68A/Y211S"""
+    contigs = []
+    for i in range(1, 4):
+        contigs.append(create_contig(random_seq(random.randint(400000, 600000)),
+                                     f"contig_{i}", ""))
+    seq = refs.get('blaOXA-48_reference')
+    if seq:
+        # P68A alone
+        mut_p68a = introduce_mutation(seq, 68, 'GCT')
+        contigs.append(create_contig(embed_in_contig(mut_p68a),
+                                     'contig_plasmid_blaOXA48_P68A',
+                                     'contains=blaOXA-48_P68A'))
+        # P68A + Y211S double
+        mut_double = introduce_mutation(seq, 68, 'GCT')
+        mut_double = introduce_mutation(mut_double, 211, 'TCT')
+        contigs.append(create_contig(embed_in_contig(mut_double),
+                                     'contig_plasmid_blaOXA48_P68A_Y211S',
+                                     'contains=blaOXA-48_P68A_Y211S'))
+    return contigs
+
+
+def create_cazavi_blacmy178_n70t(refs):
+    """blaCMY-178 with N70T (Asn70Thr)"""
+    contigs = []
+    for i in range(1, 4):
+        contigs.append(create_contig(random_seq(random.randint(400000, 600000)),
+                                     f"contig_{i}", ""))
+    seq = refs.get('blaCMY-178_reference')
+    if seq:
+        mut = introduce_mutation(seq, 70, 'ACT')   # N70T: AAT->ACT
+        contigs.append(create_contig(embed_in_contig(mut),
+                                     'contig_plasmid_blaCMY178',
+                                     'contains=blaCMY-178_N70T'))
+    return contigs
+
+
+def create_cazavi_blashv12(refs):
+    """blaSHV-12 (wildtype reference for gene detection)"""
+    contigs = []
+    for i in range(1, 4):
+        contigs.append(create_contig(random_seq(random.randint(400000, 600000)),
+                                     f"contig_{i}", ""))
+    seq = refs.get('blaSHV-12_reference')
+    if seq:
+        contigs.append(create_contig(embed_in_contig(seq),
+                                     'contig_plasmid_blaSHV12',
+                                     'contains=blaSHV-12'))
+    return contigs
+
+
+# ─── CAZAVI chromosomal mutations ────────────────────────────────────────────
+
+def create_cazavi_porins(refs):
+    """ompK35 and ompK36 porin mutations"""
+    mutations = [
+        ('ompK35_reference', 134, 'GAT', 'ompK35_G134D'),
+        ('ompK35_reference', 135, 'TAA', 'ompK35_D135stop'),
+        ('ompK35_reference', 181, 'GGT', 'ompK35_D181G'),
+        ('ompK36_reference', 134, 'GAT', 'ompK36_G134D') if 'ompK36_reference' in refs else None,
+    ]
+    mutations = [m for m in mutations if m is not None]
+    return _make_fos_chromo_contigs(refs, mutations)
+
+
+def create_cazavi_efflux_regulators(refs):
+    """mexR and nalD efflux pump regulator mutations"""
+    mutations = [
+        ('mexR_reference', 69, 'GGT', 'mexR_W69G'),
+        ('mexR_reference', 75, 'GTT', 'mexR_A75V'),
+        ('nalD_reference', 153, 'TAA', 'nalD_Q153stop'),
+        ('nalD_reference', 174, 'CGT', 'nalD_L174R'),
+    ]
+    return _make_fos_chromo_contigs(refs, mutations)
+
+
+def create_cazavi_acrB(refs):
+    """acrB efflux pump mutations"""
+    mutations = [
+        ('acrB_reference', 617, 'GAT', 'acrB_G617D'),
+        ('acrB_reference', 626, 'CTG', 'acrB_F626L'),
+        ('acrB_reference', 628, 'ACT', 'acrB_A628T'),
+    ]
+    return _make_fos_chromo_contigs(refs, mutations)
+
+
+def create_cazavi_ftsI(refs):
+    """ftsI/PBP3 penicillin-binding protein mutations"""
+    mutations = [
+        ('ftsI_reference', 333, 'GTT', 'ftsI_A333V'),
+        ('ftsI_reference', 350, 'TGT', 'ftsI_Y350C'),
+        ('ftsI_reference', 357, 'AAT', 'ftsI_S357N'),
+    ]
+    return _make_fos_chromo_contigs(refs, mutations)
+
+
+def create_cazavi_envZ(refs):
+    """envZ two-component sensor mutations"""
+    mutations = [
+        ('envZ_reference', 244, 'TCT', 'envZ_G244S'),
+        ('envZ_reference', 324, 'ATT', 'envZ_T324I'),
+    ]
+    return _make_fos_chromo_contigs(refs, mutations)
+
+
+# ─── Combined multi-resistance ────────────────────────────────────────────────
 
 def create_multi_resistance(refs):
     """Create genome with multiple resistance genes and mutations"""
     contigs = []
 
     fosa3 = refs.get('fosA3_reference', refs.get('fosA3'))
-    blakpc3 = refs.get('blaKPC-3_reference', refs.get('blaKPC'))
-    blaoxa48 = refs.get('blaOXA-48_reference', refs.get('blaOXA'))
+    blakpc3 = refs.get('blaKPC-3_reference', refs.get('blaKPC-3'))
+    blaoxa48 = refs.get('blaOXA-48_reference', refs.get('blaOXA-48'))
 
     for i in range(1, 6):
         size = random.randint(400000, 600000)
         contigs.append(create_contig(random_seq(size), f"contig_{i}", f"length={size}"))
 
-    # Plasmid 1: fosA3
-    p1_seq = random_seq(20000) + fosa3 + random_seq(25000)
-    contigs.append(create_contig(p1_seq, "contig_plasmid1_fosA3", "contains=fosA3"))
+    if fosa3:
+        p1_seq = embed_in_contig(fosa3, padding=20000)
+        contigs.append(create_contig(p1_seq, "contig_plasmid1_fosA3", "contains=fosA3"))
 
-    # Plasmid 2: blaKPC-3 with D179Y and T243M
-    blakpc3_mut = introduce_mutation(blakpc3, 179, "TAT")  # D179Y
-    blakpc3_mut = introduce_mutation(blakpc3_mut, 243, "ATG")  # T243M
-    p2_seq = random_seq(25000) + blakpc3_mut + random_seq(30000)
-    contigs.append(create_contig(p2_seq, "contig_plasmid2_blaKPC3", "contains=blaKPC-3_D179Y_T243M"))
+    if blakpc3:
+        blakpc3_mut = introduce_mutation(blakpc3, 179, "TAT")   # D179Y
+        blakpc3_mut = introduce_mutation(blakpc3_mut, 243, "ATG")  # T243M
+        p2_seq = embed_in_contig(blakpc3_mut, padding=25000)
+        contigs.append(create_contig(p2_seq, "contig_plasmid2_blaKPC3",
+                                     "contains=blaKPC-3_D179Y_T243M"))
 
-    # Plasmid 3: blaOXA-48
-    p3_seq = random_seq(30000) + blaoxa48 + random_seq(35000)
-    contigs.append(create_contig(p3_seq, "contig_plasmid3_blaOXA48", "contains=blaOXA-48"))
+    if blaoxa48:
+        p3_seq = embed_in_contig(blaoxa48, padding=30000)
+        contigs.append(create_contig(p3_seq, "contig_plasmid3_blaOXA48",
+                                     "contains=blaOXA-48"))
 
     return contigs
 
-def write_genome(contigs, filename):
-    """Write contigs to FASTA file"""
-    with open(filename, "w") as f:
-        SeqIO.write(contigs, f, "fasta")
-    total_bp = sum(len(c.seq) for c in contigs)
-    print(f"  Created {filename}: {len(contigs)} contigs, {total_bp:,} bp")
+
+# ─── Main ─────────────────────────────────────────────────────────────────────
 
 def main():
     os.makedirs("test_genomes", exist_ok=True)
 
-    # Load reference sequences from database
     db_path = "data/example_database.fasta"
     print(f"Loading references from {db_path}...")
     refs = load_references(db_path)
-    print(f"  Loaded {len(refs)//2} reference sequences\n")
+    print(f"  Loaded {len([k for k in refs if '_reference' in k])} reference sequences\n")
 
     print("Creating synthetic test genomes...")
     print("=" * 60)
 
-    # 1. Negative control
-    print("\n1. Negative control (no resistance genes)")
-    negative = create_negative_control()
-    write_genome(negative, "test_genomes/ecoli_negative_control.fasta")
+    scenarios = [
+        # (label, function, output_filename, expected_detection)
+        ("1.  Negative control",
+         create_negative_control,
+         "ecoli_negative_control.fasta",
+         "No resistance genes"),
 
-    # 2. fosA3 positive
-    print("\n2. Plasmid-mediated fosA3")
-    fosa3 = create_positive_fosa3(refs)
-    write_genome(fosa3, "test_genomes/ecoli_fosA3_positive.fasta")
+        # FOS plasmidic
+        ("2.  fosA3 (plasmidic)",
+         lambda: create_fos_plasmidic(refs, ['fosA3_reference']),
+         "ecoli_fosA3.fasta",
+         "fosA3"),
 
-    # 3. blaKPC-3 D179Y
-    print("\n3. blaKPC-3 with D179Y mutation")
-    kpc = create_positive_blakpc3_d179y(refs)
-    write_genome(kpc, "test_genomes/ecoli_blaKPC3_D179Y.fasta")
+        ("3.  fosA4 (plasmidic)",
+         lambda: create_fos_plasmidic(refs, ['fosA4_reference']),
+         "ecoli_fosA4.fasta",
+         "fosA4"),
 
-    # 4. Chromosomal FOS mutations (from primers.tsv)
-    print("\n4. Chromosomal fosfomycin resistance mutations")
-    print("   (uhpB G469R, uhpC F384L, galU R282V, lon Q558*)")
-    chromosomal = create_chromosomal_fos_mutations(refs)
-    write_genome(chromosomal, "test_genomes/ecoli_chromosomal_fos.fasta")
+        ("4.  fosA5 (plasmidic)",
+         lambda: create_fos_plasmidic(refs, ['fosA5_reference']),
+         "ecoli_fosA5.fasta",
+         "fosA5"),
 
-    # 5. Multi-resistance
-    print("\n5. Multi-resistance (fosA3 + blaKPC-3 D179Y/T243M + blaOXA-48)")
-    multi = create_multi_resistance(refs)
-    write_genome(multi, "test_genomes/ecoli_multi_resistance.fasta")
+        ("5.  fosA11 (plasmidic)",
+         lambda: create_fos_plasmidic(refs, ['fosA11_reference']),
+         "ecoli_fosA11.fasta",
+         "fosA11"),
+
+        # FOS chromosomal
+        ("6.  uhpB G469R + uhpC F384L + galU R282V + lon Q558*",
+         lambda: create_chromosomal_fos_mutations_primers(refs),
+         "ecoli_chromosomal_fos_primers.fasta",
+         "uhpB G469R, uhpC F384L, galU R282V, lon Q558*"),
+
+        ("7.  murA D369N + L370I",
+         lambda: create_chromosomal_fos_murA(refs),
+         "ecoli_murA.fasta",
+         "murA D369N, murA L370I"),
+
+        ("8.  uhpT transport mutations",
+         lambda: create_chromosomal_fos_uhpT(refs),
+         "ecoli_uhpT.fasta",
+         "uhpT G55D, W198*, E258*, W350*"),
+
+        ("9.  glpT transport mutations",
+         lambda: create_chromosomal_fos_glpT(refs),
+         "ecoli_glpT.fasta",
+         "glpT E44*, W88*, G90D, W234*, R362C"),
+
+        ("10. uhpA + uhpB + uhpC mutations",
+         lambda: create_chromosomal_fos_uhpABC(refs),
+         "ecoli_uhpABC.fasta",
+         "uhpA D54N, uhpA R139C, uhpB H350Y, uhpC F384L"),
+
+        ("11. lon Q558* + cyaA G463D + ptsI H191Y",
+         lambda: create_chromosomal_fos_lon_cyaA_ptsI(refs),
+         "ecoli_lon_cyaA_ptsI.fasta",
+         "lon Q558*, cyaA G463D, ptsI H191Y"),
+
+        ("12. fosAKP I91V (chromosomal Klebsiella)",
+         lambda: create_chromosomal_fosAKP(refs),
+         "kpneumo_fosAKP.fasta",
+         "fosAKP I91V"),
+
+        # CAZAVI plasmidic
+        ("13. blaKPC-2 D179Y",
+         lambda: create_cazavi_blakpc2_d179y(refs),
+         "kpneumo_blaKPC2_D179Y.fasta",
+         "blaKPC-2 D179Y"),
+
+        ("14. blaKPC-3 D179Y / V240G / D179Y+T243M",
+         lambda: create_cazavi_blakpc3(refs),
+         "kpneumo_blaKPC3_variants.fasta",
+         "blaKPC-3 D179Y, V240G, D179Y/T243M"),
+
+        ("15. blaKPC-31 D179Y",
+         lambda: create_cazavi_blakpc31_d179y(refs),
+         "kpneumo_blaKPC31_D179Y.fasta",
+         "blaKPC-31 D179Y"),
+
+        ("16. blaKPC-190",
+         lambda: create_cazavi_blakpc190(refs),
+         "kpneumo_blaKPC190.fasta",
+         "blaKPC-190"),
+
+        ("17. blaOXA-48 P68A + P68A/Y211S",
+         lambda: create_cazavi_blaoxa48(refs),
+         "kpneumo_blaOXA48_variants.fasta",
+         "blaOXA-48 P68A, P68A/Y211S"),
+
+        ("18. blaCMY-178 N70T",
+         lambda: create_cazavi_blacmy178_n70t(refs),
+         "kpneumo_blaCMY178_N70T.fasta",
+         "blaCMY-178 N70T"),
+
+        ("19. blaSHV-12",
+         lambda: create_cazavi_blashv12(refs),
+         "kpneumo_blaSHV12.fasta",
+         "blaSHV-12"),
+
+        # CAZAVI chromosomal
+        ("20. ompK35 + ompK36 porin mutations",
+         lambda: create_cazavi_porins(refs),
+         "kpneumo_porins.fasta",
+         "ompK35 G134D, D135*, D181G"),
+
+        ("21. acrB efflux mutations",
+         lambda: create_cazavi_acrB(refs),
+         "kpneumo_acrB.fasta",
+         "acrB G617D, F626L, A628T"),
+
+        ("22. mexR + nalD efflux regulator mutations",
+         lambda: create_cazavi_efflux_regulators(refs),
+         "kpneumo_efflux_regulators.fasta",
+         "mexR W69G, A75V; nalD Q153*, L174R"),
+
+        ("23. ftsI/PBP3 mutations",
+         lambda: create_cazavi_ftsI(refs),
+         "kpneumo_ftsI.fasta",
+         "ftsI A333V, Y350C, S357N"),
+
+        ("24. envZ two-component sensor mutations",
+         lambda: create_cazavi_envZ(refs),
+         "kpneumo_envZ.fasta",
+         "envZ G244S, T324I"),
+
+        # Multi-resistance
+        ("25. Multi-resistance (fosA3 + blaKPC-3 D179Y/T243M + blaOXA-48)",
+         lambda: create_multi_resistance(refs),
+         "ecoli_multi_resistance.fasta",
+         "fosA3, blaKPC-3 D179Y/T243M, blaOXA-48"),
+    ]
+
+    print("\nExpected detection results:")
+    for label, func, fname, expected in scenarios:
+        print(f"\n{label}")
+        try:
+            contigs = func()
+            write_genome(contigs, f"test_genomes/{fname}")
+            print(f"  Expected: {expected}")
+        except Exception as e:
+            print(f"  ERROR: {e}")
 
     print("\n" + "=" * 60)
-    print("Test genomes created successfully!")
-    print("\nExpected detection results:")
-    print("  1. ecoli_negative_control.fasta  -> No resistance genes")
-    print("  2. ecoli_fosA3_positive.fasta    -> fosA3")
-    print("  3. ecoli_blaKPC3_D179Y.fasta     -> blaKPC-3 + D179Y mutation")
-    print("  4. ecoli_chromosomal_fos.fasta   -> uhpB, uhpC, galU, lon with mutations")
-    print("  5. ecoli_multi_resistance.fasta  -> fosA3, blaKPC-3, blaOXA-48")
+    print(f"Test genomes created in test_genomes/")
+
 
 if __name__ == "__main__":
     main()
