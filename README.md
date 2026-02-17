@@ -29,10 +29,18 @@ resistance-detector/
 ├── Snakefile                # Snakemake workflow
 ├── config.yaml              # Snakemake configuration
 ├── environment.yaml         # Conda environment
+├── scripts/
+│   └── download_assembly.py # Download assemblies from NCBI
 ├── data/
 │   ├── example_database.fasta   # Reference nucleotide database
 │   ├── cazavi_proteins.fasta    # CAZAVI resistance proteins for miniprot
 │   └── primers.tsv              # Primer sequences for amplicon detection
+├── tests/                   # Unit test suite (194 tests)
+│   ├── conftest.py
+│   ├── test_blast_parsing.py
+│   ├── test_genome_creation.py
+│   ├── test_miniprot_parsing.py
+│   └── test_mutation_detection.py
 ├── example_results/         # Example outputs
 └── README.md
 ```
@@ -53,7 +61,13 @@ conda env create -f environment.yaml
 conda activate resistance_detector
 ```
 
-### Option 2: Manual Installation
+### Option 2: Pixi
+
+```bash
+pixi install
+```
+
+### Option 3: Manual Installation
 
 ```bash
 # Install system dependencies
@@ -154,9 +168,7 @@ Runs the complete pipeline (acquired + mutations).
 
 ## Example Results
 
-See `example_results/` folder for full file content.
-
-### Summary Output (`results_summary.txt`)
+### Summary Output (`*_summary.txt`)
 
 ```
 ======================================================================
@@ -182,7 +194,7 @@ CEFTAZIDIME-AVIBACTAM RESISTANCE (OXA):
     Mutations: P68D,Y211A
 ```
 
-### BLAST Results (`results_results.tsv`)
+### BLAST Results (`*_results.tsv`)
 
 ```tsv
 Contig	Gene	Identity%	Coverage%	Mutations	Method
@@ -190,6 +202,139 @@ contig_plasmid1_fosA3	fosA3	100.00	100.00	-	BLAST
 contig_plasmid2_blaKPC3	blaKPC-3	99.52	100.10	D179Y/N,V240Q,T243M	BLAST
 contig_plasmid3_blaOXA48	blaOXA-48	100.00	100.00	P68D,Y211A	BLAST
 ```
+
+## Testing
+
+### Running Tests
+
+Install dependencies and run the full test suite:
+
+```bash
+pip install pytest biopython
+python -m pytest tests/ -v
+```
+
+### Test Results
+
+```
+============================= test session starts ==============================
+platform linux -- Python 3.11.14, pytest-9.0.2
+collected 194 items
+
+194 passed in 8.85s
+```
+
+**All 194 tests pass.** No external tools (BLAST, miniprot, seqkit) are required to run the tests — all tool-dependent logic is tested via synthetic inputs.
+
+### Test Coverage Summary
+
+| Test Module | Tests | What Is Covered |
+|---|---|---|
+| `test_blast_parsing.py` | 22 | BLAST output parsing: identity/coverage filtering, gene name extraction from various ID formats, multi-hit handling, edge cases |
+| `test_genome_creation.py` | 74 | Reference database loading (30 genes verified), `introduce_mutation()` utility, synthetic contig construction for all FOS and CAZAVI genome scenarios |
+| `test_miniprot_parsing.py` | 20 | Miniprot CS-tag parsing for KPC (D179Y, V240G, T243M), OXA-48 (P68A, Y211S), CMY-178 (N70T), porins (OmpK35/36), AcrB, and CS-tag edge cases |
+| `test_mutation_detection.py` | 78 | `detect_mutations()` for all 27 gene families: wildtype no-call verification plus every documented resistance mutation across FOS and CAZAVI pathways |
+
+### Genes and Mutations Covered by Tests
+
+**Fosfomycin (FOS) — Plasmidic:**
+
+| Gene | Mutations Tested |
+|---|---|
+| fosA3, fosA4, fosA5, fosA11 | K90E, H119Q (+ wildtype) |
+| fosAKP | I91V (+ wildtype) |
+
+**Fosfomycin (FOS) — Chromosomal:**
+
+| Gene | Mutations Tested |
+|---|---|
+| murA | D369N, L370I |
+| uhpB | G469R, H350Y, H350Q |
+| uhpC | F384L |
+| uhpA | D54N, R139C, R139H |
+| uhpT | G55D, W198\*, E258\*, W350\* |
+| glpT | E44\*, W88\*, G90D, W234\*, R362C, R362H |
+| cyaA | G463D, G463\* |
+| ptsI | H191Y, H191Q |
+| galU | R282V |
+| lon | Q558\* |
+
+**Ceftazidime-Avibactam (CAZAVI) — Plasmidic:**
+
+| Gene | Mutations Tested |
+|---|---|
+| blaKPC-2, -3, -31, -190 | D179Y, V240G, T243M (incl. double mutants) |
+| blaOXA-48 | P68A, Y211S (incl. double mutant) |
+| blaCMY-178 | N70T |
+| blaSHV-12 | G238S, E240K |
+
+**Ceftazidime-Avibactam (CAZAVI) — Chromosomal:**
+
+| Gene | Mutations Tested |
+|---|---|
+| ompK36 | G134D, G134\*, D135\*, G213D |
+| ompK35 | G134D, D135\*, D181G, D181\* |
+| acrB | G617D, G617N, F626L, A628T, A628V |
+| mexR | W69G, W69\*, A75V |
+| nalD | Q153\*, L174R |
+| ftsI | A333V, A333T, Y350C, Y350S, S357N |
+| envZ | G244S, G244D, T324I, T324A |
+
+## Testing with Real Genomes
+
+### Recommended Public Assemblies
+
+The following NCBI assemblies are well-characterized and can be used to validate the full pipeline end-to-end (requires BLAST+, miniprot, seqkit):
+
+| Accession | Organism | Resistance Genes | Use |
+|---|---|---|---|
+| GCF_000968155.1 | *K. pneumoniae* KPNIH1 | blaKPC-3 | CAZAVI positive control |
+| GCF_000016305.1 | *K. pneumoniae* MGH 78578 | none | Negative control |
+| GCF_000005845.2 | *E. coli* K-12 MG1655 | murA, uhpT, glpT (chromosomal) | Chromosomal FOS targets |
+
+GCF_000968155.1 (*K. pneumoniae* KPNIH1) is from the 2011 NIH clinical outbreak and is confirmed to carry blaKPC-3. It is widely used as a reference for KPC carbapenemase studies.
+
+### Downloading an Assembly
+
+Use the provided script to download any NCBI assembly:
+
+```bash
+python scripts/download_assembly.py GCF_000968155.1
+# Saves to GCF_000968155.1.fasta
+```
+
+### Running the Full Pipeline on a Real Genome
+
+```bash
+# 1. Download a KPC-carrying K. pneumoniae assembly
+python scripts/download_assembly.py GCF_000968155.1
+
+# 2. Build BLAST database from the reference sequences
+makeblastdb -in data/example_database.fasta -dbtype nucl -out resistance_db
+
+# 3. Run full analysis
+./fos-cazavi fos-cazavi-all \
+    -a GCF_000968155.1.fasta \
+    -d resistance_db \
+    -o kpnih1_results \
+    --proteins data/cazavi_proteins.fasta \
+    --primers data/primers.tsv
+
+# 4. View summary
+cat kpnih1_results_summary.txt
+```
+
+Expected output for KPNIH1 will include blaKPC-3 at ≥99% identity with CAZAVI resistance mutations reported.
+
+### Generating Synthetic Test Genomes
+
+If you do not have a real assembly, generate synthetic test genomes that embed all resistance scenarios:
+
+```bash
+python create_test_genomes.py
+```
+
+This produces FASTA files in `test_genomes/` covering negative controls, single-gene plasmidic/chromosomal scenarios, and a multi-resistance genome (fosA3 + blaKPC-3 + blaOXA-48).
 
 ## Snakemake Workflow
 
