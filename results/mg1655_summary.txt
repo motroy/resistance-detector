@@ -1,0 +1,37 @@
+======================================================================
+FOS-CAZAVI Resistance Detection Summary
+======================================================================
+
+Assembly: downloaded_genomes/GCF_000005845.2.fasta
+Total genes detected: 0
+Method: BLAST+
+
+No resistance genes detected
+
+DETECTED AMPLICONS:
+Method: Seqkit/Amplicon
+--------------------------------------------------
+  Pair: RT_rrsA
+    Location: NC_000913.3:223984-4208465 (3984481 bp)
+    Primers: RT-qPCR_rrsA_F -> RT-qPCR_rrsA_R
+    No resistance genes/mutations detected in amplicon
+  Pair: uhpB_ver
+    Location: NC_000913.3:791462-793065 (1603 bp)
+    Primers: uhpB_F -> uhpB_R
+    No resistance genes/mutations detected in amplicon
+  Pair: uhpC_ver
+    Location: NC_000913.3:792968-794417 (1449 bp)
+    Primers: uhpC_F -> uhpC_R
+    No resistance genes/mutations detected in amplicon
+  Pair: lon_ver2
+    Location: NC_000913.3:3623938-3625160 (1222 bp)
+    Primers: lon2_F -> lon2_R
+    No resistance genes/mutations detected in amplicon
+  Pair: RT_uhpT
+    Location: NC_000913.3:794659-794825 (166 bp)
+    Primers: RT-qPCR_uhpT_F -> RT-qPCR_uhpT_R
+    No resistance genes/mutations detected in amplicon
+  Pair: RT_rrsA
+    Location: NC_000913.3:1213104-1910814 (697710 bp)
+    Primers: RT-qPCR_rrsA_F -> RT-qPCR_rrsA_R
+    No resistance genes/mutations detected in amplicon

@@ -1,0 +1,3 @@
+Contig	Gene	Identity%	Coverage%	Mutations	Method
+NZ_FO834906.1	ftsI	100.00	100.00	V355T,L367R	BLAST
+NZ_FO834906.1	envZ	99.56	100.00	-	BLAST

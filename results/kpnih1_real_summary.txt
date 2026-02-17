@@ -1,0 +1,13 @@
+======================================================================
+FOS-CAZAVI Resistance Detection Summary
+======================================================================
+
+Assembly: downloaded_genomes/GCF_000968155.1.fasta
+Total genes detected: 2
+Method: BLAST+
+
+OTHER RESISTANCE GENES:
+--------------------------------------------------
+  ftsI: 100.00% identity, 100.00% coverage
+    Mutations: V355T,L367R
+  envZ: 99.56% identity, 100.00% coverage
