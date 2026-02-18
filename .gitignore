@@ -54,3 +54,4 @@ pixi.lock
 dist/
 build/
 *.egg-info/
+resistance_db_*
