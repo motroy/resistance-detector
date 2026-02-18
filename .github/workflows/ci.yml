@@ -76,6 +76,12 @@ jobs:
       - name: Install package into conda env
         run: pip install -e . --no-deps
 
+      - name: Verify create-db command
+        run: |
+          fos-cazavi create-db --email ci@example.com --output test_db_dir --prefix ci_test_db
+          ls -l test_db_dir/
+          if [ ! -f "test_db_dir/ci_test_db.fasta" ]; then echo "Database not created!"; exit 1; fi
+
       - name: Run full test suite
         run: python -m pytest tests/ -v --tb=short
 

@@ -252,8 +252,12 @@ def write_summary(output_prefix, assembly, blast_results, gamma_results,
 
 def handle_create_db(args):
     # Setup logging
-    logger = setup_logger(args.output, args)
-    create_db(args.email, args.output)
+    output_dir = Path(args.output)
+    output_dir.mkdir(parents=True, exist_ok=True)
+    full_prefix = str(output_dir / args.prefix)
+
+    logger = setup_logger(full_prefix, args)
+    create_db(args.email, args.output, args.prefix)
 
 
 def handle_acquired(args):
@@ -338,7 +342,8 @@ def main():
     # create-db
     parser_db = subparsers.add_parser('create-db', help='Create reference database')
     parser_db.add_argument('-e', '--email', required=True, help='Email for NCBI Entrez')
-    parser_db.add_argument('-o', '--output', default='resistance_db', help='Output prefix')
+    parser_db.add_argument('-o', '--output', default='.', help='Output directory [default: .]')
+    parser_db.add_argument('-p', '--prefix', default='resistance_db', help='Output filename prefix [default: resistance_db]')
     parser_db.set_defaults(func=handle_create_db)
 
     # Common arguments for detection commands
