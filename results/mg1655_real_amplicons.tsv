@@ -1,0 +1,7 @@
+Pair_ID	Contig	Start	End	Length	Mutations_Found	Method
+RT_rrsA	NC_000913.3	223984	4208465	3984481	cyaA: (wildtype);lon: (wildtype);ptsI: (wildtype);uhpT: E350T;murA: C115H,L370I,D396S	Seqkit/Amplicon
+uhpB_ver	NC_000913.3	791462	793065	1603	-	Seqkit/Amplicon
+uhpC_ver	NC_000913.3	792968	794417	1449	-	Seqkit/Amplicon
+lon_ver2	NC_000913.3	3623938	3625160	1222	-	Seqkit/Amplicon
+RT_uhpT	NC_000913.3	794659	794825	166	-	Seqkit/Amplicon
+RT_rrsA	NC_000913.3	1213104	1910814	697710	-	Seqkit/Amplicon

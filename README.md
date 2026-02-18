@@ -288,33 +288,34 @@ The following NCBI assemblies are well-characterized and can be used to validate
 
 | Accession | Organism | Resistance Genes | Use |
 |---|---|---|---|
-| GCF_000968155.1 | *K. pneumoniae* KPNIH1 | blaKPC-3 | CAZAVI positive control |
+| GCA_000281535.1 | *K. pneumoniae* KPNIH1 | blaKPC-3 | CAZAVI positive control |
 | GCF_000016305.1 | *K. pneumoniae* MGH 78578 | none | Negative control |
 | GCF_000005845.2 | *E. coli* K-12 MG1655 | murA, uhpT, glpT (chromosomal) | Chromosomal FOS targets |
 
-GCF_000968155.1 (*K. pneumoniae* KPNIH1) is from the 2011 NIH clinical outbreak and is confirmed to carry blaKPC-3. It is widely used as a reference for KPC carbapenemase studies.
+GCA_000281535.1 (*K. pneumoniae* KPNIH1) is from the 2011 NIH clinical outbreak and is confirmed to carry blaKPC-3. It is widely used as a reference for KPC carbapenemase studies.
 
 ### Downloading an Assembly
 
 Use the provided script to download any NCBI assembly:
 
 ```bash
-python scripts/download_assembly.py GCF_000968155.1
-# Saves to GCF_000968155.1.fasta
+python scripts/download_assembly.py GCA_000281535.1
+# Saves to GCA_000281535.1.fasta
 ```
 
 ### Running the Full Pipeline on a Real Genome
 
 ```bash
 # 1. Download a KPC-carrying K. pneumoniae assembly
-python scripts/download_assembly.py GCF_000968155.1
+python scripts/download_assembly.py GCA_000281535.1
 
-# 2. Build BLAST database from the reference sequences
-makeblastdb -in data/example_database.fasta -dbtype nucl -out resistance_db
+# 2. Create BLAST database (fetches real sequences from NCBI)
+./fos-cazavi create-db -e your.email@example.com -o resistance_db
+makeblastdb -in resistance_db.fasta -dbtype nucl -out resistance_db
 
 # 3. Run full analysis
 ./fos-cazavi fos-cazavi-all \
-    -a GCF_000968155.1.fasta \
+    -a GCA_000281535.1.fasta \
     -d resistance_db \
     -o kpnih1_results \
     --proteins data/cazavi_proteins.fasta \
