@@ -11,9 +11,100 @@ _DEFAULT_PROTEINS = str(_DATA_DIR / 'cazavi_proteins.fasta')
 _DEFAULT_PRIMERS = str(_DATA_DIR / 'primers.tsv')
 
 
+def write_combined_tsv(output_prefix, assembly, blast_results, miniprot_results, amplicon_results, unified_results):
+    """Write a combined TSV summary of all results"""
+    output_file = f"{output_prefix}_all_results.tsv"
+    print(f"Writing combined summary to {output_file}...")
+
+    with open(output_file, 'w') as f:
+        # Header
+        f.write('\t'.join([
+            'Sample', 'Type', 'Gene_Protein', 'Method', 'Result_Details',
+            'Identity_Confidence', 'Contig', 'Start', 'End', 'Notes'
+        ]) + '\n')
+
+        sample = Path(assembly).name
+
+        # 1. BLAST Results (Acquired Genes)
+        if blast_results:
+            for r in blast_results:
+                f.write('\t'.join([
+                    sample,
+                    'Acquired Gene',
+                    r['gene'],
+                    'BLAST',
+                    f"Coverage: {r['coverage']}%",
+                    f"{r['identity']}%",
+                    r['contig'],
+                    str(r['start']),
+                    str(r['end']),
+                    f"Mutations: {r['mutations']}"
+                ]) + '\n')
+
+        # 2. Unified Mutation Results (Miniprot + SeqKit)
+        if unified_results:
+            for r in unified_results:
+                mp = r['miniprot_detail']
+                # Prefer miniprot location if available
+                contig = mp['contig'] if mp else '-'
+                start = str(mp['contig_start']) if mp else '-'
+                end = str(mp['contig_end']) if mp else '-'
+
+                f.write('\t'.join([
+                    sample,
+                    'Mutation',
+                    r['gene'],
+                    '+'.join(r['methods']),
+                    r['mutation'],
+                    f"{r['confidence']}%",
+                    contig,
+                    start,
+                    end,
+                    'Dual-method consensus'
+                ]) + '\n')
+
+        # 3. Miniprot Results (Wildtype/No mutation detected)
+        if miniprot_results:
+            for r in miniprot_results:
+                if not r['mutations']:
+                    f.write('\t'.join([
+                        sample,
+                        'Protein Alignment',
+                        r['protein'],
+                        'Miniprot',
+                        'Wildtype / No mutations detected',
+                        f"{r['identity']:.2f}%",
+                        r['contig'],
+                        str(r['contig_start']),
+                        str(r['contig_end']),
+                        f"Coverage: {r['coverage']:.2f}%"
+                    ]) + '\n')
+
+        # 4. Amplicon Results (Locations)
+        if amplicon_results:
+            for r in amplicon_results:
+                muts = '; '.join(r['mutations_found']) if r['mutations_found'] else 'None'
+                f.write('\t'.join([
+                    sample,
+                    'Amplicon',
+                    r['pair_id'],
+                    'SeqKit/Bed',
+                    f"Length: {r['length']}bp",
+                    '-',
+                    r['contig'],
+                    str(r['start']),
+                    str(r['end']),
+                    f"Genes/Mutations in region: {muts}"
+                ]) + '\n')
+
+
 def write_summary(output_prefix, assembly, blast_results, miniprot_results,
                   amplicon_results, seqkit_mut_results=None, unified_results=None):
     """Write a summary of detected resistance mechanisms"""
+
+    # Also write the combined TSV
+    write_combined_tsv(output_prefix, assembly, blast_results, miniprot_results, amplicon_results, unified_results)
+
     summary_file = f"{output_prefix}_summary.txt"
 
     print(f"Writing summary to {summary_file}...")
@@ -202,6 +293,19 @@ def handle_mutations(args):
 def handle_all(args):
     logger = setup_logger(args.output, args)
     log_tool_versions(logger)
+
+    # Auto-detect protein database if using default and custom BLAST DB provided
+    if args.proteins == _DEFAULT_PROTEINS:
+        db_path = Path(args.database)
+        # Check for _proteins.fasta sibling
+        if db_path.suffix == '.fasta':
+            prot_path = db_path.parent / (db_path.stem + '_proteins.fasta')
+        else:
+            prot_path = Path(str(db_path) + '_proteins.fasta')
+
+        if prot_path.exists():
+            print(f"Auto-detected protein database: {prot_path}")
+            args.proteins = str(prot_path)
 
     # Run BLAST
     blast_results = run_acquired_detection(

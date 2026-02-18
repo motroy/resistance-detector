@@ -222,7 +222,7 @@ class MutationDetector:
         if not self.primers:
             return []
 
-        print("Running seqkit amplicon for mutation-level detection...")
+        print("Running SeqKit for targeted mutation detection (amplicon extraction)...")
 
         pairs = self._build_primer_pairs()
 
@@ -279,7 +279,7 @@ class MutationDetector:
             if current_header is not None and current_seq_parts:
                 amplicons.append((current_header, ''.join(current_seq_parts)))
 
-            print(f"  SeqKit: found {len(amplicons)} amplicons for mutation analysis")
+            print(f"  SeqKit (Targeted): Extracted {len(amplicons)} amplicons for mutation analysis")
 
             for header, seq in amplicons:
                 pair_id = self._extract_pair_id_from_header(header, valid_pairs)
@@ -336,8 +336,10 @@ class MutationDetector:
 
         self.seqkit_mut_results = seqkit_mut_results
         gene_count = len({r['gene'] for r in seqkit_mut_results})
-        print(f"  SeqKit: mutations detected across {gene_count} gene(s), "
-              f"{len(seqkit_mut_results)} amplicon(s)")
+        if gene_count > 0:
+            print(f"  SeqKit (Targeted): Detected mutations in {gene_count} gene(s) across {len(seqkit_mut_results)} amplicon(s)")
+        else:
+            print("  SeqKit (Targeted): No specific mutations detected in extracted amplicons")
         return seqkit_mut_results
 
     def merge_detection_results(self, seqkit_mut_results):
@@ -439,11 +441,11 @@ class MutationDetector:
                 ]) + '\n')
 
     def detect_amplicons(self):
-        """Detect amplicons using seqkit amplicon"""
+        """Detect amplicon coordinates using seqkit amplicon (BED output)"""
         if not self.primers:
             return
 
-        print("Detecting amplicons with seqkit...")
+        print("Running SeqKit for amplicon coordinate mapping...")
 
         pairs = defaultdict(dict)
         for name, info in self.primers.items():
@@ -505,7 +507,7 @@ class MutationDetector:
                     'mutations_found': []
                 })
 
-            print(f"Found {len(self.amplicon_results)} amplicons")
+            print(f"  SeqKit (Mapping): Mapped coordinates for {len(self.amplicon_results)} amplicons")
 
         except subprocess.CalledProcessError as e:
             print(f"ERROR running seqkit: {e.stderr}", file=sys.stderr)
