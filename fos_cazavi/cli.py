@@ -281,7 +281,8 @@ def handle_mutations(args):
             args.output,
             args.proteins,
             args.primers,
-            blast_results=None
+            blast_results=None,
+            mutation_db_file=getattr(args, 'mutations', None)
         )
     write_summary(
         args.output, args.assembly,
@@ -324,7 +325,8 @@ def handle_all(args):
             args.output,
             args.proteins,
             args.primers,
-            blast_results=blast_results
+            blast_results=blast_results,
+            mutation_db_file=args.mutations
         )
 
     write_summary(
@@ -361,6 +363,7 @@ def main():
     parser_mut = subparsers.add_parser('fos-cazavi-mutations', parents=[parent_parser], help='Detect resistance mutations (Miniprot/SeqKit dual-method)')
     parser_mut.add_argument('--proteins', default=_DEFAULT_PROTEINS, help=f'Protein sequences for miniprot (FASTA) [default: bundled]')
     parser_mut.add_argument('--primers', default=_DEFAULT_PRIMERS, help=f'Primers definitions file (TSV) [default: bundled]')
+    parser_mut.add_argument('--mutations', help='Mutation definitions file (TSV) for filtering miniprot results')
     parser_mut.set_defaults(func=handle_mutations)
 
     # all

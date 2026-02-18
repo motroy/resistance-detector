@@ -11,6 +11,7 @@ from fos_cazavi.mutations import MutationDetector
 
 
 def make_detector():
+    from fos_cazavi.utils import KNOWN_MUTATIONS
     d = MutationDetector.__new__(MutationDetector)
     d.assembly = "fake.fasta"
     d.output_prefix = "fake"
@@ -19,6 +20,7 @@ def make_detector():
     d.miniprot_results = []
     d.amplicon_results = []
     d.primers = {}
+    d.mutation_db = KNOWN_MUTATIONS
     return d
 
 
