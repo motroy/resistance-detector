@@ -103,10 +103,10 @@ chmod +x fos-cazavi
 Download sequences from NCBI (AMRfinderPlus) and build the database. The `create-db` command fetches nucleotide CDS sequences and then runs GAMMA_DB_Maker to prepare a properly formatted GAMMA database:
 
 ```bash
-fos-cazavi create-db -e your.email@example.com -o resistance_db
+fos-cazavi create-db -e your.email@example.com -o . -p resistance_db
 ```
 
-This produces `resistance_db.fasta` (raw nucleotide CDS) and `resistance_db_deduplicated.fasta` (GAMMA-ready database). Use `resistance_db_deduplicated.fasta` with `--genes`.
+This produces `resistance_db.fasta` (raw nucleotide CDS) and `resistance_db_deduplicated.fasta` (GAMMA-ready database) in the specified directory. Use `resistance_db_deduplicated.fasta` with `--genes`.
 
 ### 2. Run Full Analysis
 
@@ -129,7 +129,7 @@ The tool is divided into subcommands:
 Creates the reference database and prepares it for GAMMA with GAMMA_DB_Maker.
 
 ```bash
-fos-cazavi create-db -e <email> -o <output_prefix>
+fos-cazavi create-db -e <email> -o <output_dir> [-p <prefix>]
 ```
 
 #### `fos-cazavi-acquired`
