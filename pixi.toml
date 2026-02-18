@@ -9,7 +9,7 @@ python = ">=3.8"
 blast = ">=2.10"
 biopython = ">=1.78"
 seqkit = ">=2.3"
-miniprot = ">=0.13"
+gamma = "*"
 
 [tasks]
 simulate = "PYTHONPATH=. python scripts/simulate_esbl_genomes.py"

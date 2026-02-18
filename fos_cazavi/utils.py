@@ -172,7 +172,7 @@ def get_tool_version(tool):
 def log_tool_versions(logger):
     """Log versions of dependencies"""
     logger.info("External Tools:")
-    for tool in ['blastn', 'miniprot', 'seqkit']:
+    for tool in ['blastn', 'GAMMA.py', 'seqkit']:
         version = get_tool_version(tool)
         logger.info(f"  {tool}: {version}")
     logger.info("-" * 60)
