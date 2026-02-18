@@ -36,8 +36,10 @@ class MutationDetector:
 
         cmd = [
             'miniprot',
-            '-c',  # Output cs tag
+            #'--no-cs',  # Output cs tag
             '--outs=0.95',  # High identity threshold
+            '--outc=0.3', # Output an alignment only if FLOAT fraction of the query protein is aligned [defaul=0.1]
+            '--trans', # Output translated protein sequences on ‘##STA’ lines.
             '-t', '1',
             self.assembly,
             self.proteins_file
