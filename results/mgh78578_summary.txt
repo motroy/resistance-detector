@@ -1,9 +1,0 @@
-======================================================================
-FOS-CAZAVI Resistance Detection Summary
-======================================================================
-
-Assembly: downloaded_genomes/GCF_000016305.1.fasta
-Total genes detected: 0
-Method: BLAST+
-
-No resistance genes detected

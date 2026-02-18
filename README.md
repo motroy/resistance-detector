@@ -16,25 +16,27 @@ A CLI tool for detecting fosfomycin (FOS) and ceftazidime-avibactam (CAZAVI) res
 
 ```
 resistance-detector/
-├── fos_cazavi/              # Python package
+├── fos_cazavi/              # Python package (installed via pip)
 │   ├── __init__.py
 │   ├── cli.py               # CLI entry point
 │   ├── db.py                # Database creation module
 │   ├── acquired.py          # BLAST-based detection module
 │   ├── mutations.py         # Miniprot/Amplicon detection module
-│   └── utils.py             # Shared utilities
-├── fos-cazavi               # Executable script
+│   ├── utils.py             # Shared utilities
+│   └── data/                # Bundled reference data
+│       ├── example_database.fasta   # Example nucleotide database
+│       ├── cazavi_proteins.fasta    # CAZAVI resistance proteins for miniprot
+│       └── primers.tsv              # Primer sequences for amplicon detection
+├── fos-cazavi               # Executable script (for repo use without install)
+├── pyproject.toml           # PyPI package configuration
 ├── create_test_genomes.py   # Test genome generator
 ├── batch_analysis.sh        # Batch processing script
 ├── Snakefile                # Snakemake workflow
 ├── config.yaml              # Snakemake configuration
 ├── environment.yaml         # Conda environment
 ├── scripts/
-│   └── download_assembly.py # Download assemblies from NCBI
-├── data/
-│   ├── example_database.fasta   # Reference nucleotide database
-│   ├── cazavi_proteins.fasta    # CAZAVI resistance proteins for miniprot
-│   └── primers.tsv              # Primer sequences for amplicon detection
+│   ├── download_assembly.py      # Download assemblies from NCBI
+│   └── simulate_esbl_genomes.py  # Download real ESBL genomes and simulate resistance
 ├── tests/                   # Unit test suite (194 tests)
 │   ├── conftest.py
 │   ├── test_blast_parsing.py
@@ -42,6 +44,7 @@ resistance-detector/
 │   ├── test_miniprot_parsing.py
 │   └── test_mutation_detection.py
 ├── example_results/         # Example outputs
+├── LICENSE
 └── README.md
 ```
 
@@ -54,20 +57,29 @@ resistance-detector/
 - **SeqKit**
 - **Python 3** with **Biopython**
 
-### Option 1: Conda (Recommended)
+### Option 1: pip (Recommended)
+
+```bash
+pip install fos-cazavi
+```
+
+This installs the `fos-cazavi` command and bundles the reference data files (`cazavi_proteins.fasta`, `primers.tsv`). System tools (BLAST+, miniprot, seqkit) must still be installed separately.
+
+### Option 2: Conda
 
 ```bash
 conda env create -f environment.yaml
 conda activate resistance_detector
+pip install -e .
 ```
 
-### Option 2: Pixi
+### Option 3: Pixi
 
 ```bash
 pixi install
 ```
 
-### Option 3: Manual Installation
+### Option 4: Manual Installation
 
 ```bash
 # Install system dependencies
@@ -79,7 +91,7 @@ sudo apt-get install ncbi-blast+
 # Install Python dependencies
 pip install biopython
 
-# Make script executable
+# Make script executable (for running directly from the repo)
 chmod +x fos-cazavi
 ```
 
@@ -90,20 +102,18 @@ chmod +x fos-cazavi
 Download sequences from NCBI (AMRfinderPlus) and build the database:
 
 ```bash
-./fos-cazavi create-db -e your.email@example.com -o resistance_db
+fos-cazavi create-db -e your.email@example.com -o resistance_db
 ```
 
 ### 2. Run Full Analysis
 
-Detect acquired genes, mutations, and amplicons:
+Detect acquired genes, mutations, and amplicons (bundled proteins and primers are used by default):
 
 ```bash
-./fos-cazavi fos-cazavi-all \
+fos-cazavi fos-cazavi-all \
     -a your_assembly.fasta \
     -d resistance_db.fasta \
-    -o results \
-    --proteins data/cazavi_proteins.fasta \
-    --primers data/primers.tsv
+    -o results
 ```
 
 ## Usage
@@ -116,14 +126,14 @@ The tool is divided into subcommands:
 Creates the reference database.
 
 ```bash
-./fos-cazavi create-db -e <email> -o <output_prefix>
+fos-cazavi create-db -e <email> -o <output_prefix>
 ```
 
 #### `fos-cazavi-acquired`
 Detects acquired resistance genes using BLAST.
 
 ```bash
-./fos-cazavi fos-cazavi-acquired \
+fos-cazavi fos-cazavi-acquired \
     -a <assembly> \
     -d <database> \
     -o <output_prefix> \
@@ -132,25 +142,27 @@ Detects acquired resistance genes using BLAST.
 
 #### `fos-cazavi-mutations`
 Detects mutations using Miniprot (protein alignment) and SeqKit (amplicon detection).
+`--proteins` and `--primers` default to the bundled reference files.
 
 ```bash
-./fos-cazavi fos-cazavi-mutations \
+fos-cazavi fos-cazavi-mutations \
     -a <assembly> \
     -o <output_prefix> \
-    --proteins <proteins.fasta> \
-    --primers <primers.tsv>
+    [--proteins <proteins.fasta>] \
+    [--primers <primers.tsv>]
 ```
 
 #### `fos-cazavi-all`
 Runs the complete pipeline (acquired + mutations).
+`--proteins` and `--primers` default to the bundled reference files.
 
 ```bash
-./fos-cazavi fos-cazavi-all \
+fos-cazavi fos-cazavi-all \
     -a <assembly> \
     -d <database> \
     -o <output_prefix> \
-    --proteins <proteins.fasta> \
-    --primers <primers.tsv>
+    [--proteins <proteins.fasta>] \
+    [--primers <primers.tsv>]
 ```
 
 ## Output Files
@@ -210,7 +222,7 @@ contig_plasmid3_blaOXA48	blaOXA-48	100.00	100.00	P68D,Y211A	BLAST
 Install dependencies and run the full test suite:
 
 ```bash
-pip install pytest biopython
+pip install "fos-cazavi[dev]"
 python -m pytest tests/ -v
 ```
 
@@ -310,16 +322,14 @@ python scripts/download_assembly.py GCA_000281535.1
 python scripts/download_assembly.py GCA_000281535.1
 
 # 2. Create BLAST database (fetches real sequences from NCBI)
-./fos-cazavi create-db -e your.email@example.com -o resistance_db
+fos-cazavi create-db -e your.email@example.com -o resistance_db
 makeblastdb -in resistance_db.fasta -dbtype nucl -out resistance_db
 
-# 3. Run full analysis
-./fos-cazavi fos-cazavi-all \
+# 3. Run full analysis (bundled proteins and primers used by default)
+fos-cazavi fos-cazavi-all \
     -a GCA_000281535.1.fasta \
     -d resistance_db \
-    -o kpnih1_results \
-    --proteins data/cazavi_proteins.fasta \
-    --primers data/primers.tsv
+    -o kpnih1_results
 
 # 4. View summary
 cat kpnih1_results_summary.txt
@@ -332,7 +342,7 @@ Expected output for KPNIH1 will include blaKPC-3 at ≥99% identity with CAZAVI 
 If you do not have a real assembly, generate synthetic test genomes that embed all resistance scenarios:
 
 ```bash
-python create_test_genomes.py
+python create_test_genomes.py  # produces test_genomes/ directory
 ```
 
 This produces FASTA files in `test_genomes/` covering negative controls, single-gene plasmidic/chromosomal scenarios, and a multi-resistance genome (fosA3 + blaKPC-3 + blaOXA-48).

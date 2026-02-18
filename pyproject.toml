@@ -1,0 +1,49 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[project]
+name = "fos-cazavi"
+version = "0.1.0"
+description = "Detect fosfomycin and ceftazidime-avibactam resistance genes and mutations from bacterial genome assemblies"
+readme = "README.md"
+license = { text = "MIT" }
+requires-python = ">=3.8"
+dependencies = [
+    "biopython>=1.78",
+]
+keywords = [
+    "bioinformatics",
+    "antibiotic resistance",
+    "genomics",
+    "BLAST",
+    "fosfomycin",
+    "ceftazidime-avibactam",
+]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Scientific/Engineering :: Bio-Informatics",
+    "Operating System :: POSIX :: Linux",
+    "Operating System :: MacOS",
+]
+
+[project.optional-dependencies]
+dev = ["pytest>=7.0"]
+
+[project.scripts]
+fos-cazavi = "fos_cazavi.cli:main"
+
+[project.urls]
+Repository = "https://github.com/motroy/resistance-detector"
+Issues = "https://github.com/motroy/resistance-detector/issues"
+
+[tool.hatch.build.targets.wheel]
+packages = ["fos_cazavi"]

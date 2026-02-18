@@ -6,6 +6,10 @@ from .acquired import run_acquired_detection
 from .mutations import run_mutation_detection
 from .utils import setup_logger, log_tool_versions
 
+_DATA_DIR = Path(__file__).parent / 'data'
+_DEFAULT_PROTEINS = str(_DATA_DIR / 'cazavi_proteins.fasta')
+_DEFAULT_PRIMERS = str(_DATA_DIR / 'primers.tsv')
+
 def write_summary(output_prefix, assembly, blast_results, miniprot_results, amplicon_results):
     """Write a summary of detected resistance mechanisms"""
     summary_file = f"{output_prefix}_summary.txt"
@@ -205,16 +209,16 @@ def main():
 
     # mutations
     parser_mut = subparsers.add_parser('fos-cazavi-mutations', parents=[parent_parser], help='Detect resistance mutations (Miniprot/Amplicons)')
-    parser_mut.add_argument('--proteins', help='Protein sequences for miniprot (FASTA)')
-    parser_mut.add_argument('--primers', help='Primers definitions file (TSV)')
+    parser_mut.add_argument('--proteins', default=_DEFAULT_PROTEINS, help=f'Protein sequences for miniprot (FASTA) [default: bundled]')
+    parser_mut.add_argument('--primers', default=_DEFAULT_PRIMERS, help=f'Primers definitions file (TSV) [default: bundled]')
     parser_mut.set_defaults(func=handle_mutations)
 
     # all
     parser_all = subparsers.add_parser('fos-cazavi-all', parents=[parent_parser], help='Run full detection pipeline')
     parser_all.add_argument('-d', '--database', required=True, help='Resistance gene database (FASTA)')
     parser_all.add_argument('--mutations', help='Mutation definitions file (TSV)')
-    parser_all.add_argument('--primers', help='Primers definitions file (TSV)')
-    parser_all.add_argument('--proteins', help='Protein sequences for miniprot (FASTA)')
+    parser_all.add_argument('--primers', default=_DEFAULT_PRIMERS, help=f'Primers definitions file (TSV) [default: bundled]')
+    parser_all.add_argument('--proteins', default=_DEFAULT_PROTEINS, help=f'Protein sequences for miniprot (FASTA) [default: bundled]')
     parser_all.add_argument('--min_id', type=float, default=90.0, help='Minimum percent identity (default: 90)')
     parser_all.add_argument('--min_cov', type=float, default=80.0, help='Minimum percent coverage (default: 80)')
     parser_all.set_defaults(func=handle_all)

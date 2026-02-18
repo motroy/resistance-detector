@@ -30,6 +30,19 @@ resistance_db_mutations.tsv
 downloaded_genomes/
 simulated_genomes/
 
+# Generated results
+results/
+
+# Downloaded/generated genome and database files
+GC[AF]_*.fasta
+real_resistance_db.*
+*.log
+
 # Pixi
 .pixi/
 pixi.lock
+
+# Python packaging build artifacts
+dist/
+build/
+*.egg-info/

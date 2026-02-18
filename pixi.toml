@@ -12,4 +12,5 @@ seqkit = ">=2.3"
 miniprot = ">=0.13"
 
 [tasks]
-simulate = "PYTHONPATH=. python example_results/simulate_esbl_genomes.py"
+simulate = "PYTHONPATH=. python scripts/simulate_esbl_genomes.py"
+test = "python -m pytest tests/ -v"
