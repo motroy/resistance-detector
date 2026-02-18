@@ -1,9 +1,11 @@
 import sys
+import os
 import subprocess
 from pathlib import Path
 from collections import defaultdict
 import re
-from .utils import load_primers
+from .utils import load_primers, detect_mutations as _detect_mutations, KNOWN_MUTATIONS
+
 
 class MutationDetector:
     def __init__(self, assembly, output_prefix, proteins_file=None, primers_file=None):
@@ -13,6 +15,8 @@ class MutationDetector:
         self.primers_file = primers_file
         self.miniprot_results = []
         self.amplicon_results = []
+        self.seqkit_mut_results = []
+        self.unified_results = []
 
         if primers_file:
             self.primers = load_primers(primers_file)
@@ -142,6 +146,297 @@ class MutationDetector:
                 position += 1
 
         return mutations
+
+    @staticmethod
+    def _normalize_gene_name(gene_name):
+        """
+        Normalize gene name for cross-method comparison.
+
+        Handles both primer-style names ('uhpB', 'blaKPC') and miniprot
+        protein FASTA ID style ('acrB_WP_002892069.1', 'blaKPC-3').
+        Returns a lowercase base gene name for comparison.
+        """
+        # Strip accession suffix (e.g., acrB_WP_002892069.1 -> acrB)
+        base = gene_name.split('_')[0]
+        # Strip numeric variant suffix after hyphen (e.g., blaKPC-3 -> blaKPC)
+        base = base.split('-')[0]
+        # For bla genes, strip trailing digits from the class part (e.g., blaOXA -> blaOXA)
+        if base.lower().startswith('bla'):
+            base = 'bla' + base[3:].rstrip('0123456789')
+        return base.lower()
+
+    def _extract_pair_id_from_header(self, header, valid_pairs):
+        """
+        Extract pair_id from a seqkit amplicon FASTA header.
+
+        Seqkit amplicon headers embed the primer pair name in the header
+        (e.g., '>contig1_uhpB_ver:100-500'). Scans known pair IDs.
+        """
+        for pair_id in valid_pairs:
+            if pair_id in header:
+                return pair_id
+        return None
+
+    def _build_primer_pairs(self):
+        """
+        Group primers into forward/reverse pairs from self.primers.
+        Returns {pair_id: {'F': seq, 'R': seq, 'gene': str, 'mutation': str}}.
+        """
+        pairs = defaultdict(dict)
+        for name, info in self.primers.items():
+            pair_id = info.get('pair_id')
+            if not pair_id or pair_id == '-':
+                continue
+
+            gene = info.get('gene', '') or ''
+            mutation_anno = info.get('mutation')
+
+            if pair_id not in pairs:
+                pairs[pair_id] = {
+                    'gene': gene,
+                    'mutation': mutation_anno,
+                }
+
+            # Determine forward/reverse using the same heuristics as detect_amplicons
+            if name.endswith('_F') or 'Fwd' in name or '-F' in name or '_F' in name:
+                pairs[pair_id]['F'] = info['seq']
+                pairs[pair_id]['F_name'] = name
+            elif name.endswith('_R') or 'Rev' in name or '-R' in name or '_R' in name:
+                pairs[pair_id]['R'] = info['seq']
+                pairs[pair_id]['R_name'] = name
+        return pairs
+
+    def detect_seqkit_mutations(self):
+        """
+        Detect resistance mutations using the seqkit amplicon method.
+
+        Runs seqkit amplicon to extract amplicon sequences, then:
+        - For mutation-annotated primer pairs: amplicon presence confirms
+          the annotated mutation (primer is mutation-specific).
+        - For gene-verification primer pairs: translates the amplicon in
+          all 3 frames and calls detect_mutations() to find mutations.
+
+        Returns a list of dicts:
+            {gene, pair_id, mutations (list), method='seqkit'}
+        """
+        if not self.primers:
+            return []
+
+        print("Running seqkit amplicon for mutation-level detection...")
+
+        pairs = self._build_primer_pairs()
+
+        # Keep only pairs that have both primers and a gene annotation
+        _skip_purposes = ('deletion', 'cloning', 'pBAD', 'pDS', 'RT-qPCR', 'Quantification')
+        valid_pairs = {}
+        for pid, p in pairs.items():
+            if 'F' not in p or 'R' not in p:
+                continue
+            gene = p.get('gene', '') or ''
+            if not gene or gene in ('-', ''):
+                continue
+            # Skip cloning/RT-qPCR pairs that are not for mutation/gene verification
+            purpose_hint = p.get('mutation', '') or ''
+            if any(skip in purpose_hint for skip in _skip_purposes):
+                continue
+            valid_pairs[pid] = p
+
+        if not valid_pairs:
+            print("  No valid primer pairs for seqkit mutation detection")
+            return []
+
+        seqkit_primer_file = f"{self.output_prefix}_seqkit_mut_primers.tsv"
+        with open(seqkit_primer_file, 'w') as f:
+            for pair_id, p in valid_pairs.items():
+                f.write(f"{pair_id}\t{p['F']}\t{p['R']}\n")
+
+        seqkit_mut_results = []
+
+        try:
+            result = subprocess.run(
+                ['seqkit', 'amplicon', '-p', seqkit_primer_file, self.assembly],
+                capture_output=True, text=True
+            )
+
+            if not result.stdout.strip():
+                print("  SeqKit: no amplicons found")
+                return []
+
+            # Parse FASTA output
+            current_header = None
+            current_seq_parts = []
+            amplicons = []
+
+            for line in result.stdout.strip().split('\n'):
+                if line.startswith('>'):
+                    if current_header is not None and current_seq_parts:
+                        amplicons.append((current_header, ''.join(current_seq_parts)))
+                    current_header = line[1:]
+                    current_seq_parts = []
+                else:
+                    current_seq_parts.append(line.strip())
+
+            if current_header is not None and current_seq_parts:
+                amplicons.append((current_header, ''.join(current_seq_parts)))
+
+            print(f"  SeqKit: found {len(amplicons)} amplicons for mutation analysis")
+
+            for header, seq in amplicons:
+                pair_id = self._extract_pair_id_from_header(header, valid_pairs)
+                if not pair_id:
+                    continue
+
+                p = valid_pairs[pair_id]
+                gene = p.get('gene', '')
+                mutation_anno = p.get('mutation')
+
+                if not gene or gene in ('-', ''):
+                    continue
+
+                mutations_found = []
+
+                if mutation_anno and mutation_anno.strip() and mutation_anno.strip() not in ('-', ''):
+                    # Mutation-specific primer: amplicon presence = mutation confirmed.
+                    # Annotation format: "<gene> <MutName>" e.g. "uhpB G469R"
+                    parts = mutation_anno.strip().split()
+                    # Exclude non-mutation annotations
+                    skip_words = {'deletion', 'cloning', 'verification', 'expression', 'expression(reverse)'}
+                    if len(parts) >= 2 and not any(w.lower() in skip_words for w in parts):
+                        mut_name = parts[-1]  # e.g. "G469R"
+                        mutations_found = [mut_name]
+                else:
+                    # Gene-level verification primer: translate & check for mutations.
+                    # Try all 3 reading frames to account for different amplicon starts.
+                    seen = set()
+                    for frame in range(3):
+                        frame_seq = seq[frame:]
+                        frame_muts = _detect_mutations(gene, frame_seq, KNOWN_MUTATIONS)
+                        for m in frame_muts:
+                            if m not in seen:
+                                seen.add(m)
+                                mutations_found.append(m)
+
+                if mutations_found:
+                    seqkit_mut_results.append({
+                        'gene': gene,
+                        'pair_id': pair_id,
+                        'mutations': mutations_found,
+                        'method': 'seqkit',
+                    })
+
+        except FileNotFoundError:
+            print("WARNING: seqkit not found, skipping seqkit mutation analysis")
+        except subprocess.CalledProcessError as e:
+            print(f"WARNING: seqkit amplicon failed: {e.stderr}", file=sys.stderr)
+        finally:
+            try:
+                os.remove(seqkit_primer_file)
+            except Exception:
+                pass
+
+        self.seqkit_mut_results = seqkit_mut_results
+        gene_count = len({r['gene'] for r in seqkit_mut_results})
+        print(f"  SeqKit: mutations detected across {gene_count} gene(s), "
+              f"{len(seqkit_mut_results)} amplicon(s)")
+        return seqkit_mut_results
+
+    def merge_detection_results(self, seqkit_mut_results):
+        """
+        Merge miniprot and seqkit mutation results with confidence scores.
+
+        Confidence scoring:
+          - 100% : mutation found by BOTH miniprot AND seqkit
+          -  50% : mutation found by only ONE method
+
+        Returns a list of dicts (sorted by gene then mutation):
+        {
+            'gene'            : normalized gene name (str),
+            'mutation'        : mutation string e.g. 'D179Y' (str),
+            'confidence'      : 50 or 100 (int),
+            'methods'         : list of method names, e.g. ['miniprot', 'seqkit'],
+            'miniprot_detail' : matching miniprot result dict, or None,
+            'seqkit_detail'   : matching seqkit result dict, or None,
+        }
+        """
+        # Index miniprot results by normalized (gene, mutation)
+        miniprot_by_key = {}
+        for r in self.miniprot_results:
+            gene_norm = self._normalize_gene_name(r['protein'])
+            for mut in r.get('mutations', []):
+                key = (gene_norm, mut)
+                if key not in miniprot_by_key:
+                    miniprot_by_key[key] = r
+
+        # Index seqkit results by normalized (gene, mutation)
+        seqkit_by_key = {}
+        for r in seqkit_mut_results:
+            gene_norm = self._normalize_gene_name(r['gene'])
+            for mut in r.get('mutations', []):
+                key = (gene_norm, mut)
+                if key not in seqkit_by_key:
+                    seqkit_by_key[key] = r
+
+        all_keys = set(miniprot_by_key.keys()) | set(seqkit_by_key.keys())
+
+        unified = []
+        for (gene, mutation) in sorted(all_keys):
+            in_miniprot = (gene, mutation) in miniprot_by_key
+            in_seqkit = (gene, mutation) in seqkit_by_key
+
+            methods = []
+            if in_miniprot:
+                methods.append('miniprot')
+            if in_seqkit:
+                methods.append('seqkit')
+
+            confidence = 100 if (in_miniprot and in_seqkit) else 50
+
+            unified.append({
+                'gene': gene,
+                'mutation': mutation,
+                'confidence': confidence,
+                'methods': methods,
+                'miniprot_detail': miniprot_by_key.get((gene, mutation)),
+                'seqkit_detail': seqkit_by_key.get((gene, mutation)),
+            })
+
+        self.unified_results = unified
+        return unified
+
+    def write_unified_report(self):
+        """Write the unified dual-method mutation report (TSV)."""
+        if not self.unified_results:
+            return
+
+        report_file = f"{self.output_prefix}_unified_mutations.tsv"
+        print(f"Writing unified mutation report to {report_file}...")
+
+        with open(report_file, 'w') as f:
+            f.write('\t'.join([
+                'Gene', 'Mutation', 'Confidence(%)', 'Methods',
+                'Miniprot_Contig', 'Miniprot_Identity(%)', 'Miniprot_Coverage(%)',
+                'SeqKit_PairID',
+            ]) + '\n')
+
+            for r in self.unified_results:
+                mp = r['miniprot_detail']
+                sk = r['seqkit_detail']
+
+                mp_contig = mp['contig'] if mp else '-'
+                mp_identity = f"{mp['identity']:.2f}" if mp else '-'
+                mp_coverage = f"{mp['coverage']:.2f}" if mp else '-'
+                sk_pair = sk['pair_id'] if sk else '-'
+
+                f.write('\t'.join([
+                    r['gene'],
+                    r['mutation'],
+                    str(r['confidence']),
+                    '+'.join(r['methods']),
+                    mp_contig,
+                    mp_identity,
+                    mp_coverage,
+                    sk_pair,
+                ]) + '\n')
 
     def detect_amplicons(self):
         """Detect amplicons using seqkit amplicon"""
@@ -306,13 +601,29 @@ class MutationDetector:
                 ]) + '\n')
 
     def run(self, blast_results=None):
+        """
+        Run the full mutation detection pipeline:
+          1. miniprot  – protein-to-genome alignment, CS-tag mutation parsing
+          2. seqkit    – amplicon extraction + sequence-level mutation detection
+          3. merge     – cross-reference both methods, assign confidence scores
+          4. seqkit BED – amplicon location detection (cross-ref with BLAST)
+
+        Returns:
+            (miniprot_results, amplicon_results, seqkit_mut_results, unified_results)
+        """
         self.run_miniprot()
+        seqkit_mut_results = self.detect_seqkit_mutations()
+        unified_results = self.merge_detection_results(seqkit_mut_results)
+
         self.detect_amplicons()
         self.analyze_amplicons(blast_results)
 
         self.write_miniprot_report()
         self.write_amplicon_report()
-        return self.miniprot_results, self.amplicon_results
+        self.write_unified_report()
+
+        return self.miniprot_results, self.amplicon_results, seqkit_mut_results, unified_results
+
 
 def run_mutation_detection(assembly, output, proteins, primers, blast_results=None):
     detector = MutationDetector(assembly, output, proteins, primers)

@@ -10,7 +10,9 @@ _DATA_DIR = Path(__file__).parent / 'data'
 _DEFAULT_PROTEINS = str(_DATA_DIR / 'cazavi_proteins.fasta')
 _DEFAULT_PRIMERS = str(_DATA_DIR / 'primers.tsv')
 
-def write_summary(output_prefix, assembly, blast_results, miniprot_results, amplicon_results):
+
+def write_summary(output_prefix, assembly, blast_results, miniprot_results,
+                  amplicon_results, seqkit_mut_results=None, unified_results=None):
     """Write a summary of detected resistance mechanisms"""
     summary_file = f"{output_prefix}_summary.txt"
 
@@ -77,6 +79,36 @@ def write_summary(output_prefix, assembly, blast_results, miniprot_results, ampl
             if not blast_results:
                 f.write("No resistance genes detected\n")
 
+        # ── Unified dual-method mutation detection ────────────────────────────
+        if unified_results:
+            f.write("\n")
+            f.write("MUTATION DETECTION SUMMARY (Dual-Method):\n")
+            f.write("Methods: Miniprot (protein alignment) + SeqKit (amplicon)\n")
+            f.write("Confidence: 100% = detected by both methods; "
+                    "50% = detected by one method\n")
+            f.write("-" * 70 + '\n')
+
+            # Group by gene for readability
+            from collections import defaultdict
+            by_gene = defaultdict(list)
+            for r in unified_results:
+                by_gene[r['gene']].append(r)
+
+            for gene in sorted(by_gene):
+                f.write(f"\n  Gene: {gene}\n")
+                for r in by_gene[gene]:
+                    methods_str = '+'.join(r['methods'])
+                    f.write(f"    {r['mutation']:<15} "
+                            f"Confidence: {r['confidence']:>3}%  "
+                            f"[{methods_str}]\n")
+            f.write('\n')
+        elif miniprot_results is not None or (seqkit_mut_results is not None):
+            # At least one method ran but found no cross-confirmed mutations
+            f.write("\n")
+            f.write("MUTATION DETECTION SUMMARY (Dual-Method):\n")
+            f.write("-" * 70 + '\n')
+            f.write("  No resistance mutations detected by miniprot or seqkit.\n\n")
+
         if amplicon_results:
             f.write("\n")
             f.write("DETECTED AMPLICONS:\n")
@@ -95,7 +127,7 @@ def write_summary(output_prefix, assembly, blast_results, miniprot_results, ampl
 
         if miniprot_results:
             f.write("\n")
-            f.write("PROTEIN MUTATION ANALYSIS:\n")
+            f.write("PROTEIN MUTATION ANALYSIS (Miniprot):\n")
             f.write("Method: Miniprot (protein-to-genome alignment)\n")
             f.write("-" * 50 + '\n')
             f.write("Reference: doi.org/10.3389/fcimb.2025.1645042\n\n")
@@ -124,10 +156,12 @@ def write_summary(output_prefix, assembly, blast_results, miniprot_results, ampl
                     else:
                         f.write("    No mutations detected\n")
 
+
 def handle_create_db(args):
     # Setup logging
     logger = setup_logger(args.output, args)
     create_db(args.email, args.output)
+
 
 def handle_acquired(args):
     logger = setup_logger(args.output, args)
@@ -144,20 +178,26 @@ def handle_acquired(args):
     # Write summary only for acquired part
     write_summary(args.output, args.assembly, blast_results, None, None)
 
+
 def handle_mutations(args):
     logger = setup_logger(args.output, args)
     log_tool_versions(logger)
 
-    # This command runs miniprot and amplicons.
-    # It does not run BLAST, so amplicon cross-referencing is limited.
-    miniprot_results, amplicon_results = run_mutation_detection(
-        args.assembly,
-        args.output,
-        args.proteins,
-        args.primers,
-        blast_results=None
+    # Run miniprot + seqkit mutation detection with cross-method confidence scoring
+    miniprot_results, amplicon_results, seqkit_mut_results, unified_results = \
+        run_mutation_detection(
+            args.assembly,
+            args.output,
+            args.proteins,
+            args.primers,
+            blast_results=None
+        )
+    write_summary(
+        args.output, args.assembly,
+        None, miniprot_results, amplicon_results,
+        seqkit_mut_results, unified_results
     )
-    write_summary(args.output, args.assembly, None, miniprot_results, amplicon_results)
+
 
 def handle_all(args):
     logger = setup_logger(args.output, args)
@@ -173,16 +213,22 @@ def handle_all(args):
         args.mutations
     )
 
-    # Run Mutations (Miniprot + Amplicons) with BLAST results for cross-ref
-    miniprot_results, amplicon_results = run_mutation_detection(
-        args.assembly,
-        args.output,
-        args.proteins,
-        args.primers,
-        blast_results=blast_results
+    # Run Mutations (Miniprot + SeqKit) with BLAST results for cross-ref
+    miniprot_results, amplicon_results, seqkit_mut_results, unified_results = \
+        run_mutation_detection(
+            args.assembly,
+            args.output,
+            args.proteins,
+            args.primers,
+            blast_results=blast_results
+        )
+
+    write_summary(
+        args.output, args.assembly,
+        blast_results, miniprot_results, amplicon_results,
+        seqkit_mut_results, unified_results
     )
 
-    write_summary(args.output, args.assembly, blast_results, miniprot_results, amplicon_results)
 
 def main():
     parser = argparse.ArgumentParser(description='FOS-CAZAVI Resistance Detector CLI')
@@ -208,7 +254,7 @@ def main():
     parser_acq.set_defaults(func=handle_acquired)
 
     # mutations
-    parser_mut = subparsers.add_parser('fos-cazavi-mutations', parents=[parent_parser], help='Detect resistance mutations (Miniprot/Amplicons)')
+    parser_mut = subparsers.add_parser('fos-cazavi-mutations', parents=[parent_parser], help='Detect resistance mutations (Miniprot/SeqKit dual-method)')
     parser_mut.add_argument('--proteins', default=_DEFAULT_PROTEINS, help=f'Protein sequences for miniprot (FASTA) [default: bundled]')
     parser_mut.add_argument('--primers', default=_DEFAULT_PRIMERS, help=f'Primers definitions file (TSV) [default: bundled]')
     parser_mut.set_defaults(func=handle_mutations)
@@ -225,6 +271,7 @@ def main():
 
     args = parser.parse_args()
     args.func(args)
+
 
 if __name__ == '__main__':
     main()
