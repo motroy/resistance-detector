@@ -167,6 +167,10 @@ class MutationDetector:
         # For bla genes, strip trailing digits from the class part (e.g., blaOXA -> blaOXA)
         if base.lower().startswith('bla'):
             base = 'bla' + base[3:].rstrip('0123456789')
+        # For fosA variants with numeric suffixes: fosA3/4/5/7/11 -> fosA
+        # fosAKP is unaffected because 'KP' contains no digits.
+        elif re.match(r'^fosA\d+$', base, re.IGNORECASE):
+            base = base.rstrip('0123456789')
         return base.lower()
 
     def _extract_pair_id_from_header(self, header, valid_pairs):
