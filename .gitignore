@@ -41,3 +41,8 @@ real_resistance_db.*
 # Pixi
 .pixi/
 pixi.lock
+
+# Python packaging build artifacts
+dist/
+build/
+*.egg-info/
