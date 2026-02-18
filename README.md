@@ -6,10 +6,10 @@ A CLI tool for detecting fosfomycin (FOS) and ceftazidime-avibactam (CAZAVI) res
 
 - **Modular CLI**: Separate commands for database creation, acquired gene detection, and mutation analysis.
 - **Gene Detection**: Identifies resistance genes (fosA variants, blaKPC, blaOXA-48, etc.) using BLAST+.
-- **Mutation Detection**: Detects known resistance mutations (D179Y, V240G, T243M, etc.) and analyzes protein mutations using miniprot.
+- **Mutation Detection**: Detects known resistance mutations (D179Y, V240G, T243M, etc.) using GAMMA (protein-level gene alignment via translated nucleotide CDS) and SeqKit amplicon analysis.
 - **Amplicon Detection**: Uses seqkit amplicon to find PCR products from primer pairs and checks them for resistance mutations.
 - **Sequence Extraction**: Outputs detected gene sequences to FASTA.
-- **Multiple Output Formats**: TSV results, human-readable summary, and raw BLAST/Miniprot output.
+- **Multiple Output Formats**: TSV results, human-readable summary, and raw BLAST/GAMMA output.
 - **Logging**: Comprehensive logging of commands, parameters, and tool versions.
 
 ## Repository Structure
@@ -21,11 +21,10 @@ resistance-detector/
 │   ├── cli.py               # CLI entry point
 │   ├── db.py                # Database creation module
 │   ├── acquired.py          # BLAST-based detection module
-│   ├── mutations.py         # Miniprot/Amplicon detection module
+│   ├── mutations.py         # GAMMA/Amplicon detection module
 │   ├── utils.py             # Shared utilities
 │   └── data/                # Bundled reference data
-│       ├── example_database.fasta   # Example nucleotide database
-│       ├── cazavi_proteins.fasta    # CAZAVI resistance proteins for miniprot
+│       ├── example_database.fasta   # Example nucleotide CDS database (for GAMMA)
 │       └── primers.tsv              # Primer sequences for amplicon detection
 ├── fos-cazavi               # Executable script (for repo use without install)
 ├── pyproject.toml           # PyPI package configuration
@@ -40,8 +39,7 @@ resistance-detector/
 ├── tests/                   # Unit test suite (194 tests)
 │   ├── conftest.py
 │   ├── test_blast_parsing.py
-│   ├── test_genome_creation.py
-│   ├── test_miniprot_parsing.py
+│   ├── test_gamma_parsing.py
 │   └── test_mutation_detection.py
 ├── example_results/         # Example outputs
 ├── LICENSE
@@ -53,7 +51,8 @@ resistance-detector/
 ### Prerequisites
 
 - **NCBI BLAST+**
-- **Miniprot**
+- **GAMMA** (Gene Allele Mutation Microbial Assessment)
+- **GAMMA_DB_Maker** (for preparing nucleotide databases for GAMMA)
 - **SeqKit**
 - **Python 3** with **Biopython**
 
@@ -63,7 +62,7 @@ resistance-detector/
 pip install fos-cazavi
 ```
 
-This installs the `fos-cazavi` command and bundles the reference data files (`cazavi_proteins.fasta`, `primers.tsv`). System tools (BLAST+, miniprot, seqkit) must still be installed separately.
+This installs the `fos-cazavi` command and bundles the reference data files (`example_database.fasta`, `primers.tsv`). System tools (BLAST+, GAMMA, seqkit) must still be installed separately.
 
 ### Option 2: Conda
 
@@ -82,7 +81,7 @@ pixi install
 ### Option 4: Manual Installation
 
 ```bash
-# Install system dependencies
+# Install system dependencies (BLAST+, GAMMA, SeqKit, GAMMA_DB_Maker)
 bash install_deps.sh
 
 # Install Python dependencies
@@ -96,15 +95,17 @@ chmod +x fos-cazavi
 
 ### 1. Create Reference Database
 
-Download sequences from NCBI (AMRfinderPlus) and build the database:
+Download sequences from NCBI (AMRfinderPlus) and build the database. The `create-db` command fetches nucleotide CDS sequences and then runs GAMMA_DB_Maker to prepare a properly formatted GAMMA database:
 
 ```bash
 fos-cazavi create-db -e your.email@example.com -o resistance_db
 ```
 
+This produces `resistance_db.fasta` (raw nucleotide CDS) and `resistance_db_Formatted.fasta` (GAMMA-ready database). Use `resistance_db_Formatted.fasta` with `--genes`.
+
 ### 2. Run Full Analysis
 
-Detect acquired genes, mutations, and amplicons (bundled proteins and primers are used by default):
+Detect acquired genes, mutations, and amplicons (bundled genes and primers are used by default):
 
 ```bash
 fos-cazavi fos-cazavi-all \
@@ -120,7 +121,7 @@ fos-cazavi fos-cazavi-all \
 The tool is divided into subcommands:
 
 #### `create-db`
-Creates the reference database.
+Creates the reference database and prepares it for GAMMA with GAMMA_DB_Maker.
 
 ```bash
 fos-cazavi create-db -e <email> -o <output_prefix>
@@ -138,27 +139,27 @@ fos-cazavi fos-cazavi-acquired \
 ```
 
 #### `fos-cazavi-mutations`
-Detects mutations using Miniprot (protein alignment) and SeqKit (amplicon detection).
-`--proteins` and `--primers` default to the bundled reference files.
+Detects mutations using GAMMA (protein-level alignment of nucleotide CDS) and SeqKit (amplicon detection).
+`--genes` and `--primers` default to the bundled reference files.
 
 ```bash
 fos-cazavi fos-cazavi-mutations \
     -a <assembly> \
     -o <output_prefix> \
-    [--proteins <proteins.fasta>] \
+    [--genes <genes.fasta>] \
     [--primers <primers.tsv>]
 ```
 
 #### `fos-cazavi-all`
 Runs the complete pipeline (acquired + mutations).
-`--proteins` and `--primers` default to the bundled reference files.
+`--genes` and `--primers` default to the bundled reference files.
 
 ```bash
 fos-cazavi fos-cazavi-all \
     -a <assembly> \
     -d <database> \
     -o <output_prefix> \
-    [--proteins <proteins.fasta>] \
+    [--genes <genes.fasta>] \
     [--primers <primers.tsv>]
 ```
 
@@ -172,8 +173,9 @@ fos-cazavi fos-cazavi-all \
 | `*_analysis.log` | Log of command, parameters, and tool versions |
 | `*_blast.txt` | Raw BLAST output |
 | `*_amplicons.tsv` | Amplicon detection results (with --primers) |
-| `*_protein_mutations.tsv` | Protein mutation results (with --proteins) |
-| `*_miniprot.paf` | Raw miniprot PAF output (with --proteins) |
+| `*_protein_mutations.tsv` | Protein mutation results (GAMMA) |
+| `*_gamma_prefix.gamma` | Raw GAMMA output |
+| `*_unified_mutations.tsv` | Unified dual-method mutation report |
 
 ## Example Results
 
@@ -233,7 +235,7 @@ collected 194 items
 194 passed in 8.85s
 ```
 
-**All 194 tests pass.** No external tools (BLAST, miniprot, seqkit) are required to run the tests — all tool-dependent logic is tested via synthetic inputs.
+**All 194 tests pass.** No external tools (BLAST, GAMMA, seqkit) are required to run the tests — all tool-dependent logic is tested via synthetic inputs.
 
 ### Test Coverage Summary
 
@@ -241,7 +243,7 @@ collected 194 items
 |---|---|---|
 | `test_blast_parsing.py` | 22 | BLAST output parsing: identity/coverage filtering, gene name extraction from various ID formats, multi-hit handling, edge cases |
 | `test_genome_creation.py` | 74 | Reference database loading (30 genes verified), `introduce_mutation()` utility, synthetic contig construction for all FOS and CAZAVI genome scenarios |
-| `test_miniprot_parsing.py` | 20 | Miniprot CS-tag parsing for KPC (D179Y, V240G, T243M), OXA-48 (P68A, Y211S), CMY-178 (N70T), porins (OmpK35/36), AcrB, and CS-tag edge cases |
+| `test_gamma_parsing.py` | 20 | GAMMA Codon_Changes field parsing for KPC (D179Y, V240G, T243M), OXA-48 (P68A, Y211S), CMY-178 (N70T), porins (OmpK35/36), AcrB, and gene name normalization |
 | `test_mutation_detection.py` | 78 | `detect_mutations()` for all 27 gene families: wildtype no-call verification plus every documented resistance mutation across FOS and CAZAVI pathways |
 
 ### Genes and Mutations Covered by Tests
@@ -293,7 +295,7 @@ collected 194 items
 
 ### Recommended Public Assemblies
 
-The following NCBI assemblies are well-characterized and can be used to validate the full pipeline end-to-end (requires BLAST+, miniprot, seqkit):
+The following NCBI assemblies are well-characterized and can be used to validate the full pipeline end-to-end (requires BLAST+, GAMMA, seqkit):
 
 | Accession | Organism | Resistance Genes | Use |
 |---|---|---|---|
@@ -318,11 +320,12 @@ python scripts/download_assembly.py GCA_000281535.1
 # 1. Download a KPC-carrying K. pneumoniae assembly
 python scripts/download_assembly.py GCA_000281535.1
 
-# 2. Create BLAST database (fetches real sequences from NCBI)
+# 2. Create and prepare the GAMMA database (fetches real sequences from NCBI,
+#    then runs GAMMA_DB_Maker to validate reading frames and deduplicate)
 fos-cazavi create-db -e your.email@example.com -o resistance_db
 makeblastdb -in resistance_db.fasta -dbtype nucl -out resistance_db
 
-# 3. Run full analysis (bundled proteins and primers used by default)
+# 3. Run full analysis (bundled genes and primers used by default)
 fos-cazavi fos-cazavi-all \
     -a GCA_000281535.1.fasta \
     -d resistance_db \

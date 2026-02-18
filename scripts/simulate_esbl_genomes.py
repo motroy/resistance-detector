@@ -278,15 +278,17 @@ def run_detection(simulated_files, db_prefix):
     logger.info("Running detection on simulated genomes...")
     Path("results").mkdir(exist_ok=True)
     
-    # We also need proteins file for miniprot if we want to test that
-    # It usually comes with the repo in data/cazavi_proteins.fasta
-    proteins_file = "data/cazavi_proteins.fasta"
+    # GAMMA uses a nucleotide CDS database; GAMMA_DB_Maker produces
+    # <prefix>_Formatted.fasta from the raw nucleotide FASTA.
+    gamma_db = f"{db_prefix}_Formatted.fasta"
+    if not Path(gamma_db).exists():
+        gamma_db = f"{db_prefix}.fasta"  # fall back to unformatted
     primers_file = "data/primers.tsv"
-    
+
     for fasta in simulated_files:
         base_name = Path(fasta).stem
         output_base = f"results/{base_name}"
-        
+
         cmd = [
             sys.executable, "-m", "fos_cazavi.cli", "fos-cazavi-all",
             "--assembly", fasta,
@@ -294,9 +296,9 @@ def run_detection(simulated_files, db_prefix):
             "--output", output_base,
             "--mutations", f"{db_prefix}_mutations.tsv"
         ]
-        
-        if Path(proteins_file).exists():
-            cmd.extend(["--proteins", proteins_file])
+
+        if Path(gamma_db).exists():
+            cmd.extend(["--genes", gamma_db])
         if Path(primers_file).exists():
             cmd.extend(["--primers", primers_file])
             

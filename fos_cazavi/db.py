@@ -1,9 +1,19 @@
 """
 Create reference database for FOS-CAZAVI resistance genes
 Uses AMRfinderPlus data to source sequences and mutation definitions.
+
+Database preparation for GAMMA:
+  After building the nucleotide FASTA, run GAMMA_DB_Maker.py to validate
+  reading frames, remove nonstandard bases, and deduplicate sequences:
+
+    python3 GAMMA_DB_Maker.py <output_prefix>.fasta
+
+  The formatted database (<output_prefix>_Formatted.fasta) is then ready
+  for use with GAMMA.  See https://github.com/rastanton/GAMMA_DB_Maker
 """
 
 import csv
+import subprocess
 import urllib.request
 from pathlib import Path
 from Bio import Entrez, SeqIO
@@ -332,29 +342,65 @@ class DatabaseBuilder:
                     'Name': m['name']
                 })
 
+    def prepare_gamma_db(self):
+        """Run GAMMA_DB_Maker on the nucleotide FASTA to prepare it for GAMMA.
+
+        GAMMA_DB_Maker validates reading frames, removes sequences with
+        nonstandard bases, verifies start/stop codons, and deduplicates
+        entries.  The formatted output (<prefix>_Formatted.fasta) is the
+        database to pass to GAMMA via the --genes argument.
+
+        Requires GAMMA_DB_Maker.py to be on PATH or in the current directory.
+        See https://github.com/rastanton/GAMMA_DB_Maker
+        """
+        import shutil
+        gamma_db_maker = shutil.which('GAMMA_DB_Maker.py') or 'GAMMA_DB_Maker.py'
+
+        print(f"Running GAMMA_DB_Maker on {self.output_fasta}...")
+        try:
+            subprocess.run(
+                ['python3', gamma_db_maker, self.output_fasta],
+                check=True
+            )
+            formatted = Path(self.output_fasta).stem + '_Formatted.fasta'
+            if Path(formatted).exists():
+                print(f"GAMMA-formatted database written to {formatted}")
+                print(f"Use '--genes {formatted}' when running GAMMA mutation detection.")
+            else:
+                print("WARNING: GAMMA_DB_Maker ran but formatted output not found; "
+                      f"using {self.output_fasta} directly.")
+        except FileNotFoundError:
+            print("WARNING: GAMMA_DB_Maker.py not found. Skipping database formatting. "
+                  "Download it from https://github.com/rastanton/GAMMA_DB_Maker and run:\n"
+                  f"  python3 GAMMA_DB_Maker.py {self.output_fasta}")
+        except subprocess.CalledProcessError as e:
+            print(f"WARNING: GAMMA_DB_Maker failed: {e}")
+
     def build(self):
         self.download_files()
         self.load_catalog()
         self.load_mutation_defs()
-        
+
         self.fetch_chromosomal_genes()
         self.fetch_manual_genes()
         self.fetch_acquired_genes()
         self.add_manual_mutations()
-        
+
         print(f"Writing sequences to {self.output_fasta}...")
         SeqIO.write(self.sequences, self.output_fasta, "fasta")
 
         if self.protein_sequences:
             print(f"Writing protein sequences to {self.output_proteins}...")
             SeqIO.write(self.protein_sequences, self.output_proteins, "fasta")
-        
+
         print(f"Writing mutations to {self.output_mutations}...")
         with open(self.output_mutations, 'w') as f:
             writer = csv.DictWriter(f, fieldnames=['Gene', 'Position', 'Ref', 'Variant', 'Name'], delimiter='\t')
             writer.writeheader()
             writer.writerows(self.mutations)
-            
+
+        self.prepare_gamma_db()
+
         print("Done!")
 
 def create_db(email, output_prefix):

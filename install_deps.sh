@@ -10,15 +10,18 @@ then
     export PATH=$PWD/ncbi-blast-2.16.0+/bin:$PATH
 fi
 
-# Miniprot
-if ! command -v miniprot &> /dev/null
+# GAMMA (Gene Allele Mutation Microbial Assessment)
+if ! command -v GAMMA.py &> /dev/null
 then
-    echo "Installing Miniprot..."
-    git clone https://github.com/lh3/miniprot
-    cd miniprot
-    make
-    export PATH=$PWD:$PATH
-    cd ..
+    echo "Installing GAMMA..."
+    pip install gamma-amr
+fi
+
+# GAMMA_DB_Maker (database preparation tool for GAMMA)
+if [ ! -f GAMMA_DB_Maker.py ]
+then
+    echo "Downloading GAMMA_DB_Maker..."
+    wget -q https://raw.githubusercontent.com/rastanton/GAMMA_DB_Maker/main/GAMMA_DB_Maker.py
 fi
 
 # SeqKit
