@@ -59,12 +59,18 @@ jobs:
           environment-file: environment.yaml
           auto-activate-base: false
 
+      - name: Download GAMMA_DB_Maker
+        run: |
+          wget -q https://raw.githubusercontent.com/rastanton/GAMMA_DB_Maker/main/GAMMA_DB_Maker.py
+          chmod +x GAMMA_DB_Maker.py
+
       - name: Verify tool availability
         run: |
           python --version
           blastn -version
           GAMMA.py -h | head -1
           seqkit version
+          python GAMMA_DB_Maker.py --help 2>&1 | head -3 || python GAMMA_DB_Maker.py 2>&1 | head -3 || true
           python -m pytest --version
 
       - name: Install package into conda env
