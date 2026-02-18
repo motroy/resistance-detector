@@ -63,7 +63,7 @@ jobs:
         run: |
           python --version
           blastn -version
-          miniprot --version
+          GAMMA.py -h | head -1
           seqkit version
           python -m pytest --version
 

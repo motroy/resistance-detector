@@ -1,40 +1,20 @@
 import sys
 import os
+import csv
 import subprocess
 from pathlib import Path
 from collections import defaultdict
 import re
 from .utils import load_primers, load_mutation_db, detect_mutations as _detect_mutations, KNOWN_MUTATIONS
 
-# Standard codon → amino acid lookup (bacterial genetic code, no start-codon M override).
-# Used to translate the 3-nt genomic codon from real miniprot cs-tag substitutions.
-_CODON_TABLE = {
-    'TTT': 'F', 'TTC': 'F', 'TTA': 'L', 'TTG': 'L',
-    'CTT': 'L', 'CTC': 'L', 'CTA': 'L', 'CTG': 'L',
-    'ATT': 'I', 'ATC': 'I', 'ATA': 'I', 'ATG': 'M',
-    'GTT': 'V', 'GTC': 'V', 'GTA': 'V', 'GTG': 'V',
-    'TCT': 'S', 'TCC': 'S', 'TCA': 'S', 'TCG': 'S',
-    'CCT': 'P', 'CCC': 'P', 'CCA': 'P', 'CCG': 'P',
-    'ACT': 'T', 'ACC': 'T', 'ACA': 'T', 'ACG': 'T',
-    'GCT': 'A', 'GCC': 'A', 'GCA': 'A', 'GCG': 'A',
-    'TAT': 'Y', 'TAC': 'Y', 'TAA': '*', 'TAG': '*',
-    'CAT': 'H', 'CAC': 'H', 'CAA': 'Q', 'CAG': 'Q',
-    'AAT': 'N', 'AAC': 'N', 'AAA': 'K', 'AAG': 'K',
-    'GAT': 'D', 'GAC': 'D', 'GAA': 'E', 'GAG': 'E',
-    'TGT': 'C', 'TGC': 'C', 'TGA': '*', 'TGG': 'W',
-    'CGT': 'R', 'CGC': 'R', 'CGA': 'R', 'CGG': 'R',
-    'AGT': 'S', 'AGC': 'S', 'AGA': 'R', 'AGG': 'R',
-    'GGT': 'G', 'GGC': 'G', 'GGA': 'G', 'GGG': 'G',
-}
-
 
 class MutationDetector:
-    def __init__(self, assembly, output_prefix, proteins_file=None, primers_file=None, mutation_db_file=None):
+    def __init__(self, assembly, output_prefix, genes_file=None, primers_file=None, mutation_db_file=None):
         self.assembly = assembly
         self.output_prefix = output_prefix
-        self.proteins_file = proteins_file
+        self.genes_file = genes_file
         self.primers_file = primers_file
-        self.miniprot_results = []
+        self.gamma_results = []
         self.amplicon_results = []
         self.seqkit_mut_results = []
         self.unified_results = []
@@ -44,7 +24,7 @@ class MutationDetector:
         else:
             self.primers = {}
 
-        # Load mutation database for filtering miniprot results
+        # Load mutation database for filtering GAMMA results
         # Normalize keys to lowercase so lookups via _normalize_gene_name succeed
         raw_db = load_mutation_db(mutation_db_file) if mutation_db_file else KNOWN_MUTATIONS
         self.mutation_db = {
@@ -52,104 +32,100 @@ class MutationDetector:
             for k, v in raw_db.items()
         }
 
-    def run_miniprot(self):
+    def run_gamma(self):
         """
-        Run miniprot to detect mutations in CAZAVI resistance proteins.
+        Run GAMMA to detect mutations in resistance genes.
+
+        GAMMA performs protein-level alignment using nucleotide CDS sequences
+        and reports mutations in the Codon_Changes column of the .gamma output.
         """
-        if not self.proteins_file or not Path(self.proteins_file).exists():
+        if not self.genes_file or not Path(self.genes_file).exists():
             return
 
-        print(f"Running miniprot for protein mutation analysis...")
+        print("Running GAMMA for resistance gene mutation analysis...")
 
-        miniprot_output = f"{self.output_prefix}_miniprot.paf"
+        gamma_output_prefix = f"{self.output_prefix}_gamma"
+        gamma_output_file = f"{gamma_output_prefix}.gamma"
 
-        cmd = [
-            'miniprot',
-            #'--no-cs',  # Output cs tag
-            '--outs=0.95',  # High identity threshold
-            '--outc=0.1', # Output an alignment only if FLOAT fraction of the query protein is aligned [defaul=0.1]
-            '--trans', # Output translated protein sequences on ‘##STA’ lines.
-            '-t', '1',
-            '-j', '0',
-            '-C', '0',
-            '-S',
-            self.assembly,
-            self.proteins_file
-        ]
+        cmd = ['GAMMA.py', self.assembly, self.genes_file, gamma_output_prefix]
 
         try:
             result = subprocess.run(cmd, capture_output=True, text=True, check=True)
 
-            with open(miniprot_output, 'w') as f:
-                f.write(result.stdout)
+            if not Path(gamma_output_file).exists():
+                print("WARNING: GAMMA output file not found")
+                return
 
-            for line in result.stdout.strip().split('\n'):
-                if not line:
-                    continue
+            with open(gamma_output_file, 'r') as f:
+                reader = csv.DictReader(f, delimiter='\t')
+                for row in reader:
+                    # Strip ambiguous match marker (‡) if present
+                    gene_name = row['Gene'].rstrip('\u2021')
+                    contig = row['Contig']
+                    start = int(row['Start'])
+                    stop = int(row['Stop'])
+                    match_type = row['Match_Type']
+                    codon_changes = row.get('Codon_Changes', '0')
+                    codon_percent = float(row['Codon_Percent'])
+                    percent_length = float(row['Percent_Length'])
 
-                fields = line.split('\t')
-                if len(fields) < 12:
-                    continue
+                    identity = codon_percent * 100
+                    coverage = percent_length * 100
 
-                protein_name = fields[0]
-                protein_len = int(fields[1])
-                protein_start = int(fields[2])
-                protein_end = int(fields[3])
-                contig = fields[5]
-                contig_start = int(fields[7])
-                contig_end = int(fields[8])
-                matches = int(fields[9])
-                alignment_len = int(fields[10])
+                    raw_mutations = self._parse_gamma_codon_changes(codon_changes)
+                    mutations = self._filter_known_mutations(raw_mutations, gene_name)
 
-                identity = (matches / alignment_len * 100) if alignment_len > 0 else 0
-                coverage = ((protein_end - protein_start) / protein_len * 100) if protein_len > 0 else 0
+                    self.gamma_results.append({
+                        'protein': gene_name,
+                        'contig': contig,
+                        'contig_start': min(start, stop),
+                        'contig_end': max(start, stop),
+                        'identity': identity,
+                        'coverage': coverage,
+                        'mutations': mutations,
+                        'match_type': match_type,
+                    })
 
-                mutations = []
-                cs_tag = None
-                for field in fields[12:]:
-                    if field.startswith('cs:Z:'):
-                        cs_tag = field[5:]
-                        break
-
-                if cs_tag:
-                    raw_mutations = self.parse_miniprot_cs(cs_tag, protein_name)
-                    mutations = self._filter_known_mutations(raw_mutations, protein_name)
-
-                self.miniprot_results.append({
-                    'protein': protein_name,
-                    'contig': contig,
-                    'contig_start': contig_start,
-                    'contig_end': contig_end,
-                    'protein_start': protein_start,
-                    'protein_end': protein_end,
-                    'identity': identity,
-                    'coverage': coverage,
-                    'mutations': mutations,
-                    'cs_tag': cs_tag
-                })
-
-            print(f"Found {len(self.miniprot_results)} protein alignments")
-            for r in self.miniprot_results:
+            print(f"Found {len(self.gamma_results)} gene alignments")
+            for r in self.gamma_results:
                 if r['mutations']:
                     print(f"  {r['protein']}: {len(r['mutations'])} mutations detected")
 
         except FileNotFoundError:
-            print("WARNING: miniprot not found, skipping protein analysis")
+            print("WARNING: GAMMA not found, skipping gene mutation analysis")
         except subprocess.CalledProcessError as e:
-            print(f"WARNING: miniprot failed: {e.stderr}", file=sys.stderr)
+            print(f"WARNING: GAMMA failed: {e.stderr}", file=sys.stderr)
 
-    def _filter_known_mutations(self, raw_mutations, protein_name):
+    @staticmethod
+    def _parse_gamma_codon_changes(codon_changes):
+        """Parse GAMMA's Codon_Changes field into a list of mutation strings.
+
+        GAMMA reports non-degenerate codon differences as comma-separated
+        substitution strings like 'D179Y,V240G' or '0' for wildtype matches.
+        Only standard amino acid substitution strings (e.g. 'D179Y') are returned;
+        indels, frameshifts, and truncation annotations are skipped.
         """
-        Filter raw CS-tag mutations to only known resistance mutations from mutation_db.
+        if not codon_changes or codon_changes.strip() in ('0', '-', ''):
+            return []
+        mutations = []
+        for mut in codon_changes.split(','):
+            mut = mut.strip()
+            if re.match(r'^[A-Z*]\d+[A-Z*]$', mut):
+                mutations.append(mut)
+        return mutations
 
-        raw_mutations: list of strings from parse_miniprot_cs, e.g. ['D369N', 'G463D']
-        protein_name:  protein FASTA header (e.g. 'acrB_WP_002892069.1' or 'murA')
+    def _filter_known_mutations(self, raw_mutations, gene_name):
+        """
+        Filter raw mutations to only known resistance mutations from mutation_db.
+
+        raw_mutations: list of strings from _parse_gamma_codon_changes, e.g. ['D369N', 'G463D']
+        gene_name:     gene FASTA header (e.g. 'acrB_WP_002892069.1' or 'blaKPC-3')
 
         Returns a list of mutation name strings (from mutation_db) for confirmed
         resistance mutations only.  Unknown positional variants or non-resistance
         positions are dropped.
         """
-        gene_norm = self._normalize_gene_name(protein_name)
+        gene_norm = self._normalize_gene_name(gene_name)
 
         if gene_norm not in self.mutation_db:
             return []
@@ -175,79 +151,13 @@ class MutationDetector:
 
         return filtered
 
-    def parse_miniprot_cs(self, cs_tag, protein_name):
-        """Parse miniprot cs tag to extract mutations.
-
-        Real miniprot encodes substitutions as *{3-nt codon}{uppercase protein AA},
-        e.g. ``*aatD`` means the genome has codon aat (=N) while the query protein
-        has D, corresponding to mutation D369N.
-
-        For backward compatibility with unit tests, the simplified two-character
-        format ``*{lowercase ref AA}{uppercase query AA}`` (e.g. ``*dN``) is also
-        accepted and handled by the fallback branch.
-        """
-        mutations = []
-        position = 1  # 1-indexed amino acid position
-        # Try the real 4-char codon format first, then the simplified 2-char format.
-        pattern = r'(:[0-9]+|\*[acgtn]{3}[A-Z*]|\*[A-Za-z][A-Za-z]|\+[A-Za-z]+|-[a-z]+|~[a-z]+[0-9]+[a-z]+|[a-z]+[A-Z*])'
-
-        for match in re.finditer(pattern, cs_tag):
-            op = match.group(1)
-
-            if op.startswith(':'):
-                num_identical = int(op[1:])
-                position += num_identical
-
-            elif op.startswith('*'):
-                if len(op) == 5:
-                    # Real miniprot format: *{3-nt codon}{protein AA}
-                    # e.g. *aatD → genome has aat(=N), protein has D → D369N
-                    genome_codon = op[1:4].upper()
-                    protein_aa = op[4]
-                    genome_aa = _CODON_TABLE.get(genome_codon, 'X')
-                    if protein_aa != genome_aa:
-                        mutations.append(f"{protein_aa}{position}{genome_aa}")
-                else:
-                    # Simplified test format: *{lowercase ref}{uppercase query}
-                    # e.g. *dY → ref=D, query=Y → D179Y
-                    ref_aa = op[1].upper()
-                    query_aa = op[2].upper()
-                    if ref_aa != query_aa:
-                        mutations.append(f"{ref_aa}{position}{query_aa}")
-                position += 1
-
-            elif op.startswith('+'):
-                inserted = op[1:]
-                mutations.append(f"ins{position}_{inserted}")
-
-            elif op.startswith('-'):
-                deleted_nt = op[1:]
-                deleted_aa_count = len(deleted_nt) // 3
-                if deleted_aa_count > 0:
-                    mutations.append(f"del{position}_{deleted_aa_count}aa")
-                position += deleted_aa_count
-
-            elif op.startswith('~'):
-                pass
-
-            elif op[:-1].islower() and op[-1].isupper():
-                query_aa = op[-1]
-                mutations.append(f"?{position}{query_aa}")
-                position += 1
-
-            elif op[-1] == '*':
-                mutations.append(f"?{position}*")
-                position += 1
-
-        return mutations
-
     @staticmethod
     def _normalize_gene_name(gene_name):
         """
         Normalize gene name for cross-method comparison.
 
-        Handles both primer-style names ('uhpB', 'blaKPC') and miniprot
-        protein FASTA ID style ('acrB_WP_002892069.1', 'blaKPC-3').
+        Handles both primer-style names ('uhpB', 'blaKPC') and GAMMA
+        gene FASTA ID style ('acrB_WP_002892069.1', 'blaKPC-3').
         Returns a lowercase base gene name for comparison.
         """
         # Strip accession suffix (e.g., acrB_WP_002892069.1 -> acrB)
@@ -438,30 +348,30 @@ class MutationDetector:
 
     def merge_detection_results(self, seqkit_mut_results):
         """
-        Merge miniprot and seqkit mutation results with confidence scores.
+        Merge GAMMA and seqkit mutation results with confidence scores.
 
         Confidence scoring:
-          - 100% : mutation found by BOTH miniprot AND seqkit
+          - 100% : mutation found by BOTH GAMMA AND seqkit
           -  50% : mutation found by only ONE method
 
         Returns a list of dicts (sorted by gene then mutation):
         {
-            'gene'            : normalized gene name (str),
-            'mutation'        : mutation string e.g. 'D179Y' (str),
-            'confidence'      : 50 or 100 (int),
-            'methods'         : list of method names, e.g. ['miniprot', 'seqkit'],
-            'miniprot_detail' : matching miniprot result dict, or None,
-            'seqkit_detail'   : matching seqkit result dict, or None,
+            'gene'         : normalized gene name (str),
+            'mutation'     : mutation string e.g. 'D179Y' (str),
+            'confidence'   : 50 or 100 (int),
+            'methods'      : list of method names, e.g. ['gamma', 'seqkit'],
+            'gamma_detail' : matching GAMMA result dict, or None,
+            'seqkit_detail': matching seqkit result dict, or None,
         }
         """
-        # Index miniprot results by normalized (gene, mutation)
-        miniprot_by_key = {}
-        for r in self.miniprot_results:
+        # Index GAMMA results by normalized (gene, mutation)
+        gamma_by_key = {}
+        for r in self.gamma_results:
             gene_norm = self._normalize_gene_name(r['protein'])
             for mut in r.get('mutations', []):
                 key = (gene_norm, mut)
-                if key not in miniprot_by_key:
-                    miniprot_by_key[key] = r
+                if key not in gamma_by_key:
+                    gamma_by_key[key] = r
 
         # Index seqkit results by normalized (gene, mutation)
         seqkit_by_key = {}
@@ -472,27 +382,27 @@ class MutationDetector:
                 if key not in seqkit_by_key:
                     seqkit_by_key[key] = r
 
-        all_keys = set(miniprot_by_key.keys()) | set(seqkit_by_key.keys())
+        all_keys = set(gamma_by_key.keys()) | set(seqkit_by_key.keys())
 
         unified = []
         for (gene, mutation) in sorted(all_keys):
-            in_miniprot = (gene, mutation) in miniprot_by_key
+            in_gamma = (gene, mutation) in gamma_by_key
             in_seqkit = (gene, mutation) in seqkit_by_key
 
             methods = []
-            if in_miniprot:
-                methods.append('miniprot')
+            if in_gamma:
+                methods.append('gamma')
             if in_seqkit:
                 methods.append('seqkit')
 
-            confidence = 100 if (in_miniprot and in_seqkit) else 50
+            confidence = 100 if (in_gamma and in_seqkit) else 50
 
             unified.append({
                 'gene': gene,
                 'mutation': mutation,
                 'confidence': confidence,
                 'methods': methods,
-                'miniprot_detail': miniprot_by_key.get((gene, mutation)),
+                'gamma_detail': gamma_by_key.get((gene, mutation)),
                 'seqkit_detail': seqkit_by_key.get((gene, mutation)),
             })
 
@@ -510,17 +420,17 @@ class MutationDetector:
         with open(report_file, 'w') as f:
             f.write('\t'.join([
                 'Gene', 'Mutation', 'Confidence(%)', 'Methods',
-                'Miniprot_Contig', 'Miniprot_Identity(%)', 'Miniprot_Coverage(%)',
+                'GAMMA_Contig', 'GAMMA_Identity(%)', 'GAMMA_Coverage(%)',
                 'SeqKit_PairID',
             ]) + '\n')
 
             for r in self.unified_results:
-                mp = r['miniprot_detail']
+                gm = r['gamma_detail']
                 sk = r['seqkit_detail']
 
-                mp_contig = mp['contig'] if mp else '-'
-                mp_identity = f"{mp['identity']:.2f}" if mp else '-'
-                mp_coverage = f"{mp['coverage']:.2f}" if mp else '-'
+                gm_contig = gm['contig'] if gm else '-'
+                gm_identity = f"{gm['identity']:.2f}" if gm else '-'
+                gm_coverage = f"{gm['coverage']:.2f}" if gm else '-'
                 sk_pair = sk['pair_id'] if sk else '-'
 
                 f.write('\t'.join([
@@ -528,9 +438,9 @@ class MutationDetector:
                     r['mutation'],
                     str(r['confidence']),
                     '+'.join(r['methods']),
-                    mp_contig,
-                    mp_identity,
-                    mp_coverage,
+                    gm_contig,
+                    gm_identity,
+                    gm_coverage,
                     sk_pair,
                 ]) + '\n')
 
@@ -564,7 +474,6 @@ class MutationDetector:
                 if 'F' in p and 'R' in p:
                     f.write(f"{pair_id}\t{p['F']}\t{p['R']}\n")
 
-        amplicon_output = f"{self.output_prefix}_amplicons.fasta"
         cmd = [
             'seqkit', 'amplicon',
             '-p', seqkit_primer_file,
@@ -586,7 +495,6 @@ class MutationDetector:
                 pair_id = fields[3]
                 strand = fields[5]
 
-                # Store f_primer and r_primer names if needed, but pairs dict has them
                 f_primer = pairs[pair_id].get('F_name', '?')
                 r_primer = pairs[pair_id].get('R_name', '?')
 
@@ -617,8 +525,6 @@ class MutationDetector:
             return
 
         if not blast_results:
-            # Cannot cross-reference without blast results
-            # But maybe we can just verify the amplicon exists?
             return
 
         print("Checking for mutations within amplicons...")
@@ -645,19 +551,19 @@ class MutationDetector:
                     else:
                         amp['mutations_found'].append(f"{res['gene']}: (wildtype)")
 
-    def write_miniprot_report(self):
-        """Write miniprot mutation detection results"""
-        if not self.miniprot_results:
+    def write_gamma_report(self):
+        """Write GAMMA mutation detection results."""
+        if not self.gamma_results:
             return
 
         report_file = f"{self.output_prefix}_protein_mutations.tsv"
-        print(f"Writing protein mutation results to {report_file}...")
+        print(f"Writing GAMMA mutation results to {report_file}...")
 
         with open(report_file, 'w') as f:
-            f.write('\t'.join(['Protein', 'Contig', 'Start', 'End', 'Identity',
-                              'Coverage', 'Mutations', 'CS_Tag', 'Method']) + '\n')
+            f.write('\t'.join(['Gene', 'Contig', 'Start', 'End', 'Identity',
+                              'Coverage', 'Match_Type', 'Mutations', 'Method']) + '\n')
 
-            for r in self.miniprot_results:
+            for r in self.gamma_results:
                 mutations_str = ';'.join(r['mutations']) if r['mutations'] else '-'
                 f.write('\t'.join([
                     r['protein'],
@@ -666,9 +572,9 @@ class MutationDetector:
                     str(r['contig_end']),
                     f"{r['identity']:.2f}",
                     f"{r['coverage']:.2f}",
+                    r['match_type'],
                     mutations_str,
-                    r['cs_tag'] or '-',
-                    'Miniprot'
+                    'GAMMA'
                 ]) + '\n')
 
     def write_amplicon_report(self):
@@ -699,28 +605,28 @@ class MutationDetector:
     def run(self, blast_results=None):
         """
         Run the full mutation detection pipeline:
-          1. miniprot  – protein-to-genome alignment, CS-tag mutation parsing
-          2. seqkit    – amplicon extraction + sequence-level mutation detection
-          3. merge     – cross-reference both methods, assign confidence scores
+          1. GAMMA    – protein-level gene alignment, Codon_Changes mutation parsing
+          2. seqkit   – amplicon extraction + sequence-level mutation detection
+          3. merge    – cross-reference both methods, assign confidence scores
           4. seqkit BED – amplicon location detection (cross-ref with BLAST)
 
         Returns:
-            (miniprot_results, amplicon_results, seqkit_mut_results, unified_results)
+            (gamma_results, amplicon_results, seqkit_mut_results, unified_results)
         """
-        self.run_miniprot()
+        self.run_gamma()
         seqkit_mut_results = self.detect_seqkit_mutations()
         unified_results = self.merge_detection_results(seqkit_mut_results)
 
         self.detect_amplicons()
         self.analyze_amplicons(blast_results)
 
-        self.write_miniprot_report()
+        self.write_gamma_report()
         self.write_amplicon_report()
         self.write_unified_report()
 
-        return self.miniprot_results, self.amplicon_results, seqkit_mut_results, unified_results
+        return self.gamma_results, self.amplicon_results, seqkit_mut_results, unified_results
 
 
-def run_mutation_detection(assembly, output, proteins, primers, blast_results=None, mutation_db_file=None):
-    detector = MutationDetector(assembly, output, proteins, primers, mutation_db_file)
+def run_mutation_detection(assembly, output, genes, primers, blast_results=None, mutation_db_file=None):
+    detector = MutationDetector(assembly, output, genes, primers, mutation_db_file)
     return detector.run(blast_results)
