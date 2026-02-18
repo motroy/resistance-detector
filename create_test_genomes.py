@@ -82,8 +82,8 @@ def load_references(db_path):
         # Short name: first part before underscore, e.g. 'fosA3'
         gene_name = record.id.split('_')[0]
         refs[gene_name] = str(record.seq)
-        # Also store by full id minus '_reference' suffix
-        clean = record.id.replace('_reference', '')
+        # Also store by full id minus '' suffix
+        clean = record.id
         refs[clean] = str(record.seq)
     return refs
 
@@ -118,7 +118,7 @@ def create_negative_control():
 def create_fos_plasmidic(refs, gene_ids):
     """
     Create genome with one or more plasmid-mediated fosA-family genes.
-    gene_ids: list of database keys, e.g. ['fosA3_reference', 'fosA4_reference']
+    gene_ids: list of database keys, e.g. ['fosA3', 'fosA4']
     """
     contigs = []
     for i in range(1, 6):
@@ -130,7 +130,7 @@ def create_fos_plasmidic(refs, gene_ids):
             print(f"  WARNING: {gene_id} not found in database, skipping")
             continue
         plasmid_seq = embed_in_contig(seq)
-        short = gene_id.replace('_reference', '')
+        short = gene_id
         contigs.append(create_contig(plasmid_seq, f"contig_plasmid_{short}",
                                      f"contains={short}"))
     return contigs
@@ -157,7 +157,7 @@ def _make_fos_chromo_contigs(refs, mutations):
             mut_seq = introduce_mutation(seq, codon_pos, new_codon)
             contig_seq = embed_in_contig(mut_seq)
             safe = label.replace('/', '_').replace('*', 'stop')
-            gene_name = ref_key.replace('_reference', '')
+            gene_name = ref_key
             contigs.append(create_contig(
                 contig_seq,
                 f"contig_chr_{gene_name}_{safe}",
@@ -174,10 +174,10 @@ def create_chromosomal_fos_mutations_primers(refs):
     uhpB G469R, uhpC F384L, galU R282V, lon Q558*
     """
     mutations = [
-        ('uhpB_reference',  469, 'CGT', 'uhpB_G469R'),
-        ('uhpC_reference',  384, 'CTG', 'uhpC_F384L'),
-        ('galU_reference',  282, 'GTG', 'galU_R282V'),
-        ('lon_reference',   558, 'TAG', 'lon_Q558stop'),
+        ('uhpB',  469, 'CGT', 'uhpB_G469R'),
+        ('uhpC',  384, 'CTG', 'uhpC_F384L'),
+        ('galU',  282, 'GTG', 'galU_R282V'),
+        ('lon',   558, 'TAG', 'lon_Q558stop'),
     ]
     return _make_fos_chromo_contigs(refs, mutations)
 
@@ -185,8 +185,8 @@ def create_chromosomal_fos_mutations_primers(refs):
 def create_chromosomal_fos_murA(refs):
     """murA D369N and L370I (fosfomycin target)"""
     mutations = [
-        ('murA_reference', 369, 'AAT', 'murA_D369N'),
-        ('murA_reference', 370, 'ATT', 'murA_L370I'),
+        ('murA', 369, 'AAT', 'murA_D369N'),
+        ('murA', 370, 'ATT', 'murA_L370I'),
     ]
     return _make_fos_chromo_contigs(refs, mutations)
 
@@ -194,10 +194,10 @@ def create_chromosomal_fos_murA(refs):
 def create_chromosomal_fos_uhpT(refs):
     """uhpT transport mutations (fosfomycin uptake)"""
     mutations = [
-        ('uhpT_reference',  55, 'GAT', 'uhpT_G55D'),
-        ('uhpT_reference', 198, 'TAA', 'uhpT_W198stop'),
-        ('uhpT_reference', 258, 'TAA', 'uhpT_E258stop'),
-        ('uhpT_reference', 350, 'TAA', 'uhpT_W350stop'),
+        ('uhpT',  55, 'GAT', 'uhpT_G55D'),
+        ('uhpT', 198, 'TAA', 'uhpT_W198stop'),
+        ('uhpT', 258, 'TAA', 'uhpT_E258stop'),
+        ('uhpT', 350, 'TAA', 'uhpT_W350stop'),
     ]
     return _make_fos_chromo_contigs(refs, mutations)
 
@@ -205,11 +205,11 @@ def create_chromosomal_fos_uhpT(refs):
 def create_chromosomal_fos_glpT(refs):
     """glpT transport mutations (fosfomycin uptake)"""
     mutations = [
-        ('glpT_reference',  44, 'TAA', 'glpT_E44stop'),
-        ('glpT_reference',  88, 'TAA', 'glpT_W88stop'),
-        ('glpT_reference',  90, 'GAT', 'glpT_G90D'),
-        ('glpT_reference', 234, 'TAA', 'glpT_W234stop'),
-        ('glpT_reference', 362, 'TGT', 'glpT_R362C'),
+        ('glpT',  44, 'TAA', 'glpT_E44stop'),
+        ('glpT',  88, 'TAA', 'glpT_W88stop'),
+        ('glpT',  90, 'GAT', 'glpT_G90D'),
+        ('glpT', 234, 'TAA', 'glpT_W234stop'),
+        ('glpT', 362, 'TGT', 'glpT_R362C'),
     ]
     return _make_fos_chromo_contigs(refs, mutations)
 
@@ -217,10 +217,10 @@ def create_chromosomal_fos_glpT(refs):
 def create_chromosomal_fos_uhpABC(refs):
     """uhpA, uhpB, uhpC two-component system mutations"""
     mutations = [
-        ('uhpA_reference',  54, 'AAT', 'uhpA_D54N'),
-        ('uhpA_reference', 139, 'TGT', 'uhpA_R139C'),
-        ('uhpB_reference', 350, 'TAT', 'uhpB_H350Y'),
-        ('uhpC_reference', 384, 'CTG', 'uhpC_F384L'),
+        ('uhpA',  54, 'AAT', 'uhpA_D54N'),
+        ('uhpA', 139, 'TGT', 'uhpA_R139C'),
+        ('uhpB', 350, 'TAT', 'uhpB_H350Y'),
+        ('uhpC', 384, 'CTG', 'uhpC_F384L'),
     ]
     return _make_fos_chromo_contigs(refs, mutations)
 
@@ -228,9 +228,9 @@ def create_chromosomal_fos_uhpABC(refs):
 def create_chromosomal_fos_lon_cyaA_ptsI(refs):
     """lon Q558*, cyaA G463D, ptsI H191Y"""
     mutations = [
-        ('lon_reference',  558, 'TAG', 'lon_Q558stop'),
-        ('cyaA_reference', 463, 'GAT', 'cyaA_G463D'),
-        ('ptsI_reference', 191, 'TAT', 'ptsI_H191Y'),
+        ('lon',  558, 'TAG', 'lon_Q558stop'),
+        ('cyaA', 463, 'GAT', 'cyaA_G463D'),
+        ('ptsI', 191, 'TAT', 'ptsI_H191Y'),
     ]
     return _make_fos_chromo_contigs(refs, mutations)
 
@@ -238,7 +238,7 @@ def create_chromosomal_fos_lon_cyaA_ptsI(refs):
 def create_chromosomal_fosAKP(refs):
     """fosAKP I91V (chromosomal Klebsiella fosfomycin resistance)"""
     mutations = [
-        ('fosAKP_reference', 91, 'GTT', 'fosAKP_I91V'),
+        ('fosAKP', 91, 'GTT', 'fosAKP_I91V'),
     ]
     return _make_fos_chromo_contigs(refs, mutations)
 
@@ -251,7 +251,7 @@ def create_cazavi_blakpc2_d179y(refs):
     for i in range(1, 6):
         contigs.append(create_contig(random_seq(random.randint(400000, 600000)),
                                      f"contig_{i}", ""))
-    seq = refs.get('blaKPC-2_reference')
+    seq = refs.get('blaKPC-2')
     if seq:
         mut = introduce_mutation(seq, 179, 'TAT')   # D179Y: GAT->TAT
         contigs.append(create_contig(embed_in_contig(mut),
@@ -266,7 +266,7 @@ def create_cazavi_blakpc3(refs):
     for i in range(1, 4):
         contigs.append(create_contig(random_seq(random.randint(400000, 600000)),
                                      f"contig_{i}", ""))
-    seq = refs.get('blaKPC-3_reference')
+    seq = refs.get('blaKPC-3')
     if seq:
         # D179Y alone
         mut_d179y = introduce_mutation(seq, 179, 'TAT')
@@ -293,7 +293,7 @@ def create_cazavi_blakpc31_d179y(refs):
     for i in range(1, 4):
         contigs.append(create_contig(random_seq(random.randint(400000, 600000)),
                                      f"contig_{i}", ""))
-    seq = refs.get('blaKPC-31_reference')
+    seq = refs.get('blaKPC-31')
     if seq:
         mut = introduce_mutation(seq, 179, 'TAT')
         contigs.append(create_contig(embed_in_contig(mut),
@@ -308,7 +308,7 @@ def create_cazavi_blakpc190(refs):
     for i in range(1, 4):
         contigs.append(create_contig(random_seq(random.randint(400000, 600000)),
                                      f"contig_{i}", ""))
-    seq = refs.get('blaKPC-190_reference')
+    seq = refs.get('blaKPC-190')
     if seq:
         contigs.append(create_contig(embed_in_contig(seq),
                                      'contig_plasmid_blaKPC190',
@@ -322,7 +322,7 @@ def create_cazavi_blaoxa48(refs):
     for i in range(1, 4):
         contigs.append(create_contig(random_seq(random.randint(400000, 600000)),
                                      f"contig_{i}", ""))
-    seq = refs.get('blaOXA-48_reference')
+    seq = refs.get('blaOXA-48')
     if seq:
         # P68A alone
         mut_p68a = introduce_mutation(seq, 68, 'GCT')
@@ -344,7 +344,7 @@ def create_cazavi_blacmy178_n70t(refs):
     for i in range(1, 4):
         contigs.append(create_contig(random_seq(random.randint(400000, 600000)),
                                      f"contig_{i}", ""))
-    seq = refs.get('blaCMY-178_reference')
+    seq = refs.get('blaCMY-178')
     if seq:
         mut = introduce_mutation(seq, 70, 'ACT')   # N70T: AAT->ACT
         contigs.append(create_contig(embed_in_contig(mut),
@@ -359,7 +359,7 @@ def create_cazavi_blashv12(refs):
     for i in range(1, 4):
         contigs.append(create_contig(random_seq(random.randint(400000, 600000)),
                                      f"contig_{i}", ""))
-    seq = refs.get('blaSHV-12_reference')
+    seq = refs.get('blaSHV-12')
     if seq:
         contigs.append(create_contig(embed_in_contig(seq),
                                      'contig_plasmid_blaSHV12',
@@ -372,10 +372,10 @@ def create_cazavi_blashv12(refs):
 def create_cazavi_porins(refs):
     """ompK35 and ompK36 porin mutations"""
     mutations = [
-        ('ompK35_reference', 134, 'GAT', 'ompK35_G134D'),
-        ('ompK35_reference', 135, 'TAA', 'ompK35_D135stop'),
-        ('ompK35_reference', 181, 'GGT', 'ompK35_D181G'),
-        ('ompK36_reference', 134, 'GAT', 'ompK36_G134D') if 'ompK36_reference' in refs else None,
+        ('ompK35', 134, 'GAT', 'ompK35_G134D'),
+        ('ompK35', 135, 'TAA', 'ompK35_D135stop'),
+        ('ompK35', 181, 'GGT', 'ompK35_D181G'),
+        ('ompK36', 134, 'GAT', 'ompK36_G134D') if 'ompK36' in refs else None,
     ]
     mutations = [m for m in mutations if m is not None]
     return _make_fos_chromo_contigs(refs, mutations)
@@ -384,10 +384,10 @@ def create_cazavi_porins(refs):
 def create_cazavi_efflux_regulators(refs):
     """mexR and nalD efflux pump regulator mutations"""
     mutations = [
-        ('mexR_reference', 69, 'GGT', 'mexR_W69G'),
-        ('mexR_reference', 75, 'GTT', 'mexR_A75V'),
-        ('nalD_reference', 153, 'TAA', 'nalD_Q153stop'),
-        ('nalD_reference', 174, 'CGT', 'nalD_L174R'),
+        ('mexR', 69, 'GGT', 'mexR_W69G'),
+        ('mexR', 75, 'GTT', 'mexR_A75V'),
+        ('nalD', 153, 'TAA', 'nalD_Q153stop'),
+        ('nalD', 174, 'CGT', 'nalD_L174R'),
     ]
     return _make_fos_chromo_contigs(refs, mutations)
 
@@ -395,9 +395,9 @@ def create_cazavi_efflux_regulators(refs):
 def create_cazavi_acrB(refs):
     """acrB efflux pump mutations"""
     mutations = [
-        ('acrB_reference', 617, 'GAT', 'acrB_G617D'),
-        ('acrB_reference', 626, 'CTG', 'acrB_F626L'),
-        ('acrB_reference', 628, 'ACT', 'acrB_A628T'),
+        ('acrB', 617, 'GAT', 'acrB_G617D'),
+        ('acrB', 626, 'CTG', 'acrB_F626L'),
+        ('acrB', 628, 'ACT', 'acrB_A628T'),
     ]
     return _make_fos_chromo_contigs(refs, mutations)
 
@@ -405,9 +405,9 @@ def create_cazavi_acrB(refs):
 def create_cazavi_ftsI(refs):
     """ftsI/PBP3 penicillin-binding protein mutations"""
     mutations = [
-        ('ftsI_reference', 333, 'GTT', 'ftsI_A333V'),
-        ('ftsI_reference', 350, 'TGT', 'ftsI_Y350C'),
-        ('ftsI_reference', 357, 'AAT', 'ftsI_S357N'),
+        ('ftsI', 333, 'GTT', 'ftsI_A333V'),
+        ('ftsI', 350, 'TGT', 'ftsI_Y350C'),
+        ('ftsI', 357, 'AAT', 'ftsI_S357N'),
     ]
     return _make_fos_chromo_contigs(refs, mutations)
 
@@ -415,8 +415,8 @@ def create_cazavi_ftsI(refs):
 def create_cazavi_envZ(refs):
     """envZ two-component sensor mutations"""
     mutations = [
-        ('envZ_reference', 244, 'TCT', 'envZ_G244S'),
-        ('envZ_reference', 324, 'ATT', 'envZ_T324I'),
+        ('envZ', 244, 'TCT', 'envZ_G244S'),
+        ('envZ', 324, 'ATT', 'envZ_T324I'),
     ]
     return _make_fos_chromo_contigs(refs, mutations)
 
@@ -427,9 +427,9 @@ def create_multi_resistance(refs):
     """Create genome with multiple resistance genes and mutations"""
     contigs = []
 
-    fosa3 = refs.get('fosA3_reference', refs.get('fosA3'))
-    blakpc3 = refs.get('blaKPC-3_reference', refs.get('blaKPC-3'))
-    blaoxa48 = refs.get('blaOXA-48_reference', refs.get('blaOXA-48'))
+    fosa3 = refs.get('fosA3', refs.get('fosA3'))
+    blakpc3 = refs.get('blaKPC-3', refs.get('blaKPC-3'))
+    blaoxa48 = refs.get('blaOXA-48', refs.get('blaOXA-48'))
 
     for i in range(1, 6):
         size = random.randint(400000, 600000)
@@ -462,7 +462,7 @@ def main():
     db_path = "fos_cazavi/data/example_database.fasta"
     print(f"Loading references from {db_path}...")
     refs = load_references(db_path)
-    print(f"  Loaded {len([k for k in refs if '_reference' in k])} reference sequences\n")
+    print(f"  Loaded {len(refs)} reference sequences\n")
 
     print("Creating synthetic test genomes...")
     print("=" * 60)
@@ -476,22 +476,22 @@ def main():
 
         # FOS plasmidic
         ("2.  fosA3 (plasmidic)",
-         lambda: create_fos_plasmidic(refs, ['fosA3_reference']),
+         lambda: create_fos_plasmidic(refs, ['fosA3']),
          "ecoli_fosA3.fasta",
          "fosA3"),
 
         ("3.  fosA4 (plasmidic)",
-         lambda: create_fos_plasmidic(refs, ['fosA4_reference']),
+         lambda: create_fos_plasmidic(refs, ['fosA4']),
          "ecoli_fosA4.fasta",
          "fosA4"),
 
         ("4.  fosA5 (plasmidic)",
-         lambda: create_fos_plasmidic(refs, ['fosA5_reference']),
+         lambda: create_fos_plasmidic(refs, ['fosA5']),
          "ecoli_fosA5.fasta",
          "fosA5"),
 
         ("5.  fosA11 (plasmidic)",
-         lambda: create_fos_plasmidic(refs, ['fosA11_reference']),
+         lambda: create_fos_plasmidic(refs, ['fosA11']),
          "ecoli_fosA11.fasta",
          "fosA11"),
 

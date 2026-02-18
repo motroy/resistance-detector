@@ -35,14 +35,39 @@ CHROMOSOMAL_GENES = {
     'acrB': {'taxgroup': 'Klebsiella_pneumoniae'},
     'ompK36': {'taxgroup': 'Klebsiella_pneumoniae'},
     'ftsI': {'taxgroup': 'Klebsiella_pneumoniae'},
-    'envZ': {'taxgroup': 'Klebsiella_pneumoniae'}
+    'envZ': {'taxgroup': 'Klebsiella_pneumoniae'},
+    'ompK35': {'taxgroup': 'Klebsiella_pneumoniae'},
+
+    # Pseudomonas aeruginosa
+    'mexR': {'taxgroup': 'Pseudomonas_aeruginosa'},
+    'nalD': {'taxgroup': 'Pseudomonas_aeruginosa'},
 }
 
 # Acquired genes (fetched from AMR_CDS.fa by family/name)
 ACQUIRED_GENES = [
-    'fosA3', 'fosA4', 'fosA5', 'fosA7',
-    'blaKPC-2', 'blaKPC-3', 'blaOXA-48'
+    'fosA3', 'fosA4', 'fosA5', 'fosA7', 'fosA11',
+    'blaKPC-2', 'blaKPC-3', 'blaOXA-48',
+    'blaKPC-31', 'blaKPC-190', 'blaCMY-178', 'blaSHV-12'
 ]
+
+# Fallback for genes missing in AMRfinderPlus catalog
+# Gene -> (Accession, Start, Stop, Strand)
+FALLBACK_GENES = {
+    # E. coli K-12 MG1655 (U00096.3)
+    'glpT': ('U00096.3', 2351016, 2352374, '-'),
+    'uhpB': ('U00096.3', 3848634, 3850136, '-'),
+    'uhpC': ('U00096.3', 3847305, 3848624, '-'),
+    'galU': ('U00096.3', 1291457, 1292365, '+'),
+
+    # K. pneumoniae MGH 78578 (CP000647.1)
+    'acrB': ('CP000647.1', 484760, 487906, '-'),
+}
+
+# Manual genes to fetch directly (not in catalog logic)
+MANUAL_GENES = {
+    # K. pneumoniae chromosomal fosA (FosA6), used as fosAKP
+    'fosAKP': ('KU254579.1', 59422, 59841, '+')
+}
 
 # Manual mutations (for acquired genes or those missing in AMRfinderPlus)
 # Format: Gene -> Position -> {ref, variants, name}
@@ -115,7 +140,7 @@ class DatabaseBuilder:
                 if row['gene_family'] == gene 
                 and info['taxgroup'] in row['whitelisted_taxa']
                 and row['type'] == 'AMR' 
-                and row['subtype'] == 'POINT'
+                and (row['subtype'] == 'POINT' or row['subtype'] == 'POINT_DISRUPT')
             ]
             
             if not candidates:
@@ -124,7 +149,7 @@ class DatabaseBuilder:
                     if gene in row['allele']
                     and info['taxgroup'] in row['whitelisted_taxa']
                     and row['type'] == 'AMR' 
-                    and row['subtype'] == 'POINT'
+                    and (row['subtype'] == 'POINT' or row['subtype'] == 'POINT_DISRUPT')
                 ]
 
             if candidates:
@@ -151,8 +176,26 @@ class DatabaseBuilder:
                 if record:
                     self.sequences.append(record)
                     self.extract_mutations_for_gene(gene, info['taxgroup'])
+            elif gene in FALLBACK_GENES:
+                print(f"  WARNING: {gene} not found in catalog, using fallback")
+                acc, start, stop, strand = FALLBACK_GENES[gene]
+                print(f"  Using fallback: {acc} ({start}-{stop}, {strand})")
+                record = self.fetch_sequence_from_ncbi(acc, start, stop, strand, gene)
+                if record:
+                    self.sequences.append(record)
+                    # We can't extract mutations easily without catalog protein accessions,
+                    # unless we add them manually.
             else:
                 print(f"  WARNING: {gene} not found in AMRfinderPlus catalog for {info['taxgroup']}")
+
+    def fetch_manual_genes(self):
+        """Fetch manually defined genes"""
+        print("Processing manual genes...")
+        for gene, (acc, start, stop, strand) in MANUAL_GENES.items():
+            print(f"Fetching manual gene {gene} from {acc}...")
+            record = self.fetch_sequence_from_ncbi(acc, start, stop, strand, gene)
+            if record:
+                self.sequences.append(record)
 
     def fetch_sequence_from_ncbi(self, accession, start, stop, strand, gene_name):
         """Fetch sequence from NCBI"""
@@ -259,6 +302,7 @@ class DatabaseBuilder:
         self.load_mutation_defs()
         
         self.fetch_chromosomal_genes()
+        self.fetch_manual_genes()
         self.fetch_acquired_genes()
         self.add_manual_mutations()
         
