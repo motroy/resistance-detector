@@ -70,21 +70,21 @@ class TestDatabaseLoading:
 
     def test_all_required_fos_genes_present(self, refs):
         required = [
-            'fosA3_reference', 'fosA4_reference', 'fosA5_reference', 'fosA11_reference',
-            'fosAKP_reference', 'murA_reference', 'uhpB_reference', 'uhpC_reference',
-            'uhpA_reference', 'uhpT_reference', 'glpT_reference', 'cyaA_reference',
-            'ptsI_reference', 'galU_reference', 'lon_reference',
+            'fosA3', 'fosA4', 'fosA5', 'fosA11',
+            'fosAKP', 'murA', 'uhpB', 'uhpC',
+            'uhpA', 'uhpT', 'glpT', 'cyaA',
+            'ptsI', 'galU', 'lon',
         ]
         missing = [g for g in required if g not in refs]
         assert missing == [], f"Missing from DB: {missing}"
 
     def test_all_required_cazavi_genes_present(self, refs):
         required = [
-            'blaKPC-2_reference', 'blaKPC-3_reference', 'blaKPC-31_reference',
-            'blaKPC-190_reference', 'blaOXA-48_reference', 'blaCMY-178_reference',
-            'blaSHV-12_reference', 'ompK35_reference', 'ompK36_reference',
-            'acrB_reference', 'mexR_reference', 'nalD_reference',
-            'ftsI_reference', 'envZ_reference',
+            'blaKPC-2', 'blaKPC-3', 'blaKPC-31',
+            'blaKPC-190', 'blaOXA-48', 'blaCMY-178',
+            'blaSHV-12', 'ompK35', 'ompK36',
+            'acrB', 'mexR', 'nalD',
+            'ftsI', 'envZ',
         ]
         missing = [g for g in required if g not in refs]
         assert missing == [], f"Missing from DB: {missing}"
@@ -92,28 +92,28 @@ class TestDatabaseLoading:
     def test_ref_sequences_long_enough(self, refs):
         """Ensure each reference is long enough to reach its mutation site."""
         checks = [
-            ('murA_reference',      370, 'murA L370I'),
-            ('uhpB_reference',      469, 'uhpB G469R'),
-            ('uhpC_reference',      384, 'uhpC F384L'),
-            ('uhpA_reference',      139, 'uhpA R139C/H'),
-            ('uhpT_reference',      350, 'uhpT W350*/R'),
-            ('glpT_reference',      362, 'glpT R362C/H/*'),
-            ('cyaA_reference',      463, 'cyaA G463D/*'),
-            ('ptsI_reference',      191, 'ptsI H191Y/Q'),
-            ('galU_reference',      282, 'galU R282V'),
-            ('lon_reference',       558, 'lon Q558*'),
-            ('fosAKP_reference',     91, 'fosAKP I91V'),
-            ('blaKPC-3_reference',  243, 'blaKPC-3 T243M'),
-            ('blaOXA-48_reference', 211, 'blaOXA-48 Y211S'),
-            ('blaCMY-178_reference', 70, 'blaCMY-178 N70T'),
-            ('blaSHV-12_reference', 240, 'blaSHV-12 E240K'),
-            ('ompK35_reference',    181, 'ompK35 D181G'),
-            ('ompK36_reference',    213, 'ompK36 G213D'),
-            ('acrB_reference',      628, 'acrB A628T/V'),
-            ('mexR_reference',       75, 'mexR A75V'),
-            ('nalD_reference',      174, 'nalD L174R'),
-            ('ftsI_reference',      357, 'ftsI S357N'),
-            ('envZ_reference',      324, 'envZ T324I/A'),
+            ('murA',      370, 'murA L370I'),
+            ('uhpB',      469, 'uhpB G469R'),
+            ('uhpC',      384, 'uhpC F384L'),
+            ('uhpA',      139, 'uhpA R139C/H'),
+            ('uhpT',      350, 'uhpT W350*/R'),
+            ('glpT',      362, 'glpT R362C/H/*'),
+            ('cyaA',      463, 'cyaA G463D/*'),
+            ('ptsI',      191, 'ptsI H191Y/Q'),
+            ('galU',      282, 'galU R282V'),
+            ('lon',       558, 'lon Q558*'),
+            ('fosAKP',     91, 'fosAKP I91V'),
+            ('blaKPC-3',  243, 'blaKPC-3 T243M'),
+            ('blaOXA-48', 211, 'blaOXA-48 Y211S'),
+            ('blaCMY-178', 70, 'blaCMY-178 N70T'),
+            ('blaSHV-12', 240, 'blaSHV-12 E240K'),
+            ('ompK35',    181, 'ompK35 D181G'),
+            ('ompK36',    213, 'ompK36 G213D'),
+            ('acrB',      628, 'acrB A628T/V'),
+            ('mexR',       75, 'mexR A75V'),
+            ('nalD',      174, 'nalD L174R'),
+            ('ftsI',      357, 'ftsI S357N'),
+            ('envZ',      324, 'envZ T324I/A'),
         ]
         for ref_key, min_pos, label in checks:
             seq = refs.get(ref_key, '')
@@ -182,18 +182,18 @@ class TestNegativeControl:
 class TestFosPlasmidic:
 
     @pytest.mark.parametrize("gene_id", [
-        'fosA3_reference', 'fosA4_reference', 'fosA5_reference', 'fosA11_reference'
+        'fosA3', 'fosA4', 'fosA5', 'fosA11'
     ])
     def test_plasmid_contig_created(self, refs, gene_id):
         contigs = create_fos_plasmidic(refs, [gene_id])
-        short = gene_id.replace('_reference', '')
+        short = gene_id.replace('', '')
         ids = [c.id for c in contigs]
         assert any(short in cid for cid in ids), f"No contig for {gene_id}: {ids}"
 
     def test_gene_sequence_embedded(self, refs):
         """fosA3 sequence should appear verbatim in the plasmid contig."""
-        gene_seq = refs['fosA3_reference']
-        contigs = create_fos_plasmidic(refs, ['fosA3_reference'])
+        gene_seq = refs['fosA3']
+        contigs = create_fos_plasmidic(refs, ['fosA3'])
         plasmid = next(c for c in contigs if 'fosA3' in c.id)
         assert gene_seq in str(plasmid.seq)
 
@@ -214,9 +214,9 @@ class TestChromosomalFosPrimers:
         contigs = create_chromosomal_fos_mutations_primers(refs)
         uhpB_contig = next(c for c in contigs if 'uhpB' in c.id)
         # Find uhpB sequence in contig and verify amino acid at pos 469
-        ref_seq = refs['uhpB_reference']
+        ref_seq = refs['uhpB']
         seq_str = str(uhpB_contig.seq)
-        idx = seq_str.find(refs['uhpB_reference'][:30])  # use prefix to locate start
+        idx = seq_str.find(refs['uhpB'][:30])  # use prefix to locate start
         if idx >= 0:
             gene_from_contig = seq_str[idx:idx + len(ref_seq)]
             assert get_aa(gene_from_contig, 469) == 'R', "uhpB G469R not found in contig"
@@ -224,9 +224,9 @@ class TestChromosomalFosPrimers:
     def test_galU_R282V_mutation_present(self, refs):
         contigs = create_chromosomal_fos_mutations_primers(refs)
         galU_contig = next(c for c in contigs if 'galU' in c.id)
-        ref_seq = refs['galU_reference']
+        ref_seq = refs['galU']
         seq_str = str(galU_contig.seq)
-        idx = seq_str.find(refs['galU_reference'][:30])
+        idx = seq_str.find(refs['galU'][:30])
         if idx >= 0:
             gene_from_contig = seq_str[idx:idx + len(ref_seq)]
             assert get_aa(gene_from_contig, 282) == 'V', "galU R282V not found in contig"
@@ -290,7 +290,7 @@ class TestBlaKPC2:
         """Verify that position 179 encodes Y in the embedded mutant gene."""
         contigs = create_cazavi_blakpc2_d179y(refs)
         kpc_contig = next(c for c in contigs if 'blaKPC2' in c.id)
-        ref_seq = refs['blaKPC-2_reference']
+        ref_seq = refs['blaKPC-2']
         seq_str = str(kpc_contig.seq)
         # Find the mutated gene (TAT codon at pos 179 = nt 535..537)
         # Build prefix from reference up to pos 178 and check
