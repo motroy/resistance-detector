@@ -459,7 +459,7 @@ def create_multi_resistance(refs):
 def main():
     os.makedirs("test_genomes", exist_ok=True)
 
-    db_path = "data/example_database.fasta"
+    db_path = "fos_cazavi/data/example_database.fasta"
     print(f"Loading references from {db_path}...")
     refs = load_references(db_path)
     print(f"  Loaded {len([k for k in refs if '_reference' in k])} reference sequences\n")

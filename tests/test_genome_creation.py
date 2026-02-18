@@ -42,7 +42,7 @@ from create_test_genomes import (
     create_multi_resistance,
 )
 
-DB_PATH = os.path.join(os.path.dirname(__file__), '..', 'data', 'example_database.fasta')
+DB_PATH = os.path.join(os.path.dirname(__file__), '..', 'fos_cazavi', 'data', 'example_database.fasta')
 
 
 @pytest.fixture(scope="module")
