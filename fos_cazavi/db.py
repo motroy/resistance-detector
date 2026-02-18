@@ -96,11 +96,14 @@ MANUAL_MUTATIONS = {
 
 
 class DatabaseBuilder:
-    def __init__(self, email, output_prefix):
+    def __init__(self, email, output_dir, output_prefix):
         self.email = email
-        self.output_fasta = f"{output_prefix}.fasta"
-        self.output_proteins = f"{output_prefix}_proteins.fasta"
-        self.output_mutations = f"{output_prefix}_mutations.tsv"
+        self.output_dir = Path(output_dir)
+        self.output_dir.mkdir(parents=True, exist_ok=True)
+
+        self.output_fasta = str(self.output_dir / f"{output_prefix}.fasta")
+        self.output_proteins = str(self.output_dir / f"{output_prefix}_proteins.fasta")
+        self.output_mutations = str(self.output_dir / f"{output_prefix}_mutations.tsv")
         Entrez.email = email
         self.sequences = []
         self.protein_sequences = []
@@ -404,6 +407,6 @@ class DatabaseBuilder:
 
         print("Done!")
 
-def create_db(email, output_prefix):
-    builder = DatabaseBuilder(email, output_prefix)
+def create_db(email, output_dir, output_prefix):
+    builder = DatabaseBuilder(email, output_dir, output_prefix)
     builder.build()
