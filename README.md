@@ -101,7 +101,7 @@ Download sequences from NCBI (AMRfinderPlus) and build the database. The `create
 fos-cazavi create-db -e your.email@example.com -o resistance_db
 ```
 
-This produces `resistance_db.fasta` (raw nucleotide CDS) and `resistance_db_Formatted.fasta` (GAMMA-ready database). Use `resistance_db_Formatted.fasta` with `--genes`.
+This produces `resistance_db.fasta` (raw nucleotide CDS) and `resistance_db_deduplicated.fasta` (GAMMA-ready database). Use `resistance_db_deduplicated.fasta` with `--genes`.
 
 ### 2. Run Full Analysis
 

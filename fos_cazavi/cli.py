@@ -7,7 +7,9 @@ from .mutations import run_mutation_detection
 from .utils import setup_logger, log_tool_versions
 
 _DATA_DIR = Path(__file__).parent / 'data'
-_DEFAULT_GENES = str(_DATA_DIR / 'example_database.fasta')
+# Prefer the GAMMA_DB_Maker-processed database; fall back to the raw CDS file
+_GAMMA_DB = _DATA_DIR / 'example_database_deduplicated.fasta'
+_DEFAULT_GENES = str(_GAMMA_DB if _GAMMA_DB.exists() else _DATA_DIR / 'example_database.fasta')
 _DEFAULT_PRIMERS = str(_DATA_DIR / 'primers.tsv')
 
 
