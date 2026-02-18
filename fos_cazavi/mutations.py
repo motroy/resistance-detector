@@ -4,11 +4,32 @@ import subprocess
 from pathlib import Path
 from collections import defaultdict
 import re
-from .utils import load_primers, detect_mutations as _detect_mutations, KNOWN_MUTATIONS
+from .utils import load_primers, load_mutation_db, detect_mutations as _detect_mutations, KNOWN_MUTATIONS
+
+# Standard codon → amino acid lookup (bacterial genetic code, no start-codon M override).
+# Used to translate the 3-nt genomic codon from real miniprot cs-tag substitutions.
+_CODON_TABLE = {
+    'TTT': 'F', 'TTC': 'F', 'TTA': 'L', 'TTG': 'L',
+    'CTT': 'L', 'CTC': 'L', 'CTA': 'L', 'CTG': 'L',
+    'ATT': 'I', 'ATC': 'I', 'ATA': 'I', 'ATG': 'M',
+    'GTT': 'V', 'GTC': 'V', 'GTA': 'V', 'GTG': 'V',
+    'TCT': 'S', 'TCC': 'S', 'TCA': 'S', 'TCG': 'S',
+    'CCT': 'P', 'CCC': 'P', 'CCA': 'P', 'CCG': 'P',
+    'ACT': 'T', 'ACC': 'T', 'ACA': 'T', 'ACG': 'T',
+    'GCT': 'A', 'GCC': 'A', 'GCA': 'A', 'GCG': 'A',
+    'TAT': 'Y', 'TAC': 'Y', 'TAA': '*', 'TAG': '*',
+    'CAT': 'H', 'CAC': 'H', 'CAA': 'Q', 'CAG': 'Q',
+    'AAT': 'N', 'AAC': 'N', 'AAA': 'K', 'AAG': 'K',
+    'GAT': 'D', 'GAC': 'D', 'GAA': 'E', 'GAG': 'E',
+    'TGT': 'C', 'TGC': 'C', 'TGA': '*', 'TGG': 'W',
+    'CGT': 'R', 'CGC': 'R', 'CGA': 'R', 'CGG': 'R',
+    'AGT': 'S', 'AGC': 'S', 'AGA': 'R', 'AGG': 'R',
+    'GGT': 'G', 'GGC': 'G', 'GGA': 'G', 'GGG': 'G',
+}
 
 
 class MutationDetector:
-    def __init__(self, assembly, output_prefix, proteins_file=None, primers_file=None):
+    def __init__(self, assembly, output_prefix, proteins_file=None, primers_file=None, mutation_db_file=None):
         self.assembly = assembly
         self.output_prefix = output_prefix
         self.proteins_file = proteins_file
@@ -22,6 +43,14 @@ class MutationDetector:
             self.primers = load_primers(primers_file)
         else:
             self.primers = {}
+
+        # Load mutation database for filtering miniprot results
+        # Normalize keys to lowercase so lookups via _normalize_gene_name succeed
+        raw_db = load_mutation_db(mutation_db_file) if mutation_db_file else KNOWN_MUTATIONS
+        self.mutation_db = {
+            self._normalize_gene_name(k): v
+            for k, v in raw_db.items()
+        }
 
     def run_miniprot(self):
         """
@@ -83,7 +112,8 @@ class MutationDetector:
                         break
 
                 if cs_tag:
-                    mutations = self.parse_miniprot_cs(cs_tag, protein_name)
+                    raw_mutations = self.parse_miniprot_cs(cs_tag, protein_name)
+                    mutations = self._filter_known_mutations(raw_mutations, protein_name)
 
                 self.miniprot_results.append({
                     'protein': protein_name,
@@ -108,11 +138,58 @@ class MutationDetector:
         except subprocess.CalledProcessError as e:
             print(f"WARNING: miniprot failed: {e.stderr}", file=sys.stderr)
 
+    def _filter_known_mutations(self, raw_mutations, protein_name):
+        """
+        Filter raw CS-tag mutations to only known resistance mutations from mutation_db.
+
+        raw_mutations: list of strings from parse_miniprot_cs, e.g. ['D369N', 'G463D']
+        protein_name:  protein FASTA header (e.g. 'acrB_WP_002892069.1' or 'murA')
+
+        Returns a list of mutation name strings (from mutation_db) for confirmed
+        resistance mutations only.  Unknown positional variants or non-resistance
+        positions are dropped.
+        """
+        gene_norm = self._normalize_gene_name(protein_name)
+
+        if gene_norm not in self.mutation_db:
+            return []
+
+        known = self.mutation_db[gene_norm]
+        filtered = []
+
+        for mut_str in raw_mutations:
+            # Only process standard substitution strings like "D369N", "G463*"
+            m = re.match(r'^([A-Z*])(\d+)([A-Z*])$', mut_str)
+            if not m:
+                continue  # skip frameshifts, indels, ? entries
+
+            ref, pos, var = m.group(1), int(m.group(2)), m.group(3)
+
+            if pos not in known:
+                continue  # not a known resistance position
+
+            known_info = known[pos]
+            if var in known_info.get('variants', []):
+                # Known resistance variant at a known position
+                filtered.append(known_info.get('name', mut_str))
+
+        return filtered
+
     def parse_miniprot_cs(self, cs_tag, protein_name):
-        """Parse miniprot cs tag to extract mutations."""
+        """Parse miniprot cs tag to extract mutations.
+
+        Real miniprot encodes substitutions as *{3-nt codon}{uppercase protein AA},
+        e.g. ``*aatD`` means the genome has codon aat (=N) while the query protein
+        has D, corresponding to mutation D369N.
+
+        For backward compatibility with unit tests, the simplified two-character
+        format ``*{lowercase ref AA}{uppercase query AA}`` (e.g. ``*dN``) is also
+        accepted and handled by the fallback branch.
+        """
         mutations = []
         position = 1  # 1-indexed amino acid position
-        pattern = r'(:[0-9]+|\*[A-Za-z][A-Za-z]|\+[A-Za-z]+|-[a-z]+|~[a-z]+[0-9]+[a-z]+|[a-z]+[A-Z\*])'
+        # Try the real 4-char codon format first, then the simplified 2-char format.
+        pattern = r'(:[0-9]+|\*[acgtn]{3}[A-Z*]|\*[A-Za-z][A-Za-z]|\+[A-Za-z]+|-[a-z]+|~[a-z]+[0-9]+[a-z]+|[a-z]+[A-Z*])'
 
         for match in re.finditer(pattern, cs_tag):
             op = match.group(1)
@@ -122,9 +199,21 @@ class MutationDetector:
                 position += num_identical
 
             elif op.startswith('*'):
-                ref_aa = op[1].upper()
-                query_aa = op[2].upper()
-                mutations.append(f"{ref_aa}{position}{query_aa}")
+                if len(op) == 5:
+                    # Real miniprot format: *{3-nt codon}{protein AA}
+                    # e.g. *aatD → genome has aat(=N), protein has D → D369N
+                    genome_codon = op[1:4].upper()
+                    protein_aa = op[4]
+                    genome_aa = _CODON_TABLE.get(genome_codon, 'X')
+                    if protein_aa != genome_aa:
+                        mutations.append(f"{protein_aa}{position}{genome_aa}")
+                else:
+                    # Simplified test format: *{lowercase ref}{uppercase query}
+                    # e.g. *dY → ref=D, query=Y → D179Y
+                    ref_aa = op[1].upper()
+                    query_aa = op[2].upper()
+                    if ref_aa != query_aa:
+                        mutations.append(f"{ref_aa}{position}{query_aa}")
                 position += 1
 
             elif op.startswith('+'):
@@ -632,6 +721,6 @@ class MutationDetector:
         return self.miniprot_results, self.amplicon_results, seqkit_mut_results, unified_results
 
 
-def run_mutation_detection(assembly, output, proteins, primers, blast_results=None):
-    detector = MutationDetector(assembly, output, proteins, primers)
+def run_mutation_detection(assembly, output, proteins, primers, blast_results=None, mutation_db_file=None):
+    detector = MutationDetector(assembly, output, proteins, primers, mutation_db_file)
     return detector.run(blast_results)
