@@ -30,7 +30,8 @@ resistance-detector/
 ├── config.yaml              # Snakemake configuration
 ├── environment.yaml         # Conda environment
 ├── scripts/
-│   └── download_assembly.py # Download assemblies from NCBI
+│   ├── download_assembly.py      # Download assemblies from NCBI
+│   └── simulate_esbl_genomes.py  # Download real ESBL genomes and simulate resistance
 ├── data/
 │   ├── example_database.fasta   # Reference nucleotide database
 │   ├── cazavi_proteins.fasta    # CAZAVI resistance proteins for miniprot
