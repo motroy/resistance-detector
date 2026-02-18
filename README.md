@@ -83,10 +83,7 @@ pixi install
 
 ```bash
 # Install system dependencies
-sudo apt-get install ncbi-blast+
-
-# Install Miniprot and SeqKit (e.g., via brew or download binaries)
-# brew install miniprot seqkit
+bash install_deps.sh
 
 # Install Python dependencies
 pip install biopython
