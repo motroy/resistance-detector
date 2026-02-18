@@ -9,3 +9,4 @@ dependencies:
   - biopython>=1.78
   - seqkit>=2.3
   - miniprot>=0.13
+  - pytest>=7.0
