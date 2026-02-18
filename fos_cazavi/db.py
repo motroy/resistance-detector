@@ -7,6 +7,7 @@ import csv
 import urllib.request
 from pathlib import Path
 from Bio import Entrez, SeqIO
+from Bio.SeqRecord import SeqRecord
 import time
 
 # URLs for AMRfinderPlus data
@@ -88,9 +89,11 @@ class DatabaseBuilder:
     def __init__(self, email, output_prefix):
         self.email = email
         self.output_fasta = f"{output_prefix}.fasta"
+        self.output_proteins = f"{output_prefix}_proteins.fasta"
         self.output_mutations = f"{output_prefix}_mutations.tsv"
         Entrez.email = email
         self.sequences = []
+        self.protein_sequences = []
         self.mutations = [] # List of dicts
         self.download_dir = Path("amrfinder_data")
         self.download_dir.mkdir(exist_ok=True)
@@ -176,6 +179,15 @@ class DatabaseBuilder:
                 if record:
                     self.sequences.append(record)
                     self.extract_mutations_for_gene(gene, info['taxgroup'])
+
+                    # Translate and add to protein sequences
+                    try:
+                        prot_seq = record.seq.translate(table=11, cds=True)
+                        prot_record = SeqRecord(prot_seq, id=gene, description=f"{gene} reference protein (translated)")
+                        self.protein_sequences.append(prot_record)
+                    except Exception as e:
+                        print(f"  WARNING: Could not translate {gene}: {e}")
+
             elif gene in FALLBACK_GENES:
                 print(f"  WARNING: {gene} not found in catalog, using fallback")
                 acc, start, stop, strand = FALLBACK_GENES[gene]
@@ -185,6 +197,14 @@ class DatabaseBuilder:
                     self.sequences.append(record)
                     # We can't extract mutations easily without catalog protein accessions,
                     # unless we add them manually.
+
+                    # Translate and add to protein sequences
+                    try:
+                        prot_seq = record.seq.translate(table=11, cds=True)
+                        prot_record = SeqRecord(prot_seq, id=gene, description=f"{gene} reference protein (translated)")
+                        self.protein_sequences.append(prot_record)
+                    except Exception as e:
+                        print(f"  WARNING: Could not translate {gene}: {e}")
             else:
                 print(f"  WARNING: {gene} not found in AMRfinderPlus catalog for {info['taxgroup']}")
 
@@ -196,6 +216,14 @@ class DatabaseBuilder:
             record = self.fetch_sequence_from_ncbi(acc, start, stop, strand, gene)
             if record:
                 self.sequences.append(record)
+
+                # Translate and add to protein sequences
+                try:
+                    prot_seq = record.seq.translate(table=11, cds=True)
+                    prot_record = SeqRecord(prot_seq, id=gene, description=f"{gene} reference protein (translated)")
+                    self.protein_sequences.append(prot_record)
+                except Exception as e:
+                    print(f"  WARNING: Could not translate {gene}: {e}")
 
     def fetch_sequence_from_ncbi(self, accession, start, stop, strand, gene_name):
         """Fetch sequence from NCBI"""
@@ -278,6 +306,14 @@ class DatabaseBuilder:
                             self.sequences.append(record)
                             found_genes.add(gene_symbol)
                             print(f"  Found {gene_symbol}")
+
+                            # Translate and add to protein sequences
+                            try:
+                                prot_seq = record.seq.translate(table=11, cds=True)
+                                prot_record = SeqRecord(prot_seq, id=gene_symbol, description=f"{gene_symbol} reference protein (translated)")
+                                self.protein_sequences.append(prot_record)
+                            except Exception as e:
+                                print(f"  WARNING: Could not translate {gene_symbol}: {e}")
         
         for gene in ACQUIRED_GENES:
             if gene not in found_genes:
@@ -308,6 +344,10 @@ class DatabaseBuilder:
         
         print(f"Writing sequences to {self.output_fasta}...")
         SeqIO.write(self.sequences, self.output_fasta, "fasta")
+
+        if self.protein_sequences:
+            print(f"Writing protein sequences to {self.output_proteins}...")
+            SeqIO.write(self.protein_sequences, self.output_proteins, "fasta")
         
         print(f"Writing mutations to {self.output_mutations}...")
         with open(self.output_mutations, 'w') as f:
