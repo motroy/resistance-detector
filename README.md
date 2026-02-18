@@ -24,10 +24,13 @@ resistance-detector/
 │   ├── mutations.py         # GAMMA/Amplicon detection module
 │   ├── utils.py             # Shared utilities
 │   └── data/                # Bundled reference data
-│       ├── example_database.fasta   # Example nucleotide CDS database (for GAMMA)
-│       └── primers.tsv              # Primer sequences for amplicon detection
+│       ├── example_database.fasta              # Raw nucleotide CDS sequences
+│       ├── example_database_deduplicated.fasta # GAMMA-ready database (GAMMA_DB_Maker output)
+│       ├── example_database_mutations.tsv      # Mutation definitions TSV
+│       └── primers.tsv                         # Primer sequences for amplicon detection
 ├── fos-cazavi               # Executable script (for repo use without install)
 ├── pyproject.toml           # PyPI package configuration
+├── GAMMA_DB_Maker.py        # GAMMA database preparation tool
 ├── create_test_genomes.py   # Test genome generator
 ├── batch_analysis.sh        # Batch processing script
 ├── Snakefile                # Snakemake workflow
@@ -36,10 +39,12 @@ resistance-detector/
 ├── scripts/
 │   ├── download_assembly.py      # Download assemblies from NCBI
 │   └── simulate_esbl_genomes.py  # Download real ESBL genomes and simulate resistance
-├── tests/                   # Unit test suite (194 tests)
+├── tests/                   # Unit test suite (276 tests)
 │   ├── conftest.py
 │   ├── test_blast_parsing.py
+│   ├── test_dual_detection.py
 │   ├── test_gamma_parsing.py
+│   ├── test_genome_creation.py
 │   └── test_mutation_detection.py
 ├── example_results/         # Example outputs
 ├── LICENSE
@@ -62,7 +67,7 @@ resistance-detector/
 pip install fos-cazavi
 ```
 
-This installs the `fos-cazavi` command and bundles the reference data files (`example_database.fasta`, `primers.tsv`). System tools (BLAST+, GAMMA, seqkit) must still be installed separately.
+This installs the `fos-cazavi` command and bundles the reference data files (`example_database_deduplicated.fasta`, `primers.tsv`). System tools (BLAST+, GAMMA, seqkit) must still be installed separately.
 
 ### Option 2: Conda
 
@@ -101,7 +106,7 @@ Download sequences from NCBI (AMRfinderPlus) and build the database. The `create
 fos-cazavi create-db -e your.email@example.com -o resistance_db
 ```
 
-This produces `resistance_db.fasta` (raw nucleotide CDS) and `resistance_db_Formatted.fasta` (GAMMA-ready database). Use `resistance_db_Formatted.fasta` with `--genes`.
+This produces `resistance_db.fasta` (raw nucleotide CDS) and `resistance_db_deduplicated.fasta` (GAMMA-ready database). Use `resistance_db_deduplicated.fasta` with `--genes`.
 
 ### 2. Run Full Analysis
 
@@ -230,21 +235,22 @@ python -m pytest tests/ -v
 ```
 ============================= test session starts ==============================
 platform linux -- Python 3.11.14, pytest-9.0.2
-collected 194 items
+collected 276 items
 
-194 passed in 8.85s
+276 passed in 7.52s
 ```
 
-**All 194 tests pass.** No external tools (BLAST, GAMMA, seqkit) are required to run the tests — all tool-dependent logic is tested via synthetic inputs.
+**All 276 tests pass.** No external tools (BLAST, GAMMA, seqkit) are required to run the tests — all tool-dependent logic is tested via synthetic inputs.
 
 ### Test Coverage Summary
 
 | Test Module | Tests | What Is Covered |
 |---|---|---|
-| `test_blast_parsing.py` | 22 | BLAST output parsing: identity/coverage filtering, gene name extraction from various ID formats, multi-hit handling, edge cases |
-| `test_genome_creation.py` | 74 | Reference database loading (30 genes verified), `introduce_mutation()` utility, synthetic contig construction for all FOS and CAZAVI genome scenarios |
-| `test_gamma_parsing.py` | 20 | GAMMA Codon_Changes field parsing for KPC (D179Y, V240G, T243M), OXA-48 (P68A, Y211S), CMY-178 (N70T), porins (OmpK35/36), AcrB, and gene name normalization |
-| `test_mutation_detection.py` | 78 | `detect_mutations()` for all 27 gene families: wildtype no-call verification plus every documented resistance mutation across FOS and CAZAVI pathways |
+| `test_blast_parsing.py` | 20 | BLAST output parsing: identity/coverage filtering, gene name extraction from various ID formats, multi-hit handling, edge cases |
+| `test_genome_creation.py` | 53 | Reference database loading (30 genes verified), `introduce_mutation()` utility, synthetic contig construction for all FOS and CAZAVI genome scenarios |
+| `test_gamma_parsing.py` | 58 | GAMMA Codon_Changes field parsing for KPC (D179Y, V240G, T243M), OXA-48 (P68A, Y211S), CMY-178 (N70T), porins (OmpK35/36), AcrB, gene name normalization, and fosA variant names (fosA3/4/5/7/11) |
+| `test_mutation_detection.py` | 104 | `detect_mutations()` for all gene families: wildtype no-call verification plus every documented resistance mutation across FOS and CAZAVI pathways |
+| `test_dual_detection.py` | 41 | Dual-method (GAMMA + SeqKit amplicon) confidence scoring: 100% when both methods agree, 50% when only one detects a mutation |
 
 ### Genes and Mutations Covered by Tests
 
@@ -252,7 +258,7 @@ collected 194 items
 
 | Gene | Mutations Tested |
 |---|---|
-| fosA3, fosA4, fosA5, fosA11 | K90E, H119Q (+ wildtype) |
+| fosA3, fosA4, fosA5, fosA7, fosA11 | K90E, H119Q (+ wildtype) |
 | fosAKP | I91V (+ wildtype) |
 
 **Fosfomycin (FOS) — Chromosomal:**

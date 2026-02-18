@@ -8,7 +8,7 @@ Database preparation for GAMMA:
 
     python3 GAMMA_DB_Maker.py <output_prefix>.fasta
 
-  The formatted database (<output_prefix>_Formatted.fasta) is then ready
+  The formatted database (<output_prefix>_deduplicated.fasta) is then ready
   for use with GAMMA.  See https://github.com/rastanton/GAMMA_DB_Maker
 """
 
@@ -347,7 +347,7 @@ class DatabaseBuilder:
 
         GAMMA_DB_Maker validates reading frames, removes sequences with
         nonstandard bases, verifies start/stop codons, and deduplicates
-        entries.  The formatted output (<prefix>_Formatted.fasta) is the
+        entries.  The final output (<prefix>_deduplicated.fasta) is the
         database to pass to GAMMA via the --genes argument.
 
         Requires GAMMA_DB_Maker.py to be on PATH or in the current directory.
@@ -362,12 +362,13 @@ class DatabaseBuilder:
                 ['python3', gamma_db_maker, self.output_fasta],
                 check=True
             )
-            formatted = Path(self.output_fasta).stem + '_Formatted.fasta'
-            if Path(formatted).exists():
-                print(f"GAMMA-formatted database written to {formatted}")
-                print(f"Use '--genes {formatted}' when running GAMMA mutation detection.")
+            # GAMMA_DB_Maker names the final output <stem>_deduplicated.fasta
+            deduplicated = Path(self.output_fasta).stem + '_deduplicated.fasta'
+            if Path(deduplicated).exists():
+                print(f"GAMMA-ready database written to {deduplicated}")
+                print(f"Use '--genes {deduplicated}' when running GAMMA mutation detection.")
             else:
-                print("WARNING: GAMMA_DB_Maker ran but formatted output not found; "
+                print("WARNING: GAMMA_DB_Maker ran but deduplicated output not found; "
                       f"using {self.output_fasta} directly.")
         except FileNotFoundError:
             print("WARNING: GAMMA_DB_Maker.py not found. Skipping database formatting. "

@@ -63,6 +63,7 @@ def gene_seqs():
         'fosA3':  make_gene(192, {90: 'K', 119: 'H'}),
         'fosA4':  make_gene(192, {90: 'K', 119: 'H'}),
         'fosA5':  make_gene(192, {90: 'K', 119: 'H'}),
+        'fosA7':  make_gene(192, {90: 'K', 119: 'H'}),
         'fosA11': make_gene(192, {90: 'K', 119: 'H'}),
         # Chromosomal – K. pneumoniae
         'fosAKP': make_gene(150, {91: 'I'}),

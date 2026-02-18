@@ -74,24 +74,30 @@ def check_no_mutations(gene_name, dna):
 # ══════════════════════════════════════════════════════════════════════════════
 
 class TestFosPlasmidic:
-    """fosA family – plasmid-borne glutathione S-transferases."""
+    """fosA family – plasmid-borne glutathione S-transferases.
 
-    # fosA3 / fosA4 / fosA5 / fosA11 share the same mutation positions
-    @pytest.mark.parametrize("gene", ["fosA3", "fosA4", "fosA5", "fosA11"])
+    Each test uses the actual variant gene name (fosA3, fosA4, …) as the
+    gene_name argument so that the normalization path fosA3 -> fosA is
+    exercised, matching what both BLAST and GAMMA return at runtime.
+    """
+
+    # fosA3 / fosA4 / fosA5 / fosA7 / fosA11 share the same mutation positions
+    @pytest.mark.parametrize("gene", ["fosA3", "fosA4", "fosA5", "fosA7", "fosA11"])
     def test_wildtype_no_mutations(self, gene_seqs, gene):
-        check_no_mutations('fosA', gene_seqs[gene])
+        # gene_name is the variant name so that normalization (fosA3 -> fosA) is tested
+        check_no_mutations(gene, gene_seqs[gene])
 
-    @pytest.mark.parametrize("gene", ["fosA3", "fosA4", "fosA5", "fosA11"])
+    @pytest.mark.parametrize("gene", ["fosA3", "fosA4", "fosA5", "fosA7", "fosA11"])
     def test_K90E(self, gene_seqs, gene):
         """fosA K90E – loss-of-function variant"""
         dna = mutate(gene_seqs[gene], 90, 'GAA')   # K(AAA) -> E(GAA)
-        check_detected('fosA', dna, 'K90E')
+        check_detected(gene, dna, 'K90E')
 
-    @pytest.mark.parametrize("gene", ["fosA3", "fosA4", "fosA5", "fosA11"])
+    @pytest.mark.parametrize("gene", ["fosA3", "fosA4", "fosA5", "fosA7", "fosA11"])
     def test_H119Q(self, gene_seqs, gene):
         """fosA H119Q"""
         dna = mutate(gene_seqs[gene], 119, 'CAA')  # H(CAT) -> Q(CAA)
-        check_detected('fosA', dna, 'H119Q')
+        check_detected(gene, dna, 'H119Q')
 
 
 # ══════════════════════════════════════════════════════════════════════════════

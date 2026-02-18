@@ -349,3 +349,70 @@ class TestGammaResultIntegration:
         result = self._process_row(d, row)
         assert result['protein'] == 'blaKPC-3'
         assert 'D179Y/N' in result['mutations']
+
+
+# ══════════════════════════════════════════════════════════════════════════════
+# fosA variant gene name normalisation
+# ══════════════════════════════════════════════════════════════════════════════
+
+class TestFosAGammaVariantNames:
+    """
+    GAMMA returns gene names from the database FASTA header, e.g. 'fosA3',
+    'fosA7', 'fosA11'.  _normalize_gene_name must map all of these to 'fosa'
+    so that mutations defined under the 'fosA' key are detected.
+    fosAKP must NOT be affected (non-numeric suffix).
+    """
+
+    @pytest.mark.parametrize("gene", ["fosA3", "fosA4", "fosA5", "fosA7", "fosA11"])
+    def test_K90E_via_variant_gene_name(self, gene):
+        d = make_detector()
+        raw = parse('K90E')
+        muts = filter_known(d, raw, gene)
+        assert 'K90E/Q' in muts, f"K90E not found for gene name '{gene}'"
+
+    @pytest.mark.parametrize("gene", ["fosA3", "fosA4", "fosA5", "fosA7", "fosA11"])
+    def test_H119Q_via_variant_gene_name(self, gene):
+        d = make_detector()
+        raw = parse('H119Q')
+        muts = filter_known(d, raw, gene)
+        assert 'H119Q/R' in muts, f"H119Q not found for gene name '{gene}'"
+
+    @pytest.mark.parametrize("gene", ["fosA3", "fosA4", "fosA5", "fosA7", "fosA11"])
+    def test_wildtype_no_mutations(self, gene):
+        d = make_detector()
+        raw = parse('0')
+        muts = filter_known(d, raw, gene)
+        assert muts == []
+
+    def test_fosAKP_not_collapsed_to_fosA(self):
+        """fosAKP has a non-numeric suffix and must keep its own entry."""
+        d = make_detector()
+        raw = parse('I91V')
+        muts = filter_known(d, raw, 'fosAKP')
+        assert 'I91V' in muts
+
+    def test_fosAKP_K90E_not_detected(self):
+        """fosA K90E should not be reported for fosAKP (different gene)."""
+        d = make_detector()
+        raw = parse('K90E')
+        muts = filter_known(d, raw, 'fosAKP')
+        assert muts == []
+
+    @pytest.mark.parametrize("gene", ["fosA3", "fosA4", "fosA5", "fosA7", "fosA11"])
+    def test_gamma_row_integration(self, gene):
+        """Full GAMMA row processing with fosA variant gene names."""
+        d = make_detector()
+
+        def make_row(g, cc):
+            return {'Gene': g, 'Contig': 'c1', 'Start': '100', 'Stop': '700',
+                    'Match_Type': 'mutant', 'Codon_Changes': cc,
+                    'Codon_Percent': '1.0', 'Percent_Length': '1.0'}
+
+        def process(row):
+            gene_name = row['Gene'].rstrip('\u2021')
+            raw = MutationDetector._parse_gamma_codon_changes(row['Codon_Changes'])
+            return d._filter_known_mutations(raw, gene_name)
+
+        assert 'K90E/Q' in process(make_row(gene, 'K90E'))
+        assert 'H119Q/R' in process(make_row(gene, 'H119Q'))
+        assert process(make_row(gene, '0')) == []

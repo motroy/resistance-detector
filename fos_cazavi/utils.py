@@ -1,3 +1,4 @@
+import re
 import subprocess
 import sys
 from Bio.Seq import Seq
@@ -209,10 +210,12 @@ def detect_mutations(gene_name, sequence, mutation_db=None):
     db = mutation_db if mutation_db else KNOWN_MUTATIONS
 
     # Get base gene name (remove variant numbers)
-    # This logic matches ResistanceDetector.detect_mutations
     base_gene = gene_name.split('-')[0]
-    if base_gene.startswith('bla'):
+    if base_gene.lower().startswith('bla'):
         base_gene = 'bla' + base_gene[3:].rstrip('0123456789')
+    elif re.match(r'^fosA\d+$', base_gene, re.IGNORECASE):
+        # fosA3/4/5/7/11 -> fosA  (fosAKP is unaffected: KP not digits)
+        base_gene = base_gene.rstrip('0123456789')
 
     # Try exact match first
     if gene_name in db:
