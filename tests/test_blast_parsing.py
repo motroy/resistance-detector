@@ -107,6 +107,50 @@ class TestParseBlastOutput:
         hits = d.parse_blast_output(line)
         assert hits[0]['gene'].startswith(expected_prefix)
 
+    def test_redundant_hits_same_location(self):
+        d = make_detector()
+        # Three hits at the same location (100-1100 on contig1)
+        # Hit 1: 95% identity, 100% coverage
+        line1 = blast_line("contig1", "geneA_var1", 95.0, 1000, 100, 1100, 5000, 1, 1000, 1000)
+        # Hit 2: 100% identity, 100% coverage (The best one)
+        line2 = blast_line("contig1", "geneA_var2", 100.0, 1000, 100, 1100, 5000, 1, 1000, 1000)
+        # Hit 3: 98% identity, 100% coverage
+        line3 = blast_line("contig1", "geneA_var3", 98.0, 1000, 100, 1100, 5000, 1, 1000, 1000)
+
+        output = "\n".join([line1, line2, line3])
+        hits = d.parse_blast_output(output)
+
+        # Should return only the top match (Hit 2)
+        assert len(hits) == 1
+        assert hits[0]['subject_id'] == "geneA_var2"
+
+    def test_redundant_hits_overlapping_location(self):
+        d = make_detector()
+        # Hit 1: 100-1100 (Best match for this region)
+        line1 = blast_line("contig1", "geneA", 100.0, 1000, 100, 1100, 5000, 1, 1000, 1000)
+
+        # Hit 2: 105-1095 (Included in Hit 1, lower coverage/identity potentially)
+        line2 = blast_line("contig1", "geneA_frag", 99.0, 990, 105, 1095, 5000, 1, 990, 990)
+
+        output = "\n".join([line1, line2])
+        hits = d.parse_blast_output(output)
+
+        assert len(hits) == 1
+        assert hits[0]['subject_id'] == "geneA"
+
+    def test_distinct_locations_kept(self):
+        d = make_detector()
+        # Hit 1: 100-1100
+        line1 = blast_line("contig1", "geneA", 100.0, 1000, 100, 1100, 5000, 1, 1000, 1000)
+
+        # Hit 2: 2000-3000 (Distinct location)
+        line2 = blast_line("contig1", "geneB", 100.0, 1000, 2000, 3000, 5000, 1, 1000, 1000)
+
+        output = "\n".join([line1, line2])
+        hits = d.parse_blast_output(output)
+
+        assert len(hits) == 2
+
 
 class TestExtractGeneName:
 
