@@ -116,7 +116,51 @@ class BlastDetector:
                 })
 
         print(f"Found {len(hits)} gene hits passing thresholds")
-        return hits
+        return self.filter_redundant_hits(hits)
+
+    def filter_redundant_hits(self, hits):
+        """Filter hits to keep only the best match per genomic location"""
+        if not hits:
+            return []
+
+        # Sort by coverage (desc), identity (desc), then length (desc)
+        # We use alignment length on query as a proxy for match quality if others are tied
+        hits.sort(key=lambda x: (x['coverage'], x['identity'], abs(x['qend'] - x['qstart'])), reverse=True)
+
+        kept_hits = []
+        for hit in hits:
+            # Normalize coordinates
+            start = min(hit['qstart'], hit['qend'])
+            end = max(hit['qstart'], hit['qend'])
+
+            # Check overlap with kept hits
+            is_redundant = False
+            for kept in kept_hits:
+                if hit['query_id'] != kept['query_id']:
+                    continue
+
+                k_start = min(kept['qstart'], kept['qend'])
+                k_end = max(kept['qstart'], kept['qend'])
+
+                # Calculate overlap
+                overlap_start = max(start, k_start)
+                overlap_end = min(end, k_end)
+                overlap_len = max(0, overlap_end - overlap_start + 1)
+
+                if overlap_len > 0:
+                    # Calculate overlap percentage relative to the NEW hit
+                    # If the new hit significantly overlaps with an existing better hit, discard it.
+                    hit_len = end - start + 1
+                    overlap_pct = (overlap_len / hit_len) * 100
+                    if overlap_pct > 50:
+                        is_redundant = True
+                        break
+
+            if not is_redundant:
+                kept_hits.append(hit)
+
+        print(f"Filtered to {len(kept_hits)} hits after redundancy check")
+        return kept_hits
 
     def extract_gene_name(self, subject_id):
         """Extract gene name from BLAST subject ID"""
