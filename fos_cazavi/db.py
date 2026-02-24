@@ -72,6 +72,12 @@ FALLBACK_GENES = {
 
     # K. pneumoniae MGH 78578 (CP000647.1)
     'acrB': ('CP000647.1', 484760, 487906, '-'),
+
+    # P. aeruginosa PAO1 (NC_002516.2)
+    # mexR (PA0424): 147 aa repressor of MexAB-OprM; CDS includes stop codon (444 bp)
+    'mexR': ('NC_002516.2', 475009, 475452, '-'),
+    # nalD (PA3574): 215 aa second repressor of MexAB-OprM; CDS includes stop codon (648 bp)
+    'nalD': ('NC_002516.2', 4030218, 4030865, '-'),
 }
 
 # Manual genes to fetch directly (not in catalog logic)
@@ -258,8 +264,14 @@ class DatabaseBuilder:
             record.id = gene_name
             record.description = f"{gene_name} reference sequence (AMRfinderPlus:{accession}:{start}-{stop})"
             
-            if not record.seq.startswith("ATG") and not record.seq.startswith("GTG") and not record.seq.startswith("TTG"):
-                 print(f"  WARNING: Sequence for {gene_name} does not start with ATG/GTG/TTG: {record.seq[:10]}...")
+            start_codons = {'ATG', 'GTG', 'TTG'}
+            if str(record.seq[:3]).upper() not in start_codons:
+                rc = record.seq.reverse_complement()
+                if str(rc[:3]).upper() in start_codons:
+                    print(f"  INFO: Reverse complementing {gene_name} to obtain valid start codon")
+                    record.seq = rc
+                else:
+                    print(f"  WARNING: Sequence for {gene_name} does not start with ATG/GTG/TTG: {record.seq[:10]}...")
 
             return record
         except Exception as e:
@@ -310,7 +322,7 @@ class DatabaseBuilder:
             for record in SeqIO.parse(f, "fasta"):
                 header_parts = record.description.split('|')
                 if len(header_parts) > 4:
-                    gene_symbol = header_parts[4]
+                    gene_symbol = header_parts[4].strip()
                     
                     if gene_symbol in ACQUIRED_GENES:
                         if gene_symbol not in found_genes:
