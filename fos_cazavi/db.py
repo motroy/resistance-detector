@@ -378,8 +378,9 @@ class DatabaseBuilder:
                 check=True
             )
             # GAMMA_DB_Maker names the final output <stem>_deduplicated.fasta
-            deduplicated = Path(self.output_fasta).stem + '_deduplicated.fasta'
-            if Path(deduplicated).exists():
+            # It places the output in the same directory as the input file
+            deduplicated = self.output_dir / (Path(self.output_fasta).stem + '_deduplicated.fasta')
+            if deduplicated.exists():
                 print(f"GAMMA-ready database written to {deduplicated}")
                 print(f"Use '--genes {deduplicated}' when running GAMMA mutation detection.")
             else:
