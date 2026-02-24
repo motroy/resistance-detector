@@ -368,15 +368,6 @@ class MutationDetector:
             'seqkit_detail': matching seqkit result dict, or None,
         }
         """
-        # Index GAMMA results by normalized (gene, mutation)
-        gamma_by_key = {}
-        for r in self.gamma_results:
-            gene_norm = self._normalize_gene_name(r['protein'])
-            for mut in r.get('mutations', []):
-                key = (gene_norm, mut)
-                if key not in gamma_by_key:
-                    gamma_by_key[key] = r
-
         # Index seqkit results by normalized (gene, mutation)
         seqkit_by_key = {}
         for r in seqkit_mut_results:
@@ -386,29 +377,62 @@ class MutationDetector:
                 if key not in seqkit_by_key:
                     seqkit_by_key[key] = r
 
-        all_keys = set(gamma_by_key.keys()) | set(seqkit_by_key.keys())
-
         unified = []
-        for (gene, mutation) in sorted(all_keys):
-            in_gamma = (gene, mutation) in gamma_by_key
-            in_seqkit = (gene, mutation) in seqkit_by_key
+        processed_seqkit_keys = set()
+        seen_gamma_entries = set()
 
-            methods = []
-            if in_gamma:
-                methods.append('gamma')
-            if in_seqkit:
-                methods.append('seqkit')
+        # Iterate through ALL gamma results (preserving instances)
+        # This ensures multi-copy genes are reported individually
+        for r in self.gamma_results:
+            gene_norm = self._normalize_gene_name(r['protein'])
+            mutations = r.get('mutations', [])
 
-            confidence = 100 if (in_gamma and in_seqkit) else 50
+            contig = r.get('contig', '')
+            start = r.get('contig_start', -1)
+            end = r.get('contig_end', -1)
 
-            unified.append({
-                'gene': gene,
-                'mutation': mutation,
-                'confidence': confidence,
-                'methods': methods,
-                'gamma_detail': gamma_by_key.get((gene, mutation)),
-                'seqkit_detail': seqkit_by_key.get((gene, mutation)),
-            })
+            for mutation in mutations:
+                # Deduplicate exact same mutation event (same gene, mutation, location)
+                # This handles accidental duplicates in input while allowing multi-copy genes (different locs)
+                unique_key = (gene_norm, mutation, contig, start, end)
+                if unique_key in seen_gamma_entries:
+                    continue
+                seen_gamma_entries.add(unique_key)
+
+                key = (gene_norm, mutation)
+                in_seqkit = key in seqkit_by_key
+
+                methods = ['gamma']
+                if in_seqkit:
+                    methods.append('seqkit')
+                    processed_seqkit_keys.add(key)
+
+                confidence = 100 if in_seqkit else 50
+
+                unified.append({
+                    'gene': gene_norm,
+                    'mutation': mutation,
+                    'confidence': confidence,
+                    'methods': methods,
+                    'gamma_detail': r,
+                    'seqkit_detail': seqkit_by_key.get(key),
+                })
+
+        # Process remaining SeqKit results (not matched to any GAMMA instance)
+        for key, r in seqkit_by_key.items():
+            if key not in processed_seqkit_keys:
+                gene_norm, mutation = key
+                unified.append({
+                    'gene': gene_norm,
+                    'mutation': mutation,
+                    'confidence': 50,
+                    'methods': ['seqkit'],
+                    'gamma_detail': None,
+                    'seqkit_detail': r,
+                })
+
+        # Sort unified results
+        unified.sort(key=lambda x: (x['gene'], x['mutation']))
 
         self.unified_results = unified
         return unified
