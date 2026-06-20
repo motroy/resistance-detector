@@ -1,0 +1,17 @@
+Sample	Type	Gene_Protein	Method	Result_Details	Identity_Confidence	Contig	Start	End	Notes
+A-2_1-A3.fasta	Acquired Gene	ompK36	BLAST	Coverage: 101.90%	92.62%	JAHUYZ010000008.1	74925	76043	Mutations: G213S
+A-2_1-A3.fasta	Acquired Gene	acrB	BLAST	Coverage: 100.00%	99.94%	JAHUYZ010000002.1	252618	255764	Mutations: G617A,F626A,A628T/V
+A-2_1-A3.fasta	Acquired Gene	blaKPC-3	BLAST	Coverage: 100.00%	99.89%	JAHUYZ010000039.1	13052	13933	Mutations: L168P (KPC-46)
+A-2_1-A3.fasta	Acquired Gene	ftsI	BLAST	Coverage: 100.00%	99.77%	JAHUYZ010000004.1	135170	136936	Mutations: A333P,Y350L,S357Q
+A-2_1-A3.fasta	Acquired Gene	fosAKP	BLAST	Coverage: 100.00%	99.76%	JAHUYZ010000021.1	22809	23228	Mutations: -
+A-2_1-A3.fasta	Acquired Gene	ompK35	BLAST	Coverage: 100.00%	99.35%	JAHUYZ010000007.1	41172	42251	Mutations: D135G,D181R
+A-2_1-A3.fasta	Acquired Gene	envZ	BLAST	Coverage: 100.00%	99.04%	JAHUYZ010000009.1	153951	155306	Mutations: G244S/D,T324Q
+A-2_1-A3.fasta	Acquired Gene	blaSHV-12	BLAST	Coverage: 100.00%	98.95%	JAHUYZ010000001.1	272420	273280	Mutations: G238A,E240G
+A-2_1-A3.fasta	Mutation	blakpc	gamma	L168P (KPC-46)	50%	JAHUYZ010000039.1	13051	13933	Dual-method consensus
+A-2_1-A3.fasta	Gene Alignment	blaSHV-12	GAMMA	Wildtype / No mutations detected	98.61%	JAHUYZ010000001.1	272419	273280	Coverage: 100.00%
+A-2_1-A3.fasta	Gene Alignment	fosAKP	GAMMA	Wildtype / No mutations detected	99.29%	JAHUYZ010000021.1	22808	23228	Coverage: 100.00%
+A-2_1-A3.fasta	Gene Alignment	acrB	GAMMA	Wildtype / No mutations detected	100.00%	JAHUYZ010000002.1	252617	255764	Coverage: 100.00%
+A-2_1-A3.fasta	Gene Alignment	ftsI	GAMMA	Wildtype / No mutations detected	99.83%	JAHUYZ010000004.1	135169	136936	Coverage: 100.00%
+A-2_1-A3.fasta	Gene Alignment	ompK35	GAMMA	Wildtype / No mutations detected	100.00%	JAHUYZ010000007.1	41171	42251	Coverage: 100.00%
+A-2_1-A3.fasta	Gene Alignment	ompK36	GAMMA	Wildtype / No mutations detected	58.70%	JAHUYZ010000008.1	74924	76043	Coverage: 101.40%
+A-2_1-A3.fasta	Gene Alignment	envZ	GAMMA	Wildtype / No mutations detected	99.56%	JAHUYZ010000009.1	153950	155306	Coverage: 100.00%

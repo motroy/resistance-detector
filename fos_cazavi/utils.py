@@ -11,9 +11,18 @@ import datetime
 # Default known resistance mutations (fallback)
 KNOWN_MUTATIONS = {
     'blaKPC': {
-        179: {'ref': 'D', 'variants': ['Y', 'N'], 'name': 'D179Y/N'},
-        240: {'ref': 'V', 'variants': ['G'], 'name': 'V240G'},
-        243: {'ref': 'T', 'variants': ['M'], 'name': 'T243M'}
+        # NB: position keys are literal 1-based indices into the translated
+        # blaKPC-3 reference CDS bundled in data/example_database*.fasta, which
+        # is offset by -1 relative to the classic literature/Ambler numbering
+        # for positions at/after the X-loop (179/240/243 below are stored at
+        # 178/239/242; the 'name' field preserves the literature label).
+        166: {'ref': 'L', 'variants': ['W'], 'name': 'L166W (KPC-66 X-loop)'},
+        167: {'ref': 'E', 'variants': ['D'], 'name': 'E167D (KPC-92 X-loop)'},
+        168: {'ref': 'L', 'variants': ['P'], 'name': 'L168P (KPC-46)'},
+        169: {'ref': 'N', 'variants': ['D'], 'name': 'N169D (KPC-92 X-loop)'},
+        178: {'ref': 'D', 'variants': ['Y', 'N'], 'name': 'D179Y/N'},
+        239: {'ref': 'V', 'variants': ['G'], 'name': 'V240G'},
+        242: {'ref': 'T', 'variants': ['M'], 'name': 'T243M'}
     },
     'blaOXA-48': {
         68: {'ref': 'P', 'variants': ['A'], 'name': 'P68A'},
@@ -268,6 +277,7 @@ def load_mutation_db(mutation_file):
                 pos = int(row['Position'])
                 ref = row['Ref']
                 var = row['Variant']
+                explicit_name = (row.get('Name') or '').strip()
 
                 vars_list = var.split('/')
 
@@ -277,17 +287,21 @@ def load_mutation_db(mutation_file):
                 if pos not in new_db[gene]:
                     new_db[gene][pos] = {
                         'ref': ref,
-                        'variants': set()
+                        'variants': set(),
+                        'name': explicit_name or None,
                     }
+                elif explicit_name and not new_db[gene][pos].get('name'):
+                    new_db[gene][pos]['name'] = explicit_name
 
                 new_db[gene][pos]['variants'].update(vars_list)
 
-        # Post-process to format names
+        # Post-process: fall back to auto-generated name when none was given in the file
         for gene in new_db:
             for pos in new_db[gene]:
                 entry = new_db[gene][pos]
                 variants_str = '/'.join(sorted(entry['variants']))
-                entry['name'] = f"{entry['ref']}{pos}{variants_str}"
+                if not entry.get('name'):
+                    entry['name'] = f"{entry['ref']}{pos}{variants_str}"
                 entry['variants'] = list(entry['variants'])
 
         print(f"Loaded mutation definitions for {len(new_db)} genes")

@@ -1,0 +1,17 @@
+Sample	Type	Gene_Protein	Method	Result_Details	Identity_Confidence	Contig	Start	End	Notes
+B-2_2-C6.fasta	Acquired Gene	ompK36	BLAST	Coverage: 101.90%	92.62%	JAHUYX010000009.1	74925	76043	Mutations: G213S
+B-2_2-C6.fasta	Acquired Gene	acrB	BLAST	Coverage: 100.00%	99.94%	JAHUYX010000002.1	252180	255326	Mutations: G617A,F626A,A628T/V
+B-2_2-C6.fasta	Acquired Gene	ftsI	BLAST	Coverage: 100.00%	99.77%	JAHUYX010000004.1	135170	136936	Mutations: A333P,Y350L,S357Q
+B-2_2-C6.fasta	Acquired Gene	fosAKP	BLAST	Coverage: 100.00%	99.76%	JAHUYX010000020.1	22809	23228	Mutations: -
+B-2_2-C6.fasta	Acquired Gene	ompK35	BLAST	Coverage: 100.00%	99.35%	JAHUYX010000008.1	41275	42354	Mutations: D135G,D181R
+B-2_2-C6.fasta	Acquired Gene	blaKPC-3	BLAST	Coverage: 100.00%	99.32%	JAHUYX010000038.1	5812	6687	Mutations: E167N,L168S,N169A,D178S,V240G,T242N
+B-2_2-C6.fasta	Acquired Gene	envZ	BLAST	Coverage: 100.00%	99.04%	JAHUYX010000010.1	153951	155306	Mutations: G244S/D,T324Q
+B-2_2-C6.fasta	Acquired Gene	blaSHV-12	BLAST	Coverage: 100.00%	98.95%	JAHUYX010000001.1	386007	386867	Mutations: G238A,E240G
+B-2_2-C6.fasta	Mutation	blakpc	gamma	L166W (KPC-66 X-loop)	50%	JAHUYX010000038.1	5811	6687	Dual-method consensus
+B-2_2-C6.fasta	Gene Alignment	envZ	GAMMA	Wildtype / No mutations detected	99.56%	JAHUYX010000010.1	153950	155306	Coverage: 100.00%
+B-2_2-C6.fasta	Gene Alignment	blaSHV-12	GAMMA	Wildtype / No mutations detected	98.61%	JAHUYX010000001.1	386006	386867	Coverage: 100.00%
+B-2_2-C6.fasta	Gene Alignment	fosAKP	GAMMA	Wildtype / No mutations detected	99.29%	JAHUYX010000020.1	22808	23228	Coverage: 100.00%
+B-2_2-C6.fasta	Gene Alignment	acrB	GAMMA	Wildtype / No mutations detected	100.00%	JAHUYX010000002.1	252179	255326	Coverage: 100.00%
+B-2_2-C6.fasta	Gene Alignment	ftsI	GAMMA	Wildtype / No mutations detected	99.83%	JAHUYX010000004.1	135169	136936	Coverage: 100.00%
+B-2_2-C6.fasta	Gene Alignment	ompK35	GAMMA	Wildtype / No mutations detected	100.00%	JAHUYX010000008.1	41274	42354	Coverage: 100.00%
+B-2_2-C6.fasta	Gene Alignment	ompK36	GAMMA	Wildtype / No mutations detected	58.70%	JAHUYX010000009.1	74924	76043	Coverage: 101.40%

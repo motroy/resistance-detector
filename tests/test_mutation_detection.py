@@ -299,22 +299,27 @@ class TestBlaKPC:
 
     @pytest.mark.parametrize("gene", ["blaKPC-2", "blaKPC-3", "blaKPC-31"])
     def test_D179Y(self, gene_seqs, gene):
-        """D179Y – key CAZAVI resistance mutation in KPC."""
-        dna = mutate(gene_seqs[gene], 179, 'TAT')   # D(GAT) -> Y(TAT)
+        """D179Y – key CAZAVI resistance mutation in KPC (literal CDS pos 178)."""
+        dna = mutate(gene_seqs[gene], 178, 'TAT')   # D(GAT) -> Y(TAT)
         check_detected('blaKPC', dna, 'D179Y')
 
     def test_blaKPC3_V240G(self, gene_seqs):
-        """blaKPC-3 V240G"""
-        dna = mutate(gene_seqs['blaKPC-3'], 240, 'GGT')  # V(GTT) -> G(GGT)
+        """blaKPC-3 V240G (literal CDS pos 239)"""
+        dna = mutate(gene_seqs['blaKPC-3'], 239, 'GGT')  # V(GTT) -> G(GGT)
         check_detected('blaKPC', dna, 'V240G')
 
     def test_blaKPC3_D179Y_T243M_double(self, gene_seqs):
-        """blaKPC-3 D179Y + T243M double mutant"""
-        dna = mutate(gene_seqs['blaKPC-3'], 179, 'TAT')
-        dna = mutate(dna, 243, 'ATG')               # T(ACT) -> M(ATG)
+        """blaKPC-3 D179Y + T243M double mutant (literal CDS pos 178/242)"""
+        dna = mutate(gene_seqs['blaKPC-3'], 178, 'TAT')
+        dna = mutate(dna, 242, 'ATG')               # T(ACT) -> M(ATG)
         muts = detect_mutations('blaKPC', dna, KNOWN_MUTATIONS)
         assert any('D179Y' in m for m in muts), f"D179Y not found: {muts}"
         assert any('T243M' in m for m in muts), f"T243M not found: {muts}"
+
+    def test_X_loop_L168P(self, gene_seqs):
+        """L168P – KPC-46 X-loop substitution (literal CDS pos 168, no offset)."""
+        dna = mutate(gene_seqs['blaKPC-3'], 168, 'CCT')  # L(CTG) -> P(CCT)
+        check_detected('blaKPC', dna, 'L168P')
 
 
 class TestBlaOXA48:

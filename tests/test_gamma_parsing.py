@@ -7,6 +7,7 @@ resistance mutations. No external tools are required.
 """
 import sys
 import os
+import subprocess
 import pytest
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
@@ -92,29 +93,36 @@ class TestParseGammaCodonChanges:
 # ══════════════════════════════════════════════════════════════════════════════
 
 class TestKpcGamma:
-    """blaKPC GAMMA Codon_Changes parsing for D179Y, V240G, T243M."""
+    """blaKPC GAMMA Codon_Changes parsing for D179Y, V240G, T243M.
+
+    GAMMA reports Codon_Changes using literal sequential positions of its
+    own reference translation (verified against RefSeq WP_004152396.1,
+    KPC-3), which sit one residue before the classic literature/Ambler
+    numbering used in mutation display names: D179Y/N -> raw 'D178Y',
+    V240G -> raw 'V239G', T243M -> raw 'T242M'.
+    """
 
     def test_D179Y_detected(self):
         d = make_detector()
-        raw = parse('D179Y')
+        raw = parse('D178Y')
         muts = filter_known(d, raw, 'blaKPC-3')
         assert 'D179Y/N' in muts
 
     def test_V240G_detected(self):
         d = make_detector()
-        raw = parse('V240G')
+        raw = parse('V239G')
         muts = filter_known(d, raw, 'blaKPC-3')
         assert 'V240G' in muts
 
     def test_T243M_detected(self):
         d = make_detector()
-        raw = parse('T243M')
+        raw = parse('T242M')
         muts = filter_known(d, raw, 'blaKPC-3')
         assert 'T243M' in muts
 
     def test_D179Y_T243M_double(self):
         d = make_detector()
-        raw = parse('D179Y,T243M')
+        raw = parse('D178Y,T242M')
         muts = filter_known(d, raw, 'blaKPC-3')
         assert 'D179Y/N' in muts
         assert 'T243M' in muts
@@ -130,6 +138,13 @@ class TestKpcGamma:
         raw = parse('A100T')
         muts = filter_known(d, raw, 'blaKPC-3')
         assert muts == []
+
+    def test_L168P_X_loop_detected(self):
+        """KPC-46 X-loop substitution; GAMMA's native numbering matches literally (no offset)."""
+        d = make_detector()
+        raw = parse('L168P')
+        muts = filter_known(d, raw, 'blaKPC-3')
+        assert 'L168P (KPC-46)' in muts
 
 
 # ══════════════════════════════════════════════════════════════════════════════
@@ -247,7 +262,7 @@ class TestFilterKnownMutationsGeneNorm:
     def test_variant_suffix_stripped(self):
         """blaKPC-3 normalizes to blaKPC for lookup."""
         d = make_detector()
-        raw = parse('D179Y')
+        raw = parse('D178Y')
         muts = filter_known(d, raw, 'blaKPC-3')
         assert 'D179Y/N' in muts
 
@@ -260,7 +275,7 @@ class TestFilterKnownMutationsGeneNorm:
     def test_ambiguous_marker_stripped(self):
         """Gene names with ‡ (GAMMA ambiguous marker) are handled."""
         d = make_detector()
-        raw = parse('D179Y')
+        raw = parse('D178Y')
         # Simulate gene name with ambiguous marker stripped (done in run_gamma)
         gene = 'blaKPC-3\u2021'.rstrip('\u2021')
         muts = filter_known(d, raw, gene)
@@ -277,16 +292,21 @@ class TestGammaResultIntegration:
     without requiring GAMMA to be installed.
     """
 
-    def _make_gamma_row(self, gene, codon_changes, codon_percent=1.0, percent_length=1.0,
+    def _make_gamma_row(self, gene, description, codon_percent=1.0, percent_length=1.0,
                         contig='contig1', start=1000, stop=2000, match_type='mutant'):
-        """Simulate a parsed GAMMA output row."""
+        """Simulate a parsed GAMMA output row.
+
+        Real GAMMA output puts the human-readable substitution/indel list
+        (e.g. "L168P," or "6 bp Deletion at 496,L166W,") in the 'Description'
+        column; 'Codon_Changes' is just a numeric count of changed codons.
+        """
         return {
             'Gene': gene,
             'Contig': contig,
             'Start': str(start),
             'Stop': str(stop),
             'Match_Type': match_type,
-            'Codon_Changes': codon_changes,
+            'Description': description,
             'Codon_Percent': str(codon_percent),
             'Percent_Length': str(percent_length),
         }
@@ -296,7 +316,7 @@ class TestGammaResultIntegration:
         gene_name = row['Gene'].rstrip('\u2021')
         start = int(row['Start'])
         stop = int(row['Stop'])
-        codon_changes = row.get('Codon_Changes', '0')
+        codon_changes = row.get('Description', '0')
         codon_percent = float(row['Codon_Percent'])
         percent_length = float(row['Percent_Length'])
 
@@ -316,7 +336,7 @@ class TestGammaResultIntegration:
 
     def test_kpc_mutant_row(self):
         d = make_detector()
-        row = self._make_gamma_row('blaKPC-3', 'D179Y', match_type='mutant')
+        row = self._make_gamma_row('blaKPC-3', 'D178Y', match_type='mutant')
         result = self._process_row(d, row)
         assert 'D179Y/N' in result['mutations']
         assert result['match_type'] == 'mutant'
@@ -345,7 +365,7 @@ class TestGammaResultIntegration:
 
     def test_ambiguous_gene_marker_stripped(self):
         d = make_detector()
-        row = self._make_gamma_row('blaKPC-3\u2021', 'D179Y')
+        row = self._make_gamma_row('blaKPC-3\u2021', 'D178Y')
         result = self._process_row(d, row)
         assert result['protein'] == 'blaKPC-3'
         assert 'D179Y/N' in result['mutations']
@@ -416,3 +436,79 @@ class TestFosAGammaVariantNames:
         assert 'K90E/Q' in process(make_row(gene, 'K90E'))
         assert 'H119Q/R' in process(make_row(gene, 'H119Q'))
         assert process(make_row(gene, '0')) == []
+
+
+# ══════════════════════════════════════════════════════════════════════════════
+# run_gamma() end-to-end: real GAMMA TSV column layout
+# ══════════════════════════════════════════════════════════════════════════════
+
+class TestRunGammaColumnLayout:
+    """
+    Regression test for the real GAMMA.py output column layout, where the
+    substitution/indel description ("L168P," or "6 bp Deletion at 496,L166W,")
+    is in the 'Description' column, and 'Codon_Changes' is just a numeric
+    count of changed codons. run_gamma() must read 'Description', not
+    'Codon_Changes', or mutations are silently dropped.
+    """
+
+    GAMMA_HEADER = (
+        "Gene\tContig\tStart\tStop\tMatch_Type\tDescription\tCodon_Changes\t"
+        "BP_Changes\tTransversions\tCodon_Percent\tBP_Percent\tPercent_Length\t"
+        "Match_Length\tTarget_Length\tStrand\n"
+    )
+
+    def _run(self, tmp_path, monkeypatch, gamma_row):
+        output_prefix = str(tmp_path / "sample")
+        gamma_file = output_prefix + "_gamma.gamma"
+        with open(gamma_file, 'w') as f:
+            f.write(self.GAMMA_HEADER)
+            f.write(gamma_row + "\n")
+
+        def fake_run(cmd, **kwargs):
+            return subprocess.CompletedProcess(cmd, 0, stdout='', stderr='')
+
+        monkeypatch.setattr(subprocess, 'run', fake_run)
+
+        d = MutationDetector.__new__(MutationDetector)
+        d.assembly = "fake.fasta"
+        d.output_prefix = output_prefix
+        d.genes_file = "genes.fasta"  # only needs to be truthy + path-checked below
+        d.primers_file = None
+        d.gamma_results = []
+        d.amplicon_results = []
+        d.primers = {}
+        from fos_cazavi.utils import KNOWN_MUTATIONS
+        d.mutation_db = {
+            MutationDetector._normalize_gene_name(k): v
+            for k, v in KNOWN_MUTATIONS.items()
+        }
+        monkeypatch.setattr(type(d), '_normalize_gene_name', staticmethod(MutationDetector._normalize_gene_name))
+
+        # genes_file existence check inside run_gamma() uses Path(self.genes_file).exists()
+        genes_path = tmp_path / "genes.fasta"
+        genes_path.write_text(">dummy\nACGT\n")
+        d.genes_file = str(genes_path)
+
+        d.run_gamma()
+        return d.gamma_results
+
+    def test_L168P_surfaced_via_description_column(self, tmp_path, monkeypatch):
+        row = ("blaKPC-3\tcontig1\t100\t982\tMutant\tL168P,\t1\t1\t0\t"
+               "0.9966\t0.9989\t1\t882\t882\t+")
+        results = self._run(tmp_path, monkeypatch, row)
+        assert len(results) == 1
+        assert 'L168P (KPC-46)' in results[0]['mutations']
+
+    def test_wildtype_no_coding_mutations(self, tmp_path, monkeypatch):
+        row = ("blaKPC-3\tcontig1\t100\t982\tNative\tNo coding mutations\t0\t0\t0\t"
+               "1\t1\t1\t882\t882\t+")
+        results = self._run(tmp_path, monkeypatch, row)
+        assert len(results) == 1
+        assert results[0]['mutations'] == []
+
+    def test_indel_x_loop_substitution_surfaced(self, tmp_path, monkeypatch):
+        row = ("blaKPC-3\tcontig1\t100\t982\tIndel\t6 bp Deletion at 496,L166W,\t3\t8\t1\t"
+               "0.9898\t0.9909\t0.9932\t876\t882\t-")
+        results = self._run(tmp_path, monkeypatch, row)
+        assert len(results) == 1
+        assert 'L166W (KPC-66 X-loop)' in results[0]['mutations']

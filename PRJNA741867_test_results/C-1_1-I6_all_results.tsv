@@ -1,0 +1,17 @@
+Sample	Type	Gene_Protein	Method	Result_Details	Identity_Confidence	Contig	Start	End	Notes
+C-1_1-I6.fasta	Acquired Gene	ompK36	BLAST	Coverage: 101.90%	92.62%	JAHUYW010000008.1	162302	163420	Mutations: G213S
+C-1_1-I6.fasta	Acquired Gene	blaKPC-3	BLAST	Coverage: 100.00%	100.00%	JAHUYW010000039.1	5812	6693	Mutations: -
+C-1_1-I6.fasta	Acquired Gene	acrB	BLAST	Coverage: 100.00%	99.94%	JAHUYW010000003.1	214614	217760	Mutations: G617A,F626A,A628T/V
+C-1_1-I6.fasta	Acquired Gene	ftsI	BLAST	Coverage: 100.00%	99.77%	JAHUYW010000005.1	135170	136936	Mutations: A333P,Y350L,S357Q
+C-1_1-I6.fasta	Acquired Gene	fosAKP	BLAST	Coverage: 100.00%	99.76%	JAHUYW010000020.1	22843	23262	Mutations: -
+C-1_1-I6.fasta	Acquired Gene	ompK35	BLAST	Coverage: 100.00%	99.35%	JAHUYW010000007.1	41172	42251	Mutations: D135G,D181R
+C-1_1-I6.fasta	Acquired Gene	envZ	BLAST	Coverage: 100.00%	99.04%	JAHUYW010000009.1	153951	155306	Mutations: G244S/D,T324Q
+C-1_1-I6.fasta	Acquired Gene	blaSHV-12	BLAST	Coverage: 100.00%	98.95%	JAHUYW010000001.1	386230	387090	Mutations: G238A,E240G
+C-1_1-I6.fasta	Gene Alignment	blaSHV-12	GAMMA	Wildtype / No mutations detected	98.61%	JAHUYW010000001.1	386229	387090	Coverage: 100.00%
+C-1_1-I6.fasta	Gene Alignment	fosAKP	GAMMA	Wildtype / No mutations detected	99.29%	JAHUYW010000020.1	22842	23262	Coverage: 100.00%
+C-1_1-I6.fasta	Gene Alignment	blaKPC-3	GAMMA	Wildtype / No mutations detected	100.00%	JAHUYW010000039.1	5811	6693	Coverage: 100.00%
+C-1_1-I6.fasta	Gene Alignment	acrB	GAMMA	Wildtype / No mutations detected	100.00%	JAHUYW010000003.1	214613	217760	Coverage: 100.00%
+C-1_1-I6.fasta	Gene Alignment	ftsI	GAMMA	Wildtype / No mutations detected	99.83%	JAHUYW010000005.1	135169	136936	Coverage: 100.00%
+C-1_1-I6.fasta	Gene Alignment	ompK35	GAMMA	Wildtype / No mutations detected	100.00%	JAHUYW010000007.1	41171	42251	Coverage: 100.00%
+C-1_1-I6.fasta	Gene Alignment	ompK36	GAMMA	Wildtype / No mutations detected	58.70%	JAHUYW010000008.1	162301	163420	Coverage: 101.40%
+C-1_1-I6.fasta	Gene Alignment	envZ	GAMMA	Wildtype / No mutations detected	99.56%	JAHUYW010000009.1	153950	155306	Coverage: 100.00%
