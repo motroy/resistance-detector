@@ -1,0 +1,7 @@
+Accession	Strain	PaperIsolate	Paper_Reported_KPC	GAMMA_Match_Type	GAMMA_Codon_Changes	fos-cazavi_call	Concordance
+GCA_022423605.1	S16	A-1	KPC-3 (CAZ/AVI-S, expected)	Native	none	KPC-3	exact match
+GCA_022423565.1	1-A3	A-2	KPC-46 (L168P)	Mutant	L168P	KPC-46	exact match
+GCA_022423575.1	1-G9	B-1	KPC-3 (CAZ/AVI-S, expected)	Native	none	KPC-3	exact match
+GCA_022423525.1	2-C6	B-2	KPC-66 (E167_L168del)	Indel	6bp del @496 + L166W	KPC-66-like (X-loop 6bp deletion)	matches deletion size/location
+GCA_022423535.1	1-I6	C-1	KPC-3 (CAZ/AVI-S, expected)	Native	none	KPC-3	exact match
+GCA_022423505.1	HC	C-2	KPC-92 (E167_N169delinsD)	Indel	6bp del @501 + E167D,N169D	KPC-92-like (X-loop delins)	matches event size/location

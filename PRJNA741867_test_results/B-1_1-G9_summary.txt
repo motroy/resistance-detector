@@ -1,0 +1,49 @@
+======================================================================
+FOS-CAZAVI Resistance Detection Summary
+======================================================================
+
+Assembly: B-1_1-G9.fasta
+Total genes detected: 8
+Method: BLAST+
+
+FOSFOMYCIN RESISTANCE GENES:
+--------------------------------------------------
+  fosAKP: 99.76% identity, 100.00% coverage
+    Mutations: I91R
+
+CEFTAZIDIME-AVIBACTAM RESISTANCE (KPC):
+--------------------------------------------------
+  blaKPC-3: 100.00% identity, 100.00% coverage
+    Mutations: D179T,V240Y,T243A
+
+OTHER RESISTANCE GENES:
+--------------------------------------------------
+  ompK36: 92.62% identity, 101.90% coverage
+    Mutations: G213S
+  acrB: 99.94% identity, 100.00% coverage
+    Mutations: G617F,F626T,A628F
+  ftsI: 99.77% identity, 100.00% coverage
+    Mutations: A333G,Y350Q,S357R
+  ompK35: 99.35% identity, 100.00% coverage
+    Mutations: D135G,D181R
+  envZ: 99.04% identity, 100.00% coverage
+    Mutations: G244S/D,T324Q
+  blaSHV-12: 98.95% identity, 100.00% coverage
+    Mutations: G238A,E240G
+
+
+MUTATION DETECTION SUMMARY (Dual-Method):
+----------------------------------------------------------------------
+  No resistance mutations detected by GAMMA or seqkit.
+
+
+GENE MUTATION ANALYSIS (GAMMA):
+Method: GAMMA (protein-level gene alignment)
+--------------------------------------------------
+Reference: https://github.com/rastanton/GAMMA
+
+
+Efflux Pump Components:
+  acrB: 100.0% identity, 100.0% coverage
+    Location: JAHUYY010000002.1:252179-255326
+    No mutations detected
