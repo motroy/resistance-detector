@@ -1,6 +1,6 @@
 Sample	Type	Gene_Protein	Method	Result_Details	Identity_Confidence	Contig	Start	End	Notes
 C-1_1-I6.fasta	Acquired Gene	ompK36	BLAST	Coverage: 101.90%	92.62%	JAHUYW010000008.1	162302	163420	Mutations: G213S
-C-1_1-I6.fasta	Acquired Gene	blaKPC-3	BLAST	Coverage: 100.00%	100.00%	JAHUYW010000039.1	5812	6693	Mutations: D179H,V240C,T243A
+C-1_1-I6.fasta	Acquired Gene	blaKPC-3	BLAST	Coverage: 100.00%	100.00%	JAHUYW010000039.1	5812	6693	Mutations: -
 C-1_1-I6.fasta	Acquired Gene	acrB	BLAST	Coverage: 100.00%	99.94%	JAHUYW010000003.1	214614	217760	Mutations: G617A,F626A,A628T/V
 C-1_1-I6.fasta	Acquired Gene	ftsI	BLAST	Coverage: 100.00%	99.77%	JAHUYW010000005.1	135170	136936	Mutations: A333P,Y350L,S357Q
 C-1_1-I6.fasta	Acquired Gene	fosAKP	BLAST	Coverage: 100.00%	99.76%	JAHUYW010000020.1	22843	23262	Mutations: -

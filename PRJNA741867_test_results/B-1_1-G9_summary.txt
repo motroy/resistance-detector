@@ -9,21 +9,19 @@ Method: BLAST+
 FOSFOMYCIN RESISTANCE GENES:
 --------------------------------------------------
   fosAKP: 99.76% identity, 100.00% coverage
-    Mutations: I91R
 
 CEFTAZIDIME-AVIBACTAM RESISTANCE (KPC):
 --------------------------------------------------
   blaKPC-3: 100.00% identity, 100.00% coverage
-    Mutations: D179T,V240Y,T243A
 
 OTHER RESISTANCE GENES:
 --------------------------------------------------
   ompK36: 92.62% identity, 101.90% coverage
     Mutations: G213S
   acrB: 99.94% identity, 100.00% coverage
-    Mutations: G617F,F626T,A628F
+    Mutations: G617A,F626A,A628T/V
   ftsI: 99.77% identity, 100.00% coverage
-    Mutations: A333G,Y350Q,S357R
+    Mutations: A333P,Y350L,S357Q
   ompK35: 99.35% identity, 100.00% coverage
     Mutations: D135G,D181R
   envZ: 99.04% identity, 100.00% coverage

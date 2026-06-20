@@ -175,17 +175,30 @@ class BlastDetector:
         return subject_id.split('|')[-1].split('_')[0]
 
     def extract_hit_sequence(self, hit):
-        """Extract the sequence of a BLAST hit from the assembly"""
+        """Extract the sequence of a BLAST hit, oriented to match the subject
+        (reference gene) sense.
+
+        BLAST reports qstart/qend and sstart/send independently; either can be
+        descending depending on which strand the hit lies on. The extracted
+        sequence must be reverse-complemented whenever the query and subject
+        strands differ (not merely whenever qstart > qend), otherwise genes
+        aligned to the subject's minus strand get translated on the wrong
+        strand entirely.
+        """
         query_id = hit['query_id']
         qstart = hit['qstart']
         qend = hit['qend']
+        sstart = hit['sstart']
+        send = hit['send']
 
         for record in SeqIO.parse(self.assembly, 'fasta'):
             if record.id == query_id:
-                if qstart < qend:
-                    seq = record.seq[qstart-1:qend]
-                else:
-                    seq = record.seq[qend-1:qstart].reverse_complement()
+                q_lo, q_hi = min(qstart, qend), max(qstart, qend)
+                seq = record.seq[q_lo-1:q_hi]
+                query_plus = qstart <= qend
+                subject_plus = sstart <= send
+                if query_plus != subject_plus:
+                    seq = seq.reverse_complement()
                 return str(seq)
         return None
 

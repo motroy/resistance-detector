@@ -65,7 +65,10 @@ class MutationDetector:
                     start = int(row['Start'])
                     stop = int(row['Stop'])
                     match_type = row['Match_Type']
-                    codon_changes = row.get('Codon_Changes', '0')
+                    # GAMMA's human-readable substitution/indel list (e.g. "L168P," or
+                    # "6 bp Deletion at 496,L166W,") is in the 'Description' column;
+                    # 'Codon_Changes' is just a numeric count of changed codons.
+                    codon_changes = row.get('Description', '0')
                     codon_percent = float(row['Codon_Percent'])
                     percent_length = float(row['Percent_Length'])
 
@@ -105,7 +108,7 @@ class MutationDetector:
         Only standard amino acid substitution strings (e.g. 'D179Y') are returned;
         indels, frameshifts, and truncation annotations are skipped.
         """
-        if not codon_changes or codon_changes.strip() in ('0', '-', ''):
+        if not codon_changes or codon_changes.strip().lower() in ('0', '-', '', 'no coding mutations'):
             return []
         mutations = []
         for mut in codon_changes.split(','):

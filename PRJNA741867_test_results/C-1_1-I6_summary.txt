@@ -13,7 +13,6 @@ FOSFOMYCIN RESISTANCE GENES:
 CEFTAZIDIME-AVIBACTAM RESISTANCE (KPC):
 --------------------------------------------------
   blaKPC-3: 100.00% identity, 100.00% coverage
-    Mutations: D179H,V240C,T243A
 
 OTHER RESISTANCE GENES:
 --------------------------------------------------

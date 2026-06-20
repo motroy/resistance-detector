@@ -70,43 +70,88 @@ clustered at codons 166–169 — precisely the X-loop/Ω-loop region (Arg164–
 the paper identifies as the mutational hotspot for blaKPC-46/-66/-92. The A-2 call
 (L168P) is an **exact, unambiguous match** to KPC-46.
 
-### 4b. What the pipeline's high-level summary/report actually shows
+### 4b. What the pipeline's high-level summary/report originally showed (now fixed)
 
-Despite GAMMA's raw output being correct, **none of these mutations is surfaced**
-in `*_summary.txt`'s "MUTATION DETECTION SUMMARY (Dual-Method)" section ("No
-resistance mutations detected by GAMMA or seqkit" for every isolate) or in
-`*_protein_mutations.tsv`. Root cause:
+As originally tested, despite GAMMA's raw output being correct, **none of these
+mutations was surfaced** in `*_summary.txt`'s "MUTATION DETECTION SUMMARY
+(Dual-Method)" section ("No resistance mutations detected by GAMMA or seqkit"
+for every isolate) or in `*_protein_mutations.tsv`. Three compounding root causes
+were found and fixed in this repo:
 
-1. `fos_cazavi/data/example_database_mutations.tsv` only defines blaKPC positions
-   **179 (D179Y/N), 240 (V240G), 243 (T243M)**. It has no entries for codons
-   166–169, so `_filter_known_mutations()` in `mutations.py` discards the real
-   L168P / E167D / N169D substitutions as "not a known resistance position."
-2. `_parse_gamma_codon_changes()` uses a regex (`^[A-Z*]\d+[A-Z*]$`) that only
-   accepts simple single-codon substitution strings and explicitly drops any
-   GAMMA description containing indel/deletion text — so the B-2 and C-2 raw
-   calls ("6 bp Deletion at ...") are filtered out entirely before they even
-   reach the known-mutation lookup.
+1. **Wrong source column.** `run_gamma()` in `mutations.py` read GAMMA's
+   `Codon_Changes` column expecting strings like `"L168P,"`. In the GAMMA
+   version used here, that column is actually just a numeric count of changed
+   codons (e.g. `1`, `3`) — the human-readable substitution/indel description
+   (`"L168P,"`, `"6 bp Deletion at 496,L166W,"`, `"No coding mutations"`) is in
+   the **`Description`** column instead. The code silently read the wrong
+   field, so no mutation string ever reached the parser regardless of the
+   mutation database's contents. **Fixed:** `run_gamma()` now reads
+   `Description`.
+2. `fos_cazavi/data/example_database_mutations.tsv` only defined blaKPC positions
+   **179 (D179Y/N), 240 (V240G), 243 (T243M)**. It had no entries for codons
+   166–169, so even after fixing (1), `_filter_known_mutations()` would have
+   discarded the real L168P / E167D / N169D substitutions as "not a known
+   resistance position." **Fixed:** added entries for position 166 (L166W,
+   KPC-66), 167 (E167D, KPC-92), 168 (L168P, KPC-46), and 169 (N169D, KPC-92).
+3. Separately, the classic curated positions 179/240/243 themselves turned out
+   to be off by one relative to the literal, sequential amino-acid numbering of
+   the bundled blaKPC-3 CDS (confirmed against NCBI RefSeq WP_004152396.1,
+   KPC-3): the literature/Ambler-numbered "D179Y" substitution actually sits at
+   literal sequential position 178 in this and any identically-sequenced
+   KPC-3 CDS (likewise V240G → 239, T243M → 242). This reflects how
+   Ambler-style class-A beta-lactamase numbering works (alignment-based, not
+   strictly sequential) and is independent of issues (1)/(2), but would have
+   caused false negatives/positives for the classic substitutions too.
+   **Fixed:** the database now stores the corrected literal positions
+   (178/239/242) while keeping the literature-standard display names
+   (`D179Y/N`, `V240G`, `T243M`) via an explicit `Name` field that
+   `load_mutation_db()` now honors instead of always re-deriving the name from
+   the position number.
 
-**Net effect: as configured out of the box, `fos-cazavi` would not flag any of
-the three CAZ/AVI-resistant isolates in this dataset as carrying a clinically
-significant KPC mutation**, even though the underlying GAMMA alignment (which the
-tool already runs) contains the correct information. This mirrors the paper's own
-central finding — that novel ESBL-like blaKPC variants are easily "missed" — but
-here the miss happens at the bioinformatic curation/parsing layer rather than the
-phenotypic-test layer the paper studied.
+With all three fixes applied, re-running the full pipeline on all 6 genomes now
+correctly surfaces, in `*_protein_mutations.tsv` and the "MUTATION DETECTION
+SUMMARY" section of `*_summary.txt`:
 
-### 4c. A second, unrelated issue: spurious BLAST-based mutation calls
+| Isolate | GAMMA mutation now surfaced |
+|---|---|
+| A-1, B-1, C-1 (wild-type) | *(none — correctly clean)* |
+| A-2 | `L168P (KPC-46)` |
+| B-2 | `L166W (KPC-66 X-loop)` |
+| C-2 | `E167D (KPC-92 X-loop)`, `N169D (KPC-92 X-loop)` |
+
+This is now in **complete agreement** with the paper for all 6 isolates, end to
+end, from raw GAMMA alignment through to the tool's own summary report — no
+manual inspection of `.gamma` files required.
+
+### 4c. A second, unrelated issue: spurious BLAST-based mutation calls (fixed)
 
 The `*_results.tsv` / summary's BLAST-derived "Mutations:" column for blaKPC-3
-reports *different, inconsistent* amino-acid changes at positions 179/240/243 for
-every isolate (e.g. `D179T,V240Y,T243A` for A-1; `D179H,V240C,T243A` for C-1),
-**including the three isolates GAMMA correctly calls wild-type with zero coding
-changes**. This is a translation-frame artifact in `acquired.py`'s
-`extract_hit_sequence()` / `detect_mutations()` (naive `Seq(...).translate()` of
-the raw BLAST-aligned subsequence, without GAMMA's proper codon-frame handling) —
-not a real biological signal. The GAMMA-based calls (section 4a) should be treated
-as authoritative; the BLAST-based mutation column in the summary is unreliable for
-blaKPC in this run and should not be used to compare against the paper.
+originally reported *different, inconsistent* amino-acid changes at positions
+179/240/243 for every isolate (e.g. `D179T,V240Y,T243A` for A-1;
+`D179H,V240C,T243A` for C-1), **including the three isolates GAMMA correctly
+calls wild-type with zero coding changes**. Root cause: `extract_hit_sequence()`
+in `acquired.py` decided whether to reverse-complement the extracted BLAST hit
+sequence using only `qstart` vs. `qend` (the query coordinates), ignoring
+`sstart` vs. `send` (the subject/reference coordinates). When a gene hit a
+query contig with ascending query coordinates but the alignment was on the
+minus strand of the *subject*, the literal (non-reverse-complemented) query
+slice was translated directly — i.e. on the wrong strand entirely — producing
+essentially random amino-acid "changes" at every position. This affected not
+just blaKPC-3 but also ompK36, acrB, and envZ hits in this dataset. **Fixed:**
+strand is now determined by comparing `qstart<=qend` against `sstart<=send`;
+the extracted sequence is reverse-complemented only when the two disagree
+(covering all four query/subject strand combinations correctly).
+
+Combined with the off-by-one position fix in 4b(3), the BLAST-path "Mutations"
+column now correctly reports `-` (no mutation) for all three wild-type isolates
+(A-1, B-1, C-1) and `L168P (KPC-46)` for A-2. For the two indel-bearing isolates
+(B-2, C-2), the BLAST path still reports some extra downstream noise beyond the
+true X-loop variant — a 6-bp deletion shifts every position downstream of it by
+2 codons relative to the reference, and the naive position-indexed
+`detect_mutations()` (unlike GAMMA's true alignment) has no way to detect or
+correct for this. This is an inherent limitation of position-based lookup
+without realignment, not a bug; the GAMMA-based calls (section 4a/4b) remain
+the authoritative source for indel-containing variants.
 
 ## 5. Bottom line
 
@@ -115,18 +160,20 @@ blaKPC in this run and should not be used to compare against the paper.
 | Correct isolate→gene assignment (blaKPC-3 present in all 6) | ✅ matches paper |
 | Correct wild-type vs. mutant calls (GAMMA raw) | ✅ 6/6 matches paper |
 | Correct mutation identity/location (GAMMA raw) | ✅ L168P exact match (KPC-46); 6-bp X-loop deletions co-localize with KPC-66/KPC-92 |
-| Mutations surfaced in tool's summary/report | ❌ 0/3 — known-mutation DB and indel-discarding parser miss all three novel variants |
-| BLAST-based "Mutations" column for blaKPC-3 | ❌ unreliable/spurious for this gene in this run |
+| Mutations surfaced in tool's summary/report | ✅ 3/3 — fixed (GAMMA column-mapping bug + missing X-loop DB positions + display-name decoupling) |
+| BLAST-based "Mutations" column for blaKPC-3 (wild-type isolates) | ✅ fixed — correctly reports `-` (strand-detection bug fixed) |
+| BLAST-based "Mutations" column for blaKPC-3 (indel isolates) | ⚠️ partial — flags the true X-loop variant but adds positional noise downstream of the deletion (inherent to non-realigning position lookup; GAMMA path is authoritative) |
 | Clonal consistency (identical SHV/fosA/acrB/etc. alleles across isolates) | ✅ matches paper's WGS-based clonality finding |
 
-**Conclusion:** the underlying gene/variant detection machinery in `fos-cazavi`
-(BLAST for gene presence, GAMMA for protein-level alignment) successfully
-reproduces the paper's core genomic findings when the raw GAMMA output is
-inspected directly. However, the bundled `example_database_mutations.tsv`
-curation (covering only D179Y/N, V240G, T243M) does not yet include the X-loop
-positions 166–169 needed to automatically flag the novel blaKPC-46/-66/-92
-variants reported in this study, so the tool's headline summary currently
-under-reports CAZ/AVI resistance risk for isolates carrying these specific
-variants. Expanding the mutation database to include indel-tolerant entries for
-codons 164–179 (the full Ω/X-loop) would let `fos-cazavi` correctly flag this
-exact scenario end-to-end.
+**Conclusion:** `fos-cazavi` now reproduces the paper's core genomic findings
+end-to-end, from raw detection through to its own summary report, for all 6
+isolates in this dataset. Three issues were identified and fixed in this repo:
+(1) `run_gamma()` was reading the wrong GAMMA output column (`Codon_Changes`
+instead of `Description`), silently dropping every mutation description
+regardless of database contents; (2) the bundled mutation database was missing
+entries for the X-loop positions (166–169) needed to flag the novel
+blaKPC-46/-66/-92 variants; and (3) the classic curated positions (179/240/243)
+were off by one relative to the literal sequential numbering of the bundled
+reference CDS (confirmed against NCBI RefSeq WP_004152396.1), with a related
+strand-detection bug in the BLAST path (`extract_hit_sequence()`) producing
+spurious mutation calls for any gene hit on the subject's minus strand.

@@ -80,10 +80,13 @@ def gene_seqs():
         'lon':   make_gene(600, {558: 'Q'}),
         # ── CAZAVI ───────────────────────────────────────────────────────────
         # Plasmidic – KPC family
-        'blaKPC-2':  make_gene(345, {179: 'D', 240: 'V', 243: 'T'}),
-        'blaKPC-3':  make_gene(345, {179: 'D', 240: 'V', 243: 'T'}),
-        'blaKPC-31': make_gene(345, {179: 'D', 240: 'V', 243: 'T'}),
-        'blaKPC-190':make_gene(345, {179: 'D', 240: 'V', 243: 'T'}),
+        # NB: KNOWN_MUTATIONS uses literal sequential CDS positions (verified
+        # against RefSeq WP_004152396.1, KPC-3), which sit one residue before
+        # the classic literature/Ambler numbering (D179Y -> seq. pos 178, etc).
+        'blaKPC-2':  make_gene(345, {166: 'L', 167: 'E', 168: 'L', 169: 'N', 178: 'D', 239: 'V', 242: 'T'}),
+        'blaKPC-3':  make_gene(345, {166: 'L', 167: 'E', 168: 'L', 169: 'N', 178: 'D', 239: 'V', 242: 'T'}),
+        'blaKPC-31': make_gene(345, {166: 'L', 167: 'E', 168: 'L', 169: 'N', 178: 'D', 239: 'V', 242: 'T'}),
+        'blaKPC-190':make_gene(345, {166: 'L', 167: 'E', 168: 'L', 169: 'N', 178: 'D', 239: 'V', 242: 'T'}),
         # OXA-48
         'blaOXA-48': make_gene(398, {68: 'P', 211: 'Y'}),
         # AmpC CMY
