@@ -81,7 +81,8 @@ PRJNA1086695 (paired isolates from the same study/outbreak).
 
 - `SRR28296939.fastq.gz`, `SRR28296940.fastq.gz` — original input "read" files
 - `SRR28296939_myloasm/`, `SRR28296940_myloasm/` — myloasm run directories, including the
-  `myloasm_*.log` assembly log (full command, parameters, and per-stage timing/diagnostics)
+  `myloasm_*.log` assembly log (full command, parameters, and per-stage timing/diagnostics) and the
+  gzipped final assembly graph (`final_contig_graph.gfa.gz`, GFA format, viewable in Bandage/IGV-graph)
 - `SRR28296939_myloasm_assembly.fasta.gz`, `SRR28296940_myloasm_assembly.fasta.gz` — gzipped final
   assemblies used for resistance detection (pre-dereplication unitigs, see caveat above)
 - `SRR28296939_*`, `SRR28296940_*` — fos-cazavi outputs (`_summary.txt`, `_results.tsv`, `_all_results.tsv`,
