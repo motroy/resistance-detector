@@ -38,8 +38,8 @@ myloasm SRR28296940.fastq.gz -o SRR28296940_myloasm -t 4 \
 
 | Isolate | Assembly used | Contigs | Total bases | N50-ish (largest) |
 |---|---|---|---|---|
-| SRR28296939 | `SRR28296939_myloasm_assembly.fasta` | 119 | 5,880,009 bp | 365,202 bp |
-| SRR28296940 | `SRR28296940_myloasm_assembly.fasta` | 122 | 5,886,378 bp | 365,202 bp |
+| SRR28296939 | `SRR28296939_myloasm_assembly.fasta.gz` | 119 | 5,880,009 bp | 365,202 bp |
+| SRR28296940 | `SRR28296940_myloasm_assembly.fasta.gz` | 122 | 5,886,378 bp | 365,202 bp |
 
 Both assemblies are ~5.9 Mb, consistent with a single *Klebsiella*-sized bacterial genome.
 
@@ -49,6 +49,8 @@ Run with the bundled reference database (`fos_cazavi/data/example_database.fasta
 bundled primers/genes:
 
 ```
+gunzip -k SRR28296939_myloasm_assembly.fasta.gz
+gunzip -k SRR28296940_myloasm_assembly.fasta.gz
 fos-cazavi fos-cazavi-all -a SRR28296939_myloasm_assembly.fasta -d resistance_db -o SRR28296939
 fos-cazavi fos-cazavi-all -a SRR28296940_myloasm_assembly.fasta -d resistance_db -o SRR28296940
 ```
@@ -78,9 +80,10 @@ PRJNA1086695 (paired isolates from the same study/outbreak).
 ## Files in this folder
 
 - `SRR28296939.fastq.gz`, `SRR28296940.fastq.gz` — original input "read" files
-- `SRR28296939_myloasm/`, `SRR28296940_myloasm/` — full myloasm run directories (logs, graphs, stages)
-- `SRR28296939_myloasm_assembly.fasta`, `SRR28296940_myloasm_assembly.fasta` — final assemblies used for
-  resistance detection (pre-dereplication unitigs, see caveat above)
+- `SRR28296939_myloasm/`, `SRR28296940_myloasm/` — myloasm run directories, including the
+  `myloasm_*.log` assembly log (full command, parameters, and per-stage timing/diagnostics)
+- `SRR28296939_myloasm_assembly.fasta.gz`, `SRR28296940_myloasm_assembly.fasta.gz` — gzipped final
+  assemblies used for resistance detection (pre-dereplication unitigs, see caveat above)
 - `SRR28296939_*`, `SRR28296940_*` — fos-cazavi outputs (`_summary.txt`, `_results.tsv`, `_all_results.tsv`,
   `_unified_mutations.tsv`, `_genes.fasta`, `_blast.txt`, `_gamma.gamma`/`.psl`, `_amplicons.tsv`,
   `_seqkit_primers.tsv`, `_analysis.log`)
