@@ -1,0 +1,217 @@
+{
+  "sample": "GCA_022423575.1_ASM2242357v1_genomic.fna",
+  "assembly": "/tmp/work/PRJNA741867/ncbi_dataset/data/GCA_022423575.1/GCA_022423575.1_ASM2242357v1_genomic.fna",
+  "total_acquired_genes_detected": 8,
+  "unique_acquired_genes": 8,
+  "acquired_genes": [
+    {
+      "gene": "ompK36",
+      "copy_number": 1,
+      "loci": [
+        {
+          "contig": "JAHUYY010000009.1",
+          "start": 162419,
+          "end": 163537,
+          "identity": "92.62",
+          "coverage": "101.90",
+          "mutations": "G213I"
+        }
+      ]
+    },
+    {
+      "gene": "blaKPC-3",
+      "copy_number": 1,
+      "loci": [
+        {
+          "contig": "JAHUYY010000035.1",
+          "start": 13999,
+          "end": 14880,
+          "identity": "100.00",
+          "coverage": "100.00",
+          "mutations": "-"
+        }
+      ]
+    },
+    {
+      "gene": "acrB",
+      "copy_number": 1,
+      "loci": [
+        {
+          "contig": "JAHUYY010000002.1",
+          "start": 252180,
+          "end": 255326,
+          "identity": "99.94",
+          "coverage": "100.00",
+          "mutations": "G617A,F626A,A628T/V"
+        }
+      ]
+    },
+    {
+      "gene": "ftsI",
+      "copy_number": 1,
+      "loci": [
+        {
+          "contig": "JAHUYY010000005.1",
+          "start": 144417,
+          "end": 146183,
+          "identity": "99.77",
+          "coverage": "100.00",
+          "mutations": "A333P,Y350L,S357Q"
+        }
+      ]
+    },
+    {
+      "gene": "fosAKP",
+      "copy_number": 1,
+      "loci": [
+        {
+          "contig": "JAHUYY010000019.1",
+          "start": 73622,
+          "end": 74041,
+          "identity": "99.76",
+          "coverage": "100.00",
+          "mutations": "-"
+        }
+      ]
+    },
+    {
+      "gene": "ompK35",
+      "copy_number": 1,
+      "loci": [
+        {
+          "contig": "JAHUYY010000008.1",
+          "start": 41172,
+          "end": 42251,
+          "identity": "99.35",
+          "coverage": "100.00",
+          "mutations": "D135G,D181R"
+        }
+      ]
+    },
+    {
+      "gene": "envZ",
+      "copy_number": 1,
+      "loci": [
+        {
+          "contig": "JAHUYY010000010.1",
+          "start": 153951,
+          "end": 155306,
+          "identity": "99.04",
+          "coverage": "100.00",
+          "mutations": "G244S/D,T324Q"
+        }
+      ]
+    },
+    {
+      "gene": "blaSHV-12",
+      "copy_number": 1,
+      "loci": [
+        {
+          "contig": "JAHUYY010000001.1",
+          "start": 299664,
+          "end": 300524,
+          "identity": "98.95",
+          "coverage": "100.00",
+          "mutations": "G238A,E240G"
+        }
+      ]
+    }
+  ],
+  "mutations": [],
+  "gene_alignments": [
+    {
+      "protein": "envZ",
+      "contig": "JAHUYY010000010.1",
+      "contig_start": 153950,
+      "contig_end": 155306,
+      "identity": 99.56,
+      "coverage": 100.0,
+      "mutations": [],
+      "match_type": "Mutant"
+    },
+    {
+      "protein": "fosAKP",
+      "contig": "JAHUYY010000019.1",
+      "contig_start": 73621,
+      "contig_end": 74041,
+      "identity": 99.29,
+      "coverage": 100.0,
+      "mutations": [],
+      "match_type": "Mutant"
+    },
+    {
+      "protein": "blaSHV-12",
+      "contig": "JAHUYY010000001.1",
+      "contig_start": 299663,
+      "contig_end": 300524,
+      "identity": 98.61,
+      "coverage": 100.0,
+      "mutations": [],
+      "match_type": "Mutant"
+    },
+    {
+      "protein": "acrB",
+      "contig": "JAHUYY010000002.1",
+      "contig_start": 252179,
+      "contig_end": 255326,
+      "identity": 100.0,
+      "coverage": 100.0,
+      "mutations": [],
+      "match_type": "Native"
+    },
+    {
+      "protein": "blaKPC-3",
+      "contig": "JAHUYY010000035.1",
+      "contig_start": 13998,
+      "contig_end": 14880,
+      "identity": 100.0,
+      "coverage": 100.0,
+      "mutations": [],
+      "match_type": "Native"
+    },
+    {
+      "protein": "ftsI",
+      "contig": "JAHUYY010000005.1",
+      "contig_start": 144416,
+      "contig_end": 146183,
+      "identity": 99.83,
+      "coverage": 100.0,
+      "mutations": [],
+      "match_type": "Mutant"
+    },
+    {
+      "protein": "ompK35",
+      "contig": "JAHUYY010000008.1",
+      "contig_start": 41171,
+      "contig_end": 42251,
+      "identity": 100.0,
+      "coverage": 100.0,
+      "mutations": [],
+      "match_type": "Native"
+    },
+    {
+      "protein": "ompK36",
+      "contig": "JAHUYY010000009.1",
+      "contig_start": 162418,
+      "contig_end": 163537,
+      "identity": 58.699999999999996,
+      "coverage": 101.4,
+      "mutations": [],
+      "match_type": "Indel"
+    }
+  ],
+  "amplicons": [
+    {
+      "pair_id": "blaKPC_ver",
+      "contig": "JAHUYY010000035.1",
+      "start": 13998,
+      "end": 14880,
+      "length": 882,
+      "f_primer": "blaKPC_F",
+      "r_primer": "blaKPC_R",
+      "mutations_found": [
+        "blaKPC-3: (wildtype)"
+      ]
+    }
+  ]
+}

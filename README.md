@@ -48,11 +48,12 @@ resistance-detector/
 │   ├── test_genome_creation.py
 │   └── test_mutation_detection.py
 ├── example_results/         # Example outputs
-├── PRJNA595047_test/        # Real-genome validation: 4 K. pneumoniae assemblies (NCBI),
-│                            #   incl. comparison against a published in vitro selection study
-├── PRJNA741867_test_results/ # Real-genome validation: 6 K. pneumoniae ST307 assemblies (NCBI),
-│                            #   incl. comparison against a published clinical CAZ/AVI-resistance study
-├── PRJNA1086695_test/       # Real-genome validation: 2 myloasm-assembled isolates
+├── bioproject_tests/        # Real-genome validation against published bioprojects
+│   ├── PRJNA595047_test/        # 4 K. pneumoniae assemblies (NCBI),
+│   │                            #   incl. comparison against a published in vitro selection study
+│   ├── PRJNA741867_test_results/ # 6 K. pneumoniae ST307 assemblies (NCBI),
+│   │                            #   incl. comparison against a published clinical CAZ/AVI-resistance study
+│   └── PRJNA1086695_test/       # 2 myloasm-assembled isolates
 ├── LICENSE
 └── README.md
 ```
@@ -289,11 +290,11 @@ Beyond the synthetic unit-test suite, the pipeline has been run end-to-end (BLAS
 
 | Folder | Genomes | Paper compared against |
 |---|---|---|
-| `PRJNA595047_test/` | 4 *K. pneumoniae* assemblies | Pariona et al. 2024 (doi:10.1128/spectrum.01173-24) — *in vitro* meropenem-selected blaKPC reversion/Ω-loop deletion mutants |
-| `PRJNA741867_test_results/` | 6 *K. pneumoniae* ST307 assemblies | Hernández-García et al. 2022 (JCM 60:e02245-21) — clinical ceftazidime-avibactam-selected blaKPC-46/-66/-92 X-loop variants |
-| `PRJNA1086695_test/` | 2 myloasm-assembled isolates | — (assembly + detection validation only) |
+| `bioproject_tests/PRJNA595047_test/` | 4 *K. pneumoniae* assemblies | Pariona et al. 2024 (doi:10.1128/spectrum.01173-24) — *in vitro* meropenem-selected blaKPC reversion/Ω-loop deletion mutants |
+| `bioproject_tests/PRJNA741867_test_results/` | 6 *K. pneumoniae* ST307 assemblies | Hernández-García et al. 2022 (JCM 60:e02245-21) — clinical ceftazidime-avibactam-selected blaKPC-46/-66/-92 X-loop variants |
+| `bioproject_tests/PRJNA1086695_test/` | 2 myloasm-assembled isolates | — (assembly + detection validation only) |
 
-These real-genome runs caught and validated the fix for an indel-misrepresentation bug: the BLAST and SeqKit mutation callers used to do a fixed-position lookup into the translated query with no sequence alignment, so any real insertion/deletion relative to the reference gene shifted every downstream "known mutation position" and produced fabricated point-substitution calls. See `PRJNA595047_test/RESULTS_SUMMARY.md` and `PRJNA741867_test_results/COMPARISON_TO_PAPER.md` for the full writeups, including before/after comparisons.
+These real-genome runs caught and validated the fix for an indel-misrepresentation bug: the BLAST and SeqKit mutation callers used to do a fixed-position lookup into the translated query with no sequence alignment, so any real insertion/deletion relative to the reference gene shifted every downstream "known mutation position" and produced fabricated point-substitution calls. See `bioproject_tests/PRJNA595047_test/RESULTS_SUMMARY.md` and `bioproject_tests/PRJNA741867_test_results/COMPARISON_TO_PAPER.md` for the full writeups, including before/after comparisons.
 
 ### Genes and Mutations Covered by Tests
 
