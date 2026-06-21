@@ -1,5 +1,7 @@
 import argparse
+import json
 import sys
+from collections import Counter
 from pathlib import Path
 from .db import create_db
 from .acquired import run_acquired_detection
@@ -18,11 +20,16 @@ def write_combined_tsv(output_prefix, assembly, blast_results, gamma_results, am
     output_file = f"{output_prefix}_all_results.tsv"
     print(f"Writing combined summary to {output_file}...")
 
+    # Copy number = number of distinct loci reported for the same gene/protein
+    blast_copy_counts = Counter(r['gene'] for r in blast_results) if blast_results else Counter()
+    gamma_copy_counts = Counter(r['protein'] for r in gamma_results) if gamma_results else Counter()
+    unified_copy_counts = Counter(r['gene'] for r in unified_results) if unified_results else Counter()
+
     with open(output_file, 'w') as f:
         # Header
         f.write('\t'.join([
             'Sample', 'Type', 'Gene_Protein', 'Method', 'Result_Details',
-            'Identity_Confidence', 'Contig', 'Start', 'End', 'Notes'
+            'Identity_Confidence', 'Contig', 'Start', 'End', 'Copy_Number', 'Notes'
         ]) + '\n')
 
         sample = Path(assembly).name
@@ -40,6 +47,7 @@ def write_combined_tsv(output_prefix, assembly, blast_results, gamma_results, am
                     r['contig'],
                     str(r['start']),
                     str(r['end']),
+                    str(blast_copy_counts[r['gene']]),
                     f"Mutations: {r['mutations']}"
                 ]) + '\n')
 
@@ -62,6 +70,7 @@ def write_combined_tsv(output_prefix, assembly, blast_results, gamma_results, am
                     contig,
                     start,
                     end,
+                    str(unified_copy_counts[r['gene']]),
                     'Dual-method consensus'
                 ]) + '\n')
 
@@ -79,6 +88,7 @@ def write_combined_tsv(output_prefix, assembly, blast_results, gamma_results, am
                         r['contig'],
                         str(r['contig_start']),
                         str(r['contig_end']),
+                        str(gamma_copy_counts[r['protein']]),
                         f"Coverage: {r['coverage']:.2f}%"
                     ]) + '\n')
 
@@ -96,8 +106,83 @@ def write_combined_tsv(output_prefix, assembly, blast_results, gamma_results, am
                     r['contig'],
                     str(r['start']),
                     str(r['end']),
+                    '-',
                     f"Genes/Mutations in region: {muts}"
                 ]) + '\n')
+
+
+def _aggregate_genes_by_copy_number(blast_results):
+    """Group acquired-gene BLAST hits by gene name, one entry per gene with
+    all of its detected loci and a copy_number count."""
+    by_gene = {}
+    for r in blast_results or []:
+        entry = by_gene.setdefault(r['gene'], {
+            'gene': r['gene'],
+            'copy_number': 0,
+            'loci': []
+        })
+        entry['copy_number'] += 1
+        entry['loci'].append({
+            'contig': r['contig'],
+            'start': r['start'],
+            'end': r['end'],
+            'identity': r['identity'],
+            'coverage': r['coverage'],
+            'mutations': r['mutations']
+        })
+    return list(by_gene.values())
+
+
+def write_machine_summary(output_prefix, assembly, blast_results, gamma_results,
+                          amplicon_results, unified_results):
+    """Write a structured, machine-parsable summary (JSON + TSV) with a
+    per-gene copy-number breakdown, suitable for downstream scripting."""
+    sample = Path(assembly).name
+    gene_entries = _aggregate_genes_by_copy_number(blast_results)
+
+    summary = {
+        'sample': sample,
+        'assembly': assembly,
+        'total_acquired_genes_detected': len(blast_results) if blast_results else 0,
+        'unique_acquired_genes': len(gene_entries),
+        'acquired_genes': gene_entries,
+        'mutations': unified_results or [],
+        'gene_alignments': gamma_results or [],
+        'amplicons': amplicon_results or []
+    }
+
+    json_file = f"{output_prefix}_summary.json"
+    print(f"Writing machine-readable JSON summary to {json_file}...")
+    with open(json_file, 'w') as f:
+        json.dump(summary, f, indent=2, default=str)
+
+    tsv_file = f"{output_prefix}_summary.tsv"
+    print(f"Writing machine-readable TSV summary to {tsv_file}...")
+    with open(tsv_file, 'w') as f:
+        f.write('\t'.join([
+            'Sample', 'Gene', 'Copy_Number', 'Loci', 'Max_Identity%',
+            'Max_Coverage%', 'Mutations'
+        ]) + '\n')
+
+        for entry in gene_entries:
+            loci_str = ';'.join(
+                f"{l['contig']}:{l['start']}-{l['end']}" for l in entry['loci']
+            )
+            max_identity = max(float(l['identity']) for l in entry['loci'])
+            max_coverage = max(float(l['coverage']) for l in entry['loci'])
+            mutations = sorted({
+                m for l in entry['loci'] if l['mutations'] != '-'
+                for m in l['mutations'].split(',')
+            })
+            f.write('\t'.join([
+                sample,
+                entry['gene'],
+                str(entry['copy_number']),
+                loci_str,
+                f"{max_identity:.2f}",
+                f"{max_coverage:.2f}",
+                ','.join(mutations) if mutations else '-'
+            ]) + '\n')
 
 
 def write_summary(output_prefix, assembly, blast_results, gamma_results,
@@ -106,6 +191,9 @@ def write_summary(output_prefix, assembly, blast_results, gamma_results,
 
     # Also write the combined TSV
     write_combined_tsv(output_prefix, assembly, blast_results, gamma_results, amplicon_results, unified_results)
+
+    # And the structured, machine-parsable summary (JSON + TSV)
+    write_machine_summary(output_prefix, assembly, blast_results, gamma_results, amplicon_results, unified_results)
 
     summary_file = f"{output_prefix}_summary.txt"
 
@@ -133,8 +221,8 @@ def write_summary(output_prefix, assembly, blast_results, gamma_results,
                 f.write("FOSFOMYCIN RESISTANCE GENES:\n")
                 f.write("-" * 50 + '\n')
                 for gene in fos_genes:
-                    f.write(f"  {gene['gene']}: {gene['identity']}% identity, "
-                           f"{gene['coverage']}% coverage\n")
+                    f.write(f"  {gene['gene']} (copy number: {gene['copy_number']}): "
+                           f"{gene['identity']}% identity, {gene['coverage']}% coverage\n")
                     if gene['mutations'] != '-':
                         f.write(f"    Mutations: {gene['mutations']}\n")
                 f.write('\n')
@@ -143,8 +231,8 @@ def write_summary(output_prefix, assembly, blast_results, gamma_results,
                 f.write("CEFTAZIDIME-AVIBACTAM RESISTANCE (KPC):\n")
                 f.write("-" * 50 + '\n')
                 for gene in kpc_genes:
-                    f.write(f"  {gene['gene']}: {gene['identity']}% identity, "
-                           f"{gene['coverage']}% coverage\n")
+                    f.write(f"  {gene['gene']} (copy number: {gene['copy_number']}): "
+                           f"{gene['identity']}% identity, {gene['coverage']}% coverage\n")
                     if gene['mutations'] != '-':
                         f.write(f"    Mutations: {gene['mutations']}\n")
                 f.write('\n')
@@ -153,8 +241,8 @@ def write_summary(output_prefix, assembly, blast_results, gamma_results,
                 f.write("CEFTAZIDIME-AVIBACTAM RESISTANCE (OXA):\n")
                 f.write("-" * 50 + '\n')
                 for gene in oxa_genes:
-                    f.write(f"  {gene['gene']}: {gene['identity']}% identity, "
-                           f"{gene['coverage']}% coverage\n")
+                    f.write(f"  {gene['gene']} (copy number: {gene['copy_number']}): "
+                           f"{gene['identity']}% identity, {gene['coverage']}% coverage\n")
                     if gene['mutations'] != '-':
                         f.write(f"    Mutations: {gene['mutations']}\n")
                 f.write('\n')
@@ -163,8 +251,8 @@ def write_summary(output_prefix, assembly, blast_results, gamma_results,
                 f.write("OTHER RESISTANCE GENES:\n")
                 f.write("-" * 50 + '\n')
                 for gene in other_genes:
-                    f.write(f"  {gene['gene']}: {gene['identity']}% identity, "
-                           f"{gene['coverage']}% coverage\n")
+                    f.write(f"  {gene['gene']} (copy number: {gene['copy_number']}): "
+                           f"{gene['identity']}% identity, {gene['coverage']}% coverage\n")
                     if gene['mutations'] != '-':
                         f.write(f"    Mutations: {gene['mutations']}\n")
                 f.write('\n')

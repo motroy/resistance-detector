@@ -1,5 +1,6 @@
 import sys
 import subprocess
+from collections import Counter
 from Bio import SeqIO
 from Bio.Seq import Seq
 from Bio.SeqRecord import SeqRecord
@@ -240,6 +241,11 @@ class BlastDetector:
                     description=f"identity={hit['identity']:.2f}% coverage={hit['coverage']:.2f}% mutations={result['mutations']}"
                 ))
 
+        # Annotate each result with how many distinct loci carry the same gene
+        copy_counts = Counter(r['gene'] for r in self.results)
+        for result in self.results:
+            result['copy_number'] = copy_counts[result['gene']]
+
     def write_report(self):
         """Write results to TSV file"""
         report_file = f"{self.output_prefix}_results.tsv"
@@ -248,7 +254,7 @@ class BlastDetector:
 
         with open(report_file, 'w') as f:
             f.write('\t'.join(['Contig', 'Gene', 'Identity%', 'Coverage%',
-                              'Mutations', 'Method']) + '\n')
+                              'Mutations', 'Method', 'Copy_Number']) + '\n')
 
             for result in self.results:
                 f.write('\t'.join([
@@ -257,7 +263,8 @@ class BlastDetector:
                     result['identity'],
                     result['coverage'],
                     result['mutations'],
-                    'BLAST'
+                    'BLAST',
+                    str(result['copy_number'])
                 ]) + '\n')
 
         print(f"Detected {len(self.results)} resistance genes")
