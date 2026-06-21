@@ -1,0 +1,18 @@
+Sample	Type	Gene_Protein	Method	Result_Details	Identity_Confidence	Contig	Start	End	Notes
+GCA_038433285.1_ASM3843328v1_genomic.fna	Acquired Gene	blaKPC-2	BLAST	Coverage: 100.00%	100.00%	JBCEBI010000007.1	22663	23544	Mutations: -
+GCA_038433285.1_ASM3843328v1_genomic.fna	Acquired Gene	acrB	BLAST	Coverage: 100.00%	99.87%	JBCEBI010000006.1	159973	163119	Mutations: G617A,F626A,A628T/V
+GCA_038433285.1_ASM3843328v1_genomic.fna	Acquired Gene	envZ	BLAST	Coverage: 100.00%	99.85%	JBCEBI010000032.1	48555	49910	Mutations: G244S/D,T324Q
+GCA_038433285.1_ASM3843328v1_genomic.fna	Acquired Gene	ompK35	BLAST	Coverage: 100.00%	99.44%	JBCEBI010000004.1	258287	259366	Mutations: D135G,D181R
+GCA_038433285.1_ASM3843328v1_genomic.fna	Acquired Gene	ftsI	BLAST	Coverage: 100.00%	99.43%	JBCEBI010000008.1	135076	136842	Mutations: A333P,Y350L,S357Q
+GCA_038433285.1_ASM3843328v1_genomic.fna	Acquired Gene	blaSHV-12	BLAST	Coverage: 100.00%	99.42%	JBCEBI010000012.1	26892	27752	Mutations: G238A,E240G
+GCA_038433285.1_ASM3843328v1_genomic.fna	Acquired Gene	fosAKP	BLAST	Coverage: 100.00%	98.81%	JBCEBI010000026.1	13910	14329	Mutations: I91V
+GCA_038433285.1_ASM3843328v1_genomic.fna	Acquired Gene	ompK36	BLAST	Coverage: 91.58%	99.90%	JBCEBI010000038.1	1	1011	Mutations: G213I
+GCA_038433285.1_ASM3843328v1_genomic.fna	Mutation	fosakp	gamma	I91V	50%	JBCEBI010000026.1	13909	14329	Dual-method consensus
+GCA_038433285.1_ASM3843328v1_genomic.fna	Gene Alignment	blaSHV-12	GAMMA	Wildtype / No mutations detected	99.30%	JBCEBI010000012.1	26891	27752	Coverage: 100.00%
+GCA_038433285.1_ASM3843328v1_genomic.fna	Gene Alignment	envZ	GAMMA	Wildtype / No mutations detected	99.56%	JBCEBI010000032.1	48554	49910	Coverage: 100.00%
+GCA_038433285.1_ASM3843328v1_genomic.fna	Gene Alignment	ompK36	GAMMA	Wildtype / No mutations detected	91.58%	JBCEBI010000038.1	0	1011	Coverage: 91.58%
+GCA_038433285.1_ASM3843328v1_genomic.fna	Gene Alignment	ompK35	GAMMA	Wildtype / No mutations detected	100.00%	JBCEBI010000004.1	258286	259366	Coverage: 100.00%
+GCA_038433285.1_ASM3843328v1_genomic.fna	Gene Alignment	acrB	GAMMA	Wildtype / No mutations detected	100.00%	JBCEBI010000006.1	159972	163119	Coverage: 100.00%
+GCA_038433285.1_ASM3843328v1_genomic.fna	Gene Alignment	blaKPC-2	GAMMA	Wildtype / No mutations detected	100.00%	JBCEBI010000007.1	22662	23544	Coverage: 100.00%
+GCA_038433285.1_ASM3843328v1_genomic.fna	Gene Alignment	ftsI	GAMMA	Wildtype / No mutations detected	99.83%	JBCEBI010000008.1	135075	136842	Coverage: 100.00%
+GCA_038433285.1_ASM3843328v1_genomic.fna	Amplicon	blaKPC_ver	SeqKit/Bed	Length: 882bp	-	JBCEBI010000007.1	22662	23544	Genes/Mutations in region: blaKPC-2: (wildtype)

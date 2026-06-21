@@ -11,7 +11,13 @@ in the ST307-*Klebsiella pneumoniae* High-Risk Clone..."
   FOS/CAZAVI gene set), built into a BLAST nucleotide DB.
 - Input: `test_data/PRJNA741867.ncbi_dataset.zip` → 6 *K. pneumoniae* ST307 assemblies
   (BioProject PRJNA741867, NCBI GenBank).
-- Command per genome: `fos-cazavi fos-cazavi-all -a <assembly> -d resistance_db -o <prefix>`
+- Command per genome:
+  ```
+  fos-cazavi fos-cazavi-all -a <assembly> -o <prefix> \
+      -d fos_cazavi/data/example_database.fasta \
+      --genes fos_cazavi/data/example_database_deduplicated.fasta \
+      --mutations fos_cazavi/data/example_database_mutations.tsv
+  ```
 
 ## 2. Mapping assemblies to the paper's isolates
 
@@ -144,14 +150,40 @@ the extracted sequence is reverse-complemented only when the two disagree
 
 Combined with the off-by-one position fix in 4b(3), the BLAST-path "Mutations"
 column now correctly reports `-` (no mutation) for all three wild-type isolates
-(A-1, B-1, C-1) and `L168P (KPC-46)` for A-2. For the two indel-bearing isolates
-(B-2, C-2), the BLAST path still reports some extra downstream noise beyond the
-true X-loop variant — a 6-bp deletion shifts every position downstream of it by
-2 codons relative to the reference, and the naive position-indexed
-`detect_mutations()` (unlike GAMMA's true alignment) has no way to detect or
-correct for this. This is an inherent limitation of position-based lookup
-without realignment, not a bug; the GAMMA-based calls (section 4a/4b) remain
-the authoritative source for indel-containing variants.
+(A-1, B-1, C-1) and `L168P (KPC-46)` for A-2.
+
+**Update — the downstream noise for the indel-bearing isolates is now fixed
+too.** The "inherent limitation" described above (a 6-bp deletion shifting
+every downstream known-mutation position by 2 codons, producing spurious
+substitution calls) was in fact a real, fixable bug, not an inherent
+limitation of BLAST itself: BLAST's own gapped alignment (`qseq`/`sseq`)
+already contains the information needed to map each known mutation position
+to its true corresponding query codon (or to a gap). The naive
+`detect_mutations()` simply never requested or used that alignment — it did
+a flat `protein[pos-1]` lookup on the translated query as if query and
+reference were always the same length. A new function,
+`detect_mutations_aligned()` (`fos_cazavi/utils.py`), walks the alignment
+columns instead, and `fos_cazavi/acquired.py` now requests `qseq`/`sseq` from
+BLAST and uses it. Re-running with this fix:
+
+| Isolate | Old (buggy) BLAST call | New (aligned) BLAST call |
+|---|---|---|
+| B-2 (2-C6) | `E167N,L168S,N169A,D178S,V240G,T242N` | `L166del` |
+| C-2 (HC)   | `E167D (KPC-92 X-loop),L168S,N169A,D178S,V240G,T242N` | `E167del,L168del,N169del` |
+
+All of the spurious downstream substitutions (`D178S`/`V240G`/`T242N`-shaped
+artifacts) are gone, replaced by clean deletion calls localized exactly to
+the X-loop region GAMMA also flags. The deletion's precise column placement
+differs slightly from GAMMA's (BLAST's optimal nucleotide alignment places
+the 6-bp gap one codon earlier than GAMMA's protein-level alignment for B-2
+— `L166del` vs. GAMMA's `L166W` — because the surrounding sequence has a
+tandem `L...E...L` repeat that admits more than one equally-optimal gap
+placement). This is expected alignment ambiguity inherent to the *sequence*
+itself, not a tool bug, and both placements correctly identify the same
+6-bp in-frame deletion in the same 3-residue window. GAMMA's calls remain
+the authoritative reference for exact residue-level placement; the BLAST
+path is now indel-aware and no longer fabricates unrelated downstream
+substitutions.
 
 ### 4d. Adding a blaKPC primer pair to the seqkit (dual-method) panel
 
@@ -195,7 +227,7 @@ pair had ever actually round-tripped through it successfully:
    previous run in place. **Fixed:** it now removes the file when there is
    nothing to report.
 
-With all three fixed, re-running the pipeline now gives:
+With all three fixed, re-running the pipeline at the time gave:
 
 | Isolate | blaKPC unified call | Confidence | Methods |
 |---|---|---|---|
@@ -205,17 +237,43 @@ With all three fixed, re-running the pipeline now gives:
 | C-2 | `E167D (KPC-92 X-loop)` | **100%** | gamma+seqkit |
 | C-2 | `N169D (KPC-92 X-loop)` | 50% | gamma only |
 
-A-2's clean substitution now reaches full dual-method confidence. B-2 and
-C-2 (the two indel-bearing isolates) still show some seqkit-only positional
-noise downstream of their 6-bp/2-codon X-loop deletions (e.g. spurious
-`V240G`/`T242N`-shaped calls) for exactly the same reason already documented
-for the BLAST path in 4c: an in-frame deletion shifts every downstream codon
-index by 2 relative to the reference, and naive position-indexed
-`detect_mutations()` has no way to detect or correct for that without
-realignment. This is an inherent limitation of position-based lookup, not a
-new bug; GAMMA remains the authoritative source for indel-containing
-variants, and the true X-loop call (`L166W` / `E167D`/`N169D`) is still
-correctly present alongside the noise.
+A-2's clean substitution reached full dual-method confidence at that point,
+but B-2 and C-2 (the two indel-bearing isolates) still showed seqkit-only
+positional noise downstream of their 6-bp/2-codon X-loop deletions (spurious
+`V240G`/`T242N`-shaped calls), for the seqkit-path analog of the BLAST bug
+described in 4c.
+
+**Update — this seqkit-path noise is now fixed too**, by the same kind of fix
+as 4c: `detect_seqkit_mutations()` (`fos_cazavi/mutations.py`) used to call
+the same naive `detect_mutations()` on the translated amplicon, so it shared
+the exact same fixed-position-lookup limitation, just reproduced on a
+different extracted sequence (the previous agreement between "GAMMA-only"
+and "seqkit-only" *noise* was never independent corroboration of anything —
+it just happened not to overlap because the two methods occasionally landed
+on different spurious positions). A new function,
+`detect_mutations_amplicon()` (`fos_cazavi/utils.py`), aligns the amplicon
+against the gene's reference sequence (loaded from the `--genes` FASTA via
+`load_gene_reference_sequences()`) with `Bio.Align.PairwiseAligner`, then
+reuses the same alignment-walking logic as `detect_mutations_aligned()`.
+Re-running with this fix:
+
+| Isolate | blaKPC unified call | Confidence | Methods |
+|---|---|---|---|
+| A-1, B-1, C-1 (wild-type) | *(none — correctly clean)* | — | — |
+| A-2 | `L168P (KPC-46)` | **100%** | gamma+seqkit |
+| B-2 | `L166W (KPC-66 X-loop)` | 50% | gamma only |
+| B-2 | `L166del` | 50% | seqkit only |
+| C-2 | `E167D (KPC-92 X-loop)` | 50% | gamma only |
+| C-2 | `N169D (KPC-92 X-loop)` | 50% | gamma only |
+| C-2 | `E167del`, `L168del`, `N169del` | 50% | seqkit only |
+
+The spurious downstream substitutions are gone from the seqkit path too, and
+the seqkit calls now agree with the BLAST-path calls in section 4c
+(`L166del` for B-2; `E167del,L168del,N169del` for C-2) — a genuine
+cross-method confirmation this time, not duplicated noise. GAMMA still
+places the gap one codon later for B-2 (`L166W`) for the alignment-ambiguity
+reason discussed in 4c; all three methods agree on the affected
+3-residue window.
 
 ## 5. Bottom line
 
@@ -226,25 +284,33 @@ correctly present alongside the noise.
 | Correct mutation identity/location (GAMMA raw) | ✅ L168P exact match (KPC-46); 6-bp X-loop deletions co-localize with KPC-66/KPC-92 |
 | Mutations surfaced in tool's summary/report | ✅ 3/3 — fixed (GAMMA column-mapping bug + missing X-loop DB positions + display-name decoupling) |
 | BLAST-based "Mutations" column for blaKPC-3 (wild-type isolates) | ✅ fixed — correctly reports `-` (strand-detection bug fixed) |
-| BLAST-based "Mutations" column for blaKPC-3 (indel isolates) | ⚠️ partial — flags the true X-loop variant but adds positional noise downstream of the deletion (inherent to non-realigning position lookup; GAMMA path is authoritative) |
-| Dual-method (GAMMA+seqkit) confidence for blaKPC substitutions | ✅ 100% for clean substitutions (A-2, C-2's E167D) after adding a blaKPC primer pair and fixing two seqkit-path bugs |
-| Dual-method confidence for blaKPC indel-flanked calls (B-2, C-2's N169D) | ⚠️ 50% (gamma-only) — same inherent indel/realignment limitation as the BLAST path |
+| BLAST-based "Mutations" column for blaKPC-3 (indel isolates) | ✅ fixed — `detect_mutations_aligned()` walks BLAST's own gapped alignment, eliminating the downstream-noise bug; reports clean `L166del`/`E167del,L168del,N169del` calls |
+| Dual-method (GAMMA+seqkit) confidence for blaKPC substitutions | ✅ 100% for clean substitutions (A-2) after adding a blaKPC primer pair and fixing two seqkit-path bugs |
+| Dual-method confidence for blaKPC indel-flanked calls (B-2, C-2) | ✅ seqkit now independently confirms the same clean deletion calls as the fixed BLAST path (`detect_mutations_amplicon()`), instead of producing its own uncorrelated noise; GAMMA remains the most precise residue-level placement |
 | Clonal consistency (identical SHV/fosA/acrB/etc. alleles across isolates) | ✅ matches paper's WGS-based clonality finding |
 
 **Conclusion:** `fos-cazavi` now reproduces the paper's core genomic findings
 end-to-end, from raw detection through to its own summary report, for all 6
-isolates in this dataset. Three issues were identified and fixed in this repo:
+isolates in this dataset. Issues identified and fixed in this repo:
 (1) `run_gamma()` was reading the wrong GAMMA output column (`Codon_Changes`
 instead of `Description`), silently dropping every mutation description
 regardless of database contents; (2) the bundled mutation database was missing
 entries for the X-loop positions (166–169) needed to flag the novel
-blaKPC-46/-66/-92 variants; and (3) the classic curated positions (179/240/243)
+blaKPC-46/-66/-92 variants; (3) the classic curated positions (179/240/243)
 were off by one relative to the literal sequential numbering of the bundled
 reference CDS (confirmed against NCBI RefSeq WP_004152396.1), with a related
 strand-detection bug in the BLAST path (`extract_hit_sequence()`) producing
-spurious mutation calls for any gene hit on the subject's minus strand.
-Separately, adding a blaKPC primer pair to the seqkit panel (section 4d)
-surfaced and fixed two more bugs in the dual-method confidence-scoring path:
-a broken pair-ID recovery from seqkit's FASTA header (fixed by switching to
-`--bed` output) and spurious "mutations" from blindly merging all 3 reading
-frames instead of picking the one real one.
+spurious mutation calls for any gene hit on the subject's minus strand;
+(4) adding a blaKPC primer pair to the seqkit panel (section 4d) surfaced and
+fixed two more bugs in the dual-method confidence-scoring path: a broken
+pair-ID recovery from seqkit's FASTA header (fixed by switching to `--bed`
+output) and spurious "mutations" from blindly merging all 3 reading frames
+instead of picking the one real one; and (5), the most subtle, both the
+BLAST and seqkit mutation callers did fixed-position lookups into the
+translated query with no sequence alignment, so any real indel relative to
+the reference gene (the 6-bp X-loop deletions in B-2/C-2) silently
+fabricated spurious downstream substitution calls. Fixed by
+`detect_mutations_aligned()` (BLAST path, walks BLAST's own gapped
+alignment) and `detect_mutations_amplicon()` (seqkit path, aligns the
+amplicon against the reference gene with `Bio.Align.PairwiseAligner`) — see
+`PRJNA595047_test/RESULTS_SUMMARY.md` for the full writeup of this fix.

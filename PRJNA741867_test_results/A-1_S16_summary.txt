@@ -2,7 +2,7 @@
 FOS-CAZAVI Resistance Detection Summary
 ======================================================================
 
-Assembly: A-1_S16.fasta
+Assembly: /tmp/prjna741867_unzip/ncbi_dataset/data/GCA_022423605.1/GCA_022423605.1_ASM2242360v1_genomic.fna
 Total genes detected: 8
 Method: BLAST+
 
@@ -17,7 +17,7 @@ CEFTAZIDIME-AVIBACTAM RESISTANCE (KPC):
 OTHER RESISTANCE GENES:
 --------------------------------------------------
   ompK36: 92.62% identity, 101.90% coverage
-    Mutations: G213S
+    Mutations: G213I
   acrB: 99.94% identity, 100.00% coverage
     Mutations: G617A,F626A,A628T/V
   ftsI: 99.77% identity, 100.00% coverage

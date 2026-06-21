@@ -1,2 +1,2 @@
 Pair_ID	Contig	Start	End	Length	Mutations_Found	Method
-blaKPC_ver	JAHUYX010000038.1	5811	6687	876	blaKPC-3: E167N,L168S,N169A,D178S,V240G,T242N	Seqkit/Amplicon
+blaKPC_ver	JAHUYX010000038.1	5811	6687	876	blaKPC-3: L166del	Seqkit/Amplicon

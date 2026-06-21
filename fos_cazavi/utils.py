@@ -211,6 +211,18 @@ def check_dependencies(tools):
         return False
     return True
 
+def _lookup_mutation_dict(gene_name, db):
+    """Resolve gene_name (possibly a specific variant like 'blaKPC-3') to its
+    mutation position dict in db, normalizing variant suffixes first."""
+    base_gene = _lookup_base_gene_name(gene_name)
+
+    if gene_name in db:
+        return db[gene_name]
+    if base_gene in db:
+        return db[base_gene]
+    return None
+
+
 def detect_mutations(gene_name, sequence, mutation_db=None):
     """Detect known mutations in a gene sequence"""
     mutations_found = []
@@ -218,20 +230,8 @@ def detect_mutations(gene_name, sequence, mutation_db=None):
     # Use provided DB or fallback to default
     db = mutation_db if mutation_db else KNOWN_MUTATIONS
 
-    # Get base gene name (remove variant numbers)
-    base_gene = gene_name.split('-')[0]
-    if base_gene.lower().startswith('bla'):
-        base_gene = 'bla' + base_gene[3:].rstrip('0123456789')
-    elif re.match(r'^fosA\d+$', base_gene, re.IGNORECASE):
-        # fosA3/4/5/7/11 -> fosA  (fosAKP is unaffected: KP not digits)
-        base_gene = base_gene.rstrip('0123456789')
-
-    # Try exact match first
-    if gene_name in db:
-        mutation_dict = db[gene_name]
-    elif base_gene in db:
-        mutation_dict = db[base_gene]
-    else:
+    mutation_dict = _lookup_mutation_dict(gene_name, db)
+    if mutation_dict is None:
         return mutations_found
 
     # Translate to protein
@@ -259,6 +259,190 @@ def detect_mutations(gene_name, sequence, mutation_db=None):
               file=sys.stderr)
 
     return mutations_found
+
+
+def detect_mutations_aligned(gene_name, qseq_aln, sseq_aln, sstart, send, mutation_db=None):
+    """Detect known mutations using a gapped nucleotide alignment (e.g. BLAST's
+    qseq/sseq with '-' gap characters), rather than a fixed-position lookup
+    against the raw query sequence.
+
+    detect_mutations() assumes the query has no indels relative to the
+    reference gene, so reference position N always lines up with position N
+    of the translated query. When the query has a real insertion or
+    deletion, every mutation position downstream of it is read from the
+    wrong (frame-shifted) codon, which can fabricate plausible-looking but
+    false substitution calls. This function instead walks the actual
+    alignment columns so each reference codon is matched to its true
+    corresponding query codon (or to a gap, reported as e.g. "L166del").
+    """
+    mutations_found = []
+
+    db = mutation_db if mutation_db else KNOWN_MUTATIONS
+    mutation_dict = _lookup_mutation_dict(gene_name, db)
+    if mutation_dict is None:
+        return mutations_found
+
+    qseq_aln = qseq_aln.upper()
+    sseq_aln = sseq_aln.upper()
+
+    if sstart > send:
+        qseq_aln = str(Seq(qseq_aln).reverse_complement())
+        sseq_aln = str(Seq(sseq_aln).reverse_complement())
+        sstart, send = send, sstart
+
+    # Map each ungapped subject (reference gene) nt position to its column
+    # in the gapped alignment.
+    col_for_subject_pos = {}
+    subj_pos = sstart - 1
+    for col, s_char in enumerate(sseq_aln):
+        if s_char != '-':
+            subj_pos += 1
+            col_for_subject_pos[subj_pos] = col
+
+    for pos, mut_info in mutation_dict.items():
+        nt_start = (pos - 1) * 3 + 1
+        cols = [col_for_subject_pos.get(nt_start + i) for i in range(3)]
+        if any(c is None for c in cols):
+            continue  # this codon isn't covered by the alignment
+
+        query_chars = [qseq_aln[c] for c in cols]
+        ref_aa = mut_info['ref']
+
+        if '-' in query_chars:
+            mutations_found.append(f"{ref_aa}{pos}del")
+            continue
+
+        try:
+            observed_aa = str(Seq(''.join(query_chars)).translate())
+        except Exception:
+            continue
+
+        if observed_aa in mut_info['variants']:
+            mutations_found.append(mut_info['name'])
+        elif observed_aa != ref_aa:
+            mutations_found.append(f"{ref_aa}{pos}{observed_aa}")
+
+    return mutations_found
+
+
+def load_gene_reference_sequences(genes_file):
+    """Load a {gene_name: nucleotide_sequence} map from a gene reference FASTA
+    (e.g. fos_cazavi/data/example_database_deduplicated.fasta), keyed by both
+    the exact header gene token (e.g. 'blaKPC-3') and its normalized base name
+    (e.g. 'blaKPC'), so lookups work regardless of which specific variant a
+    mutation_db entry uses. If multiple records share a base name, the first
+    one encountered wins.
+    """
+    references = {}
+    if not genes_file or not Path(genes_file).exists():
+        return references
+
+    try:
+        from Bio import SeqIO
+        for record in SeqIO.parse(genes_file, 'fasta'):
+            gene_token = record.description.split()[0]
+            seq = str(record.seq)
+            references.setdefault(gene_token, seq)
+            base_gene = _lookup_base_gene_name(gene_token)
+            references.setdefault(base_gene, seq)
+    except Exception as e:
+        print(f"Warning: Could not load gene reference sequences from {genes_file}: {e}",
+              file=sys.stderr)
+
+    return references
+
+
+def _lookup_base_gene_name(gene_name):
+    """Normalize a specific gene variant name to its base gene family name,
+    e.g. 'blaKPC-3' -> 'blaKPC', 'fosA3' -> 'fosA' (fosAKP is unaffected)."""
+    base_gene = gene_name.split('-')[0]
+    if base_gene.lower().startswith('bla'):
+        base_gene = 'bla' + base_gene[3:].rstrip('0123456789')
+    elif re.match(r'^fosA\d+$', base_gene, re.IGNORECASE):
+        base_gene = base_gene.rstrip('0123456789')
+    return base_gene
+
+
+def _align_to_reference(query_seq, reference_seq):
+    """Locally align query_seq (nucleotide) against reference_seq (nucleotide),
+    trying both strands and keeping the better-scoring orientation.
+
+    Returns (qseq_aln, sseq_aln, sstart, send) with the same semantics as
+    BLAST's gapped qseq/sseq/sstart/send (1-based, sstart <= send), or None
+    if no usable alignment was found.
+    """
+    from Bio.Align import PairwiseAligner
+
+    aligner = PairwiseAligner()
+    aligner.mode = 'local'
+    aligner.match_score = 2
+    aligner.mismatch_score = -1
+    aligner.open_gap_score = -5
+    aligner.extend_gap_score = -1
+
+    best = None
+    for candidate in (query_seq, str(Seq(query_seq).reverse_complement())):
+        try:
+            alignments = aligner.align(reference_seq.upper(), candidate.upper())
+        except Exception:
+            continue
+        if not alignments:
+            continue
+        aln = alignments[0]
+        if best is None or aln.score > best.score:
+            best = aln
+
+    if best is None or best.score <= 0:
+        return None
+
+    sstart = int(best.aligned[0][0][0]) + 1
+    send = int(best.aligned[0][-1][-1])
+    sseq_aln = str(best[0])
+    qseq_aln = str(best[1])
+    return qseq_aln, sseq_aln, sstart, send
+
+
+def detect_mutations_amplicon(gene_name, amplicon_seq, mutation_db=None, reference_seqs=None):
+    """Detect known mutations in a PCR amplicon sequence, indel-aware.
+
+    detect_mutations() assumes the amplicon starts exactly at the gene's
+    first codon, which is essentially never true for verification primers
+    that amplify an internal fragment, and breaks down completely (like the
+    BLAST path) whenever the amplicon contains a real indel relative to the
+    reference gene. When a reference sequence is available, this locally
+    aligns the amplicon against it and reuses detect_mutations_aligned() so
+    mutation positions are read from the correct, indel-corrected codon.
+
+    When no reference sequence is available for this gene, falls back to
+    the legacy fixed-position detect_mutations(), trying all 3 reading
+    frames and keeping the first one that translates without a premature
+    internal stop codon (since unlike the reference-aligned path, that
+    legacy function requires the input to already be in-frame).
+    """
+    db = mutation_db if mutation_db else KNOWN_MUTATIONS
+
+    reference_seq = None
+    if reference_seqs:
+        reference_seq = reference_seqs.get(gene_name) or reference_seqs.get(_lookup_base_gene_name(gene_name))
+
+    if reference_seq:
+        aligned = _align_to_reference(amplicon_seq, reference_seq)
+        if aligned is not None:
+            qseq_aln, sseq_aln, sstart, send = aligned
+            return detect_mutations_aligned(gene_name, qseq_aln, sseq_aln, sstart, send, db)
+
+    for frame in range(3):
+        frame_seq = amplicon_seq[frame:]
+        trimmed_len = len(frame_seq) - (len(frame_seq) % 3)
+        try:
+            protein = str(Seq(frame_seq[:trimmed_len]).translate())
+        except Exception:
+            continue
+        if '*' not in protein.rstrip('*'):
+            return detect_mutations(gene_name, frame_seq, mutation_db)
+
+    return []
+
 
 def load_mutation_db(mutation_file):
     """Load mutations from TSV file"""

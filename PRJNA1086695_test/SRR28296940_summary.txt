@@ -18,12 +18,13 @@ CEFTAZIDIME-AVIBACTAM RESISTANCE (KPC):
 OTHER RESISTANCE GENES:
 --------------------------------------------------
   ompK36: 92.22% identity, 102.45% coverage
+    Mutations: G213I
   envZ: 99.93% identity, 100.00% coverage
     Mutations: G244S/D,T324Q
   acrB: 99.84% identity, 100.00% coverage
     Mutations: G617A,F626A,A628T/V
   ompK35: 99.35% identity, 100.00% coverage
-    Mutations: G134A,D135V,D181V
+    Mutations: D135G,D181R
   ftsI: 99.32% identity, 100.00% coverage
     Mutations: A333P,Y350L,S357Q
 

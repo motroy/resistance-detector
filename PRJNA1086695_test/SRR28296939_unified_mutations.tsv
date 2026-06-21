@@ -1,4 +1,2 @@
 Gene	Mutation	Confidence(%)	Methods	GAMMA_Contig	GAMMA_Identity(%)	GAMMA_Coverage(%)	SeqKit_PairID
-blakpc	T242G	50	seqkit	-	-	-	blaKPC_ver
-blakpc	V240G	50	seqkit	-	-	-	blaKPC_ver
 fosakp	I91V	50	gamma	u58	97.86	100.00	-

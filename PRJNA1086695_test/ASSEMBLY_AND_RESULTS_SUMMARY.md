@@ -51,8 +51,18 @@ bundled primers/genes:
 ```
 gunzip -k SRR28296939_myloasm_assembly.fasta.gz
 gunzip -k SRR28296940_myloasm_assembly.fasta.gz
-fos-cazavi fos-cazavi-all -a SRR28296939_myloasm_assembly.fasta -d resistance_db -o SRR28296939
-fos-cazavi fos-cazavi-all -a SRR28296940_myloasm_assembly.fasta -d resistance_db -o SRR28296940
+fos-cazavi fos-cazavi-all \
+    -a SRR28296939_myloasm_assembly.fasta \
+    -o SRR28296939 \
+    -d fos_cazavi/data/example_database.fasta \
+    --genes fos_cazavi/data/example_database_deduplicated.fasta \
+    --mutations fos_cazavi/data/example_database_mutations.tsv
+fos-cazavi fos-cazavi-all \
+    -a SRR28296940_myloasm_assembly.fasta \
+    -o SRR28296940 \
+    -d fos_cazavi/data/example_database.fasta \
+    --genes fos_cazavi/data/example_database_deduplicated.fasta \
+    --mutations fos_cazavi/data/example_database_mutations.tsv
 ```
 
 ### Key findings
@@ -62,20 +72,31 @@ porin/efflux/PBP genes (ompK35/ompK36/acrB/envZ/ftsI) and **fosAKP** (chromosoma
 
 | Gene | SRR28296939 | SRR28296940 |
 |---|---|---|
-| blaKPC-2 | 99.55% id / 100.34% cov — **V240G, T242G** | 100.00% id / 100.00% cov — wild-type |
+| blaKPC-2 | 99.55% id / 100.34% cov — **3 bp in-frame insertion + A132T** (GAMMA `Match_Type=Indel`; no tracked X-loop/V240/T242 position altered) | 100.00% id / 100.00% cov — wild-type |
 | fosAKP | 98.81% id / 100.00% cov — I91V | 98.81% id / 100.00% cov — I91V |
-| ompK36 | 92.22% id / 102.45% cov — wild-type | 92.22% id / 102.45% cov — wild-type |
-| ompK35 | 99.35% id / 100.00% cov — G134A, D135V, D181V | same |
+| ompK36 | 92.22% id / 102.45% cov — G213I (contig-edge truncation, no internal mutation) | same |
+| ompK35 | 99.35% id / 100.00% cov — D135G, D181R | same |
 | acrB | 99.84% id / 100.00% cov — G617A, F626A, A628T/V | same |
 | envZ | 99.93% id / 100.00% cov — G244S/D, T324Q | same |
 | ftsI | 99.32% id / 100.00% cov — A333P, Y350L, S357Q | same |
 
-**Notable difference between isolates:** SRR28296939's blaKPC-2 carries the V240G/T242G mutations
-(confirmed independently by both GAMMA and the SeqKit amplicon method, see
-`*_unified_mutations.tsv`), which are associated with reduced ceftazidime-avibactam susceptibility,
-while SRR28296940's blaKPC-2 is wild-type at those positions. This is consistent with the two isolates
-being related but phenotypically/genotypically distinct KPC-producing strains, matching the premise of
-PRJNA1086695 (paired isolates from the same study/outbreak).
+**Notable difference between isolates:** SRR28296939's blaKPC-2 carries a small in-frame insertion (3 bp
+at nucleotide 543) plus a separate A132T substitution, independently confirmed by GAMMA's protein-level
+alignment (`Match_Type=Indel`, `Codon_Changes=A132T`, `BP_Changes=3 bp Insertion at 543`), while
+SRR28296940's blaKPC-2 is fully wild-type. This is consistent with the two isolates being related but
+phenotypically/genotypically distinct KPC-producing strains, matching the premise of PRJNA1086695
+(paired isolates from the same study/outbreak).
+
+**Bug fix note:** earlier runs of this pipeline (before the indel-aware mutation caller in
+`fos_cazavi/utils.py::detect_mutations_aligned()`/`detect_mutations_amplicon()` was added — see
+`PRJNA595047_test/RESULTS_SUMMARY.md` for the full writeup) reported SRR28296939's blaKPC-2 mutations as
+**V240G, T242G**. Those were fabricated point-substitution calls: the BLAST/SeqKit mutation caller used a
+fixed-position lookup into the translated query with no alignment, so the real 3 bp insertion at
+nucleotide 543 shifted every downstream "known mutation position" by one codon, causing the caller to
+read the wrong (frame-shifted) codons at positions 239/242. GAMMA's independent indel-aware alignment
+correctly classified this hit as `Match_Type=Indel` all along. After the fix, the BLAST and SeqKit paths
+both correctly report no mutation at the tracked positions 166–169/178/239/242 (none of them are actually
+altered — the real changes are the untracked insertion and A132T), consistent with GAMMA.
 
 ## Files in this folder
 

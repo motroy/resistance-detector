@@ -7,6 +7,7 @@ A CLI tool for detecting fosfomycin (FOS) and ceftazidime-avibactam (CAZAVI) res
 - **Modular CLI**: Separate commands for database creation, acquired gene detection, and mutation analysis.
 - **Gene Detection**: Identifies resistance genes (fosA variants, blaKPC, blaOXA-48, etc.) using BLAST+.
 - **Mutation Detection**: Detects known resistance mutations (D179Y, V240G, T243M, etc.) using GAMMA (protein-level gene alignment via translated nucleotide CDS) and SeqKit amplicon analysis.
+- **Indel-aware mutation calling**: Both the BLAST and SeqKit mutation-detection paths walk a real gapped alignment (BLAST's own `qseq`/`sseq` for the BLAST path, a fresh `Bio.Align.PairwiseAligner` alignment against the reference gene for the SeqKit amplicon path) rather than doing a fixed-position lookup into the translated query. This means insertions/deletions relative to the reference gene are reported as e.g. `L166del` instead of producing fabricated, frame-shifted point-substitution calls at every downstream tracked position.
 - **Amplicon Detection**: Uses seqkit amplicon to find PCR products from primer pairs and checks them for resistance mutations.
 - **Sequence Extraction**: Outputs detected gene sequences to FASTA.
 - **Multiple Output Formats**: TSV results, human-readable summary, and raw BLAST/GAMMA output.
@@ -39,7 +40,7 @@ resistance-detector/
 ├── scripts/
 │   ├── download_assembly.py      # Download assemblies from NCBI
 │   └── simulate_esbl_genomes.py  # Download real ESBL genomes and simulate resistance
-├── tests/                   # Unit test suite (276 tests)
+├── tests/                   # Unit test suite (285 tests)
 │   ├── conftest.py
 │   ├── test_blast_parsing.py
 │   ├── test_dual_detection.py
@@ -47,6 +48,11 @@ resistance-detector/
 │   ├── test_genome_creation.py
 │   └── test_mutation_detection.py
 ├── example_results/         # Example outputs
+├── PRJNA595047_test/        # Real-genome validation: 4 K. pneumoniae assemblies (NCBI),
+│                            #   incl. comparison against a published in vitro selection study
+├── PRJNA741867_test_results/ # Real-genome validation: 6 K. pneumoniae ST307 assemblies (NCBI),
+│                            #   incl. comparison against a published clinical CAZ/AVI-resistance study
+├── PRJNA1086695_test/       # Real-genome validation: 2 myloasm-assembled isolates
 ├── LICENSE
 └── README.md
 ```
@@ -57,6 +63,7 @@ resistance-detector/
 
 - **NCBI BLAST+**
 - **GAMMA** (Gene Allele Mutation Microbial Assessment)
+- **BLAT** (required by GAMMA for its protein-level alignment search)
 - **GAMMA_DB_Maker** (for preparing nucleotide databases for GAMMA)
 - **SeqKit**
 - **Python 3** with **Biopython**
@@ -86,8 +93,10 @@ pixi install
 ### Option 4: Manual Installation
 
 ```bash
-# Install system dependencies (BLAST+, GAMMA, SeqKit, GAMMA_DB_Maker)
-bash install_deps.sh
+# Install system dependencies (BLAST+, BLAT, GAMMA, SeqKit, GAMMA_DB_Maker)
+# into ./bin (or pass a different directory as the first argument)
+bash install_deps.sh ./bin
+export PATH="$PWD/bin:$PATH"
 
 # Install Python dependencies
 pip install biopython
@@ -95,6 +104,11 @@ pip install biopython
 # Make script executable (for running directly from the repo)
 chmod +x fos-cazavi
 ```
+
+GAMMA is not distributed on PyPI; `install_deps.sh` fetches `GAMMA.py` directly from its
+GitHub repository (rastanton/GAMMA) and `unidecode`/`biopython`, its Python dependencies. BLAT
+is fetched from the UCSC binary mirror; if your network blocks that mirror, install it via
+conda instead (`conda install -c bioconda ucsc-blat`).
 
 ## Quick Start
 
@@ -235,22 +249,34 @@ python -m pytest tests/ -v
 ```
 ============================= test session starts ==============================
 platform linux -- Python 3.11.14, pytest-9.0.2
-collected 276 items
+collected 285 items
 
-276 passed in 7.52s
+285 passed in 8.37s
 ```
 
-**All 276 tests pass.** No external tools (BLAST, GAMMA, seqkit) are required to run the tests — all tool-dependent logic is tested via synthetic inputs.
+**All 285 tests pass.** No external tools (BLAST, GAMMA, seqkit) are required to run the tests — all tool-dependent logic is tested via synthetic inputs.
 
 ### Test Coverage Summary
 
 | Test Module | Tests | What Is Covered |
 |---|---|---|
-| `test_blast_parsing.py` | 20 | BLAST output parsing: identity/coverage filtering, gene name extraction from various ID formats, multi-hit handling, edge cases |
+| `test_blast_parsing.py` | 23 | BLAST output parsing: identity/coverage filtering, gene name extraction from various ID formats, multi-hit handling, edge cases |
 | `test_genome_creation.py` | 53 | Reference database loading (30 genes verified), `introduce_mutation()` utility, synthetic contig construction for all FOS and CAZAVI genome scenarios |
-| `test_gamma_parsing.py` | 58 | GAMMA Codon_Changes field parsing for KPC (D179Y, V240G, T243M), OXA-48 (P68A, Y211S), CMY-178 (N70T), porins (OmpK35/36), AcrB, gene name normalization, and fosA variant names (fosA3/4/5/7/11) |
-| `test_mutation_detection.py` | 104 | `detect_mutations()` for all gene families: wildtype no-call verification plus every documented resistance mutation across FOS and CAZAVI pathways |
-| `test_dual_detection.py` | 41 | Dual-method (GAMMA + SeqKit amplicon) confidence scoring: 100% when both methods agree, 50% when only one detects a mutation |
+| `test_gamma_parsing.py` | 62 | GAMMA Codon_Changes field parsing for KPC (D179Y, V240G, T243M), OXA-48 (P68A, Y211S), CMY-178 (N70T), porins (OmpK35/36), AcrB, gene name normalization, and fosA variant names (fosA3/4/5/7/11) |
+| `test_mutation_detection.py` | 105 | `detect_mutations()` for all gene families: wildtype no-call verification plus every documented resistance mutation across FOS and CAZAVI pathways |
+| `test_dual_detection.py` | 42 | Dual-method (GAMMA + SeqKit amplicon) confidence scoring: 100% when both methods agree, 50% when only one detects a mutation |
+
+### Validation Against Real, Published Genomes
+
+Beyond the synthetic unit-test suite, the pipeline has been run end-to-end (BLAST+GAMMA+SeqKit, all external tools) against real NCBI assemblies tied to published studies, with results cross-checked against each paper's reported findings:
+
+| Folder | Genomes | Paper compared against |
+|---|---|---|
+| `PRJNA595047_test/` | 4 *K. pneumoniae* assemblies | Pariona et al. 2024 (doi:10.1128/spectrum.01173-24) — *in vitro* meropenem-selected blaKPC reversion/Ω-loop deletion mutants |
+| `PRJNA741867_test_results/` | 6 *K. pneumoniae* ST307 assemblies | Hernández-García et al. 2022 (JCM 60:e02245-21) — clinical ceftazidime-avibactam-selected blaKPC-46/-66/-92 X-loop variants |
+| `PRJNA1086695_test/` | 2 myloasm-assembled isolates | — (assembly + detection validation only) |
+
+These real-genome runs caught and validated the fix for an indel-misrepresentation bug: the BLAST and SeqKit mutation callers used to do a fixed-position lookup into the translated query with no sequence alignment, so any real insertion/deletion relative to the reference gene shifted every downstream "known mutation position" and produced fabricated point-substitution calls. See `PRJNA595047_test/RESULTS_SUMMARY.md` and `PRJNA741867_test_results/COMPARISON_TO_PAPER.md` for the full writeups, including before/after comparisons.
 
 ### Genes and Mutations Covered by Tests
 

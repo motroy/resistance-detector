@@ -4,7 +4,7 @@ from Bio import SeqIO
 from Bio.Seq import Seq
 from Bio.SeqRecord import SeqRecord
 from pathlib import Path
-from .utils import detect_mutations, check_dependencies, load_mutation_db, KNOWN_MUTATIONS
+from .utils import detect_mutations_aligned, check_dependencies, load_mutation_db, KNOWN_MUTATIONS
 
 class BlastDetector:
     def __init__(self, assembly, database, output_prefix, min_identity=90, min_coverage=80, mutation_db_file=None):
@@ -59,7 +59,7 @@ class BlastDetector:
             'blastn',
             '-query', self.assembly,
             '-db', self.database,
-            '-outfmt', '6 qseqid sseqid pident length qstart qend qlen sstart send slen',
+            '-outfmt', '6 qseqid sseqid pident length qstart qend qlen sstart send slen qseq sseq',
             '-evalue', '1e-20',
             '-max_target_seqs', '5'
         ]
@@ -96,6 +96,8 @@ class BlastDetector:
             sstart = int(fields[7])
             send = int(fields[8])
             slen = int(fields[9])
+            qseq = fields[10] if len(fields) > 10 else ''
+            sseq = fields[11] if len(fields) > 11 else ''
 
             # Calculate coverage based on subject (reference gene)
             coverage = (length / slen) * 100
@@ -112,7 +114,9 @@ class BlastDetector:
                     'qlen': qlen,
                     'sstart': sstart,
                     'send': send,
-                    'slen': slen
+                    'slen': slen,
+                    'qseq': qseq,
+                    'sseq': sseq
                 })
 
         print(f"Found {len(hits)} gene hits passing thresholds")
@@ -210,7 +214,13 @@ class BlastDetector:
             sequence = self.extract_hit_sequence(hit)
 
             if sequence:
-                mutations = detect_mutations(hit['gene'], sequence, self.mutation_db)
+                if hit.get('qseq') and hit.get('sseq'):
+                    mutations = detect_mutations_aligned(
+                        hit['gene'], hit['qseq'], hit['sseq'],
+                        hit['sstart'], hit['send'], self.mutation_db
+                    )
+                else:
+                    mutations = []
 
                 result = {
                     'contig': hit['query_id'],

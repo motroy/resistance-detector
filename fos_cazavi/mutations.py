@@ -5,8 +5,10 @@ import subprocess
 from pathlib import Path
 from collections import defaultdict
 import re
-from Bio.Seq import Seq
-from .utils import load_primers, load_mutation_db, detect_mutations as _detect_mutations, KNOWN_MUTATIONS
+from .utils import (
+    load_primers, load_mutation_db, detect_mutations_amplicon,
+    load_gene_reference_sequences, KNOWN_MUTATIONS,
+)
 
 
 class MutationDetector:
@@ -25,13 +27,20 @@ class MutationDetector:
         else:
             self.primers = {}
 
+        # Raw (non-normalized) mutation DB, as needed by detect_mutations_amplicon()
+        # -- preserves whatever gene-name casing/variant the --mutations file or
+        # KNOWN_MUTATIONS fallback uses.
+        self.raw_mutation_db = load_mutation_db(mutation_db_file) if mutation_db_file else KNOWN_MUTATIONS
+
         # Load mutation database for filtering GAMMA results
         # Normalize keys to lowercase so lookups via _normalize_gene_name succeed
-        raw_db = load_mutation_db(mutation_db_file) if mutation_db_file else KNOWN_MUTATIONS
         self.mutation_db = {
             self._normalize_gene_name(k): v
-            for k, v in raw_db.items()
+            for k, v in self.raw_mutation_db.items()
         }
+
+        # Reference gene sequences (for indel-aware amplicon mutation detection)
+        self.reference_seqs = load_gene_reference_sequences(genes_file)
 
     def run_gamma(self):
         """
@@ -312,25 +321,13 @@ class MutationDetector:
                         mut_name = parts[-1]  # e.g. "G469R"
                         mutations_found = [mut_name]
                 else:
-                    # Gene-level verification primer: translate & check for
-                    # mutations. The amplicon's start may be offset by 0-2 nt
-                    # from the gene's reading frame, so pick whichever of the
-                    # 3 frames translates without premature internal stop
-                    # codons (real coding sequence) rather than merging all
-                    # 3 - the two wrong frames produce essentially random
-                    # amino acids at every position, which would otherwise
-                    # masquerade as "novel mutations" at every known site.
-                    best_frame_seq = None
-                    for frame in range(3):
-                        frame_seq = seq[frame:]
-                        trimmed_len = len(frame_seq) - (len(frame_seq) % 3)
-                        protein = str(Seq(frame_seq[:trimmed_len]).translate())
-                        if '*' not in protein.rstrip('*'):
-                            best_frame_seq = frame_seq
-                            break
-
-                    if best_frame_seq is not None:
-                        mutations_found = _detect_mutations(gene, best_frame_seq, KNOWN_MUTATIONS)
+                    # Gene-level verification primer: align the amplicon
+                    # against the gene's reference sequence (when available)
+                    # so mutation positions are read indel-aware, the same
+                    # fix applied to the BLAST detection path.
+                    mutations_found = detect_mutations_amplicon(
+                        gene, seq, self.raw_mutation_db, self.reference_seqs
+                    )
 
                 if mutations_found:
                     seqkit_mut_results.append({

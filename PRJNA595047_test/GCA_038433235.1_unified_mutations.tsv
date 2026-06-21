@@ -1,0 +1,6 @@
+Gene	Mutation	Confidence(%)	Methods	GAMMA_Contig	GAMMA_Identity(%)	GAMMA_Coverage(%)	SeqKit_PairID
+blakpc	E167del	50	seqkit	-	-	-	blaKPC_ver
+blakpc	L166del	50	seqkit	-	-	-	blaKPC_ver
+blakpc	L168del	50	seqkit	-	-	-	blaKPC_ver
+blakpc	N169del	50	seqkit	-	-	-	blaKPC_ver
+fosakp	I91V	50	gamma	JBCEBJ010000023.1	97.86	100.00	-
