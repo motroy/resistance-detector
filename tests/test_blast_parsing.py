@@ -152,6 +152,32 @@ class TestParseBlastOutput:
         assert len(hits) == 2
 
 
+class TestCopyNumber:
+
+    def test_multiple_loci_same_gene_get_copy_number(self):
+        d = make_detector()
+        d.extract_hit_sequence = lambda hit: "ATGC"
+        # Same gene detected at two distinct loci on contig1
+        line1 = blast_line("contig1", "fosA3_reference", 100.0, 576, 1, 576, 576, 1, 576, 576)
+        line2 = blast_line("contig1", "fosA3_reference", 95.0, 576, 2000, 2576, 576, 1, 576, 576)
+        hits = d.parse_blast_output("\n".join([line1, line2]))
+        d.analyze_hits(hits)
+
+        assert len(d.results) == 2
+        assert all(r['copy_number'] == 2 for r in d.results)
+
+    def test_distinct_genes_get_copy_number_one(self):
+        d = make_detector()
+        d.extract_hit_sequence = lambda hit: "ATGC"
+        line1 = blast_line("contig1", "geneA", 100.0, 1000, 1, 1000, 1000, 1, 1000, 1000)
+        line2 = blast_line("contig1", "geneB", 100.0, 1000, 2000, 3000, 1000, 1, 1000, 1000)
+        hits = d.parse_blast_output("\n".join([line1, line2]))
+        d.analyze_hits(hits)
+
+        assert len(d.results) == 2
+        assert all(r['copy_number'] == 1 for r in d.results)
+
+
 class TestExtractGeneName:
 
     def setup_method(self):
