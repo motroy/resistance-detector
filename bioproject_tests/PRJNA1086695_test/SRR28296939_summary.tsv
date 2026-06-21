@@ -1,0 +1,8 @@
+Sample	Gene	Copy_Number	Loci	Max_Identity%	Max_Coverage%	Mutations
+SRR28296939_myloasm_assembly.fasta	ompK36	1	u55:216041-217165	92.22	102.45	G213I
+SRR28296939_myloasm_assembly.fasta	blaKPC-2	1	u87:6026-6910	99.55	100.34	-
+SRR28296939_myloasm_assembly.fasta	envZ	1	u110:48666-50021	99.93	100.00	G244S/D,T324Q
+SRR28296939_myloasm_assembly.fasta	acrB	1	u1:171239-174385	99.84	100.00	A628T/V,F626A,G617A
+SRR28296939_myloasm_assembly.fasta	ompK35	1	u44:64642-65720	99.35	100.00	D135G,D181R
+SRR28296939_myloasm_assembly.fasta	ftsI	1	u77:186809-188575	99.32	100.00	A333P,S357Q,Y350L
+SRR28296939_myloasm_assembly.fasta	fosAKP	1	u58:14021-14440	98.81	100.00	I91V

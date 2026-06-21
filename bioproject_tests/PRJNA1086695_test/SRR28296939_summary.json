@@ -1,0 +1,217 @@
+{
+  "sample": "SRR28296939_myloasm_assembly.fasta",
+  "assembly": "bioproject_tests/PRJNA1086695_test/SRR28296939_myloasm_assembly.fasta",
+  "total_acquired_genes_detected": 7,
+  "unique_acquired_genes": 7,
+  "acquired_genes": [
+    {
+      "gene": "ompK36",
+      "copy_number": 1,
+      "loci": [
+        {
+          "contig": "u55",
+          "start": 216041,
+          "end": 217165,
+          "identity": "92.22",
+          "coverage": "102.45",
+          "mutations": "G213I"
+        }
+      ]
+    },
+    {
+      "gene": "blaKPC-2",
+      "copy_number": 1,
+      "loci": [
+        {
+          "contig": "u87",
+          "start": 6026,
+          "end": 6910,
+          "identity": "99.55",
+          "coverage": "100.34",
+          "mutations": "-"
+        }
+      ]
+    },
+    {
+      "gene": "envZ",
+      "copy_number": 1,
+      "loci": [
+        {
+          "contig": "u110",
+          "start": 48666,
+          "end": 50021,
+          "identity": "99.93",
+          "coverage": "100.00",
+          "mutations": "G244S/D,T324Q"
+        }
+      ]
+    },
+    {
+      "gene": "acrB",
+      "copy_number": 1,
+      "loci": [
+        {
+          "contig": "u1",
+          "start": 171239,
+          "end": 174385,
+          "identity": "99.84",
+          "coverage": "100.00",
+          "mutations": "G617A,F626A,A628T/V"
+        }
+      ]
+    },
+    {
+      "gene": "ompK35",
+      "copy_number": 1,
+      "loci": [
+        {
+          "contig": "u44",
+          "start": 64642,
+          "end": 65720,
+          "identity": "99.35",
+          "coverage": "100.00",
+          "mutations": "D135G,D181R"
+        }
+      ]
+    },
+    {
+      "gene": "ftsI",
+      "copy_number": 1,
+      "loci": [
+        {
+          "contig": "u77",
+          "start": 186809,
+          "end": 188575,
+          "identity": "99.32",
+          "coverage": "100.00",
+          "mutations": "A333P,Y350L,S357Q"
+        }
+      ]
+    },
+    {
+      "gene": "fosAKP",
+      "copy_number": 1,
+      "loci": [
+        {
+          "contig": "u58",
+          "start": 14021,
+          "end": 14440,
+          "identity": "98.81",
+          "coverage": "100.00",
+          "mutations": "I91V"
+        }
+      ]
+    }
+  ],
+  "mutations": [
+    {
+      "gene": "fosakp",
+      "mutation": "I91V",
+      "confidence": 50,
+      "methods": [
+        "gamma"
+      ],
+      "gamma_detail": {
+        "protein": "fosAKP",
+        "contig": "u58",
+        "contig_start": 14020,
+        "contig_end": 14440,
+        "identity": 97.86,
+        "coverage": 100.0,
+        "mutations": [
+          "I91V"
+        ],
+        "match_type": "Mutant"
+      },
+      "seqkit_detail": null
+    }
+  ],
+  "gene_alignments": [
+    {
+      "protein": "acrB",
+      "contig": "u1",
+      "contig_start": 171238,
+      "contig_end": 174385,
+      "identity": 99.9,
+      "coverage": 100.0,
+      "mutations": [],
+      "match_type": "Mutant"
+    },
+    {
+      "protein": "ompK35",
+      "contig": "u44",
+      "contig_start": 64641,
+      "contig_end": 65720,
+      "identity": 10.56,
+      "coverage": 99.91,
+      "mutations": [],
+      "match_type": "Indel Truncation"
+    },
+    {
+      "protein": "ompK36",
+      "contig": "u55",
+      "contig_start": 216040,
+      "contig_end": 217165,
+      "identity": 47.010000000000005,
+      "coverage": 101.89999999999999,
+      "mutations": [],
+      "match_type": "Indel"
+    },
+    {
+      "protein": "fosAKP",
+      "contig": "u58",
+      "contig_start": 14020,
+      "contig_end": 14440,
+      "identity": 97.86,
+      "coverage": 100.0,
+      "mutations": [
+        "I91V"
+      ],
+      "match_type": "Mutant"
+    },
+    {
+      "protein": "ftsI",
+      "contig": "u77",
+      "contig_start": 186808,
+      "contig_end": 188575,
+      "identity": 99.66000000000001,
+      "coverage": 100.0,
+      "mutations": [],
+      "match_type": "Mutant"
+    },
+    {
+      "protein": "blaKPC-2",
+      "contig": "u87",
+      "contig_start": 6025,
+      "contig_end": 6910,
+      "identity": 99.32,
+      "coverage": 100.29999999999998,
+      "mutations": [],
+      "match_type": "Indel"
+    },
+    {
+      "protein": "envZ",
+      "contig": "u110",
+      "contig_start": 48665,
+      "contig_end": 50021,
+      "identity": 99.78,
+      "coverage": 100.0,
+      "mutations": [],
+      "match_type": "Mutant"
+    }
+  ],
+  "amplicons": [
+    {
+      "pair_id": "blaKPC_ver",
+      "contig": "u87",
+      "start": 6025,
+      "end": 6910,
+      "length": 885,
+      "f_primer": "blaKPC_F",
+      "r_primer": "blaKPC_R",
+      "mutations_found": [
+        "blaKPC-2: (wildtype)"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,16 @@
+Sample	Type	Gene_Protein	Method	Result_Details	Identity_Confidence	Contig	Start	End	Copy_Number	Notes
+SRR28296939_myloasm_assembly.fasta	Acquired Gene	ompK36	BLAST	Coverage: 102.45%	92.22%	u55	216041	217165	1	Mutations: G213I
+SRR28296939_myloasm_assembly.fasta	Acquired Gene	blaKPC-2	BLAST	Coverage: 100.34%	99.55%	u87	6026	6910	1	Mutations: -
+SRR28296939_myloasm_assembly.fasta	Acquired Gene	envZ	BLAST	Coverage: 100.00%	99.93%	u110	48666	50021	1	Mutations: G244S/D,T324Q
+SRR28296939_myloasm_assembly.fasta	Acquired Gene	acrB	BLAST	Coverage: 100.00%	99.84%	u1	171239	174385	1	Mutations: G617A,F626A,A628T/V
+SRR28296939_myloasm_assembly.fasta	Acquired Gene	ompK35	BLAST	Coverage: 100.00%	99.35%	u44	64642	65720	1	Mutations: D135G,D181R
+SRR28296939_myloasm_assembly.fasta	Acquired Gene	ftsI	BLAST	Coverage: 100.00%	99.32%	u77	186809	188575	1	Mutations: A333P,Y350L,S357Q
+SRR28296939_myloasm_assembly.fasta	Acquired Gene	fosAKP	BLAST	Coverage: 100.00%	98.81%	u58	14021	14440	1	Mutations: I91V
+SRR28296939_myloasm_assembly.fasta	Mutation	fosakp	gamma	I91V	50%	u58	14020	14440	1	Dual-method consensus
+SRR28296939_myloasm_assembly.fasta	Gene Alignment	acrB	GAMMA	Wildtype / No mutations detected	99.90%	u1	171238	174385	1	Coverage: 100.00%
+SRR28296939_myloasm_assembly.fasta	Gene Alignment	ompK35	GAMMA	Wildtype / No mutations detected	10.56%	u44	64641	65720	1	Coverage: 99.91%
+SRR28296939_myloasm_assembly.fasta	Gene Alignment	ompK36	GAMMA	Wildtype / No mutations detected	47.01%	u55	216040	217165	1	Coverage: 101.90%
+SRR28296939_myloasm_assembly.fasta	Gene Alignment	ftsI	GAMMA	Wildtype / No mutations detected	99.66%	u77	186808	188575	1	Coverage: 100.00%
+SRR28296939_myloasm_assembly.fasta	Gene Alignment	blaKPC-2	GAMMA	Wildtype / No mutations detected	99.32%	u87	6025	6910	1	Coverage: 100.30%
+SRR28296939_myloasm_assembly.fasta	Gene Alignment	envZ	GAMMA	Wildtype / No mutations detected	99.78%	u110	48665	50021	1	Coverage: 100.00%
+SRR28296939_myloasm_assembly.fasta	Amplicon	blaKPC_ver	SeqKit/Bed	Length: 885bp	-	u87	6025	6910	-	Genes/Mutations in region: blaKPC-2: (wildtype)

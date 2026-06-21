@@ -1,0 +1,61 @@
+======================================================================
+FOS-CAZAVI Resistance Detection Summary
+======================================================================
+
+Assembly: /tmp/work/PRJNA595047/ncbi_dataset/data/GCA_038433305.1/GCA_038433305.1_ASM3843330v1_genomic.fna
+Total genes detected: 8
+Method: BLAST+
+
+FOSFOMYCIN RESISTANCE GENES:
+--------------------------------------------------
+  fosAKP (copy number: 1): 98.81% identity, 100.00% coverage
+    Mutations: I91V
+
+CEFTAZIDIME-AVIBACTAM RESISTANCE (KPC):
+--------------------------------------------------
+  blaKPC-2 (copy number: 1): 100.00% identity, 100.00% coverage
+
+OTHER RESISTANCE GENES:
+--------------------------------------------------
+  acrB (copy number: 1): 99.87% identity, 100.00% coverage
+    Mutations: G617A,F626A,A628T/V
+  envZ (copy number: 1): 99.85% identity, 100.00% coverage
+    Mutations: G244S/D,T324Q
+  ompK35 (copy number: 1): 99.44% identity, 100.00% coverage
+    Mutations: D135G,D181R
+  ftsI (copy number: 1): 99.43% identity, 100.00% coverage
+    Mutations: A333P,Y350L,S357Q
+  blaSHV-12 (copy number: 1): 99.42% identity, 100.00% coverage
+    Mutations: G238A,E240G
+  ompK36 (copy number: 1): 99.90% identity, 91.58% coverage
+    Mutations: G213I
+
+
+MUTATION DETECTION SUMMARY (Dual-Method):
+Methods: GAMMA (protein-level alignment) + SeqKit (amplicon)
+Confidence: 100% = detected by both methods; 50% = detected by one method
+----------------------------------------------------------------------
+
+  Gene: fosakp
+    I91V            Confidence:  50%  [gamma]
+
+
+DETECTED AMPLICONS:
+Method: Seqkit/Amplicon
+--------------------------------------------------
+  Pair: blaKPC_ver
+    Location: JBCEBH010000047.1:18415-19297 (882 bp)
+    Primers: blaKPC_F -> blaKPC_R
+    Mutations/Genes in amplicon:
+      - blaKPC-2: (wildtype)
+
+GENE MUTATION ANALYSIS (GAMMA):
+Method: GAMMA (protein-level gene alignment)
+--------------------------------------------------
+Reference: https://github.com/rastanton/GAMMA
+
+
+Efflux Pump Components:
+  acrB: 100.0% identity, 100.0% coverage
+    Location: JBCEBH010000006.1:36223-39370
+    No mutations detected
