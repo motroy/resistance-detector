@@ -14,6 +14,7 @@ import pytest
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
 from fos_cazavi.mutations import MutationDetector
+from fos_cazavi.utils import KNOWN_MUTATIONS
 
 
 # ── Fixture helpers ────────────────────────────────────────────────────────────
@@ -389,6 +390,8 @@ class TestDetectSeqkitMutationsBedParsing:
             'blaKPC_R': {'seq': 'TTACTGCCCGTTGACGCCCA', 'purpose': '', 'mutation': None,
                          'gene': 'blaKPC', 'pair_id': 'blaKPC_ver'},
         }
+        d.raw_mutation_db = KNOWN_MUTATIONS
+        d.reference_seqs = {}
 
         def fake_run(cmd, **kwargs):
             assert '--bed' in cmd

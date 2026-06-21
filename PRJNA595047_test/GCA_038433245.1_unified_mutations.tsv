@@ -1,9 +1,5 @@
 Gene	Mutation	Confidence(%)	Methods	GAMMA_Contig	GAMMA_Identity(%)	GAMMA_Coverage(%)	SeqKit_PairID
-blakpc	D178P	50	seqkit	-	-	-	blaKPC_ver
-blakpc	E167A	50	seqkit	-	-	-	blaKPC_ver
-blakpc	L166S	50	seqkit	-	-	-	blaKPC_ver
-blakpc	L168I	50	seqkit	-	-	-	blaKPC_ver
-blakpc	N169P	50	seqkit	-	-	-	blaKPC_ver
-blakpc	T242Y	50	seqkit	-	-	-	blaKPC_ver
-blakpc	V239A	50	seqkit	-	-	-	blaKPC_ver
+blakpc	E167del	50	seqkit	-	-	-	blaKPC_ver
+blakpc	L166del	50	seqkit	-	-	-	blaKPC_ver
+blakpc	L168del	50	seqkit	-	-	-	blaKPC_ver
 fosakp	I91V	50	gamma	JBCEBK010000001.1	97.86	100.00	-

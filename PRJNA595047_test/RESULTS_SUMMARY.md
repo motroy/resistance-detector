@@ -77,19 +77,31 @@ but still a length mismatch that the fixed-position lookup couldn't handle), pro
 `G134L,D135*/N,G213T`-style calls that differed between genomes only because of slightly different
 truncation lengths, even though the genomes are otherwise identical at this locus.
 
-Note that the SeqKit-amplicon cross-check (`fos_cazavi/mutations.py`) calls the *same* underlying
-`detect_mutations()` on a translated PCR amplicon, so it shares this exact limitation — its agreement
-with the old BLAST calls in `*_unified_mutations.tsv` was **not** independent confirmation, just the same
-bug reproduced twice. GAMMA's protein-level alignment (which does proper indel-aware alignment) was the
-only one of the three methods that got this right all along, correctly flagging `Match_Type=Indel`.
+The SeqKit-amplicon cross-check (`fos_cazavi/mutations.py::detect_seqkit_mutations()`) called this same
+underlying `detect_mutations()` on a translated PCR amplicon, so it shared this exact limitation — its
+original agreement with the old BLAST calls in `*_unified_mutations.tsv` was **not** independent
+confirmation, just the same bug reproduced twice on a different extracted sequence. GAMMA's protein-level
+alignment (which does proper indel-aware alignment) was the only one of the three methods that got this
+right all along, correctly flagging `Match_Type=Indel`.
 
-**Fix:** added `detect_mutations_aligned()` in `fos_cazavi/utils.py`, which walks BLAST's gapped
-nucleotide alignment (`qseq`/`sseq`, now requested via `-outfmt`) column-by-column to map each known
-mutation's reference codon to its true corresponding query codon (or to a gap, reported as e.g.
-`L166del`), instead of assuming the query and reference are the same length. `fos_cazavi/acquired.py`
-now uses this function. All 285 existing unit tests pass; the genomes in this folder were re-run with
-the fix and the result files in this folder (`*_results.tsv`, `*_all_results.tsv`, `*_summary.txt`,
-`*_blast.txt`, `*_amplicons.tsv`) now reflect the corrected output.
+**Fix:** added two indel-aware replacements in `fos_cazavi/utils.py`:
+
+- `detect_mutations_aligned()` walks BLAST's gapped nucleotide alignment (`qseq`/`sseq`, now requested
+  via `-outfmt`) column-by-column to map each known mutation's reference codon to its true corresponding
+  query codon (or to a gap, reported as e.g. `L166del`), instead of assuming the query and reference are
+  the same length. `fos_cazavi/acquired.py` now uses this for the BLAST detection path.
+- `detect_mutations_amplicon()` applies the same fix to the SeqKit amplicon path: when a reference gene
+  sequence is available (loaded from the `--genes` FASTA), it locally aligns the amplicon against it
+  with `Bio.Align.PairwiseAligner` and reuses `detect_mutations_aligned()` on the resulting alignment.
+  It falls back to the legacy fixed-position frame-search behavior only when no reference sequence is
+  available for that gene. `fos_cazavi/mutations.py::detect_seqkit_mutations()` now uses this.
+
+With both paths fixed, GCA_038433235.1/245.1's SeqKit amplicon results now independently agree with the
+BLAST and GAMMA calls (`L166del,E167del,L168del,N169del` / `L166del,E167del,L168del`) — this is now a
+genuine cross-method confirmation, not a duplicated bug. All 285 existing unit tests pass; the genomes in
+this folder were re-run with both fixes and the result files in this folder (`*_results.tsv`,
+`*_all_results.tsv`, `*_summary.txt`, `*_blast.txt`, `*_amplicons.tsv`, `*_unified_mutations.tsv`) now
+reflect the corrected output.
 
 ## Comparison to Pariona et al. 2024 (DOI 10.1128/spectrum.01173-24)
 

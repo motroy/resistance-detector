@@ -7,11 +7,10 @@ GCA_038433235.1_ASM3843323v1_genomic.fna	Acquired Gene	blaSHV-12	BLAST	Coverage:
 GCA_038433235.1_ASM3843323v1_genomic.fna	Acquired Gene	fosAKP	BLAST	Coverage: 100.00%	98.81%	JBCEBJ010000023.1	13910	14329	Mutations: I91V
 GCA_038433235.1_ASM3843323v1_genomic.fna	Acquired Gene	blaKPC-2	BLAST	Coverage: 100.00%	96.60%	JBCEBJ010000045.1	14086	14937	Mutations: L166del,E167del,L168del,N169del
 GCA_038433235.1_ASM3843323v1_genomic.fna	Acquired Gene	ompK36	BLAST	Coverage: 91.58%	99.90%	JBCEBJ010000036.1	1	1011	Mutations: G213I
-GCA_038433235.1_ASM3843323v1_genomic.fna	Mutation	blakpc	seqkit	D178S	50%	-	-	-	Dual-method consensus
-GCA_038433235.1_ASM3843323v1_genomic.fna	Mutation	blakpc	seqkit	E167R	50%	-	-	-	Dual-method consensus
-GCA_038433235.1_ASM3843323v1_genomic.fna	Mutation	blakpc	seqkit	L166A	50%	-	-	-	Dual-method consensus
-GCA_038433235.1_ASM3843323v1_genomic.fna	Mutation	blakpc	seqkit	L168D	50%	-	-	-	Dual-method consensus
-GCA_038433235.1_ASM3843323v1_genomic.fna	Mutation	blakpc	seqkit	N169T	50%	-	-	-	Dual-method consensus
+GCA_038433235.1_ASM3843323v1_genomic.fna	Mutation	blakpc	seqkit	E167del	50%	-	-	-	Dual-method consensus
+GCA_038433235.1_ASM3843323v1_genomic.fna	Mutation	blakpc	seqkit	L166del	50%	-	-	-	Dual-method consensus
+GCA_038433235.1_ASM3843323v1_genomic.fna	Mutation	blakpc	seqkit	L168del	50%	-	-	-	Dual-method consensus
+GCA_038433235.1_ASM3843323v1_genomic.fna	Mutation	blakpc	seqkit	N169del	50%	-	-	-	Dual-method consensus
 GCA_038433235.1_ASM3843323v1_genomic.fna	Mutation	fosakp	gamma	I91V	50%	JBCEBJ010000023.1	13909	14329	Dual-method consensus
 GCA_038433235.1_ASM3843323v1_genomic.fna	Gene Alignment	ftsI	GAMMA	Wildtype / No mutations detected	99.83%	JBCEBJ010000012.1	111885	113652	Coverage: 100.00%
 GCA_038433235.1_ASM3843323v1_genomic.fna	Gene Alignment	blaSHV-12	GAMMA	Wildtype / No mutations detected	99.30%	JBCEBJ010000013.1	128676	129537	Coverage: 100.00%

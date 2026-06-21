@@ -2,7 +2,7 @@
 FOS-CAZAVI Resistance Detection Summary
 ======================================================================
 
-Assembly: /tmp/prjna595047_unzip/ncbi_dataset/data/GCA_038433245.1/GCA_038433245.1_ASM3843324v1_genomic.fna
+Assembly: /tmp/prjna_unzip2/ncbi_dataset/data/GCA_038433245.1/GCA_038433245.1_ASM3843324v1_genomic.fna
 Total genes detected: 8
 Method: BLAST+
 
@@ -38,13 +38,9 @@ Confidence: 100% = detected by both methods; 50% = detected by one method
 ----------------------------------------------------------------------
 
   Gene: blakpc
-    D178P           Confidence:  50%  [seqkit]
-    E167A           Confidence:  50%  [seqkit]
-    L166S           Confidence:  50%  [seqkit]
-    L168I           Confidence:  50%  [seqkit]
-    N169P           Confidence:  50%  [seqkit]
-    T242Y           Confidence:  50%  [seqkit]
-    V239A           Confidence:  50%  [seqkit]
+    E167del         Confidence:  50%  [seqkit]
+    L166del         Confidence:  50%  [seqkit]
+    L168del         Confidence:  50%  [seqkit]
 
   Gene: fosakp
     I91V            Confidence:  50%  [gamma]

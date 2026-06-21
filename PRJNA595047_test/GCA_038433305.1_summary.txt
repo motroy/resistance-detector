@@ -2,7 +2,7 @@
 FOS-CAZAVI Resistance Detection Summary
 ======================================================================
 
-Assembly: /tmp/prjna595047_unzip/ncbi_dataset/data/GCA_038433305.1/GCA_038433305.1_ASM3843330v1_genomic.fna
+Assembly: /tmp/prjna_unzip2/ncbi_dataset/data/GCA_038433305.1/GCA_038433305.1_ASM3843330v1_genomic.fna
 Total genes detected: 8
 Method: BLAST+
 
