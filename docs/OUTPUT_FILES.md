@@ -38,6 +38,8 @@ characterized genomes.
 
 ### Summary Output (`*_summary.txt`)
 
+This is real output from `fos-cazavi fos-cazavi-all` on `test_genomes/ecoli_multi_resistance.fasta` (see `example_results/ecoli_multi_summary.txt`):
+
 ```
 ======================================================================
 FOS-CAZAVI Resistance Detection Summary
@@ -49,8 +51,8 @@ PREDICTED PHENOTYPES (genotype-based):
 --------------------------------------------------
   Fosfomycin (FOS): Resistant
     - Acquired fosfomycin-inactivating enzyme fosA3 detected (100.00% identity, 100.00% coverage)
-  Ceftazidime-Avibactam (CAZ/AVI): Resistant
-    - blaKPC variant blaKPC-3 carries Omega-loop/X-loop resistance marker(s): D179Y/N,V240Q,T243M
+  Ceftazidime-Avibactam (CAZ/AVI): Susceptible
+    - No blaKPC Omega-loop/X-loop resistance marker detected (wildtype blaKPC, if present, remains avibactam-inhibitable)
   Note: Genotype-based prediction only; not a substitute for phenotypic antimicrobial susceptibility testing (AST).
 
 Total genes detected: 3
@@ -59,25 +61,26 @@ Method: BLAST+
 FOSFOMYCIN RESISTANCE GENES:
 --------------------------------------------------
   fosA3 (copy number: 1): 100.00% identity, 100.00% coverage
+    Mutations: K90E/Q,H119L
 
 CEFTAZIDIME-AVIBACTAM RESISTANCE (KPC):
 --------------------------------------------------
-  blaKPC-3 (copy number: 1): 99.52% identity, 100.10% coverage
-    Mutations: D179Y/N,V240Q,T243M
+  blaKPC-3 (copy number: 1): 99.32% identity, 100.00% coverage
 
 CEFTAZIDIME-AVIBACTAM RESISTANCE (OXA):
 --------------------------------------------------
   blaOXA-48 (copy number: 1): 100.00% identity, 100.00% coverage
-    Mutations: P68D,Y211A
 ```
+
+Here `blaKPC-3` carries no tracked Omega-loop/X-loop mutation, so it predicts CAZ/AVI-Susceptible even though `blaKPC-3` itself is detected — wildtype `blaKPC` is not inherently avibactam-resistant.
 
 ### BLAST Results (`*_results.tsv`)
 
 ```tsv
 Contig	Gene	Identity%	Coverage%	Mutations	Method	Copy_Number
-contig_plasmid1_fosA3	fosA3	100.00	100.00	-	BLAST	1
-contig_plasmid2_blaKPC3	blaKPC-3	99.52	100.10	D179Y/N,V240Q,T243M	BLAST	1
-contig_plasmid3_blaOXA48	blaOXA-48	100.00	100.00	P68D,Y211A	BLAST	1
+contig_plasmid3_blaOXA48	blaOXA-48	100.00	100.00	-	BLAST	1
+contig_plasmid1_fosA3	fosA3	100.00	100.00	K90E/Q,H119L	BLAST	1
+contig_plasmid2_blaKPC3	blaKPC-3	99.32	100.00	-	BLAST	1
 ```
 
 `Copy_Number` is the number of distinct genomic loci where that gene was detected (after redundancy filtering). A gene detected on two different contigs/loci will show `Copy_Number: 2` on both rows.
@@ -88,11 +91,12 @@ contig_plasmid3_blaOXA48	blaOXA-48	100.00	100.00	P68D,Y211A	BLAST	1
 
 ```tsv
 # Predicted_Phenotype_Fosfomycin	Resistant	Acquired fosfomycin-inactivating enzyme fosA3 detected (100.00% identity, 100.00% coverage)
-# Predicted_Phenotype_Ceftazidime_Avibactam	Resistant	blaKPC variant blaKPC-3 carries Omega-loop/X-loop resistance marker(s): D179Y/N,V240Q,T243M
+# Predicted_Phenotype_Ceftazidime_Avibactam	Susceptible	No blaKPC Omega-loop/X-loop resistance marker detected (wildtype blaKPC, if present, remains avibactam-inhibitable)
 # Disclaimer	Genotype-based prediction only; not a substitute for phenotypic antimicrobial susceptibility testing (AST).
 Sample	Gene	Copy_Number	Loci	Max_Identity%	Max_Coverage%	Mutations
-sample.fasta	fosA3	2	contig1:1-576;contig2:50-626	100.00	100.00	-
-sample.fasta	blaKPC-3	1	contig3:2000-3000	99.52	100.10	D179Y/N,V240Q,T243M
+ecoli_multi_resistance.fasta	blaOXA-48	1	contig_plasmid3_blaOXA48:30001-30798	100.00	100.00	-
+ecoli_multi_resistance.fasta	fosA3	1	contig_plasmid1_fosA3:20001-20417	100.00	100.00	H119L,K90E/Q
+ecoli_multi_resistance.fasta	blaKPC-3	1	contig_plasmid2_blaKPC3:25001-25882	99.32	100.00	-
 ```
 
-`*_summary.json` contains the same `predicted_phenotypes` block plus the per-gene aggregation (with full per-locus detail), mutation, gene-alignment, and amplicon results, for easy parsing by downstream scripts/pipelines.
+`*_summary.json` contains the same `predicted_phenotypes` block plus the per-gene aggregation (with full per-locus detail), mutation, gene-alignment, and amplicon results, for easy parsing by downstream scripts/pipelines. See `example_results/ecoli_multi_summary.json` for the full file.

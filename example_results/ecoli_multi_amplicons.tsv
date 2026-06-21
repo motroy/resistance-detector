@@ -1,0 +1,2 @@
+Pair_ID	Contig	Start	End	Length	Mutations_Found	Method
+blaKPC_ver	contig_plasmid2_blaKPC3	25000	25882	882	blaKPC-3: (wildtype)	Seqkit/Amplicon

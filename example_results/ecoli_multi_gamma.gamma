@@ -1,0 +1,4 @@
+Gene	Contig	Start	Stop	Match_Type	Description	Codon_Changes	BP_Changes	Transversions	Codon_Percent	BP_Percent	Percent_Length	Match_Length	Target_Length	Strand
+fosA3	contig_plasmid1_fosA3	20000	20417	Native	No coding mutations	0	0	0	1	1	1	417	417	+
+blaKPC-3	contig_plasmid2_blaKPC3	25000	25882	Mutant	T179Y,A243M,	2	6	2	0.9932	0.9932	1	882	882	+
+blaOXA-48	contig_plasmid3_blaOXA48	30000	30798	Native	No coding mutations	0	0	0	1	1	1	798	798	+

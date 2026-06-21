@@ -3,19 +3,48 @@ FOS-CAZAVI Resistance Detection Summary
 ======================================================================
 
 Assembly: test_genomes/ecoli_multi_resistance.fasta
+
+PREDICTED PHENOTYPES (genotype-based):
+--------------------------------------------------
+  Fosfomycin (FOS): Resistant
+    - Acquired fosfomycin-inactivating enzyme fosA3 detected (100.00% identity, 100.00% coverage)
+  Ceftazidime-Avibactam (CAZ/AVI): Susceptible
+    - No blaKPC Omega-loop/X-loop resistance marker detected (wildtype blaKPC, if present, remains avibactam-inhibitable)
+  Note: Genotype-based prediction only; not a substitute for phenotypic antimicrobial susceptibility testing (AST).
+
 Total genes detected: 3
 Method: BLAST+
 
 FOSFOMYCIN RESISTANCE GENES:
 --------------------------------------------------
-  fosA3: 100.00% identity, 100.00% coverage
+  fosA3 (copy number: 1): 100.00% identity, 100.00% coverage
+    Mutations: K90E/Q,H119L
 
 CEFTAZIDIME-AVIBACTAM RESISTANCE (KPC):
 --------------------------------------------------
-  blaKPC-3: 99.52% identity, 100.10% coverage
-    Mutations: D179Y/N,V240Q,T243M
+  blaKPC-3 (copy number: 1): 99.32% identity, 100.00% coverage
 
 CEFTAZIDIME-AVIBACTAM RESISTANCE (OXA):
 --------------------------------------------------
-  blaOXA-48: 100.00% identity, 100.00% coverage
-    Mutations: P68D,Y211A
+  blaOXA-48 (copy number: 1): 100.00% identity, 100.00% coverage
+
+
+MUTATION DETECTION SUMMARY (Dual-Method):
+----------------------------------------------------------------------
+  No resistance mutations detected by GAMMA or seqkit.
+
+
+DETECTED AMPLICONS:
+Method: Seqkit/Amplicon
+--------------------------------------------------
+  Pair: blaKPC_ver
+    Location: contig_plasmid2_blaKPC3:25000-25882 (882 bp)
+    Primers: blaKPC_F -> blaKPC_R
+    Mutations/Genes in amplicon:
+      - blaKPC-3: (wildtype)
+
+GENE MUTATION ANALYSIS (GAMMA):
+Method: GAMMA (protein-level gene alignment)
+--------------------------------------------------
+Reference: https://github.com/rastanton/GAMMA
+
