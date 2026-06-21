@@ -1,0 +1,4 @@
+Gene	Contig	Start	End	Identity	Coverage	Match_Type	Mutations	Method
+fosA3	contig_plasmid1_fosA3	20000	20417	100.00	100.00	Native	-	GAMMA
+blaKPC-3	contig_plasmid2_blaKPC3	25000	25882	99.32	100.00	Mutant	-	GAMMA
+blaOXA-48	contig_plasmid3_blaOXA48	30000	30798	100.00	100.00	Native	-	GAMMA

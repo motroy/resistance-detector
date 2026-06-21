@@ -1,3 +1,6 @@
+# Predicted_Phenotype_Fosfomycin	Susceptible	No acquired fosA-family enzyme or loss-of-function mutation in fosfomycin uptake/regulatory genes detected
+# Predicted_Phenotype_Ceftazidime_Avibactam	Resistant	blaKPC variant blaKPC-3 carries Omega-loop/X-loop resistance marker(s): L166del; blaKPC mutation L166W (KPC-66 X-loop) detected in blakpc (Omega-loop/X-loop avibactam-resistance marker); blaKPC mutation L166del detected in blakpc (Omega-loop/X-loop avibactam-resistance marker)
+# Disclaimer	Genotype-based prediction only; not a substitute for phenotypic antimicrobial susceptibility testing (AST).
 Sample	Gene	Copy_Number	Loci	Max_Identity%	Max_Coverage%	Mutations
 GCA_022423525.1_ASM2242352v1_genomic.fna	ompK36	1	JAHUYX010000009.1:74925-76043	92.62	101.90	G213I
 GCA_022423525.1_ASM2242352v1_genomic.fna	acrB	1	JAHUYX010000002.1:252180-255326	99.94	100.00	A628T/V,F626A,G617A

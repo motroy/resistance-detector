@@ -3,6 +3,15 @@ FOS-CAZAVI Resistance Detection Summary
 ======================================================================
 
 Assembly: bioproject_tests/PRJNA1086695_test/SRR28296940_myloasm_assembly.fasta
+
+PREDICTED PHENOTYPES (genotype-based):
+--------------------------------------------------
+  Fosfomycin (FOS): Susceptible
+    - No acquired fosA-family enzyme or loss-of-function mutation in fosfomycin uptake/regulatory genes detected
+  Ceftazidime-Avibactam (CAZ/AVI): Susceptible
+    - No blaKPC Omega-loop/X-loop resistance marker detected (wildtype blaKPC, if present, remains avibactam-inhibitable)
+  Note: Genotype-based prediction only; not a substitute for phenotypic antimicrobial susceptibility testing (AST).
+
 Total genes detected: 7
 Method: BLAST+
 

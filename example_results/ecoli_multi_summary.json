@@ -1,0 +1,112 @@
+{
+  "sample": "ecoli_multi_resistance.fasta",
+  "assembly": "test_genomes/ecoli_multi_resistance.fasta",
+  "total_acquired_genes_detected": 3,
+  "unique_acquired_genes": 3,
+  "acquired_genes": [
+    {
+      "gene": "blaOXA-48",
+      "copy_number": 1,
+      "loci": [
+        {
+          "contig": "contig_plasmid3_blaOXA48",
+          "start": 30001,
+          "end": 30798,
+          "identity": "100.00",
+          "coverage": "100.00",
+          "mutations": "-"
+        }
+      ]
+    },
+    {
+      "gene": "fosA3",
+      "copy_number": 1,
+      "loci": [
+        {
+          "contig": "contig_plasmid1_fosA3",
+          "start": 20001,
+          "end": 20417,
+          "identity": "100.00",
+          "coverage": "100.00",
+          "mutations": "K90E/Q,H119L"
+        }
+      ]
+    },
+    {
+      "gene": "blaKPC-3",
+      "copy_number": 1,
+      "loci": [
+        {
+          "contig": "contig_plasmid2_blaKPC3",
+          "start": 25001,
+          "end": 25882,
+          "identity": "99.32",
+          "coverage": "100.00",
+          "mutations": "-"
+        }
+      ]
+    }
+  ],
+  "mutations": [],
+  "gene_alignments": [
+    {
+      "protein": "fosA3",
+      "contig": "contig_plasmid1_fosA3",
+      "contig_start": 20000,
+      "contig_end": 20417,
+      "identity": 100.0,
+      "coverage": 100.0,
+      "mutations": [],
+      "match_type": "Native"
+    },
+    {
+      "protein": "blaKPC-3",
+      "contig": "contig_plasmid2_blaKPC3",
+      "contig_start": 25000,
+      "contig_end": 25882,
+      "identity": 99.32,
+      "coverage": 100.0,
+      "mutations": [],
+      "match_type": "Mutant"
+    },
+    {
+      "protein": "blaOXA-48",
+      "contig": "contig_plasmid3_blaOXA48",
+      "contig_start": 30000,
+      "contig_end": 30798,
+      "identity": 100.0,
+      "coverage": 100.0,
+      "mutations": [],
+      "match_type": "Native"
+    }
+  ],
+  "amplicons": [
+    {
+      "pair_id": "blaKPC_ver",
+      "contig": "contig_plasmid2_blaKPC3",
+      "start": 25000,
+      "end": 25882,
+      "length": 882,
+      "f_primer": "blaKPC_F",
+      "r_primer": "blaKPC_R",
+      "mutations_found": [
+        "blaKPC-3: (wildtype)"
+      ]
+    }
+  ],
+  "predicted_phenotypes": {
+    "fosfomycin": {
+      "phenotype": "Resistant",
+      "evidence": [
+        "Acquired fosfomycin-inactivating enzyme fosA3 detected (100.00% identity, 100.00% coverage)"
+      ]
+    },
+    "ceftazidime_avibactam": {
+      "phenotype": "Susceptible",
+      "evidence": [
+        "No blaKPC Omega-loop/X-loop resistance marker detected (wildtype blaKPC, if present, remains avibactam-inhibitable)"
+      ]
+    },
+    "disclaimer": "Genotype-based prediction only; not a substitute for phenotypic antimicrobial susceptibility testing (AST)."
+  }
+}

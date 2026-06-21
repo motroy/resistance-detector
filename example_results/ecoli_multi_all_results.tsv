@@ -1,0 +1,8 @@
+Sample	Type	Gene_Protein	Method	Result_Details	Identity_Confidence	Contig	Start	End	Copy_Number	Notes
+ecoli_multi_resistance.fasta	Acquired Gene	blaOXA-48	BLAST	Coverage: 100.00%	100.00%	contig_plasmid3_blaOXA48	30001	30798	1	Mutations: -
+ecoli_multi_resistance.fasta	Acquired Gene	fosA3	BLAST	Coverage: 100.00%	100.00%	contig_plasmid1_fosA3	20001	20417	1	Mutations: K90E/Q,H119L
+ecoli_multi_resistance.fasta	Acquired Gene	blaKPC-3	BLAST	Coverage: 100.00%	99.32%	contig_plasmid2_blaKPC3	25001	25882	1	Mutations: -
+ecoli_multi_resistance.fasta	Gene Alignment	fosA3	GAMMA	Wildtype / No mutations detected	100.00%	contig_plasmid1_fosA3	20000	20417	1	Coverage: 100.00%
+ecoli_multi_resistance.fasta	Gene Alignment	blaKPC-3	GAMMA	Wildtype / No mutations detected	99.32%	contig_plasmid2_blaKPC3	25000	25882	1	Coverage: 100.00%
+ecoli_multi_resistance.fasta	Gene Alignment	blaOXA-48	GAMMA	Wildtype / No mutations detected	100.00%	contig_plasmid3_blaOXA48	30000	30798	1	Coverage: 100.00%
+ecoli_multi_resistance.fasta	Amplicon	blaKPC_ver	SeqKit/Bed	Length: 882bp	-	contig_plasmid2_blaKPC3	25000	25882	-	Genes/Mutations in region: blaKPC-3: (wildtype)

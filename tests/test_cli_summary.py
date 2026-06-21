@@ -79,7 +79,7 @@ class TestWriteMachineSummary:
         assert genes_by_name['fosA3']['copy_number'] == 2
         assert genes_by_name['blaKPC-3']['copy_number'] == 1
 
-        tsv_lines = tsv_path.read_text().strip().split('\n')
+        tsv_lines = [l for l in tsv_path.read_text().strip().split('\n') if not l.startswith('#')]
         header = tsv_lines[0].split('\t')
         assert 'Copy_Number' in header
         rows = {line.split('\t')[1]: line.split('\t') for line in tsv_lines[1:]}

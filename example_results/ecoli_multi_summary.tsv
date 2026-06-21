@@ -1,0 +1,7 @@
+# Predicted_Phenotype_Fosfomycin	Resistant	Acquired fosfomycin-inactivating enzyme fosA3 detected (100.00% identity, 100.00% coverage)
+# Predicted_Phenotype_Ceftazidime_Avibactam	Susceptible	No blaKPC Omega-loop/X-loop resistance marker detected (wildtype blaKPC, if present, remains avibactam-inhibitable)
+# Disclaimer	Genotype-based prediction only; not a substitute for phenotypic antimicrobial susceptibility testing (AST).
+Sample	Gene	Copy_Number	Loci	Max_Identity%	Max_Coverage%	Mutations
+ecoli_multi_resistance.fasta	blaOXA-48	1	contig_plasmid3_blaOXA48:30001-30798	100.00	100.00	-
+ecoli_multi_resistance.fasta	fosA3	1	contig_plasmid1_fosA3:20001-20417	100.00	100.00	H119L,K90E/Q
+ecoli_multi_resistance.fasta	blaKPC-3	1	contig_plasmid2_blaKPC3:25001-25882	99.32	100.00	-
