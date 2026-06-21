@@ -79,12 +79,15 @@ class TestWriteMachineSummary:
         assert genes_by_name['fosA3']['copy_number'] == 2
         assert genes_by_name['blaKPC-3']['copy_number'] == 1
 
-        tsv_lines = [l for l in tsv_path.read_text().strip().split('\n') if not l.startswith('#')]
+        tsv_lines = tsv_path.read_text().strip().split('\n')
         header = tsv_lines[0].split('\t')
         assert 'Copy_Number' in header
+        assert 'Predicted_Phenotype_Fosfomycin' in header
+        assert 'Predicted_Phenotype_Ceftazidime_Avibactam' in header
         rows = {line.split('\t')[1]: line.split('\t') for line in tsv_lines[1:]}
         assert rows['fosA3'][header.index('Copy_Number')] == '2'
         assert rows['blaKPC-3'][header.index('Copy_Number')] == '1'
+        assert rows['fosA3'][header.index('Predicted_Phenotype_Fosfomycin')] == 'Resistant'
 
     def test_no_results_writes_empty_summary(self, tmp_path):
         prefix = str(tmp_path / "sample")
@@ -94,6 +97,12 @@ class TestWriteMachineSummary:
         assert data['total_acquired_genes_detected'] == 0
         assert data['unique_acquired_genes'] == 0
         assert data['acquired_genes'] == []
+
+        tsv_lines = (tmp_path / "sample_summary.tsv").read_text().strip().split('\n')
+        header = tsv_lines[0].split('\t')
+        row = tsv_lines[1].split('\t')
+        assert row[header.index('Predicted_Phenotype_Fosfomycin')] == 'Susceptible'
+        assert row[header.index('Predicted_Phenotype_Ceftazidime_Avibactam')] == 'Susceptible'
 
 
 class TestWriteCombinedTsvCopyNumber:

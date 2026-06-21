@@ -161,16 +161,27 @@ def write_machine_summary(output_prefix, assembly, blast_results, gamma_results,
 
     tsv_file = f"{output_prefix}_summary.tsv"
     print(f"Writing machine-readable TSV summary to {tsv_file}...")
+    fos = phenotypes['fosfomycin']
+    cazavi = phenotypes['ceftazidime_avibactam']
+    phenotype_columns = [
+        fos['phenotype'],
+        '; '.join(fos['evidence']),
+        cazavi['phenotype'],
+        '; '.join(cazavi['evidence']),
+        phenotypes['disclaimer']
+    ]
+
     with open(tsv_file, 'w') as f:
-        f.write(f"# Predicted_Phenotype_Fosfomycin\t{phenotypes['fosfomycin']['phenotype']}\t"
-                 f"{'; '.join(phenotypes['fosfomycin']['evidence'])}\n")
-        f.write(f"# Predicted_Phenotype_Ceftazidime_Avibactam\t{phenotypes['ceftazidime_avibactam']['phenotype']}\t"
-                 f"{'; '.join(phenotypes['ceftazidime_avibactam']['evidence'])}\n")
-        f.write(f"# Disclaimer\t{phenotypes['disclaimer']}\n")
         f.write('\t'.join([
             'Sample', 'Gene', 'Copy_Number', 'Loci', 'Max_Identity%',
-            'Max_Coverage%', 'Mutations'
+            'Max_Coverage%', 'Mutations',
+            'Predicted_Phenotype_Fosfomycin', 'Fosfomycin_Evidence',
+            'Predicted_Phenotype_Ceftazidime_Avibactam', 'Ceftazidime_Avibactam_Evidence',
+            'Phenotype_Disclaimer'
         ]) + '\n')
+
+        if not gene_entries:
+            f.write('\t'.join([sample, '-', '0', '-', '-', '-', '-'] + phenotype_columns) + '\n')
 
         for entry in gene_entries:
             loci_str = ';'.join(
@@ -190,7 +201,7 @@ def write_machine_summary(output_prefix, assembly, blast_results, gamma_results,
                 f"{max_identity:.2f}",
                 f"{max_coverage:.2f}",
                 ','.join(mutations) if mutations else '-'
-            ]) + '\n')
+            ] + phenotype_columns) + '\n')
 
 
 def write_summary(output_prefix, assembly, blast_results, gamma_results,
