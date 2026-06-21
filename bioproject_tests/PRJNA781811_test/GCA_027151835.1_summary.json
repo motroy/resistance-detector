@@ -1,0 +1,256 @@
+{
+  "sample": "GCA_027151835.1_ASM2715183v1_genomic.fna",
+  "assembly": "bioproject_tests/PRJNA781811_test/extracted/ncbi_dataset/data/GCA_027151835.1//GCA_027151835.1_ASM2715183v1_genomic.fna",
+  "total_acquired_genes_detected": 8,
+  "unique_acquired_genes": 8,
+  "acquired_genes": [
+    {
+      "gene": "ompK36",
+      "copy_number": 1,
+      "loci": [
+        {
+          "contig": "JAJOCJ010000003.1",
+          "start": 202470,
+          "end": 203579,
+          "identity": "99.37",
+          "coverage": "100.54",
+          "mutations": "G213I"
+        }
+      ]
+    },
+    {
+      "gene": "ompK35",
+      "copy_number": 1,
+      "loci": [
+        {
+          "contig": "JAJOCJ010000007.1",
+          "start": 36930,
+          "end": 38010,
+          "identity": "99.35",
+          "coverage": "100.09",
+          "mutations": "D135G,D181R"
+        }
+      ]
+    },
+    {
+      "gene": "blaKPC-3",
+      "copy_number": 1,
+      "loci": [
+        {
+          "contig": "JAJOCJ010000039.1",
+          "start": 11396,
+          "end": 12277,
+          "identity": "100.00",
+          "coverage": "100.00",
+          "mutations": "-"
+        }
+      ]
+    },
+    {
+      "gene": "acrB",
+      "copy_number": 1,
+      "loci": [
+        {
+          "contig": "JAJOCJ010000004.1",
+          "start": 171141,
+          "end": 174287,
+          "identity": "99.87",
+          "coverage": "100.00",
+          "mutations": "G617A,F626A,A628T/V"
+        }
+      ]
+    },
+    {
+      "gene": "envZ",
+      "copy_number": 1,
+      "loci": [
+        {
+          "contig": "JAJOCJ010000009.1",
+          "start": 48632,
+          "end": 49987,
+          "identity": "99.78",
+          "coverage": "100.00",
+          "mutations": "G244S/D,T324Q"
+        }
+      ]
+    },
+    {
+      "gene": "ftsI",
+      "copy_number": 1,
+      "loci": [
+        {
+          "contig": "JAJOCJ010000006.1",
+          "start": 48649,
+          "end": 50415,
+          "identity": "99.43",
+          "coverage": "100.00",
+          "mutations": "A333P,Y350L,S357Q"
+        }
+      ]
+    },
+    {
+      "gene": "blaSHV-12",
+      "copy_number": 1,
+      "loci": [
+        {
+          "contig": "JAJOCJ010000069.1",
+          "start": 24,
+          "end": 884,
+          "identity": "99.42",
+          "coverage": "100.00",
+          "mutations": "G238A,E240G"
+        }
+      ]
+    },
+    {
+      "gene": "fosAKP",
+      "copy_number": 1,
+      "loci": [
+        {
+          "contig": "JAJOCJ010000006.1",
+          "start": 255899,
+          "end": 256318,
+          "identity": "98.81",
+          "coverage": "100.00",
+          "mutations": "I91V"
+        }
+      ]
+    }
+  ],
+  "mutations": [
+    {
+      "gene": "fosakp",
+      "mutation": "I91V",
+      "confidence": 50,
+      "methods": [
+        "gamma"
+      ],
+      "gamma_detail": {
+        "protein": "fosAKP",
+        "contig": "JAJOCJ010000006.1",
+        "contig_start": 255898,
+        "contig_end": 256318,
+        "identity": 97.86,
+        "coverage": 100.0,
+        "mutations": [
+          "I91V"
+        ],
+        "match_type": "Mutant"
+      },
+      "seqkit_detail": null
+    }
+  ],
+  "gene_alignments": [
+    {
+      "protein": "blaKPC-3",
+      "contig": "JAJOCJ010000039.1",
+      "contig_start": 11395,
+      "contig_end": 12277,
+      "identity": 100.0,
+      "coverage": 100.0,
+      "mutations": [],
+      "match_type": "Native"
+    },
+    {
+      "protein": "ompK36",
+      "contig": "JAJOCJ010000003.1",
+      "contig_start": 202469,
+      "contig_end": 203579,
+      "identity": 99.46000000000001,
+      "coverage": 100.49999999999999,
+      "mutations": [],
+      "match_type": "Indel"
+    },
+    {
+      "protein": "acrB",
+      "contig": "JAJOCJ010000004.1",
+      "contig_start": 171140,
+      "contig_end": 174287,
+      "identity": 100.0,
+      "coverage": 100.0,
+      "mutations": [],
+      "match_type": "Native"
+    },
+    {
+      "protein": "blaSHV-12",
+      "contig": "JAJOCJ010000069.1",
+      "contig_start": 23,
+      "contig_end": 884,
+      "identity": 99.3,
+      "coverage": 100.0,
+      "mutations": [],
+      "match_type": "Mutant"
+    },
+    {
+      "protein": "ftsI",
+      "contig": "JAJOCJ010000006.1",
+      "contig_start": 48648,
+      "contig_end": 50415,
+      "identity": 99.83,
+      "coverage": 100.0,
+      "mutations": [],
+      "match_type": "Mutant"
+    },
+    {
+      "protein": "fosAKP",
+      "contig": "JAJOCJ010000006.1",
+      "contig_start": 255898,
+      "contig_end": 256318,
+      "identity": 97.86,
+      "coverage": 100.0,
+      "mutations": [
+        "I91V"
+      ],
+      "match_type": "Mutant"
+    },
+    {
+      "protein": "ompK35",
+      "contig": "JAJOCJ010000007.1",
+      "contig_start": 36929,
+      "contig_end": 38010,
+      "identity": 13.33,
+      "coverage": 100.1,
+      "mutations": [],
+      "match_type": "Indel Truncation"
+    },
+    {
+      "protein": "envZ",
+      "contig": "JAJOCJ010000009.1",
+      "contig_start": 48631,
+      "contig_end": 49987,
+      "identity": 99.33999999999999,
+      "coverage": 100.0,
+      "mutations": [],
+      "match_type": "Mutant"
+    }
+  ],
+  "amplicons": [
+    {
+      "pair_id": "blaKPC_ver",
+      "contig": "JAJOCJ010000039.1",
+      "start": 11395,
+      "end": 12277,
+      "length": 882,
+      "f_primer": "blaKPC_F",
+      "r_primer": "blaKPC_R",
+      "mutations_found": [
+        "blaKPC-3: (wildtype)"
+      ]
+    }
+  ],
+  "predicted_phenotypes": {
+    "fosfomycin": {
+      "phenotype": "Susceptible",
+      "evidence": [
+        "No acquired fosA-family enzyme or loss-of-function mutation in fosfomycin uptake/regulatory genes detected"
+      ]
+    },
+    "ceftazidime_avibactam": {
+      "phenotype": "Susceptible",
+      "evidence": [
+        "No blaKPC Omega-loop/X-loop resistance marker detected (wildtype blaKPC, if present, remains avibactam-inhibitable)"
+      ]
+    },
+    "disclaimer": "Genotype-based prediction only; not a substitute for phenotypic antimicrobial susceptibility testing (AST)."
+  }
+}

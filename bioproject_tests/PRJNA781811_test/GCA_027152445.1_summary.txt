@@ -1,0 +1,70 @@
+======================================================================
+FOS-CAZAVI Resistance Detection Summary
+======================================================================
+
+Assembly: bioproject_tests/PRJNA781811_test/extracted/ncbi_dataset/data/GCA_027152445.1//GCA_027152445.1_ASM2715244v1_genomic.fna
+
+PREDICTED PHENOTYPES (genotype-based):
+--------------------------------------------------
+  Fosfomycin (FOS): Susceptible
+    - No acquired fosA-family enzyme or loss-of-function mutation in fosfomycin uptake/regulatory genes detected
+  Ceftazidime-Avibactam (CAZ/AVI): Susceptible
+    - No blaKPC Omega-loop/X-loop resistance marker detected (wildtype blaKPC, if present, remains avibactam-inhibitable)
+  Note: Genotype-based prediction only; not a substitute for phenotypic antimicrobial susceptibility testing (AST).
+
+Total genes detected: 8
+Method: BLAST+
+
+FOSFOMYCIN RESISTANCE GENES:
+--------------------------------------------------
+  fosAKP (copy number: 1): 98.81% identity, 100.00% coverage
+    Mutations: I91V
+
+CEFTAZIDIME-AVIBACTAM RESISTANCE (KPC):
+--------------------------------------------------
+  blaKPC-3 (copy number: 1): 100.00% identity, 100.00% coverage
+
+OTHER RESISTANCE GENES:
+--------------------------------------------------
+  ompK36 (copy number: 1): 99.37% identity, 100.54% coverage
+    Mutations: G213I
+  ompK35 (copy number: 1): 99.35% identity, 100.09% coverage
+    Mutations: D135G,D181R
+  acrB (copy number: 1): 99.87% identity, 100.00% coverage
+    Mutations: G617A,F626A,A628T/V
+  envZ (copy number: 1): 99.85% identity, 100.00% coverage
+    Mutations: G244S/D,T324Q
+  blaSHV-12 (copy number: 1): 99.42% identity, 100.00% coverage
+    Mutations: G238A,E240G
+  ftsI (copy number: 1): 99.38% identity, 100.00% coverage
+    Mutations: A333P,Y350L,S357Q
+
+
+MUTATION DETECTION SUMMARY (Dual-Method):
+Methods: GAMMA (protein-level alignment) + SeqKit (amplicon)
+Confidence: 100% = detected by both methods; 50% = detected by one method
+----------------------------------------------------------------------
+
+  Gene: fosakp
+    I91V            Confidence:  50%  [gamma]
+
+
+DETECTED AMPLICONS:
+Method: Seqkit/Amplicon
+--------------------------------------------------
+  Pair: blaKPC_ver
+    Location: JAJOCZ010000033.1:8835-9717 (882 bp)
+    Primers: blaKPC_F -> blaKPC_R
+    Mutations/Genes in amplicon:
+      - blaKPC-3: (wildtype)
+
+GENE MUTATION ANALYSIS (GAMMA):
+Method: GAMMA (protein-level gene alignment)
+--------------------------------------------------
+Reference: https://github.com/rastanton/GAMMA
+
+
+Efflux Pump Components:
+  acrB: 100.0% identity, 100.0% coverage
+    Location: JAJOCZ010000008.1:171140-174287
+    No mutations detected

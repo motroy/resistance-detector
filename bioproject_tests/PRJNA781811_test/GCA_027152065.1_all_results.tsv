@@ -1,0 +1,18 @@
+Sample	Type	Gene_Protein	Method	Result_Details	Identity_Confidence	Contig	Start	End	Copy_Number	Notes
+GCA_027152065.1_ASM2715206v1_genomic.fna	Acquired Gene	ompK36	BLAST	Coverage: 100.54%	99.37%	JAJOCT010000004.1	127765	128874	1	Mutations: G213I
+GCA_027152065.1_ASM2715206v1_genomic.fna	Acquired Gene	ompK35	BLAST	Coverage: 100.09%	99.35%	JAJOCT010000007.1	36930	38010	1	Mutations: D135G,D181R
+GCA_027152065.1_ASM2715206v1_genomic.fna	Acquired Gene	blaKPC-3	BLAST	Coverage: 100.00%	100.00%	JAJOCT010000053.1	7103	7984	1	Mutations: -
+GCA_027152065.1_ASM2715206v1_genomic.fna	Acquired Gene	acrB	BLAST	Coverage: 100.00%	99.87%	JAJOCT010000008.1	57642	60788	1	Mutations: G617A,F626A,A628T/V
+GCA_027152065.1_ASM2715206v1_genomic.fna	Acquired Gene	envZ	BLAST	Coverage: 100.00%	99.85%	JAJOCT010000009.1	48632	49987	1	Mutations: G244S/D,T324Q
+GCA_027152065.1_ASM2715206v1_genomic.fna	Acquired Gene	blaSHV-12	BLAST	Coverage: 100.00%	99.42%	JAJOCT010000011.1	7142	8002	1	Mutations: G238A,E240G
+GCA_027152065.1_ASM2715206v1_genomic.fna	Acquired Gene	ftsI	BLAST	Coverage: 100.00%	99.38%	JAJOCT010000006.1	48649	50415	1	Mutations: A333P,Y350L,S357Q
+GCA_027152065.1_ASM2715206v1_genomic.fna	Acquired Gene	fosAKP	BLAST	Coverage: 100.00%	98.81%	JAJOCT010000006.1	255909	256328	1	Mutations: I91V
+GCA_027152065.1_ASM2715206v1_genomic.fna	Mutation	fosakp	gamma	I91V	50%	JAJOCT010000006.1	255908	256328	1	Dual-method consensus
+GCA_027152065.1_ASM2715206v1_genomic.fna	Gene Alignment	blaSHV-12	GAMMA	Wildtype / No mutations detected	99.30%	JAJOCT010000011.1	7141	8002	1	Coverage: 100.00%
+GCA_027152065.1_ASM2715206v1_genomic.fna	Gene Alignment	ompK36	GAMMA	Wildtype / No mutations detected	99.46%	JAJOCT010000004.1	127764	128874	1	Coverage: 100.50%
+GCA_027152065.1_ASM2715206v1_genomic.fna	Gene Alignment	blaKPC-3	GAMMA	Wildtype / No mutations detected	100.00%	JAJOCT010000053.1	7102	7984	1	Coverage: 100.00%
+GCA_027152065.1_ASM2715206v1_genomic.fna	Gene Alignment	ftsI	GAMMA	Wildtype / No mutations detected	99.66%	JAJOCT010000006.1	48648	50415	1	Coverage: 100.00%
+GCA_027152065.1_ASM2715206v1_genomic.fna	Gene Alignment	ompK35	GAMMA	Wildtype / No mutations detected	13.33%	JAJOCT010000007.1	36929	38010	1	Coverage: 100.10%
+GCA_027152065.1_ASM2715206v1_genomic.fna	Gene Alignment	acrB	GAMMA	Wildtype / No mutations detected	100.00%	JAJOCT010000008.1	57641	60788	1	Coverage: 100.00%
+GCA_027152065.1_ASM2715206v1_genomic.fna	Gene Alignment	envZ	GAMMA	Wildtype / No mutations detected	99.56%	JAJOCT010000009.1	48631	49987	1	Coverage: 100.00%
+GCA_027152065.1_ASM2715206v1_genomic.fna	Amplicon	blaKPC_ver	SeqKit/Bed	Length: 882bp	-	JAJOCT010000053.1	7102	7984	-	Genes/Mutations in region: blaKPC-3: (wildtype)

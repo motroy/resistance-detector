@@ -1,0 +1,53 @@
+======================================================================
+FOS-CAZAVI Resistance Detection Summary
+======================================================================
+
+Assembly: bioproject_tests/PRJNA781811_test/extracted/ncbi_dataset/data/GCA_027152185.1//GCA_027152185.1_ASM2715218v1_genomic.fna
+
+PREDICTED PHENOTYPES (genotype-based):
+--------------------------------------------------
+  Fosfomycin (FOS): Resistant
+    - Acquired fosfomycin-inactivating enzyme fosA5 detected (96.67% identity, 100.00% coverage)
+  Ceftazidime-Avibactam (CAZ/AVI): Susceptible
+    - No blaKPC Omega-loop/X-loop resistance marker detected (wildtype blaKPC, if present, remains avibactam-inhibitable)
+  Note: Genotype-based prediction only; not a substitute for phenotypic antimicrobial susceptibility testing (AST).
+
+Total genes detected: 7
+Method: BLAST+
+
+FOSFOMYCIN RESISTANCE GENES:
+--------------------------------------------------
+  fosA5 (copy number: 1): 96.67% identity, 100.00% coverage
+    Mutations: K90A,H119L
+
+OTHER RESISTANCE GENES:
+--------------------------------------------------
+  ompK36 (copy number: 1): 93.43% identity, 101.99% coverage
+    Mutations: G213I
+  acrB (copy number: 1): 99.75% identity, 100.00% coverage
+    Mutations: G617A,F626A,A628T/V
+  blaSHV-12 (copy number: 1): 99.53% identity, 100.00% coverage
+    Mutations: G238A,E240G
+  ftsI (copy number: 1): 99.49% identity, 100.00% coverage
+    Mutations: A333P,Y350L,S357Q
+  ompK35 (copy number: 1): 99.35% identity, 100.00% coverage
+    Mutations: D135G,D181R
+  envZ (copy number: 1): 99.34% identity, 100.00% coverage
+    Mutations: G244S/D,T324Q
+
+
+MUTATION DETECTION SUMMARY (Dual-Method):
+----------------------------------------------------------------------
+  No resistance mutations detected by GAMMA or seqkit.
+
+
+GENE MUTATION ANALYSIS (GAMMA):
+Method: GAMMA (protein-level gene alignment)
+--------------------------------------------------
+Reference: https://github.com/rastanton/GAMMA
+
+
+Efflux Pump Components:
+  acrB: 99.9% identity, 100.0% coverage
+    Location: JAJOCU010000007.1:60388-63535
+    No mutations detected

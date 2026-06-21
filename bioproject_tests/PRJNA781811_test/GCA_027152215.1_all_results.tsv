@@ -1,0 +1,15 @@
+Sample	Type	Gene_Protein	Method	Result_Details	Identity_Confidence	Contig	Start	End	Copy_Number	Notes
+GCA_027152215.1_ASM2715221v1_genomic.fna	Acquired Gene	ompK36	BLAST	Coverage: 101.63%	96.79%	JAJOCS010000002.1	127662	128783	1	Mutations: G213I
+GCA_027152215.1_ASM2715221v1_genomic.fna	Acquired Gene	acrB	BLAST	Coverage: 100.00%	99.81%	JAJOCS010000001.1	247367	250513	1	Mutations: G617A,F626A,A628T/V
+GCA_027152215.1_ASM2715221v1_genomic.fna	Acquired Gene	ompK35	BLAST	Coverage: 100.00%	99.54%	JAJOCS010000010.1	36931	38010	1	Mutations: D135G,D181R
+GCA_027152215.1_ASM2715221v1_genomic.fna	Acquired Gene	ftsI	BLAST	Coverage: 100.00%	99.49%	JAJOCS010000004.1	220224	221990	1	Mutations: A333P,Y350L,S357Q
+GCA_027152215.1_ASM2715221v1_genomic.fna	Acquired Gene	envZ	BLAST	Coverage: 100.00%	99.48%	JAJOCS010000003.1	48608	49963	1	Mutations: G244S/D,T324Q
+GCA_027152215.1_ASM2715221v1_genomic.fna	Acquired Gene	blaSHV-12	BLAST	Coverage: 100.00%	99.30%	JAJOCS010000013.1	149709	150569	1	Mutations: G238A,E240G
+GCA_027152215.1_ASM2715221v1_genomic.fna	Acquired Gene	fosA5	BLAST	Coverage: 100.00%	96.19%	JAJOCS010000004.1	14205	14624	1	Mutations: K90A,H119L
+GCA_027152215.1_ASM2715221v1_genomic.fna	Mutation	fosakp	gamma	I91V	50%	JAJOCS010000004.1	14204	14624	1	Dual-method consensus
+GCA_027152215.1_ASM2715221v1_genomic.fna	Gene Alignment	ompK35	GAMMA	Wildtype / No mutations detected	100.00%	JAJOCS010000010.1	36930	38010	1	Coverage: 100.00%
+GCA_027152215.1_ASM2715221v1_genomic.fna	Gene Alignment	blaSHV-12	GAMMA	Wildtype / No mutations detected	99.30%	JAJOCS010000013.1	149708	150569	1	Coverage: 100.00%
+GCA_027152215.1_ASM2715221v1_genomic.fna	Gene Alignment	acrB	GAMMA	Wildtype / No mutations detected	100.00%	JAJOCS010000001.1	247366	250513	1	Coverage: 100.00%
+GCA_027152215.1_ASM2715221v1_genomic.fna	Gene Alignment	ompK36	GAMMA	Wildtype / No mutations detected	95.65%	JAJOCS010000002.1	127661	128783	1	Coverage: 101.60%
+GCA_027152215.1_ASM2715221v1_genomic.fna	Gene Alignment	envZ	GAMMA	Wildtype / No mutations detected	99.56%	JAJOCS010000003.1	48607	49963	1	Coverage: 100.00%
+GCA_027152215.1_ASM2715221v1_genomic.fna	Gene Alignment	ftsI	GAMMA	Wildtype / No mutations detected	99.83%	JAJOCS010000004.1	220223	221990	1	Coverage: 100.00%

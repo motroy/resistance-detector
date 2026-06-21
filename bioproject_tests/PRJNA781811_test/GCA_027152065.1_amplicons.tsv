@@ -1,0 +1,2 @@
+Pair_ID	Contig	Start	End	Length	Mutations_Found	Method
+blaKPC_ver	JAJOCT010000053.1	7102	7984	882	blaKPC-3: (wildtype)	Seqkit/Amplicon
