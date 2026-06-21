@@ -1,0 +1,2 @@
+Pair_ID	Contig	Start	End	Length	Mutations_Found	Method
+blaKPC_ver	u87	6025	6910	885	blaKPC-2: V240G,T242G	Seqkit/Amplicon

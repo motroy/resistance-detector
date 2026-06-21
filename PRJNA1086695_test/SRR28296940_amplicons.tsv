@@ -1,0 +1,2 @@
+Pair_ID	Contig	Start	End	Length	Mutations_Found	Method
+blaKPC_ver	u93	6025	6907	882	blaKPC-2: (wildtype)	Seqkit/Amplicon
