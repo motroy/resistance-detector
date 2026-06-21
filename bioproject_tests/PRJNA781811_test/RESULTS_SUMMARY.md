@@ -109,11 +109,18 @@ blaCMY-178) — consistent in count and allele mix with the paper's own genotypi
 resistant to plain ceftazidime, but only **one** isolate (an ST512 strain, "GMR140") was phenotypically
 resistant to ceftazidime-avibactam (94.7% susceptible overall, MIC90 2/4 µg/mL). `fos-cazavi` predicted
 **all 18** genomes here Susceptible to CAZ/AVI, because every detected blaKPC allele was GAMMA
-`Match_Type=Native` (no Omega-loop/X-loop mutation). This means the tool likely missed the one
-genuinely CAZ/AVI-resistant ST512 isolate: CAZ/AVI resistance in blaKPC-producing *K. pneumoniae* can
-also arise from mechanisms this pipeline doesn't screen for (porin loss/ompK mutations, blaKPC gene
-amplification/copy-number increase, efflux), not just canonical Omega-loop/X-loop substitutions — a
-known limitation of mutation-marker-only CAZ/AVI prediction, worth flagging for future improvement.
+`Match_Type=Native` (no Omega-loop/X-loop mutation) and `fos_cazavi/phenotype.py`'s
+`predict_cazavi_phenotype()` bases the CAZ/AVI call solely on blaKPC Omega-loop/X-loop markers. This
+means the tool likely missed the one genuinely CAZ/AVI-resistant ST512 isolate. The pipeline *does*
+separately detect porin (ompK35/ompK36) and efflux (acrB) mutations in every genome here (see "Other
+resistance genes detected" below), but those calls aren't wired into the CAZ/AVI phenotype prediction
+— and in this dataset they wouldn't have discriminated the resistant isolate anyway, since the same
+ompK36 G213I / ompK35 D135G,D181R / acrB G617A,F626A,A628T baseline mutation set is present across
+essentially all 18 genomes regardless of blaKPC status (consistent with the chromosomal-background
+findings already noted in the PRJNA595047/PRJNA741867 datasets). The likelier explanation for the
+paper's one CAZ/AVI-resistant isolate is a mechanism this pipeline doesn't model at all, e.g. blaKPC
+gene copy-number amplification — a known but harder-to-detect-from-assemblies driver of CAZ/AVI
+resistance in blaKPC-producing *K. pneumoniae*.
 
 **Fosfomycin — partial agreement, similar genotype/phenotype gap to the original study.** The paper
 phenotypically found 47.4% (9/19) of isolates fosfomycin-resistant, but explicitly identified an
