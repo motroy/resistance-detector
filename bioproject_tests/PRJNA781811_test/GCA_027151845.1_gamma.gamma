@@ -1,0 +1,9 @@
+Gene	Contig	Start	Stop	Match_Type	Description	Codon_Changes	BP_Changes	Transversions	Codon_Percent	BP_Percent	Percent_Length	Match_Length	Target_Length	Strand
+acrB	JAJOCK010000003.1	174163	177310	Native	No coding mutations	0	4	1	1	0.9987	1	3147	3147	+
+ftsI	JAJOCK010000004.1	219931	221698	Mutant	V375A,	1	10	1	0.9983	0.9943	1	1767	1767	+
+fosAKP	JAJOCK010000004.1	14020	14440	Mutant	S41P,I91V,Q130P,D138E,	4	6	3	0.9714	0.9857	1	420	420	+
+blaSHV-12	JAJOCK010000005.1	225933	226794	Mutant	S234G,K235E,	2	5	0	0.9930	0.9942	1	861	861	-
+ompK36	JAJOCK010000006.1	47927	49031	Native	No coding mutations	0	1	0	1	0.9991	1	1104	1104	-
+ompK35	JAJOCK010000012.1	42979	44059	Truncation	truncation at codon 113 (of 360 codons),1 coding mutations	1	7	1	0.9972	0.9935	1	1080	1080	+
+envZ	JAJOCK010000014.1	58720	60076	Mutant	I15T,I258M,	2	2	1	0.9956	0.9985	1	1356	1356	+
+fosA3	JAJOCK010000078.1	431	848	Native	No coding mutations	0	0	0	1	1	1	417	417	+

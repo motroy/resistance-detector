@@ -1,0 +1,52 @@
+======================================================================
+FOS-CAZAVI Resistance Detection Summary
+======================================================================
+
+Assembly: bioproject_tests/PRJNA781811_test/extracted/ncbi_dataset/data/GCA_027151785.1//GCA_027151785.1_ASM2715178v1_genomic.fna
+
+PREDICTED PHENOTYPES (genotype-based):
+--------------------------------------------------
+  Fosfomycin (FOS): Susceptible
+    - No acquired fosA-family enzyme or loss-of-function mutation in fosfomycin uptake/regulatory genes detected
+  Ceftazidime-Avibactam (CAZ/AVI): Susceptible
+    - No blaKPC Omega-loop/X-loop resistance marker detected (wildtype blaKPC, if present, remains avibactam-inhibitable)
+  Note: Genotype-based prediction only; not a substitute for phenotypic antimicrobial susceptibility testing (AST).
+
+Total genes detected: 7
+Method: BLAST+
+
+FOSFOMYCIN RESISTANCE GENES:
+--------------------------------------------------
+  fosAKP (copy number: 1): 99.29% identity, 100.00% coverage
+
+OTHER RESISTANCE GENES:
+--------------------------------------------------
+  ompK36 (copy number: 1): 92.69% identity, 100.36% coverage
+    Mutations: G213I
+  ompK35 (copy number: 1): 99.81% identity, 100.00% coverage
+    Mutations: D135G,D181R
+  ftsI (copy number: 1): 99.72% identity, 100.00% coverage
+    Mutations: A333P,Y350L,S357Q
+  acrB (copy number: 1): 99.59% identity, 100.00% coverage
+    Mutations: G617A,F626A,A628T/V
+  envZ (copy number: 1): 99.48% identity, 100.00% coverage
+    Mutations: G244S/D,T324Q
+  blaSHV-12 (copy number: 1): 99.30% identity, 99.77% coverage
+    Mutations: G238A,E240G
+
+
+MUTATION DETECTION SUMMARY (Dual-Method):
+----------------------------------------------------------------------
+  No resistance mutations detected by GAMMA or seqkit.
+
+
+GENE MUTATION ANALYSIS (GAMMA):
+Method: GAMMA (protein-level gene alignment)
+--------------------------------------------------
+Reference: https://github.com/rastanton/GAMMA
+
+
+Efflux Pump Components:
+  acrB: 99.9% identity, 100.0% coverage
+    Location: JAJOCL010000002.1:162222-165369
+    No mutations detected

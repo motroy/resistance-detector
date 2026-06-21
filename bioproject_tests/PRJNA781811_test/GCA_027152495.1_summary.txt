@@ -1,0 +1,57 @@
+======================================================================
+FOS-CAZAVI Resistance Detection Summary
+======================================================================
+
+Assembly: bioproject_tests/PRJNA781811_test/extracted/ncbi_dataset/data/GCA_027152495.1//GCA_027152495.1_ASM2715249v1_genomic.fna
+
+PREDICTED PHENOTYPES (genotype-based):
+--------------------------------------------------
+  Fosfomycin (FOS): Susceptible
+    - No acquired fosA-family enzyme or loss-of-function mutation in fosfomycin uptake/regulatory genes detected
+  Ceftazidime-Avibactam (CAZ/AVI): Susceptible
+    - No blaKPC Omega-loop/X-loop resistance marker detected (wildtype blaKPC, if present, remains avibactam-inhibitable)
+  Note: Genotype-based prediction only; not a substitute for phenotypic antimicrobial susceptibility testing (AST).
+
+Total genes detected: 7
+Method: BLAST+
+
+FOSFOMYCIN RESISTANCE GENES:
+--------------------------------------------------
+  fosAKP (copy number: 1): 93.33% identity, 100.00% coverage
+    Mutations: I91V
+
+OTHER RESISTANCE GENES:
+--------------------------------------------------
+  blaSHV-12 (copy number: 1): 90.83% identity, 100.12% coverage
+    Mutations: G238A,E240G
+  acrB (copy number: 1): 95.84% identity, 100.06% coverage
+    Mutations: G617A,F626A,A628T/V
+  ompK35 (copy number: 1): 96.02% identity, 100.00% coverage
+    Mutations: D135G,D181R
+  ftsI (copy number: 1): 95.64% identity, 100.00% coverage
+    Mutations: A333P,Y350L,S357Q
+  ompK36 (copy number: 1): 94.56% identity, 100.00% coverage
+    Mutations: G213I
+  envZ (copy number: 1): 94.17% identity, 100.00% coverage
+    Mutations: G244S/D,T324Q
+
+
+MUTATION DETECTION SUMMARY (Dual-Method):
+Methods: GAMMA (protein-level alignment) + SeqKit (amplicon)
+Confidence: 100% = detected by both methods; 50% = detected by one method
+----------------------------------------------------------------------
+
+  Gene: fosakp
+    I91V            Confidence:  50%  [gamma]
+
+
+GENE MUTATION ANALYSIS (GAMMA):
+Method: GAMMA (protein-level gene alignment)
+--------------------------------------------------
+Reference: https://github.com/rastanton/GAMMA
+
+
+Efflux Pump Components:
+  acrB: 99.7% identity, 100.0% coverage
+    Location: JAJOCY010000002.1:242733-245880
+    No mutations detected
