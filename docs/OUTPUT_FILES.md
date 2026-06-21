@@ -6,7 +6,7 @@
 | `*_genes.fasta` | FASTA sequences of detected genes |
 | `*_summary.txt` | Human-readable summary of all findings: predicted FOS/CAZ-AVI phenotypes, per-gene copy number, mutations |
 | `*_summary.json` | Machine-parsable summary: predicted phenotypes, per-gene copy number and loci, plus mutations/gene-alignments/amplicons |
-| `*_summary.tsv` | Machine-parsable, one-row-per-gene summary with `Copy_Number`, loci, and max identity/coverage (predicted phenotypes are included as leading `#`-prefixed comment lines) |
+| `*_summary.tsv` | Machine-parsable, one-row-per-gene summary with `Copy_Number`, loci, max identity/coverage, and predicted phenotypes/evidence/disclaimer as dedicated trailing columns |
 | `*_all_results.tsv` | Combined TSV of all detections (acquired genes, mutations, gene alignments, amplicons), including a `Copy_Number` column |
 | `*_analysis.log` | Log of command, parameters, and tool versions |
 | `*_blast.txt` | Raw BLAST output |
@@ -87,16 +87,15 @@ contig_plasmid2_blaKPC3	blaKPC-3	99.32	100.00	-	BLAST	1
 
 ### Machine-Readable Summary (`*_summary.tsv` / `*_summary.json`)
 
-`*_summary.tsv` leads with `#`-prefixed phenotype comment lines, then aggregates results to one row per gene, making copy number easy to script against:
+`*_summary.tsv` aggregates results to one row per gene, with the predicted phenotypes, evidence, and
+disclaimer included as dedicated trailing columns on every row (so each line is fully self-contained
+for downstream scripting/filtering, with no comment lines to skip):
 
 ```tsv
-# Predicted_Phenotype_Fosfomycin	Resistant	Acquired fosfomycin-inactivating enzyme fosA3 detected (100.00% identity, 100.00% coverage)
-# Predicted_Phenotype_Ceftazidime_Avibactam	Susceptible	No blaKPC Omega-loop/X-loop resistance marker detected (wildtype blaKPC, if present, remains avibactam-inhibitable)
-# Disclaimer	Genotype-based prediction only; not a substitute for phenotypic antimicrobial susceptibility testing (AST).
-Sample	Gene	Copy_Number	Loci	Max_Identity%	Max_Coverage%	Mutations
-ecoli_multi_resistance.fasta	blaOXA-48	1	contig_plasmid3_blaOXA48:30001-30798	100.00	100.00	-
-ecoli_multi_resistance.fasta	fosA3	1	contig_plasmid1_fosA3:20001-20417	100.00	100.00	H119L,K90E/Q
-ecoli_multi_resistance.fasta	blaKPC-3	1	contig_plasmid2_blaKPC3:25001-25882	99.32	100.00	-
+Sample	Gene	Copy_Number	Loci	Max_Identity%	Max_Coverage%	Mutations	Predicted_Phenotype_Fosfomycin	Fosfomycin_Evidence	Predicted_Phenotype_Ceftazidime_Avibactam	Ceftazidime_Avibactam_Evidence	Phenotype_Disclaimer
+ecoli_multi_resistance.fasta	blaOXA-48	1	contig_plasmid3_blaOXA48:30001-30798	100.00	100.00	-	Resistant	Acquired fosfomycin-inactivating enzyme fosA3 detected (100.00% identity, 100.00% coverage)	Susceptible	No blaKPC Omega-loop/X-loop resistance marker detected (wildtype blaKPC, if present, remains avibactam-inhibitable)	Genotype-based prediction only; not a substitute for phenotypic antimicrobial susceptibility testing (AST).
+ecoli_multi_resistance.fasta	fosA3	1	contig_plasmid1_fosA3:20001-20417	100.00	100.00	H119L,K90E/Q	Resistant	Acquired fosfomycin-inactivating enzyme fosA3 detected (100.00% identity, 100.00% coverage)	Susceptible	No blaKPC Omega-loop/X-loop resistance marker detected (wildtype blaKPC, if present, remains avibactam-inhibitable)	Genotype-based prediction only; not a substitute for phenotypic antimicrobial susceptibility testing (AST).
+ecoli_multi_resistance.fasta	blaKPC-3	1	contig_plasmid2_blaKPC3:25001-25882	99.32	100.00	-	Resistant	Acquired fosfomycin-inactivating enzyme fosA3 detected (100.00% identity, 100.00% coverage)	Susceptible	No blaKPC Omega-loop/X-loop resistance marker detected (wildtype blaKPC, if present, remains avibactam-inhibitable)	Genotype-based prediction only; not a substitute for phenotypic antimicrobial susceptibility testing (AST).
 ```
 
 `*_summary.json` contains the same `predicted_phenotypes` block plus the per-gene aggregation (with full per-locus detail), mutation, gene-alignment, and amplicon results, for easy parsing by downstream scripts/pipelines. See `example_results/ecoli_multi_summary.json` for the full file.
