@@ -2,10 +2,12 @@
 
 18 *Klebsiella pneumoniae* / *K. variicola* assemblies from BioProject PRJNA781811 (listed in
 `PRJNA781811.ncbi_datasets.tsv`; see
-[paper](https://www.frontiersin.org/journals/microbiology/articles/10.3389/fmicb.2026.1694693/full))
-were downloaded with the NCBI `datasets` CLI and run through `fos-cazavi fos-cazavi-all` using the
-bundled reference database (`fos_cazavi/data/example_database.fasta` /
-`example_database_deduplicated.fasta` / `example_database_mutations.tsv`) and default primers/genes.
+[Arena et al. 2022, Front. Microbiol. 13:983294](https://doi.org/10.3389/fmicb.2022.983294), whose
+Data Availability statement deposits its sequenced hypermucoviscous *K. pneumoniae*/*K. variicola*
+bacteremia isolates under this BioProject) were downloaded with the NCBI `datasets` CLI and run
+through `fos-cazavi fos-cazavi-all` using the bundled reference database
+(`fos_cazavi/data/example_database.fasta` / `example_database_deduplicated.fasta` /
+`example_database_mutations.tsv`) and default primers/genes.
 
 ## Command used
 
@@ -86,6 +88,44 @@ additionally carry an acquired carbapenemase:
 
 No mutations were detected in any of the blaKPC alleles found here (all `Match_Type=Native` in GAMMA),
 so the CAZ/AVI-susceptible phenotype call is consistent: wild-type blaKPC remains avibactam-inhibitable.
+
+## Comparison with the source paper (Arena et al. 2022)
+
+The paper enrolled 19 confirmed hypermucoviscous (HMV, "string test"-positive) bloodstream isolates
+from a 2016–17 nationwide Italian surveillance (43 laboratories, 1,502 *K. pneumoniae* bacteremia
+episodes screened): 18 *K. pneumoniae* + 1 *K. variicola*. The genomes were typed with Kleborate/
+PathogenWatch and phenotyped by broth microdilution (cephalosporins, CAZ/AVI, colistin, fosfomycin,
+etc.) plus *Galleria mellonella*/murine virulence models. Only 18 of the 19 assemblies are present in
+`PRJNA781811.ncbi_datasets.tsv` (the 18 analyzed here) — one isolate from the paper's cohort does not
+appear to have a corresponding public assembly accession in this BioProject.
+
+**Acquired carbapenemases — count matches.** The paper reports 5/19 isolates (across the two major
+ST307 and ST512 clones) carrying an acquired blaKPC carbapenemase: 2 isolates with blaKPC-3/blaKPC-2
+among the six ST307 strains, and blaKPC-3 in all three ST512 strains. `fos-cazavi` independently
+detected blaKPC in exactly 5/18 genomes here (4× blaKPC-3, 1× blaKPC-2, one genome also carrying
+blaCMY-178) — consistent in count and allele mix with the paper's own genotyping.
+
+**Ceftazidime-avibactam — a genuine discrepancy.** The paper found all 19 isolates phenotypically
+resistant to plain ceftazidime, but only **one** isolate (an ST512 strain, "GMR140") was phenotypically
+resistant to ceftazidime-avibactam (94.7% susceptible overall, MIC90 2/4 µg/mL). `fos-cazavi` predicted
+**all 18** genomes here Susceptible to CAZ/AVI, because every detected blaKPC allele was GAMMA
+`Match_Type=Native` (no Omega-loop/X-loop mutation). This means the tool likely missed the one
+genuinely CAZ/AVI-resistant ST512 isolate: CAZ/AVI resistance in blaKPC-producing *K. pneumoniae* can
+also arise from mechanisms this pipeline doesn't screen for (porin loss/ompK mutations, blaKPC gene
+amplification/copy-number increase, efflux), not just canonical Omega-loop/X-loop substitutions — a
+known limitation of mutation-marker-only CAZ/AVI prediction, worth flagging for future improvement.
+
+**Fosfomycin — partial agreement, similar genotype/phenotype gap to the original study.** The paper
+phenotypically found 47.4% (9/19) of isolates fosfomycin-resistant, but explicitly identified an
+acquired `fosA3` gene in only **one** of them (the ST11 isolate). The other resistant isolates (all
+three ST512 strains, plus single ST29/ST35/new-ST37 isolates) had no acquired fosfomycin-resistance
+gene detected by the paper's own Kleborate-based pipeline either — i.e., the source study itself
+reports a similar genotype-phenotype gap for fosfomycin, most likely from un-screened chromosomal
+mutations or efflux-mediated resistance. `fos-cazavi` here detected acquired `fosA` in 3/18 genomes
+(1× fosA3 at 100% identity — consistent with the paper's ST11 fosA3 call; 2× fosA5 at ~96% identity,
+not narratively reported in the paper's main text but plausibly present in its supplementary Kleborate
+output). Both studies therefore likely under-call true fosfomycin resistance when relying only on
+acquired-gene detection.
 
 ## Files in this folder
 
