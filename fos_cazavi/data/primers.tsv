@@ -41,3 +41,5 @@ RT-qPCR_uhpT_F	ACCTACGGGTTGAGCATGAC	Quantification of uhpT expression	-	uhpT	RT_
 RT-qPCR_uhpT_R	CACTGAAGCCCAGCATACAA	Quantification of uhpT expression (reverse)	-	uhpT	RT_uhpT
 RT-qPCR_rrsA_F	CTCTTGCCATCGGATGTGCCCA	Quantification of rrsA expression	-	rrsA	RT_rrsA
 RT-qPCR_rrsA_R	CCAGTGTGGCTGGTCATCCTCTCA	Quantification of rrsA expression (reverse)	-	rrsA	RT_rrsA
+blaKPC_F	ATGTCACTGTATCGCCGTCT	Verification of blaKPC sequence (whole-gene amplicon, covers X-loop and classic CAZAVI mutation positions)	-	blaKPC	blaKPC_ver
+blaKPC_R	TTACTGCCCGTTGACGCCCA	Verification of blaKPC sequence (reverse)	-	blaKPC	blaKPC_ver

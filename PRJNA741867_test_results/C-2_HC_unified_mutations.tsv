@@ -1,3 +1,8 @@
 Gene	Mutation	Confidence(%)	Methods	GAMMA_Contig	GAMMA_Identity(%)	GAMMA_Coverage(%)	SeqKit_PairID
-blakpc	E167D (KPC-92 X-loop)	50	gamma	JAHUYV010000037.1	98.64	99.32	-
+blakpc	D178S	50	seqkit	-	-	-	blaKPC_ver
+blakpc	E167D (KPC-92 X-loop)	100	gamma+seqkit	JAHUYV010000037.1	98.64	99.32	blaKPC_ver
+blakpc	L168S	50	seqkit	-	-	-	blaKPC_ver
+blakpc	N169A	50	seqkit	-	-	-	blaKPC_ver
 blakpc	N169D (KPC-92 X-loop)	50	gamma	JAHUYV010000037.1	98.64	99.32	-
+blakpc	T242N	50	seqkit	-	-	-	blaKPC_ver
+blakpc	V240G	50	seqkit	-	-	-	blaKPC_ver

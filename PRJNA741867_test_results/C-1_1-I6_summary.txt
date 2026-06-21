@@ -35,6 +35,15 @@ MUTATION DETECTION SUMMARY (Dual-Method):
   No resistance mutations detected by GAMMA or seqkit.
 
 
+DETECTED AMPLICONS:
+Method: Seqkit/Amplicon
+--------------------------------------------------
+  Pair: blaKPC_ver
+    Location: JAHUYW010000039.1:5811-6693 (882 bp)
+    Primers: blaKPC_F -> blaKPC_R
+    Mutations/Genes in amplicon:
+      - blaKPC-3: (wildtype)
+
 GENE MUTATION ANALYSIS (GAMMA):
 Method: GAMMA (protein-level gene alignment)
 --------------------------------------------------

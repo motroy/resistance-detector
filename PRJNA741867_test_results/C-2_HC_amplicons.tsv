@@ -1,0 +1,2 @@
+Pair_ID	Contig	Start	End	Length	Mutations_Found	Method
+blaKPC_ver	JAHUYV010000037.1	7390	8266	876	blaKPC-3: E167D (KPC-92 X-loop),L168S,N169A,D178S,V240G,T242N	Seqkit/Amplicon

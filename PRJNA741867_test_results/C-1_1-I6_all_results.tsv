@@ -15,3 +15,4 @@ C-1_1-I6.fasta	Gene Alignment	ftsI	GAMMA	Wildtype / No mutations detected	99.83%
 C-1_1-I6.fasta	Gene Alignment	ompK35	GAMMA	Wildtype / No mutations detected	100.00%	JAHUYW010000007.1	41171	42251	Coverage: 100.00%
 C-1_1-I6.fasta	Gene Alignment	ompK36	GAMMA	Wildtype / No mutations detected	58.70%	JAHUYW010000008.1	162301	163420	Coverage: 101.40%
 C-1_1-I6.fasta	Gene Alignment	envZ	GAMMA	Wildtype / No mutations detected	99.56%	JAHUYW010000009.1	153950	155306	Coverage: 100.00%
+C-1_1-I6.fasta	Amplicon	blaKPC_ver	SeqKit/Bed	Length: 882bp	-	JAHUYW010000039.1	5811	6693	Genes/Mutations in region: blaKPC-3: (wildtype)

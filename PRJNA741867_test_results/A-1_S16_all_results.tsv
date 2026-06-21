@@ -15,3 +15,4 @@ A-1_S16.fasta	Gene Alignment	blaKPC-3	GAMMA	Wildtype / No mutations detected	100
 A-1_S16.fasta	Gene Alignment	acrB	GAMMA	Wildtype / No mutations detected	100.00%	JAHUZA010000006.1	87632	90779	Coverage: 100.00%
 A-1_S16.fasta	Gene Alignment	ompK35	GAMMA	Wildtype / No mutations detected	100.00%	JAHUZA010000008.1	41171	42251	Coverage: 100.00%
 A-1_S16.fasta	Gene Alignment	ompK36	GAMMA	Wildtype / No mutations detected	58.70%	JAHUZA010000009.1	74924	76043	Coverage: 101.40%
+A-1_S16.fasta	Amplicon	blaKPC_ver	SeqKit/Bed	Length: 882bp	-	JAHUZA010000054.1	1723	2605	Genes/Mutations in region: blaKPC-3: (wildtype)
