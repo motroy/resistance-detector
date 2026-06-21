@@ -1,0 +1,8 @@
+Gene	Contig	Start	End	Identity	Coverage	Match_Type	Mutations	Method
+envZ	u1	48665	50021	99.78	100.00	Mutant	-	GAMMA
+acrB	u12	171238	174385	99.90	100.00	Mutant	-	GAMMA
+ompK35	u46	46601	47680	10.56	99.91	Indel Truncation	-	GAMMA
+ompK36	u57	216040	217165	47.01	101.90	Indel	-	GAMMA
+fosAKP	u60	14060	14480	97.86	100.00	Mutant	I91V	GAMMA
+ftsI	u79	186808	188575	99.66	100.00	Mutant	-	GAMMA
+blaKPC-2	u93	6025	6907	100.00	100.00	Native	-	GAMMA
