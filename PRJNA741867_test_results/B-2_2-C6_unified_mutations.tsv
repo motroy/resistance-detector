@@ -1,8 +1,3 @@
 Gene	Mutation	Confidence(%)	Methods	GAMMA_Contig	GAMMA_Identity(%)	GAMMA_Coverage(%)	SeqKit_PairID
-blakpc	D178S	50	seqkit	-	-	-	blaKPC_ver
-blakpc	E167N	50	seqkit	-	-	-	blaKPC_ver
 blakpc	L166W (KPC-66 X-loop)	50	gamma	JAHUYX010000038.1	98.98	99.32	-
-blakpc	L168S	50	seqkit	-	-	-	blaKPC_ver
-blakpc	N169A	50	seqkit	-	-	-	blaKPC_ver
-blakpc	T242N	50	seqkit	-	-	-	blaKPC_ver
-blakpc	V240G	50	seqkit	-	-	-	blaKPC_ver
+blakpc	L166del	50	seqkit	-	-	-	blaKPC_ver

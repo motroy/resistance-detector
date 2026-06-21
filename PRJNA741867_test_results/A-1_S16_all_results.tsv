@@ -1,18 +1,18 @@
 Sample	Type	Gene_Protein	Method	Result_Details	Identity_Confidence	Contig	Start	End	Notes
-A-1_S16.fasta	Acquired Gene	ompK36	BLAST	Coverage: 101.90%	92.62%	JAHUZA010000009.1	74925	76043	Mutations: G213S
-A-1_S16.fasta	Acquired Gene	blaKPC-3	BLAST	Coverage: 100.00%	100.00%	JAHUZA010000054.1	1724	2605	Mutations: -
-A-1_S16.fasta	Acquired Gene	acrB	BLAST	Coverage: 100.00%	99.94%	JAHUZA010000006.1	87633	90779	Mutations: G617A,F626A,A628T/V
-A-1_S16.fasta	Acquired Gene	ftsI	BLAST	Coverage: 100.00%	99.77%	JAHUZA010000004.1	135170	136936	Mutations: A333P,Y350L,S357Q
-A-1_S16.fasta	Acquired Gene	fosAKP	BLAST	Coverage: 100.00%	99.76%	JAHUZA010000020.1	22842	23261	Mutations: -
-A-1_S16.fasta	Acquired Gene	ompK35	BLAST	Coverage: 100.00%	99.35%	JAHUZA010000008.1	41172	42251	Mutations: D135G,D181R
-A-1_S16.fasta	Acquired Gene	envZ	BLAST	Coverage: 100.00%	99.04%	JAHUZA010000010.1	48608	49963	Mutations: G244S/D,T324Q
-A-1_S16.fasta	Acquired Gene	blaSHV-12	BLAST	Coverage: 100.00%	98.95%	JAHUZA010000001.1	272420	273280	Mutations: G238A,E240G
-A-1_S16.fasta	Gene Alignment	blaSHV-12	GAMMA	Wildtype / No mutations detected	98.61%	JAHUZA010000001.1	272419	273280	Coverage: 100.00%
-A-1_S16.fasta	Gene Alignment	envZ	GAMMA	Wildtype / No mutations detected	99.56%	JAHUZA010000010.1	48607	49963	Coverage: 100.00%
-A-1_S16.fasta	Gene Alignment	fosAKP	GAMMA	Wildtype / No mutations detected	99.29%	JAHUZA010000020.1	22841	23261	Coverage: 100.00%
-A-1_S16.fasta	Gene Alignment	ftsI	GAMMA	Wildtype / No mutations detected	99.83%	JAHUZA010000004.1	135169	136936	Coverage: 100.00%
-A-1_S16.fasta	Gene Alignment	blaKPC-3	GAMMA	Wildtype / No mutations detected	100.00%	JAHUZA010000054.1	1723	2605	Coverage: 100.00%
-A-1_S16.fasta	Gene Alignment	acrB	GAMMA	Wildtype / No mutations detected	100.00%	JAHUZA010000006.1	87632	90779	Coverage: 100.00%
-A-1_S16.fasta	Gene Alignment	ompK35	GAMMA	Wildtype / No mutations detected	100.00%	JAHUZA010000008.1	41171	42251	Coverage: 100.00%
-A-1_S16.fasta	Gene Alignment	ompK36	GAMMA	Wildtype / No mutations detected	58.70%	JAHUZA010000009.1	74924	76043	Coverage: 101.40%
-A-1_S16.fasta	Amplicon	blaKPC_ver	SeqKit/Bed	Length: 882bp	-	JAHUZA010000054.1	1723	2605	Genes/Mutations in region: blaKPC-3: (wildtype)
+GCA_022423605.1_ASM2242360v1_genomic.fna	Acquired Gene	ompK36	BLAST	Coverage: 101.90%	92.62%	JAHUZA010000009.1	74925	76043	Mutations: G213I
+GCA_022423605.1_ASM2242360v1_genomic.fna	Acquired Gene	blaKPC-3	BLAST	Coverage: 100.00%	100.00%	JAHUZA010000054.1	1724	2605	Mutations: -
+GCA_022423605.1_ASM2242360v1_genomic.fna	Acquired Gene	acrB	BLAST	Coverage: 100.00%	99.94%	JAHUZA010000006.1	87633	90779	Mutations: G617A,F626A,A628T/V
+GCA_022423605.1_ASM2242360v1_genomic.fna	Acquired Gene	ftsI	BLAST	Coverage: 100.00%	99.77%	JAHUZA010000004.1	135170	136936	Mutations: A333P,Y350L,S357Q
+GCA_022423605.1_ASM2242360v1_genomic.fna	Acquired Gene	fosAKP	BLAST	Coverage: 100.00%	99.76%	JAHUZA010000020.1	22842	23261	Mutations: -
+GCA_022423605.1_ASM2242360v1_genomic.fna	Acquired Gene	ompK35	BLAST	Coverage: 100.00%	99.35%	JAHUZA010000008.1	41172	42251	Mutations: D135G,D181R
+GCA_022423605.1_ASM2242360v1_genomic.fna	Acquired Gene	envZ	BLAST	Coverage: 100.00%	99.04%	JAHUZA010000010.1	48608	49963	Mutations: G244S/D,T324Q
+GCA_022423605.1_ASM2242360v1_genomic.fna	Acquired Gene	blaSHV-12	BLAST	Coverage: 100.00%	98.95%	JAHUZA010000001.1	272420	273280	Mutations: G238A,E240G
+GCA_022423605.1_ASM2242360v1_genomic.fna	Gene Alignment	blaSHV-12	GAMMA	Wildtype / No mutations detected	98.61%	JAHUZA010000001.1	272419	273280	Coverage: 100.00%
+GCA_022423605.1_ASM2242360v1_genomic.fna	Gene Alignment	envZ	GAMMA	Wildtype / No mutations detected	99.56%	JAHUZA010000010.1	48607	49963	Coverage: 100.00%
+GCA_022423605.1_ASM2242360v1_genomic.fna	Gene Alignment	fosAKP	GAMMA	Wildtype / No mutations detected	99.29%	JAHUZA010000020.1	22841	23261	Coverage: 100.00%
+GCA_022423605.1_ASM2242360v1_genomic.fna	Gene Alignment	ftsI	GAMMA	Wildtype / No mutations detected	99.83%	JAHUZA010000004.1	135169	136936	Coverage: 100.00%
+GCA_022423605.1_ASM2242360v1_genomic.fna	Gene Alignment	blaKPC-3	GAMMA	Wildtype / No mutations detected	100.00%	JAHUZA010000054.1	1723	2605	Coverage: 100.00%
+GCA_022423605.1_ASM2242360v1_genomic.fna	Gene Alignment	acrB	GAMMA	Wildtype / No mutations detected	100.00%	JAHUZA010000006.1	87632	90779	Coverage: 100.00%
+GCA_022423605.1_ASM2242360v1_genomic.fna	Gene Alignment	ompK35	GAMMA	Wildtype / No mutations detected	100.00%	JAHUZA010000008.1	41171	42251	Coverage: 100.00%
+GCA_022423605.1_ASM2242360v1_genomic.fna	Gene Alignment	ompK36	GAMMA	Wildtype / No mutations detected	58.70%	JAHUZA010000009.1	74924	76043	Coverage: 101.40%
+GCA_022423605.1_ASM2242360v1_genomic.fna	Amplicon	blaKPC_ver	SeqKit/Bed	Length: 882bp	-	JAHUZA010000054.1	1723	2605	Genes/Mutations in region: blaKPC-3: (wildtype)

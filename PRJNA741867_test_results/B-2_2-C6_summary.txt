@@ -2,7 +2,7 @@
 FOS-CAZAVI Resistance Detection Summary
 ======================================================================
 
-Assembly: B-2_2-C6.fasta
+Assembly: /tmp/prjna741867_unzip/ncbi_dataset/data/GCA_022423525.1/GCA_022423525.1_ASM2242352v1_genomic.fna
 Total genes detected: 8
 Method: BLAST+
 
@@ -13,12 +13,12 @@ FOSFOMYCIN RESISTANCE GENES:
 CEFTAZIDIME-AVIBACTAM RESISTANCE (KPC):
 --------------------------------------------------
   blaKPC-3: 99.32% identity, 100.00% coverage
-    Mutations: E167N,L168S,N169A,D178S,V240G,T242N
+    Mutations: L166del
 
 OTHER RESISTANCE GENES:
 --------------------------------------------------
   ompK36: 92.62% identity, 101.90% coverage
-    Mutations: G213S
+    Mutations: G213I
   acrB: 99.94% identity, 100.00% coverage
     Mutations: G617A,F626A,A628T/V
   ftsI: 99.77% identity, 100.00% coverage
@@ -37,13 +37,8 @@ Confidence: 100% = detected by both methods; 50% = detected by one method
 ----------------------------------------------------------------------
 
   Gene: blakpc
-    D178S           Confidence:  50%  [seqkit]
-    E167N           Confidence:  50%  [seqkit]
     L166W (KPC-66 X-loop) Confidence:  50%  [gamma]
-    L168S           Confidence:  50%  [seqkit]
-    N169A           Confidence:  50%  [seqkit]
-    T242N           Confidence:  50%  [seqkit]
-    V240G           Confidence:  50%  [seqkit]
+    L166del         Confidence:  50%  [seqkit]
 
 
 DETECTED AMPLICONS:
@@ -53,7 +48,7 @@ Method: Seqkit/Amplicon
     Location: JAHUYX010000038.1:5811-6687 (876 bp)
     Primers: blaKPC_F -> blaKPC_R
     Mutations/Genes in amplicon:
-      - blaKPC-3: E167N,L168S,N169A,D178S,V240G,T242N
+      - blaKPC-3: L166del
 
 GENE MUTATION ANALYSIS (GAMMA):
 Method: GAMMA (protein-level gene alignment)

@@ -14,17 +14,17 @@ FOSFOMYCIN RESISTANCE GENES:
 CEFTAZIDIME-AVIBACTAM RESISTANCE (KPC):
 --------------------------------------------------
   blaKPC-2: 99.55% identity, 100.34% coverage
-    Mutations: V240G,T242G
 
 OTHER RESISTANCE GENES:
 --------------------------------------------------
   ompK36: 92.22% identity, 102.45% coverage
+    Mutations: G213I
   envZ: 99.93% identity, 100.00% coverage
     Mutations: G244S/D,T324Q
   acrB: 99.84% identity, 100.00% coverage
     Mutations: G617A,F626A,A628T/V
   ompK35: 99.35% identity, 100.00% coverage
-    Mutations: G134A,D135V,D181V
+    Mutations: D135G,D181R
   ftsI: 99.32% identity, 100.00% coverage
     Mutations: A333P,Y350L,S357Q
 
@@ -33,10 +33,6 @@ MUTATION DETECTION SUMMARY (Dual-Method):
 Methods: GAMMA (protein-level alignment) + SeqKit (amplicon)
 Confidence: 100% = detected by both methods; 50% = detected by one method
 ----------------------------------------------------------------------
-
-  Gene: blakpc
-    T242G           Confidence:  50%  [seqkit]
-    V240G           Confidence:  50%  [seqkit]
 
   Gene: fosakp
     I91V            Confidence:  50%  [gamma]
@@ -49,7 +45,7 @@ Method: Seqkit/Amplicon
     Location: u87:6025-6910 (885 bp)
     Primers: blaKPC_F -> blaKPC_R
     Mutations/Genes in amplicon:
-      - blaKPC-2: V240G,T242G
+      - blaKPC-2: (wildtype)
 
 GENE MUTATION ANALYSIS (GAMMA):
 Method: GAMMA (protein-level gene alignment)

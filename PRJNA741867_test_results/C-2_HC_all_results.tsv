@@ -1,24 +1,22 @@
 Sample	Type	Gene_Protein	Method	Result_Details	Identity_Confidence	Contig	Start	End	Notes
-C-2_HC.fasta	Acquired Gene	ompK36	BLAST	Coverage: 101.90%	92.62%	JAHUYV010000009.1	162302	163420	Mutations: G213S
-C-2_HC.fasta	Acquired Gene	acrB	BLAST	Coverage: 100.00%	99.94%	JAHUYV010000002.1	198132	201278	Mutations: G617A,F626A,A628T/V
-C-2_HC.fasta	Acquired Gene	ftsI	BLAST	Coverage: 100.00%	99.77%	JAHUYV010000006.1	144080	145846	Mutations: A333P,Y350L,S357Q
-C-2_HC.fasta	Acquired Gene	fosAKP	BLAST	Coverage: 100.00%	99.76%	JAHUYV010000020.1	73622	74041	Mutations: -
-C-2_HC.fasta	Acquired Gene	ompK35	BLAST	Coverage: 100.00%	99.35%	JAHUYV010000008.1	41172	42251	Mutations: D135G,D181R
-C-2_HC.fasta	Acquired Gene	blaKPC-3	BLAST	Coverage: 100.00%	99.32%	JAHUYV010000037.1	7391	8266	Mutations: E167D (KPC-92 X-loop),L168S,N169A,D178S,V240G,T242N
-C-2_HC.fasta	Acquired Gene	envZ	BLAST	Coverage: 100.00%	99.04%	JAHUYV010000010.1	153951	155306	Mutations: G244S/D,T324Q
-C-2_HC.fasta	Acquired Gene	blaSHV-12	BLAST	Coverage: 100.00%	98.95%	JAHUYV010000001.1	272420	273280	Mutations: G238A,E240G
-C-2_HC.fasta	Mutation	blakpc	seqkit	D178S	50%	-	-	-	Dual-method consensus
-C-2_HC.fasta	Mutation	blakpc	gamma+seqkit	E167D (KPC-92 X-loop)	100%	JAHUYV010000037.1	7390	8266	Dual-method consensus
-C-2_HC.fasta	Mutation	blakpc	seqkit	L168S	50%	-	-	-	Dual-method consensus
-C-2_HC.fasta	Mutation	blakpc	seqkit	N169A	50%	-	-	-	Dual-method consensus
-C-2_HC.fasta	Mutation	blakpc	gamma	N169D (KPC-92 X-loop)	50%	JAHUYV010000037.1	7390	8266	Dual-method consensus
-C-2_HC.fasta	Mutation	blakpc	seqkit	T242N	50%	-	-	-	Dual-method consensus
-C-2_HC.fasta	Mutation	blakpc	seqkit	V240G	50%	-	-	-	Dual-method consensus
-C-2_HC.fasta	Gene Alignment	envZ	GAMMA	Wildtype / No mutations detected	99.56%	JAHUYV010000010.1	153950	155306	Coverage: 100.00%
-C-2_HC.fasta	Gene Alignment	blaSHV-12	GAMMA	Wildtype / No mutations detected	98.61%	JAHUYV010000001.1	272419	273280	Coverage: 100.00%
-C-2_HC.fasta	Gene Alignment	fosAKP	GAMMA	Wildtype / No mutations detected	99.29%	JAHUYV010000020.1	73621	74041	Coverage: 100.00%
-C-2_HC.fasta	Gene Alignment	acrB	GAMMA	Wildtype / No mutations detected	100.00%	JAHUYV010000002.1	198131	201278	Coverage: 100.00%
-C-2_HC.fasta	Gene Alignment	ftsI	GAMMA	Wildtype / No mutations detected	99.83%	JAHUYV010000006.1	144079	145846	Coverage: 100.00%
-C-2_HC.fasta	Gene Alignment	ompK35	GAMMA	Wildtype / No mutations detected	100.00%	JAHUYV010000008.1	41171	42251	Coverage: 100.00%
-C-2_HC.fasta	Gene Alignment	ompK36	GAMMA	Wildtype / No mutations detected	58.70%	JAHUYV010000009.1	162301	163420	Coverage: 101.40%
-C-2_HC.fasta	Amplicon	blaKPC_ver	SeqKit/Bed	Length: 876bp	-	JAHUYV010000037.1	7390	8266	Genes/Mutations in region: blaKPC-3: E167D (KPC-92 X-loop),L168S,N169A,D178S,V240G,T242N
+GCA_022423505.1_ASM2242350v1_genomic.fna	Acquired Gene	ompK36	BLAST	Coverage: 101.90%	92.62%	JAHUYV010000009.1	162302	163420	Mutations: G213I
+GCA_022423505.1_ASM2242350v1_genomic.fna	Acquired Gene	acrB	BLAST	Coverage: 100.00%	99.94%	JAHUYV010000002.1	198132	201278	Mutations: G617A,F626A,A628T/V
+GCA_022423505.1_ASM2242350v1_genomic.fna	Acquired Gene	ftsI	BLAST	Coverage: 100.00%	99.77%	JAHUYV010000006.1	144080	145846	Mutations: A333P,Y350L,S357Q
+GCA_022423505.1_ASM2242350v1_genomic.fna	Acquired Gene	fosAKP	BLAST	Coverage: 100.00%	99.76%	JAHUYV010000020.1	73622	74041	Mutations: -
+GCA_022423505.1_ASM2242350v1_genomic.fna	Acquired Gene	ompK35	BLAST	Coverage: 100.00%	99.35%	JAHUYV010000008.1	41172	42251	Mutations: D135G,D181R
+GCA_022423505.1_ASM2242350v1_genomic.fna	Acquired Gene	blaKPC-3	BLAST	Coverage: 100.00%	99.32%	JAHUYV010000037.1	7391	8266	Mutations: E167del,L168del,N169del
+GCA_022423505.1_ASM2242350v1_genomic.fna	Acquired Gene	envZ	BLAST	Coverage: 100.00%	99.04%	JAHUYV010000010.1	153951	155306	Mutations: G244S/D,T324Q
+GCA_022423505.1_ASM2242350v1_genomic.fna	Acquired Gene	blaSHV-12	BLAST	Coverage: 100.00%	98.95%	JAHUYV010000001.1	272420	273280	Mutations: G238A,E240G
+GCA_022423505.1_ASM2242350v1_genomic.fna	Mutation	blakpc	gamma	E167D (KPC-92 X-loop)	50%	JAHUYV010000037.1	7390	8266	Dual-method consensus
+GCA_022423505.1_ASM2242350v1_genomic.fna	Mutation	blakpc	seqkit	E167del	50%	-	-	-	Dual-method consensus
+GCA_022423505.1_ASM2242350v1_genomic.fna	Mutation	blakpc	seqkit	L168del	50%	-	-	-	Dual-method consensus
+GCA_022423505.1_ASM2242350v1_genomic.fna	Mutation	blakpc	gamma	N169D (KPC-92 X-loop)	50%	JAHUYV010000037.1	7390	8266	Dual-method consensus
+GCA_022423505.1_ASM2242350v1_genomic.fna	Mutation	blakpc	seqkit	N169del	50%	-	-	-	Dual-method consensus
+GCA_022423505.1_ASM2242350v1_genomic.fna	Gene Alignment	envZ	GAMMA	Wildtype / No mutations detected	99.56%	JAHUYV010000010.1	153950	155306	Coverage: 100.00%
+GCA_022423505.1_ASM2242350v1_genomic.fna	Gene Alignment	blaSHV-12	GAMMA	Wildtype / No mutations detected	98.61%	JAHUYV010000001.1	272419	273280	Coverage: 100.00%
+GCA_022423505.1_ASM2242350v1_genomic.fna	Gene Alignment	fosAKP	GAMMA	Wildtype / No mutations detected	99.29%	JAHUYV010000020.1	73621	74041	Coverage: 100.00%
+GCA_022423505.1_ASM2242350v1_genomic.fna	Gene Alignment	acrB	GAMMA	Wildtype / No mutations detected	100.00%	JAHUYV010000002.1	198131	201278	Coverage: 100.00%
+GCA_022423505.1_ASM2242350v1_genomic.fna	Gene Alignment	ftsI	GAMMA	Wildtype / No mutations detected	99.83%	JAHUYV010000006.1	144079	145846	Coverage: 100.00%
+GCA_022423505.1_ASM2242350v1_genomic.fna	Gene Alignment	ompK35	GAMMA	Wildtype / No mutations detected	100.00%	JAHUYV010000008.1	41171	42251	Coverage: 100.00%
+GCA_022423505.1_ASM2242350v1_genomic.fna	Gene Alignment	ompK36	GAMMA	Wildtype / No mutations detected	58.70%	JAHUYV010000009.1	162301	163420	Coverage: 101.40%
+GCA_022423505.1_ASM2242350v1_genomic.fna	Amplicon	blaKPC_ver	SeqKit/Bed	Length: 876bp	-	JAHUYV010000037.1	7390	8266	Genes/Mutations in region: blaKPC-3: E167del,L168del,N169del
