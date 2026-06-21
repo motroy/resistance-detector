@@ -6,6 +6,7 @@ from pathlib import Path
 from .db import create_db
 from .acquired import run_acquired_detection
 from .mutations import run_mutation_detection
+from .phenotype import predict_phenotypes
 from .utils import setup_logger, log_tool_versions
 
 _DATA_DIR = Path(__file__).parent / 'data'
@@ -139,6 +140,7 @@ def write_machine_summary(output_prefix, assembly, blast_results, gamma_results,
     per-gene copy-number breakdown, suitable for downstream scripting."""
     sample = Path(assembly).name
     gene_entries = _aggregate_genes_by_copy_number(blast_results)
+    phenotypes = predict_phenotypes(blast_results, unified_results)
 
     summary = {
         'sample': sample,
@@ -148,7 +150,8 @@ def write_machine_summary(output_prefix, assembly, blast_results, gamma_results,
         'acquired_genes': gene_entries,
         'mutations': unified_results or [],
         'gene_alignments': gamma_results or [],
-        'amplicons': amplicon_results or []
+        'amplicons': amplicon_results or [],
+        'predicted_phenotypes': phenotypes
     }
 
     json_file = f"{output_prefix}_summary.json"
@@ -159,6 +162,11 @@ def write_machine_summary(output_prefix, assembly, blast_results, gamma_results,
     tsv_file = f"{output_prefix}_summary.tsv"
     print(f"Writing machine-readable TSV summary to {tsv_file}...")
     with open(tsv_file, 'w') as f:
+        f.write(f"# Predicted_Phenotype_Fosfomycin\t{phenotypes['fosfomycin']['phenotype']}\t"
+                 f"{'; '.join(phenotypes['fosfomycin']['evidence'])}\n")
+        f.write(f"# Predicted_Phenotype_Ceftazidime_Avibactam\t{phenotypes['ceftazidime_avibactam']['phenotype']}\t"
+                 f"{'; '.join(phenotypes['ceftazidime_avibactam']['evidence'])}\n")
+        f.write(f"# Disclaimer\t{phenotypes['disclaimer']}\n")
         f.write('\t'.join([
             'Sample', 'Gene', 'Copy_Number', 'Loci', 'Max_Identity%',
             'Max_Coverage%', 'Mutations'
@@ -204,7 +212,20 @@ def write_summary(output_prefix, assembly, blast_results, gamma_results,
         f.write("FOS-CAZAVI Resistance Detection Summary\n")
         f.write("=" * 70 + '\n\n')
 
-        f.write(f"Assembly: {assembly}\n")
+        f.write(f"Assembly: {assembly}\n\n")
+
+        phenotypes = predict_phenotypes(blast_results, unified_results)
+        f.write("PREDICTED PHENOTYPES (genotype-based):\n")
+        f.write("-" * 50 + '\n')
+        fos = phenotypes['fosfomycin']
+        cazavi = phenotypes['ceftazidime_avibactam']
+        f.write(f"  Fosfomycin (FOS): {fos['phenotype']}\n")
+        for ev in fos['evidence']:
+            f.write(f"    - {ev}\n")
+        f.write(f"  Ceftazidime-Avibactam (CAZ/AVI): {cazavi['phenotype']}\n")
+        for ev in cazavi['evidence']:
+            f.write(f"    - {ev}\n")
+        f.write(f"  Note: {phenotypes['disclaimer']}\n\n")
 
         if blast_results is not None:
             f.write(f"Total genes detected: {len(blast_results)}\n")

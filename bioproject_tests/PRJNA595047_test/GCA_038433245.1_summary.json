@@ -294,5 +294,23 @@
         "blaKPC-2: L166del,E167del,L168del"
       ]
     }
-  ]
+  ],
+  "predicted_phenotypes": {
+    "fosfomycin": {
+      "phenotype": "Susceptible",
+      "evidence": [
+        "No acquired fosA-family enzyme or loss-of-function mutation in fosfomycin uptake/regulatory genes detected"
+      ]
+    },
+    "ceftazidime_avibactam": {
+      "phenotype": "Resistant",
+      "evidence": [
+        "blaKPC variant blaKPC-2 carries Omega-loop/X-loop resistance marker(s): L166del,E167del,L168del",
+        "blaKPC mutation E167del detected in blakpc (Omega-loop/X-loop avibactam-resistance marker)",
+        "blaKPC mutation L166del detected in blakpc (Omega-loop/X-loop avibactam-resistance marker)",
+        "blaKPC mutation L168del detected in blakpc (Omega-loop/X-loop avibactam-resistance marker)"
+      ]
+    },
+    "disclaimer": "Genotype-based prediction only; not a substitute for phenotypic antimicrobial susceptibility testing (AST)."
+  }
 }

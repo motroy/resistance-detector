@@ -1,3 +1,6 @@
+# Predicted_Phenotype_Fosfomycin	Susceptible	No acquired fosA-family enzyme or loss-of-function mutation in fosfomycin uptake/regulatory genes detected
+# Predicted_Phenotype_Ceftazidime_Avibactam	Susceptible	No blaKPC Omega-loop/X-loop resistance marker detected (wildtype blaKPC, if present, remains avibactam-inhibitable)
+# Disclaimer	Genotype-based prediction only; not a substitute for phenotypic antimicrobial susceptibility testing (AST).
 Sample	Gene	Copy_Number	Loci	Max_Identity%	Max_Coverage%	Mutations
 GCA_022423535.1_ASM2242353v1_genomic.fna	ompK36	1	JAHUYW010000008.1:162302-163420	92.62	101.90	G213I
 GCA_022423535.1_ASM2242353v1_genomic.fna	blaKPC-3	1	JAHUYW010000039.1:5812-6693	100.00	100.00	-

@@ -3,6 +3,18 @@ FOS-CAZAVI Resistance Detection Summary
 ======================================================================
 
 Assembly: /tmp/work/PRJNA595047/ncbi_dataset/data/GCA_038433245.1/GCA_038433245.1_ASM3843324v1_genomic.fna
+
+PREDICTED PHENOTYPES (genotype-based):
+--------------------------------------------------
+  Fosfomycin (FOS): Susceptible
+    - No acquired fosA-family enzyme or loss-of-function mutation in fosfomycin uptake/regulatory genes detected
+  Ceftazidime-Avibactam (CAZ/AVI): Resistant
+    - blaKPC variant blaKPC-2 carries Omega-loop/X-loop resistance marker(s): L166del,E167del,L168del
+    - blaKPC mutation E167del detected in blakpc (Omega-loop/X-loop avibactam-resistance marker)
+    - blaKPC mutation L166del detected in blakpc (Omega-loop/X-loop avibactam-resistance marker)
+    - blaKPC mutation L168del detected in blakpc (Omega-loop/X-loop avibactam-resistance marker)
+  Note: Genotype-based prediction only; not a substitute for phenotypic antimicrobial susceptibility testing (AST).
+
 Total genes detected: 8
 Method: BLAST+
 
