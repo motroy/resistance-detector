@@ -55,3 +55,7 @@ dist/
 build/
 *.egg-info/
 resistance_db_*
+
+# Local install_deps.sh tooling (BLAST+, BLAT, GAMMA, SeqKit, datasets binaries)
+bin/
+ncbi-blast-*/
