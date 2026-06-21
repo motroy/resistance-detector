@@ -2,7 +2,7 @@
 FOS-CAZAVI Resistance Detection Summary
 ======================================================================
 
-Assembly: ncbi_dataset/data/GCA_038433285.1/GCA_038433285.1_ASM3843328v1_genomic.fna
+Assembly: /tmp/prjna595047_unzip/ncbi_dataset/data/GCA_038433285.1/GCA_038433285.1_ASM3843328v1_genomic.fna
 Total genes detected: 8
 Method: BLAST+
 
@@ -28,7 +28,7 @@ OTHER RESISTANCE GENES:
   blaSHV-12: 99.42% identity, 100.00% coverage
     Mutations: G238A,E240G
   ompK36: 99.90% identity, 91.58% coverage
-    Mutations: G134L,D135*/N,G213T
+    Mutations: G213I
 
 
 MUTATION DETECTION SUMMARY (Dual-Method):

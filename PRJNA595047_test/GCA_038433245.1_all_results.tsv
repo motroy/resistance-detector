@@ -5,8 +5,8 @@ GCA_038433245.1_ASM3843324v1_genomic.fna	Acquired Gene	ompK35	BLAST	Coverage: 10
 GCA_038433245.1_ASM3843324v1_genomic.fna	Acquired Gene	ftsI	BLAST	Coverage: 100.00%	99.43%	JBCEBK010000001.1	219628	221394	Mutations: A333P,Y350L,S357Q
 GCA_038433245.1_ASM3843324v1_genomic.fna	Acquired Gene	blaSHV-12	BLAST	Coverage: 100.00%	99.42%	JBCEBK010000010.1	126882	127742	Mutations: G238A,E240G
 GCA_038433245.1_ASM3843324v1_genomic.fna	Acquired Gene	fosAKP	BLAST	Coverage: 100.00%	98.81%	JBCEBK010000001.1	13951	14370	Mutations: I91V
-GCA_038433245.1_ASM3843324v1_genomic.fna	Acquired Gene	blaKPC-2	BLAST	Coverage: 100.00%	98.64%	JBCEBK010000044.1	14088	14957	Mutations: L166S,E167A,L168I,N169P,D178P,V239A,T242Y
-GCA_038433245.1_ASM3843324v1_genomic.fna	Acquired Gene	ompK36	BLAST	Coverage: 91.30%	99.90%	JBCEBK010000033.1	49379	50386	Mutations: G134N,D135F
+GCA_038433245.1_ASM3843324v1_genomic.fna	Acquired Gene	blaKPC-2	BLAST	Coverage: 100.00%	98.64%	JBCEBK010000044.1	14088	14957	Mutations: L166del,E167del,L168del
+GCA_038433245.1_ASM3843324v1_genomic.fna	Acquired Gene	ompK36	BLAST	Coverage: 91.30%	99.90%	JBCEBK010000033.1	49379	50386	Mutations: G213I
 GCA_038433245.1_ASM3843324v1_genomic.fna	Mutation	blakpc	seqkit	D178P	50%	-	-	-	Dual-method consensus
 GCA_038433245.1_ASM3843324v1_genomic.fna	Mutation	blakpc	seqkit	E167A	50%	-	-	-	Dual-method consensus
 GCA_038433245.1_ASM3843324v1_genomic.fna	Mutation	blakpc	seqkit	L166S	50%	-	-	-	Dual-method consensus
@@ -22,4 +22,4 @@ GCA_038433245.1_ASM3843324v1_genomic.fna	Gene Alignment	ompK35	GAMMA	Wildtype / 
 GCA_038433245.1_ASM3843324v1_genomic.fna	Gene Alignment	blaKPC-2	GAMMA	Wildtype / No mutations detected	97.28%	JBCEBK010000044.1	14087	14957	Coverage: 98.64%
 GCA_038433245.1_ASM3843324v1_genomic.fna	Gene Alignment	acrB	GAMMA	Wildtype / No mutations detected	100.00%	JBCEBK010000006.1	160001	163148	Coverage: 100.00%
 GCA_038433245.1_ASM3843324v1_genomic.fna	Gene Alignment	envZ	GAMMA	Wildtype / No mutations detected	99.56%	JBCEBK010000007.1	83828	85184	Coverage: 100.00%
-GCA_038433245.1_ASM3843324v1_genomic.fna	Amplicon	blaKPC_ver	SeqKit/Bed	Length: 870bp	-	JBCEBK010000044.1	14087	14957	Genes/Mutations in region: blaKPC-2: L166S,E167A,L168I,N169P,D178P,V239A,T242Y
+GCA_038433245.1_ASM3843324v1_genomic.fna	Amplicon	blaKPC_ver	SeqKit/Bed	Length: 870bp	-	JBCEBK010000044.1	14087	14957	Genes/Mutations in region: blaKPC-2: L166del,E167del,L168del

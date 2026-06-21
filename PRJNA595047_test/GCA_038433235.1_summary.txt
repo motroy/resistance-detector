@@ -2,7 +2,7 @@
 FOS-CAZAVI Resistance Detection Summary
 ======================================================================
 
-Assembly: ncbi_dataset/data/GCA_038433235.1/GCA_038433235.1_ASM3843323v1_genomic.fna
+Assembly: /tmp/prjna595047_unzip/ncbi_dataset/data/GCA_038433235.1/GCA_038433235.1_ASM3843323v1_genomic.fna
 Total genes detected: 8
 Method: BLAST+
 
@@ -14,7 +14,7 @@ FOSFOMYCIN RESISTANCE GENES:
 CEFTAZIDIME-AVIBACTAM RESISTANCE (KPC):
 --------------------------------------------------
   blaKPC-2: 96.60% identity, 100.00% coverage
-    Mutations: L166A,E167R,L168D,N169T,D178S
+    Mutations: L166del,E167del,L168del,N169del
 
 OTHER RESISTANCE GENES:
 --------------------------------------------------
@@ -29,7 +29,7 @@ OTHER RESISTANCE GENES:
   blaSHV-12: 99.42% identity, 100.00% coverage
     Mutations: G238A,E240G
   ompK36: 99.90% identity, 91.58% coverage
-    Mutations: G134L,D135*/N,G213T
+    Mutations: G213I
 
 
 MUTATION DETECTION SUMMARY (Dual-Method):
@@ -55,7 +55,7 @@ Method: Seqkit/Amplicon
     Location: JBCEBJ010000045.1:14085-14937 (852 bp)
     Primers: blaKPC_F -> blaKPC_R
     Mutations/Genes in amplicon:
-      - blaKPC-2: L166A,E167R,L168D,N169T,D178S
+      - blaKPC-2: L166del,E167del,L168del,N169del
 
 GENE MUTATION ANALYSIS (GAMMA):
 Method: GAMMA (protein-level gene alignment)

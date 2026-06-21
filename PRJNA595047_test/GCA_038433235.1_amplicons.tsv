@@ -1,2 +1,2 @@
 Pair_ID	Contig	Start	End	Length	Mutations_Found	Method
-blaKPC_ver	JBCEBJ010000045.1	14085	14937	852	blaKPC-2: L166A,E167R,L168D,N169T,D178S	Seqkit/Amplicon
+blaKPC_ver	JBCEBJ010000045.1	14085	14937	852	blaKPC-2: L166del,E167del,L168del,N169del	Seqkit/Amplicon

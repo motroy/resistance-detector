@@ -211,14 +211,9 @@ def check_dependencies(tools):
         return False
     return True
 
-def detect_mutations(gene_name, sequence, mutation_db=None):
-    """Detect known mutations in a gene sequence"""
-    mutations_found = []
-
-    # Use provided DB or fallback to default
-    db = mutation_db if mutation_db else KNOWN_MUTATIONS
-
-    # Get base gene name (remove variant numbers)
+def _lookup_mutation_dict(gene_name, db):
+    """Resolve gene_name (possibly a specific variant like 'blaKPC-3') to its
+    mutation position dict in db, normalizing variant suffixes first."""
     base_gene = gene_name.split('-')[0]
     if base_gene.lower().startswith('bla'):
         base_gene = 'bla' + base_gene[3:].rstrip('0123456789')
@@ -226,12 +221,22 @@ def detect_mutations(gene_name, sequence, mutation_db=None):
         # fosA3/4/5/7/11 -> fosA  (fosAKP is unaffected: KP not digits)
         base_gene = base_gene.rstrip('0123456789')
 
-    # Try exact match first
     if gene_name in db:
-        mutation_dict = db[gene_name]
-    elif base_gene in db:
-        mutation_dict = db[base_gene]
-    else:
+        return db[gene_name]
+    if base_gene in db:
+        return db[base_gene]
+    return None
+
+
+def detect_mutations(gene_name, sequence, mutation_db=None):
+    """Detect known mutations in a gene sequence"""
+    mutations_found = []
+
+    # Use provided DB or fallback to default
+    db = mutation_db if mutation_db else KNOWN_MUTATIONS
+
+    mutation_dict = _lookup_mutation_dict(gene_name, db)
+    if mutation_dict is None:
         return mutations_found
 
     # Translate to protein
@@ -257,6 +262,70 @@ def detect_mutations(gene_name, sequence, mutation_db=None):
     except Exception as e:
         print(f"Warning: Could not translate {gene_name}: {e}",
               file=sys.stderr)
+
+    return mutations_found
+
+
+def detect_mutations_aligned(gene_name, qseq_aln, sseq_aln, sstart, send, mutation_db=None):
+    """Detect known mutations using a gapped nucleotide alignment (e.g. BLAST's
+    qseq/sseq with '-' gap characters), rather than a fixed-position lookup
+    against the raw query sequence.
+
+    detect_mutations() assumes the query has no indels relative to the
+    reference gene, so reference position N always lines up with position N
+    of the translated query. When the query has a real insertion or
+    deletion, every mutation position downstream of it is read from the
+    wrong (frame-shifted) codon, which can fabricate plausible-looking but
+    false substitution calls. This function instead walks the actual
+    alignment columns so each reference codon is matched to its true
+    corresponding query codon (or to a gap, reported as e.g. "L166del").
+    """
+    mutations_found = []
+
+    db = mutation_db if mutation_db else KNOWN_MUTATIONS
+    mutation_dict = _lookup_mutation_dict(gene_name, db)
+    if mutation_dict is None:
+        return mutations_found
+
+    qseq_aln = qseq_aln.upper()
+    sseq_aln = sseq_aln.upper()
+
+    if sstart > send:
+        qseq_aln = str(Seq(qseq_aln).reverse_complement())
+        sseq_aln = str(Seq(sseq_aln).reverse_complement())
+        sstart, send = send, sstart
+
+    # Map each ungapped subject (reference gene) nt position to its column
+    # in the gapped alignment.
+    col_for_subject_pos = {}
+    subj_pos = sstart - 1
+    for col, s_char in enumerate(sseq_aln):
+        if s_char != '-':
+            subj_pos += 1
+            col_for_subject_pos[subj_pos] = col
+
+    for pos, mut_info in mutation_dict.items():
+        nt_start = (pos - 1) * 3 + 1
+        cols = [col_for_subject_pos.get(nt_start + i) for i in range(3)]
+        if any(c is None for c in cols):
+            continue  # this codon isn't covered by the alignment
+
+        query_chars = [qseq_aln[c] for c in cols]
+        ref_aa = mut_info['ref']
+
+        if '-' in query_chars:
+            mutations_found.append(f"{ref_aa}{pos}del")
+            continue
+
+        try:
+            observed_aa = str(Seq(''.join(query_chars)).translate())
+        except Exception:
+            continue
+
+        if observed_aa in mut_info['variants']:
+            mutations_found.append(mut_info['name'])
+        elif observed_aa != ref_aa:
+            mutations_found.append(f"{ref_aa}{pos}{observed_aa}")
 
     return mutations_found
 
