@@ -9,6 +9,7 @@ Covers:
 """
 import sys
 import os
+import subprocess
 import pytest
 
 sys.path.insert(0, os.path.join(os.path.dirname(__file__), '..'))
@@ -16,6 +17,30 @@ from fos_cazavi.mutations import MutationDetector
 
 
 # ── Fixture helpers ────────────────────────────────────────────────────────────
+
+def blaKPC3_real_seq():
+    """The bundled blaKPC-3 reference CDS (data/example_database.fasta)."""
+    return (
+        "atgtcactgtatcgccgtctagttctgctgtcttgtctctcatggccgctggctggcttttctgccaccgcgctgacc"
+        "aacctcgtcgcggaaccattcgctaaactcgaacaggactttggcggctccatcggtgtgtacgcgatggataccggc"
+        "tcaggcgcaactgtaagttaccgcgctgaggagcgcttcccactgtgcagctcattcaagggctttcttgctgccgct"
+        "gtgctggctcgcagccagcagcaggccggcttgctggacacacccatccgttacggcaaaaatgcgctggttccgtgg"
+        "tcacccatctcggaaaaatatctgacaacaggcatgacggtggcggagctgtccgcggccgccgtgcaatacagtgat"
+        "aacgccgccgccaatttgttgctgaaggagttgggcggcccggccgggctgacggccttcatgcgctctatcggcgat"
+        "accacgttccgtctggaccgctgggagctggagctgaactccgccatcccaggcgatgcgcgcgatacctcatcgccg"
+        "cgcgccgtgacggaaagcttacaaaaactgacactgggctctgcactggctgcgccgcagcggcagcagtttgttgat"
+        "tggctaaagggaaacacgaccggcaaccaccgcatccgcgcggcggtgccggcagactgggcagtcggagacaaaacc"
+        "ggaacctgcggagtgtatggcacggcaaatgactatgccgtcgtctggcccactgggcgcgcacctattgtgttggcc"
+        "gtctacacccgggcgcctaacaaggatgacaagtacagcgaggccgtcatcgccgctgcggctagactcgcgctcgag"
+        "ggattgggcgtcaacgggcagtaa"
+    ).upper()
+
+
+def mutate(dna, codon_pos, new_codon):
+    """Replace the codon at *codon_pos* (1-indexed) in *dna*."""
+    start = (codon_pos - 1) * 3
+    return dna[:start] + new_codon + dna[start + 3:]
+
 
 def make_detector(gamma_results=None):
     """Create a MutationDetector without running any subprocesses."""
@@ -338,3 +363,48 @@ class TestMergeDetectionResults:
         for r in unified:
             assert r['confidence'] == 100
             assert set(r['methods']) == {'gamma', 'seqkit'}
+
+
+# ── detect_seqkit_mutations(): real seqkit --bed output parsing ────────────
+
+class TestDetectSeqkitMutationsBedParsing:
+    """
+    Regression test for the seqkit amplicon output format.
+
+    seqkit v2.8.2's default FASTA output only puts the matched contig's
+    description in the header, never the primer pair name, so pair IDs
+    could never be recovered from it. detect_seqkit_mutations() must
+    invoke `seqkit amplicon --bed` (name in column 4, sequence in column 7)
+    instead, mirroring the already-correct pattern used by
+    detect_amplicons() for coordinate mapping.
+    """
+
+    def _make_detector_with_primers(self, tmp_path, monkeypatch, bed_line):
+        d = MutationDetector.__new__(MutationDetector)
+        d.assembly = "fake.fasta"
+        d.output_prefix = str(tmp_path / "fake_output")
+        d.primers = {
+            'blaKPC_F': {'seq': 'ATGTCACTGTATCGCCGTCT', 'purpose': '', 'mutation': None,
+                         'gene': 'blaKPC', 'pair_id': 'blaKPC_ver'},
+            'blaKPC_R': {'seq': 'TTACTGCCCGTTGACGCCCA', 'purpose': '', 'mutation': None,
+                         'gene': 'blaKPC', 'pair_id': 'blaKPC_ver'},
+        }
+
+        def fake_run(cmd, **kwargs):
+            assert '--bed' in cmd
+            return subprocess.CompletedProcess(cmd, 0, stdout=bed_line, stderr='')
+
+        monkeypatch.setattr(subprocess, 'run', fake_run)
+        return d
+
+    def test_x_loop_mutation_detected_via_bed(self, tmp_path, monkeypatch):
+        """Mutation found in the gene-verification amplicon must be attributed
+        to the correct pair_id, recovered from the BED 'name' column, even
+        though the default FASTA header would carry no primer pair name."""
+        kpc_seq = mutate(blaKPC3_real_seq(), 168, 'CCT')  # L(CTG) -> P(CCT)
+        bed_line = f"contig1\t100\t982\tblaKPC_ver\t0\t+\t{kpc_seq}\n"
+        d = self._make_detector_with_primers(tmp_path, monkeypatch, bed_line)
+        results = d.detect_seqkit_mutations()
+        assert len(results) == 1
+        assert results[0]['pair_id'] == 'blaKPC_ver'
+        assert 'L168P (KPC-46)' in results[0]['mutations']

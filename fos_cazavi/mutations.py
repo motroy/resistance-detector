@@ -5,6 +5,7 @@ import subprocess
 from pathlib import Path
 from collections import defaultdict
 import re
+from Bio.Seq import Seq
 from .utils import load_primers, load_mutation_db, detect_mutations as _detect_mutations, KNOWN_MUTATIONS
 
 
@@ -264,8 +265,13 @@ class MutationDetector:
         seqkit_mut_results = []
 
         try:
+            # --bed puts the primer pair name in column 4 and the amplicon
+            # sequence in column 7 (BED6+1). The default FASTA output's
+            # header only contains the matched contig's description, not
+            # the primer pair name, so it cannot be used to recover which
+            # pair produced which amplicon.
             result = subprocess.run(
-                ['seqkit', 'amplicon', '-p', seqkit_primer_file, self.assembly],
+                ['seqkit', 'amplicon', '-p', seqkit_primer_file, '--bed', self.assembly],
                 capture_output=True, text=True
             )
 
@@ -273,28 +279,18 @@ class MutationDetector:
                 print("  SeqKit: no amplicons found")
                 return []
 
-            # Parse FASTA output
-            current_header = None
-            current_seq_parts = []
             amplicons = []
-
             for line in result.stdout.strip().split('\n'):
-                if line.startswith('>'):
-                    if current_header is not None and current_seq_parts:
-                        amplicons.append((current_header, ''.join(current_seq_parts)))
-                    current_header = line[1:]
-                    current_seq_parts = []
-                else:
-                    current_seq_parts.append(line.strip())
-
-            if current_header is not None and current_seq_parts:
-                amplicons.append((current_header, ''.join(current_seq_parts)))
+                fields = line.split('\t')
+                if len(fields) < 7:
+                    continue
+                pair_id, seq = fields[3], fields[6]
+                amplicons.append((pair_id, seq))
 
             print(f"  SeqKit (Targeted): Extracted {len(amplicons)} amplicons for mutation analysis")
 
-            for header, seq in amplicons:
-                pair_id = self._extract_pair_id_from_header(header, valid_pairs)
-                if not pair_id:
+            for pair_id, seq in amplicons:
+                if pair_id not in valid_pairs:
                     continue
 
                 p = valid_pairs[pair_id]
@@ -316,16 +312,25 @@ class MutationDetector:
                         mut_name = parts[-1]  # e.g. "G469R"
                         mutations_found = [mut_name]
                 else:
-                    # Gene-level verification primer: translate & check for mutations.
-                    # Try all 3 reading frames to account for different amplicon starts.
-                    seen = set()
+                    # Gene-level verification primer: translate & check for
+                    # mutations. The amplicon's start may be offset by 0-2 nt
+                    # from the gene's reading frame, so pick whichever of the
+                    # 3 frames translates without premature internal stop
+                    # codons (real coding sequence) rather than merging all
+                    # 3 - the two wrong frames produce essentially random
+                    # amino acids at every position, which would otherwise
+                    # masquerade as "novel mutations" at every known site.
+                    best_frame_seq = None
                     for frame in range(3):
                         frame_seq = seq[frame:]
-                        frame_muts = _detect_mutations(gene, frame_seq, KNOWN_MUTATIONS)
-                        for m in frame_muts:
-                            if m not in seen:
-                                seen.add(m)
-                                mutations_found.append(m)
+                        trimmed_len = len(frame_seq) - (len(frame_seq) % 3)
+                        protein = str(Seq(frame_seq[:trimmed_len]).translate())
+                        if '*' not in protein.rstrip('*'):
+                            best_frame_seq = frame_seq
+                            break
+
+                    if best_frame_seq is not None:
+                        mutations_found = _detect_mutations(gene, best_frame_seq, KNOWN_MUTATIONS)
 
                 if mutations_found:
                     seqkit_mut_results.append({
@@ -441,11 +446,19 @@ class MutationDetector:
         return unified
 
     def write_unified_report(self):
-        """Write the unified dual-method mutation report (TSV)."""
+        """Write the unified dual-method mutation report (TSV).
+
+        Always (re)writes the report file, even when empty, so a clean
+        re-run doesn't leave a stale report from a previous run with
+        mutations behind.
+        """
+        report_file = f"{self.output_prefix}_unified_mutations.tsv"
+
         if not self.unified_results:
+            if os.path.exists(report_file):
+                os.remove(report_file)
             return
 
-        report_file = f"{self.output_prefix}_unified_mutations.tsv"
         print(f"Writing unified mutation report to {report_file}...")
 
         with open(report_file, 'w') as f:

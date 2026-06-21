@@ -1,0 +1,2 @@
+Pair_ID	Contig	Start	End	Length	Mutations_Found	Method
+blaKPC_ver	JAHUYZ010000039.1	13051	13933	882	blaKPC-3: L168P (KPC-46)	Seqkit/Amplicon
