@@ -33,21 +33,70 @@
       ]
     },
     {
-      "gene": "blaKPC-3",
+      "gene": "blaKPC-31",
       "copy_number": 1,
       "loci": [
         {
           "contig": "contig_plasmid2_blaKPC3",
           "start": 25001,
           "end": 25882,
-          "identity": "99.32",
+          "identity": "99.89",
           "coverage": "100.00",
-          "mutations": "-"
+          "mutations": "D179Y/N,T243M"
         }
       ]
     }
   ],
-  "mutations": [],
+  "mutations": [
+    {
+      "gene": "blakpc",
+      "mutation": "D179Y/N",
+      "confidence": 50,
+      "methods": [
+        "seqkit"
+      ],
+      "gamma_detail": null,
+      "seqkit_detail": {
+        "gene": "blaKPC",
+        "pair_id": "blaKPC_ver",
+        "mutations": [
+          "D179Y/N",
+          "T243M"
+        ],
+        "method": "seqkit"
+      }
+    },
+    {
+      "gene": "blakpc",
+      "mutation": "T243M",
+      "confidence": 100,
+      "methods": [
+        "gamma",
+        "seqkit"
+      ],
+      "gamma_detail": {
+        "protein": "blaKPC-31",
+        "contig": "contig_plasmid2_blaKPC3",
+        "contig_start": 25000,
+        "contig_end": 25882,
+        "identity": 99.66000000000001,
+        "coverage": 100.0,
+        "mutations": [
+          "T243M"
+        ],
+        "match_type": "Mutant"
+      },
+      "seqkit_detail": {
+        "gene": "blaKPC",
+        "pair_id": "blaKPC_ver",
+        "mutations": [
+          "D179Y/N",
+          "T243M"
+        ],
+        "method": "seqkit"
+      }
+    }
+  ],
   "gene_alignments": [
     {
       "protein": "fosA3",
@@ -60,13 +109,15 @@
       "match_type": "Native"
     },
     {
-      "protein": "blaKPC-3",
+      "protein": "blaKPC-31",
       "contig": "contig_plasmid2_blaKPC3",
       "contig_start": 25000,
       "contig_end": 25882,
-      "identity": 99.32,
+      "identity": 99.66000000000001,
       "coverage": 100.0,
-      "mutations": [],
+      "mutations": [
+        "T243M"
+      ],
       "match_type": "Mutant"
     },
     {
@@ -90,7 +141,7 @@
       "f_primer": "blaKPC_F",
       "r_primer": "blaKPC_R",
       "mutations_found": [
-        "blaKPC-3: (wildtype)"
+        "blaKPC-31: D179Y/N,T243M"
       ]
     }
   ],
@@ -102,9 +153,11 @@
       ]
     },
     "ceftazidime_avibactam": {
-      "phenotype": "Susceptible",
+      "phenotype": "Resistant",
       "evidence": [
-        "No blaKPC Omega-loop/X-loop resistance marker detected (wildtype blaKPC, if present, remains avibactam-inhibitable)"
+        "blaKPC variant blaKPC-31 carries Omega-loop/X-loop resistance marker(s): D179Y/N,T243M",
+        "blaKPC mutation D179Y/N detected in blakpc (Omega-loop/X-loop avibactam-resistance marker)",
+        "blaKPC mutation T243M detected in blakpc (Omega-loop/X-loop avibactam-resistance marker)"
       ]
     },
     "disclaimer": "Genotype-based prediction only; not a substitute for phenotypic antimicrobial susceptibility testing (AST)."

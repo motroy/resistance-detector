@@ -253,7 +253,9 @@ def create_cazavi_blakpc2_d179y(refs):
                                      f"contig_{i}", ""))
     seq = refs.get('blaKPC-2')
     if seq:
-        mut = introduce_mutation(seq, 179, 'TAT')   # D179Y: GAT->TAT
+        # D179Y (literature/Ambler numbering) is stored at literal CDS codon 178
+        # in this reference (see fos_cazavi/utils.py KNOWN_MUTATIONS['blaKPC']).
+        mut = introduce_mutation(seq, 178, 'TAT')   # D179Y: GAT->TAT
         contigs.append(create_contig(embed_in_contig(mut),
                                      'contig_plasmid_blaKPC2',
                                      'contains=blaKPC-2_D179Y'))
@@ -268,19 +270,21 @@ def create_cazavi_blakpc3(refs):
                                      f"contig_{i}", ""))
     seq = refs.get('blaKPC-3')
     if seq:
+        # Literature positions D179Y/V240G/T243M map to literal CDS codons
+        # 178/239/242 in this reference (see KNOWN_MUTATIONS['blaKPC']).
         # D179Y alone
-        mut_d179y = introduce_mutation(seq, 179, 'TAT')
+        mut_d179y = introduce_mutation(seq, 178, 'TAT')
         contigs.append(create_contig(embed_in_contig(mut_d179y),
                                      'contig_plasmid_blaKPC3_D179Y',
                                      'contains=blaKPC-3_D179Y'))
         # V240G alone
-        mut_v240g = introduce_mutation(seq, 240, 'GGT')
+        mut_v240g = introduce_mutation(seq, 239, 'GGT')
         contigs.append(create_contig(embed_in_contig(mut_v240g),
                                      'contig_plasmid_blaKPC3_V240G',
                                      'contains=blaKPC-3_V240G'))
         # D179Y + T243M double mutant
-        mut_double = introduce_mutation(seq, 179, 'TAT')
-        mut_double = introduce_mutation(mut_double, 243, 'ATG')
+        mut_double = introduce_mutation(seq, 178, 'TAT')
+        mut_double = introduce_mutation(mut_double, 242, 'ATG')
         contigs.append(create_contig(embed_in_contig(mut_double),
                                      'contig_plasmid_blaKPC3_D179Y_T243M',
                                      'contains=blaKPC-3_D179Y_T243M'))
@@ -295,7 +299,7 @@ def create_cazavi_blakpc31_d179y(refs):
                                      f"contig_{i}", ""))
     seq = refs.get('blaKPC-31')
     if seq:
-        mut = introduce_mutation(seq, 179, 'TAT')
+        mut = introduce_mutation(seq, 178, 'TAT')
         contigs.append(create_contig(embed_in_contig(mut),
                                      'contig_plasmid_blaKPC31',
                                      'contains=blaKPC-31_D179Y'))
@@ -440,8 +444,10 @@ def create_multi_resistance(refs):
         contigs.append(create_contig(p1_seq, "contig_plasmid1_fosA3", "contains=fosA3"))
 
     if blakpc3:
-        blakpc3_mut = introduce_mutation(blakpc3, 179, "TAT")   # D179Y
-        blakpc3_mut = introduce_mutation(blakpc3_mut, 243, "ATG")  # T243M
+        # Literature D179Y/T243M map to literal CDS codons 178/242 in this
+        # reference (see KNOWN_MUTATIONS['blaKPC'] in fos_cazavi/utils.py).
+        blakpc3_mut = introduce_mutation(blakpc3, 178, "TAT")   # D179Y
+        blakpc3_mut = introduce_mutation(blakpc3_mut, 242, "ATG")  # T243M
         p2_seq = embed_in_contig(blakpc3_mut, padding=25000)
         contigs.append(create_contig(p2_seq, "contig_plasmid2_blaKPC3",
                                      "contains=blaKPC-3_D179Y_T243M"))
