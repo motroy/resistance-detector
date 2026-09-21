@@ -1,0 +1,3 @@
+Gene	Mutation	Confidence(%)	Methods	GAMMA_Contig	GAMMA_Identity(%)	GAMMA_Coverage(%)	SeqKit_PairID
+blakpc	D179Y/N	50	seqkit	-	-	-	blaKPC_ver
+blakpc	T243M	100	gamma+seqkit	contig_plasmid2_blaKPC3	99.66	100.00	blaKPC_ver

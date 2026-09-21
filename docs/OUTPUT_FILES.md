@@ -51,8 +51,10 @@ PREDICTED PHENOTYPES (genotype-based):
 --------------------------------------------------
   Fosfomycin (FOS): Resistant
     - Acquired fosfomycin-inactivating enzyme fosA3 detected (100.00% identity, 100.00% coverage)
-  Ceftazidime-Avibactam (CAZ/AVI): Susceptible
-    - No blaKPC Omega-loop/X-loop resistance marker detected (wildtype blaKPC, if present, remains avibactam-inhibitable)
+  Ceftazidime-Avibactam (CAZ/AVI): Resistant
+    - blaKPC variant blaKPC-31 carries Omega-loop/X-loop resistance marker(s): D179Y/N,T243M
+    - blaKPC mutation D179Y/N detected in blakpc (Omega-loop/X-loop avibactam-resistance marker)
+    - blaKPC mutation T243M detected in blakpc (Omega-loop/X-loop avibactam-resistance marker)
   Note: Genotype-based prediction only; not a substitute for phenotypic antimicrobial susceptibility testing (AST).
 
 Total genes detected: 3
@@ -65,14 +67,18 @@ FOSFOMYCIN RESISTANCE GENES:
 
 CEFTAZIDIME-AVIBACTAM RESISTANCE (KPC):
 --------------------------------------------------
-  blaKPC-3 (copy number: 1): 99.32% identity, 100.00% coverage
+  blaKPC-31 (copy number: 1): 99.89% identity, 100.00% coverage
+    Mutations: D179Y/N,T243M
 
 CEFTAZIDIME-AVIBACTAM RESISTANCE (OXA):
 --------------------------------------------------
   blaOXA-48 (copy number: 1): 100.00% identity, 100.00% coverage
 ```
 
-Here `blaKPC-3` carries no tracked Omega-loop/X-loop mutation, so it predicts CAZ/AVI-Susceptible even though `blaKPC-3` itself is detected — wildtype `blaKPC` is not inherently avibactam-resistant.
+Here the acquired `blaKPC` hit's closest reference is `blaKPC-31` (which already carries the same X-loop
+D179Y substitution natively), and it also carries the introduced T243M mutation, so it predicts
+CAZ/AVI-Resistant. A `blaKPC` hit with no tracked Omega-loop/X-loop mutation instead predicts
+CAZ/AVI-Susceptible — wildtype `blaKPC` is not inherently avibactam-resistant.
 
 ### BLAST Results (`*_results.tsv`)
 
@@ -80,7 +86,7 @@ Here `blaKPC-3` carries no tracked Omega-loop/X-loop mutation, so it predicts CA
 Contig	Gene	Identity%	Coverage%	Mutations	Method	Copy_Number
 contig_plasmid3_blaOXA48	blaOXA-48	100.00	100.00	-	BLAST	1
 contig_plasmid1_fosA3	fosA3	100.00	100.00	K90E/Q,H119L	BLAST	1
-contig_plasmid2_blaKPC3	blaKPC-3	99.32	100.00	-	BLAST	1
+contig_plasmid2_blaKPC3	blaKPC-31	99.89	100.00	D179Y/N,T243M	BLAST	1
 ```
 
 `Copy_Number` is the number of distinct genomic loci where that gene was detected (after redundancy filtering). A gene detected on two different contigs/loci will show `Copy_Number: 2` on both rows.
@@ -93,9 +99,9 @@ for downstream scripting/filtering, with no comment lines to skip):
 
 ```tsv
 Sample	Gene	Copy_Number	Loci	Max_Identity%	Max_Coverage%	Mutations	Predicted_Phenotype_Fosfomycin	Fosfomycin_Evidence	Predicted_Phenotype_Ceftazidime_Avibactam	Ceftazidime_Avibactam_Evidence	Phenotype_Disclaimer
-ecoli_multi_resistance.fasta	blaOXA-48	1	contig_plasmid3_blaOXA48:30001-30798	100.00	100.00	-	Resistant	Acquired fosfomycin-inactivating enzyme fosA3 detected (100.00% identity, 100.00% coverage)	Susceptible	No blaKPC Omega-loop/X-loop resistance marker detected (wildtype blaKPC, if present, remains avibactam-inhibitable)	Genotype-based prediction only; not a substitute for phenotypic antimicrobial susceptibility testing (AST).
-ecoli_multi_resistance.fasta	fosA3	1	contig_plasmid1_fosA3:20001-20417	100.00	100.00	H119L,K90E/Q	Resistant	Acquired fosfomycin-inactivating enzyme fosA3 detected (100.00% identity, 100.00% coverage)	Susceptible	No blaKPC Omega-loop/X-loop resistance marker detected (wildtype blaKPC, if present, remains avibactam-inhibitable)	Genotype-based prediction only; not a substitute for phenotypic antimicrobial susceptibility testing (AST).
-ecoli_multi_resistance.fasta	blaKPC-3	1	contig_plasmid2_blaKPC3:25001-25882	99.32	100.00	-	Resistant	Acquired fosfomycin-inactivating enzyme fosA3 detected (100.00% identity, 100.00% coverage)	Susceptible	No blaKPC Omega-loop/X-loop resistance marker detected (wildtype blaKPC, if present, remains avibactam-inhibitable)	Genotype-based prediction only; not a substitute for phenotypic antimicrobial susceptibility testing (AST).
+ecoli_multi_resistance.fasta	blaOXA-48	1	contig_plasmid3_blaOXA48:30001-30798	100.00	100.00	-	Resistant	Acquired fosfomycin-inactivating enzyme fosA3 detected (100.00% identity, 100.00% coverage)	Resistant	blaKPC variant blaKPC-31 carries Omega-loop/X-loop resistance marker(s): D179Y/N,T243M; blaKPC mutation D179Y/N detected in blakpc (Omega-loop/X-loop avibactam-resistance marker); blaKPC mutation T243M detected in blakpc (Omega-loop/X-loop avibactam-resistance marker)	Genotype-based prediction only; not a substitute for phenotypic antimicrobial susceptibility testing (AST).
+ecoli_multi_resistance.fasta	fosA3	1	contig_plasmid1_fosA3:20001-20417	100.00	100.00	H119L,K90E/Q	Resistant	Acquired fosfomycin-inactivating enzyme fosA3 detected (100.00% identity, 100.00% coverage)	Resistant	blaKPC variant blaKPC-31 carries Omega-loop/X-loop resistance marker(s): D179Y/N,T243M; blaKPC mutation D179Y/N detected in blakpc (Omega-loop/X-loop avibactam-resistance marker); blaKPC mutation T243M detected in blakpc (Omega-loop/X-loop avibactam-resistance marker)	Genotype-based prediction only; not a substitute for phenotypic antimicrobial susceptibility testing (AST).
+ecoli_multi_resistance.fasta	blaKPC-31	1	contig_plasmid2_blaKPC3:25001-25882	99.89	100.00	D179Y/N,T243M	Resistant	Acquired fosfomycin-inactivating enzyme fosA3 detected (100.00% identity, 100.00% coverage)	Resistant	blaKPC variant blaKPC-31 carries Omega-loop/X-loop resistance marker(s): D179Y/N,T243M; blaKPC mutation D179Y/N detected in blakpc (Omega-loop/X-loop avibactam-resistance marker); blaKPC mutation T243M detected in blakpc (Omega-loop/X-loop avibactam-resistance marker)	Genotype-based prediction only; not a substitute for phenotypic antimicrobial susceptibility testing (AST).
 ```
 
 `*_summary.json` contains the same `predicted_phenotypes` block plus the per-gene aggregation (with full per-locus detail), mutation, gene-alignment, and amplicon results, for easy parsing by downstream scripts/pipelines. See `example_results/ecoli_multi_summary.json` for the full file.

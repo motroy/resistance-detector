@@ -8,8 +8,10 @@ PREDICTED PHENOTYPES (genotype-based):
 --------------------------------------------------
   Fosfomycin (FOS): Resistant
     - Acquired fosfomycin-inactivating enzyme fosA3 detected (100.00% identity, 100.00% coverage)
-  Ceftazidime-Avibactam (CAZ/AVI): Susceptible
-    - No blaKPC Omega-loop/X-loop resistance marker detected (wildtype blaKPC, if present, remains avibactam-inhibitable)
+  Ceftazidime-Avibactam (CAZ/AVI): Resistant
+    - blaKPC variant blaKPC-31 carries Omega-loop/X-loop resistance marker(s): D179Y/N,T243M
+    - blaKPC mutation D179Y/N detected in blakpc (Omega-loop/X-loop avibactam-resistance marker)
+    - blaKPC mutation T243M detected in blakpc (Omega-loop/X-loop avibactam-resistance marker)
   Note: Genotype-based prediction only; not a substitute for phenotypic antimicrobial susceptibility testing (AST).
 
 Total genes detected: 3
@@ -22,7 +24,8 @@ FOSFOMYCIN RESISTANCE GENES:
 
 CEFTAZIDIME-AVIBACTAM RESISTANCE (KPC):
 --------------------------------------------------
-  blaKPC-3 (copy number: 1): 99.32% identity, 100.00% coverage
+  blaKPC-31 (copy number: 1): 99.89% identity, 100.00% coverage
+    Mutations: D179Y/N,T243M
 
 CEFTAZIDIME-AVIBACTAM RESISTANCE (OXA):
 --------------------------------------------------
@@ -30,8 +33,13 @@ CEFTAZIDIME-AVIBACTAM RESISTANCE (OXA):
 
 
 MUTATION DETECTION SUMMARY (Dual-Method):
+Methods: GAMMA (protein-level alignment) + SeqKit (amplicon)
+Confidence: 100% = detected by both methods; 50% = detected by one method
 ----------------------------------------------------------------------
-  No resistance mutations detected by GAMMA or seqkit.
+
+  Gene: blakpc
+    D179Y/N         Confidence:  50%  [seqkit]
+    T243M           Confidence: 100%  [gamma+seqkit]
 
 
 DETECTED AMPLICONS:
@@ -41,7 +49,7 @@ Method: Seqkit/Amplicon
     Location: contig_plasmid2_blaKPC3:25000-25882 (882 bp)
     Primers: blaKPC_F -> blaKPC_R
     Mutations/Genes in amplicon:
-      - blaKPC-3: (wildtype)
+      - blaKPC-31: D179Y/N,T243M
 
 GENE MUTATION ANALYSIS (GAMMA):
 Method: GAMMA (protein-level gene alignment)
