@@ -6,6 +6,10 @@ dependencies:
   - python>=3.8
   - blast>=2.10
   - biopython>=1.78
-  - seqkit>=2.3
+  # seqkit <2.8 (e.g. Ubuntu/Debian-packaged 2.3.x builds) has a coordinate bug in
+  # `seqkit amplicon --bed`: it can report the wrong genomic location for a
+  # reverse-strand amplicon match, which silently drops real mutation calls
+  # that depend on amplicon coordinates. Pin >=2.8 to avoid it.
+  - seqkit>=2.8
   - gamma
   - pytest>=7.0

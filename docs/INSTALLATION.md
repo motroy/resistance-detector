@@ -6,7 +6,7 @@
 - **GAMMA** (Gene Allele Mutation Microbial Assessment)
 - **BLAT** (required by GAMMA for its protein-level alignment search)
 - **GAMMA_DB_Maker** (for preparing nucleotide databases for GAMMA)
-- **SeqKit**
+- **SeqKit** (>=2.8 — older builds, including the seqkit packaged by Ubuntu/Debian's `apt` as of 2.3.x, have a coordinate bug in `seqkit amplicon --bed` that can report the wrong genomic location for a reverse-strand amplicon match, silently dropping real mutation calls that depend on amplicon coordinates)
 - **Python 3** with **Biopython**
 
 ## Option 1: pip (Recommended)
