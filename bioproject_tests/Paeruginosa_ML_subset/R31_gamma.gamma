@@ -1,0 +1,6 @@
+Gene	Contig	Start	Stop	Match_Type	Description	Codon_Changes	BP_Changes	Transversions	Codon_Percent	BP_Percent	Percent_Length	Match_Length	Target_Length	Strand
+blaPDC-1	CP061850.1	226328	227522	Mutant	T105A,L176R,	2	5	1	0.9950	0.9958	1	1194	1194	-
+nalD	CP061850.1	808000	808639	Mutant	A37T,	1	2	0	0.9953	0.9969	1	639	639	-
+fosA_PA1129	CP061850.1	3885884	3886292	Native	No coding mutations	0	4	0	1	0.9902	1	408	408	-
+mexR	CP061850.1	6778129	6778573	Native	No coding mutations	0	2	1	1	0.9955	1	444	444	-
+blaKPC-2	CP061851.1	6249	7131	Native	No coding mutations	0	0	0	1	1	1	882	882	+

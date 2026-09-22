@@ -1,0 +1,6 @@
+Gene	Mutation	Confidence(%)	Methods	Contig	Reported_As_Resistance_Mutation
+blaIMP-99	S69I	50	blast	CP045739.1	yes
+blaPDC-1	T105A	100	blast+gamma	CP045739.1	yes
+fosA_PA1129	E110_D135del	50	blast	CP045739.1	no
+fosA_PA1129	Y55C	50	blast	CP045739.1	no
+mexR	V126E	100	blast+gamma	CP045739.1	no

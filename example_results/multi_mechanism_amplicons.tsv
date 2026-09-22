@@ -1,0 +1,2 @@
+Pair_ID	Contig	Start	End	Length	Genes_In_Region	Method
+blaKPC_ver	contig_blaKPC	800	1682	882	blaKPC-33: D179Y	SeqKit/amplicon

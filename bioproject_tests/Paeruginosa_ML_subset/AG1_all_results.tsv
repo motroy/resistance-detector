@@ -1,0 +1,12 @@
+Sample	Type	Gene	Allele	Method	Result_Details	Identity_Confidence	Contig	Start	End	Copy_Number	Notes
+AG1.fna	Acquired gene	blaPDC-1	blaPDC-like	BLAST	Coverage: 100.00%	99.41%	CP045739.1	1034176	1035369	1	protein changes: T105A
+AG1.fna	Acquired gene	blaVIM-2	blaVIM-2	BLAST	Coverage: 100.00%	100.00%	CP045739.1	3528229	3529029	1	no protein changes vs reference
+AG1.fna	Acquired gene	blaIMP-99	blaIMP-like	BLAST	Coverage: 100.00%	99.86%	CP045739.1	6121110	6121850	1	protein changes: S69I
+AG1.fna	Chromosomal gene	nalD	nalD	BLAST	Coverage: 100.00%	99.84%	CP045739.1	1752289	1752927	1	no protein changes vs reference
+AG1.fna	Chromosomal gene	mexR	mexR	BLAST	Coverage: 100.00%	98.87%	CP045739.1	555374	555817	1	protein changes: V126E
+AG1.fna	Chromosomal gene	fosA_PA1129	fosA_PA1129	BLAST	Coverage: 100.00%	98.53%	CP045739.1	4948504	4948911	1	protein changes: Y55C;E110_D135del; premature stop at residue 110 (109/135 aa)
+AG1.fna	Protein change	blaIMP-99	-	blast	S69I	50%	CP045739.1	-	-	-	reported as resistance mutation
+AG1.fna	Protein change	blaPDC-1	-	blast+gamma	T105A	100%	CP045739.1	-	-	-	reported as resistance mutation
+AG1.fna	Protein change	fosA_PA1129	-	blast	E110_D135del	50%	CP045739.1	-	-	-	sequence difference, not a curated resistance mutation
+AG1.fna	Protein change	fosA_PA1129	-	blast	Y55C	50%	CP045739.1	-	-	-	sequence difference, not a curated resistance mutation
+AG1.fna	Protein change	mexR	-	blast+gamma	V126E	100%	CP045739.1	-	-	-	sequence difference, not a curated resistance mutation

@@ -1,0 +1,4 @@
+Gene	Mutation	Confidence(%)	Methods	Contig	Reported_As_Resistance_Mutation
+blaPDC-1	L176R	100	blast+gamma	CP065417.1	yes
+blaPDC-1	T105A	100	blast+gamma	CP065417.1	yes
+nalD	A37T	100	blast+gamma	CP065417.1	no

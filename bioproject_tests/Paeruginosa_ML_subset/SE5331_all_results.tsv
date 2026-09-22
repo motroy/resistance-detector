@@ -1,0 +1,14 @@
+Sample	Type	Gene	Allele	Method	Result_Details	Identity_Confidence	Contig	Start	End	Copy_Number	Notes
+SE5331.fna	Acquired gene	blaPDC-1	blaPDC-like	BLAST	Coverage: 100.00%	99.25%	CP046402.2	2164511	2165704	1	protein changes: G27D;A97V;T105A;V205L;G391A
+SE5331.fna	Acquired gene	blaGES-61	blaGES-like	BLAST	Coverage: 100.00%	99.88%	CP046402.2	5421019	5421882	1	protein changes: E38Q
+SE5331.fna	Chromosomal gene	nalD	nalD	BLAST	Coverage: 100.00%	99.37%	CP046402.2	1581561	1582199	1	no protein changes vs reference
+SE5331.fna	Chromosomal gene	mexR	mexR	BLAST	Coverage: 100.00%	98.87%	CP046402.2	2637228	2637671	1	protein changes: V126E
+SE5331.fna	Chromosomal gene	fosA_PA1129	fosA_PA1129	BLAST	Coverage: 100.00%	99.02%	CP046402.2	4818752	4819159	1	protein changes: D135N
+SE5331.fna	Protein change	blaGES-61	-	blast	E38Q	50%	CP046402.2	-	-	-	reported as resistance mutation
+SE5331.fna	Protein change	blaPDC-1	-	blast+gamma	A97V	100%	CP046402.2	-	-	-	reported as resistance mutation
+SE5331.fna	Protein change	blaPDC-1	-	blast+gamma	G27D	100%	CP046402.2	-	-	-	reported as resistance mutation
+SE5331.fna	Protein change	blaPDC-1	-	blast+gamma	G391A	100%	CP046402.2	-	-	-	reported as resistance mutation
+SE5331.fna	Protein change	blaPDC-1	-	blast+gamma	T105A	100%	CP046402.2	-	-	-	reported as resistance mutation
+SE5331.fna	Protein change	blaPDC-1	-	blast+gamma	V205L	100%	CP046402.2	-	-	-	reported as resistance mutation
+SE5331.fna	Protein change	fosA_PA1129	-	blast+gamma	D135N	100%	CP046402.2	-	-	-	sequence difference, not a curated resistance mutation
+SE5331.fna	Protein change	mexR	-	blast+gamma	V126E	100%	CP046402.2	-	-	-	sequence difference, not a curated resistance mutation

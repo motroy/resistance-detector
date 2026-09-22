@@ -1,0 +1,10 @@
+Sample	Type	Gene	Allele	Method	Result_Details	Identity_Confidence	Contig	Start	End	Copy_Number	Notes
+AR_0440.fna	Acquired gene	blaPDC-1	blaPDC-like	BLAST	Coverage: 100.00%	99.25%	CP029148.1	28028	29221	1	protein changes: P7S;T105A;V205L;G391A
+AR_0440.fna	Chromosomal gene	nalD	nalD	BLAST	Coverage: 100.00%	99.84%	CP029148.1	606413	607051	1	no protein changes vs reference
+AR_0440.fna	Chromosomal gene	mexR	mexR	BLAST	Coverage: 100.00%	98.87%	CP029148.1	6702521	6702964	1	protein changes: V126E
+AR_0440.fna	Chromosomal gene	fosA_PA1129	fosA_PA1129	BLAST	Coverage: 100.00%	99.75%	CP029148.1	3693141	3693548	1	no protein changes vs reference
+AR_0440.fna	Protein change	blaPDC-1	-	blast+gamma	G391A	100%	CP029148.1	-	-	-	reported as resistance mutation
+AR_0440.fna	Protein change	blaPDC-1	-	blast+gamma	P7S	100%	CP029148.1	-	-	-	reported as resistance mutation
+AR_0440.fna	Protein change	blaPDC-1	-	blast+gamma	T105A	100%	CP029148.1	-	-	-	reported as resistance mutation
+AR_0440.fna	Protein change	blaPDC-1	-	blast+gamma	V205L	100%	CP029148.1	-	-	-	reported as resistance mutation
+AR_0440.fna	Protein change	mexR	-	blast+gamma	V126E	100%	CP029148.1	-	-	-	sequence difference, not a curated resistance mutation

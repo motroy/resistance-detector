@@ -1,278 +1,345 @@
-import sys
+"""Gene detection and variant calling from an assembly, via BLAST.
+
+Each BLAST hit is turned into a full protein-level call: the gene span is
+recovered from the contig (including the parts of the gene the alignment did
+not cover), translated, and compared with the reference protein.  What comes
+out is what the assembly actually encodes - substitutions, indels, premature
+stops, frameshifts and truncations - rather than a lookup at fixed positions.
+"""
+
 import subprocess
+import sys
 from collections import Counter
+from pathlib import Path
+
 from Bio import SeqIO
 from Bio.Seq import Seq
 from Bio.SeqRecord import SeqRecord
-from pathlib import Path
-from .utils import detect_mutations_aligned, check_dependencies, load_mutation_db, KNOWN_MUTATIONS
+
+from . import betalactamase
+from .references import (
+    ACQUIRED_PREFIXES, IN_SCOPE_DRUGS, gene_family, is_acquired_gene,
+    load_point_mutations, load_reference_proteins, mutation_lookup_key,
+    mutation_scope,
+)
+from .utils import check_dependencies
+from .variants import call_variants, extract_gene_span, loss_of_function_label
+
+# BLAST output columns, in the order requested below.
+_BLAST_FIELDS = ('qseqid sseqid pident length mismatch gapopen qstart qend '
+                 'sstart send evalue bitscore slen qlen')
+
 
 class BlastDetector:
-    def __init__(self, assembly, database, output_prefix, min_identity=90, min_coverage=80, mutation_db_file=None):
+    """Find reference genes in an assembly and call their variants."""
+
+    def __init__(self, assembly, database, output_prefix, min_identity=90,
+                 min_coverage=80, mutation_db_file=None, organism=None, threads=1):
         self.assembly = assembly
         self.database = database
         self.output_prefix = output_prefix
         self.min_identity = min_identity
         self.min_coverage = min_coverage
+        self.organism = organism
+        self.threads = max(1, int(threads or 1))
         self.results = []
         self.detected_genes = []
 
-        # Load mutations
-        if mutation_db_file:
-            self.mutation_db = load_mutation_db(mutation_db_file)
-        else:
-            # Try to auto-discover
-            default_mut_file = Path(str(self.database).replace('.fasta', '') + '_mutations.tsv')
-            if default_mut_file.exists():
-                print(f"Auto-detected mutation file: {default_mut_file}")
-                self.mutation_db = load_mutation_db(default_mut_file)
-            else:
-                self.mutation_db = KNOWN_MUTATIONS
+        self.reference_cds = {
+            record.id: str(record.seq)
+            for record in SeqIO.parse(self.database, 'fasta')
+        }
+        self.contigs = {
+            record.id: str(record.seq)
+            for record in SeqIO.parse(self.assembly, 'fasta')
+        }
+        self.point_mutations = load_point_mutations(mutation_db_file)
+        self.reference_proteins = load_reference_proteins()
+
+    # ------------------------------------------------------------------ BLAST
 
     def prepare_database(self):
-        """Check if BLAST database exists, create if needed"""
-        db_files = [f"{self.database}.{ext}" for ext in ['nhr', 'nin', 'nsq']]
-
-        if not all(Path(f).exists() for f in db_files):
-            print(f"Creating BLAST database from {self.database}...")
-            cmd = ['makeblastdb', '-in', self.database,
-                   '-dbtype', 'nucl', '-parse_seqids']
-            try:
-                subprocess.run(cmd, check=True, capture_output=True)
-                print("Database created successfully")
-            except subprocess.CalledProcessError as e:
-                print(f"ERROR creating database: {e.stderr.decode()}",
-                      file=sys.stderr)
-                sys.exit(1)
-
-    def run_blast(self):
-        """Run BLAST search for resistance genes"""
-        if not check_dependencies(['blastn', 'makeblastdb']):
+        db_files = [f"{self.database}.{extension}" for extension in ('nhr', 'nin', 'nsq')]
+        if all(Path(path).exists() for path in db_files):
+            return
+        print(f"Creating BLAST database from {self.database}...")
+        try:
+            subprocess.run(['makeblastdb', '-in', self.database, '-dbtype', 'nucl'],
+                           check=True, capture_output=True)
+        except subprocess.CalledProcessError as error:
+            print(f"ERROR creating database: {error.stderr.decode()}", file=sys.stderr)
             sys.exit(1)
 
+    def run_blast(self):
+        if not check_dependencies(['blastn', 'makeblastdb']):
+            sys.exit(1)
         self.prepare_database()
 
-        print(f"Running BLAST search (min_id={self.min_identity}%, min_cov={self.min_coverage}%)...")
+        print(f"Running BLAST search (min_id={self.min_identity}%, "
+              f"min_cov={self.min_coverage}%)...")
 
-        blast_output = f"{self.output_prefix}_blast.txt"
-
-        cmd = [
+        command = [
             'blastn',
             '-query', self.assembly,
             '-db', self.database,
-            '-outfmt', '6 qseqid sseqid pident length qstart qend qlen sstart send slen qseq sseq',
+            '-outfmt', f'6 {_BLAST_FIELDS}',
             '-evalue', '1e-20',
-            '-max_target_seqs', '5'
+            # One reference gene can have many near-identical relatives in the
+            # database (every fosA, every MBL).  Keeping all of them and
+            # choosing by bitscore afterwards is what makes allele assignment
+            # correct; capping the list here would hide the true best match.
+            '-max_target_seqs', '5000',
+            '-perc_identity', str(max(self.min_identity - 5, 70)),
+            '-num_threads', str(self.threads),
         ]
-
         try:
-            result = subprocess.run(cmd, capture_output=True,
-                                  text=True, check=True)
-
-            with open(blast_output, 'w') as f:
-                f.write(result.stdout)
-
-            return self.parse_blast_output(result.stdout)
-
-        except subprocess.CalledProcessError as e:
-            print(f"ERROR running BLAST: {e.stderr}", file=sys.stderr)
+            completed = subprocess.run(command, capture_output=True, text=True, check=True)
+        except subprocess.CalledProcessError as error:
+            print(f"ERROR running BLAST: {error.stderr}", file=sys.stderr)
             sys.exit(1)
 
-    def parse_blast_output(self, blast_output):
-        """Parse BLAST results and filter by identity and coverage"""
-        hits = []
+        with open(f"{self.output_prefix}_blast.txt", 'w') as handle:
+            handle.write(completed.stdout)
 
+        return self.filter_redundant_hits(self.parse_blast_output(completed.stdout))
+
+    def parse_blast_output(self, blast_output):
+        hits = []
         for line in blast_output.strip().split('\n'):
             if not line:
                 continue
-
             fields = line.split('\t')
-            query_id = fields[0]
-            subject_id = fields[1]
-            pident = float(fields[2])
-            length = int(fields[3])
-            qstart = int(fields[4])
-            qend = int(fields[5])
-            qlen = int(fields[6])
-            sstart = int(fields[7])
-            send = int(fields[8])
-            slen = int(fields[9])
-            qseq = fields[10] if len(fields) > 10 else ''
-            sseq = fields[11] if len(fields) > 11 else ''
+            if len(fields) < 14:
+                continue
+            (query_id, subject_id, identity, length, _mismatch, _gapopen,
+             qstart, qend, sstart, send, _evalue, bitscore, slen, _qlen) = fields[:14]
 
-            # Calculate coverage based on subject (reference gene)
-            coverage = (length / slen) * 100
+            subject_length = int(slen)
+            coverage = (abs(int(send) - int(sstart)) + 1) / subject_length * 100
 
-            if pident >= self.min_identity and coverage >= self.min_coverage:
-                hits.append({
-                    'query_id': query_id,
-                    'subject_id': subject_id,
-                    'gene': self.extract_gene_name(subject_id),
-                    'identity': pident,
-                    'coverage': coverage,
-                    'qstart': qstart,
-                    'qend': qend,
-                    'qlen': qlen,
-                    'sstart': sstart,
-                    'send': send,
-                    'slen': slen,
-                    'qseq': qseq,
-                    'sseq': sseq
-                })
+            if float(identity) < self.min_identity or coverage < self.min_coverage:
+                continue
+
+            hits.append({
+                'query_id': query_id,
+                'gene': subject_id,
+                'identity': float(identity),
+                'coverage': coverage,
+                'length': int(length),
+                'qstart': int(qstart),
+                'qend': int(qend),
+                'sstart': int(sstart),
+                'send': int(send),
+                'slen': subject_length,
+                'bitscore': float(bitscore),
+            })
 
         print(f"Found {len(hits)} gene hits passing thresholds")
-        return self.filter_redundant_hits(hits)
+        return hits
 
     def filter_redundant_hits(self, hits):
-        """Filter hits to keep only the best match per genomic location"""
+        """Keep the single best reference match per genomic locus.
+
+        Alleles of one family are near-identical, so a locus hits many of them.
+        Ranking by bitscore (then identity, then coverage) and dropping
+        overlapping lower-scoring hits leaves one call per locus against the
+        closest reference - which is what allele assignment needs.
+        """
         if not hits:
             return []
 
-        # Sort by coverage (desc), identity (desc), then length (desc)
-        # We use alignment length on query as a proxy for match quality if others are tied
-        hits.sort(key=lambda x: (x['coverage'], x['identity'], abs(x['qend'] - x['qstart'])), reverse=True)
+        hits.sort(key=lambda hit: (hit['bitscore'], hit['identity'], hit['coverage']),
+                  reverse=True)
 
-        kept_hits = []
+        kept = []
         for hit in hits:
-            # Normalize coordinates
-            start = min(hit['qstart'], hit['qend'])
-            end = max(hit['qstart'], hit['qend'])
-
-            # Check overlap with kept hits
-            is_redundant = False
-            for kept in kept_hits:
-                if hit['query_id'] != kept['query_id']:
+            start, end = min(hit['qstart'], hit['qend']), max(hit['qstart'], hit['qend'])
+            redundant = False
+            for previous in kept:
+                if hit['query_id'] != previous['query_id']:
                     continue
+                previous_start = min(previous['qstart'], previous['qend'])
+                previous_end = max(previous['qstart'], previous['qend'])
+                overlap = max(0, min(end, previous_end) - max(start, previous_start) + 1)
+                if overlap / (end - start + 1) * 100 > 50:
+                    redundant = True
+                    break
+            if not redundant:
+                kept.append(hit)
 
-                k_start = min(kept['qstart'], kept['qend'])
-                k_end = max(kept['qstart'], kept['qend'])
+        print(f"Filtered to {len(kept)} hits after redundancy check")
+        return kept
 
-                # Calculate overlap
-                overlap_start = max(start, k_start)
-                overlap_end = min(end, k_end)
-                overlap_len = max(0, overlap_end - overlap_start + 1)
-
-                if overlap_len > 0:
-                    # Calculate overlap percentage relative to the NEW hit
-                    # If the new hit significantly overlaps with an existing better hit, discard it.
-                    hit_len = end - start + 1
-                    overlap_pct = (overlap_len / hit_len) * 100
-                    if overlap_pct > 50:
-                        is_redundant = True
-                        break
-
-            if not is_redundant:
-                kept_hits.append(hit)
-
-        print(f"Filtered to {len(kept_hits)} hits after redundancy check")
-        return kept_hits
-
-    def extract_gene_name(self, subject_id):
-        """Extract gene name from BLAST subject ID"""
-        if '|' in subject_id:
-            parts = subject_id.split('|')
-            if len(parts) > 4:
-                return parts[4]
-
-        if '_' not in subject_id and '|' not in subject_id:
-            return subject_id
-
-        return subject_id.split('|')[-1].split('_')[0]
-
-    def extract_hit_sequence(self, hit):
-        """Extract the sequence of a BLAST hit, oriented to match the subject
-        (reference gene) sense.
-
-        BLAST reports qstart/qend and sstart/send independently; either can be
-        descending depending on which strand the hit lies on. The extracted
-        sequence must be reverse-complemented whenever the query and subject
-        strands differ (not merely whenever qstart > qend), otherwise genes
-        aligned to the subject's minus strand get translated on the wrong
-        strand entirely.
-        """
-        query_id = hit['query_id']
-        qstart = hit['qstart']
-        qend = hit['qend']
-        sstart = hit['sstart']
-        send = hit['send']
-
-        for record in SeqIO.parse(self.assembly, 'fasta'):
-            if record.id == query_id:
-                q_lo, q_hi = min(qstart, qend), max(qstart, qend)
-                seq = record.seq[q_lo-1:q_hi]
-                query_plus = qstart <= qend
-                subject_plus = sstart <= send
-                if query_plus != subject_plus:
-                    seq = seq.reverse_complement()
-                return str(seq)
-        return None
+    # ------------------------------------------------------------- variant call
 
     def analyze_hits(self, hits):
-        """Analyze BLAST hits and detect mutations"""
-        print("Analyzing hits and detecting mutations...")
+        print("Analyzing hits and calling variants...")
 
         for hit in hits:
-            sequence = self.extract_hit_sequence(hit)
+            gene = hit['gene']
+            family = gene_family(gene)
+            contig = self.contigs.get(hit['query_id'], '')
+            reference_cds = self.reference_cds.get(gene, '')
+            if not contig or not reference_cds:
+                continue
 
-            if sequence:
-                if hit.get('qseq') and hit.get('sseq'):
-                    mutations = detect_mutations_aligned(
-                        hit['gene'], hit['qseq'], hit['sseq'],
-                        hit['sstart'], hit['send'], self.mutation_db
-                    )
-                else:
-                    mutations = []
+            reference_protein = str(Seq(reference_cds).translate()).rstrip('*')
+            sequence, complete = extract_gene_span(
+                contig, hit['qstart'], hit['qend'], hit['sstart'], hit['send'],
+                len(reference_cds))
 
-                result = {
-                    'contig': hit['query_id'],
-                    'gene': hit['gene'],
-                    'identity': f"{hit['identity']:.2f}",
-                    'coverage': f"{hit['coverage']:.2f}",
-                    'mutations': ','.join(mutations) if mutations else '-',
-                    'sequence': sequence,
-                    'start': hit['qstart'],
-                    'end': hit['qend']
-                }
+            numbering = 'ambler' if family in ('blaKPC', 'blaSHV', 'blaOXA', 'blaCTX-M') else 'sequential'
+            call = call_variants(reference_protein, sequence, numbering=numbering)
+            change_labels = [change['label'] for change in call['changes']]
 
-                self.results.append(result)
-                self.detected_genes.append(SeqRecord(
-                    Seq(sequence),
-                    id=f"{hit['query_id']}_{hit['gene']}",
-                    description=f"identity={hit['identity']:.2f}% coverage={hit['coverage']:.2f}% mutations={result['mutations']}"
-                ))
+            allele_row = None
+            allele_name = gene
+            if family == 'blaKPC':
+                allele_row = betalactamase.identify_kpc_allele(change_labels)
+                allele_name = betalactamase.describe_kpc_result(change_labels, allele_row)
+            elif is_acquired_gene(gene) and change_labels:
+                # Allele-level typing is only done for blaKPC.  Elsewhere the
+                # matched reference is merely the closest of many near-identical
+                # alleles - blaIMP-18 and blaIMP-99 are 99.7% identical - so
+                # naming a specific allele would assert more than the data
+                # supports.  The family is reported instead; the Gene column
+                # still records which reference was closest.
+                allele_name = f"{family}-like"
 
-        # Annotate each result with how many distinct loci carry the same gene
-        copy_counts = Counter(r['gene'] for r in self.results)
+            # Curated chromosomal mutations are numbered against the organism's
+            # own reference protein, so they are matched against a second call
+            # made against that protein rather than against the nucleotide
+            # database entry, whose numbering can differ.
+            curated_call = call
+            curated_reference = self.reference_proteins.get((gene, self.organism))
+            if curated_reference and not is_acquired_gene(gene):
+                curated_call = call_variants(curated_reference[1], sequence)
+
+            reported, unreported, curated_rows = self._classify_changes(
+                gene, family, call, curated_call)
+
+            result = {
+                'contig': hit['query_id'],
+                'gene': gene,
+                'family': family,
+                'allele': allele_name,
+                'allele_row': allele_row,
+                'identity': f"{hit['identity']:.2f}",
+                'coverage': f"{hit['coverage']:.2f}",
+                'complete': complete,
+                'acquired': is_acquired_gene(gene),
+                'changes': change_labels,
+                'reported_mutations': reported,
+                'curated_mutations': curated_rows,
+                'other_drug_mutations': [
+                    f"{row['Label']} ({row['Subclass'] or row['Class']})"
+                    for row in curated_rows
+                    if mutation_scope(row) not in IN_SCOPE_DRUGS
+                ],
+                'other_changes': unreported,
+                'loss_of_function': call['loss_of_function'],
+                'lof_description': loss_of_function_label(call, numbering),
+                'mutations': ','.join(reported) if reported else '-',
+                'sequence': sequence,
+                'start': hit['qstart'],
+                'end': hit['qend'],
+                'call': call,
+            }
+            self.results.append(result)
+            self.detected_genes.append(SeqRecord(
+                Seq(sequence),
+                id=f"{hit['query_id']}_{gene}",
+                description=(f"allele={allele_name} identity={hit['identity']:.2f}% "
+                             f"coverage={hit['coverage']:.2f}% "
+                             f"changes={';'.join(change_labels) if change_labels else 'none'}"),
+            ))
+
+        copy_counts = Counter(result['gene'] for result in self.results)
         for result in self.results:
             result['copy_number'] = copy_counts[result['gene']]
 
-    def write_report(self):
-        """Write results to TSV file"""
-        report_file = f"{self.output_prefix}_results.tsv"
+    def _classify_changes(self, gene, family, call, curated_call=None):
+        """Split called changes into ones this tool is willing to report as
+        resistance mutations, and everything else.
 
+        For an acquired beta-lactamase every change is meaningful, because the
+        reference is the canonical allele of that same gene.  For a chromosomal
+        gene a difference from the reference is usually just natural sequence
+        variation, so only positions curated for the sample's organism are
+        reported - and only when the organism was actually declared.
+
+        Returns ``(reported_labels, other_labels, curated_rows)``.  The curated
+        rows carry the drug class each mutation was curated for, which is what
+        lets the phenotype logic tell a ceftazidime-avibactam mutation from,
+        say, a tigecycline one.
+        """
+        labels = [change['label'] for change in call['changes']]
+
+        if family == 'blaKPC':
+            # Only the changes the ceftazidime-avibactam assessor recognises are
+            # reported as resistance mutations; the rest (e.g. H274Y, which
+            # simply distinguishes KPC-3 from KPC-2) stay in the full change list.
+            assessment = betalactamase.assess_kpc_changes(labels)
+            flagged = [label for label in labels
+                       if any(label in item for item in assessment['evidence'])]
+            return flagged, [label for label in labels if label not in flagged], []
+
+        if is_acquired_gene(gene):
+            return labels, [], []
+
+        curated = self.point_mutations.get((gene, self.organism), {}) if self.organism else {}
+        source = curated_call or call
+        reported, other, rows = [], [], []
+        for change in source['changes']:
+            entry = curated.get(mutation_lookup_key(change))
+            if entry is None:
+                other.append(change['label'])
+                continue
+            rows.append(entry)
+            if mutation_scope(entry) in IN_SCOPE_DRUGS:
+                reported.append(entry['Label'])
+            else:
+                # Curated, but for a drug this tool does not report on (e.g.
+                # tigecycline, carbapenems).  Kept visible as context rather
+                # than presented as a fosfomycin/ceftazidime-avibactam finding.
+                other.append(change['label'])
+        return reported, other, rows
+
+    # ----------------------------------------------------------------- reports
+
+    def write_report(self):
+        report_file = f"{self.output_prefix}_results.tsv"
         print(f"Writing results to {report_file}...")
 
-        with open(report_file, 'w') as f:
-            f.write('\t'.join(['Contig', 'Gene', 'Identity%', 'Coverage%',
-                              'Mutations', 'Method', 'Copy_Number']) + '\n')
+        with open(report_file, 'w') as handle:
+            handle.write('\t'.join([
+                'Contig', 'Gene', 'Allele', 'Identity%', 'Coverage%', 'Complete',
+                'Reported_Mutations', 'Other_Drug_Mutations',
+                'All_Protein_Changes', 'Loss_Of_Function',
+                'Method', 'Copy_Number',
+            ]) + '\n')
 
             for result in self.results:
-                f.write('\t'.join([
+                handle.write('\t'.join([
                     result['contig'],
                     result['gene'],
+                    result['allele'],
                     result['identity'],
                     result['coverage'],
+                    'yes' if result['complete'] else 'no (contig boundary)',
                     result['mutations'],
+                    ';'.join(result['other_drug_mutations'])
+                    if result['other_drug_mutations'] else '-',
+                    ';'.join(result['changes']) if result['changes'] else '-',
+                    result['lof_description'] or '-',
                     'BLAST',
-                    str(result['copy_number'])
+                    str(result['copy_number']),
                 ]) + '\n')
 
-        print(f"Detected {len(self.results)} resistance genes")
+        print(f"Detected {len(self.results)} genes")
 
     def write_sequences(self):
-        """Write detected gene sequences to FASTA file"""
         fasta_file = f"{self.output_prefix}_genes.fasta"
-
         if self.detected_genes:
             print(f"Writing {len(self.detected_genes)} gene sequences to {fasta_file}...")
             SeqIO.write(self.detected_genes, fasta_file, 'fasta')
@@ -287,6 +354,9 @@ class BlastDetector:
         self.write_sequences()
         return self.results
 
-def run_acquired_detection(assembly, database, output, min_id, min_cov, mutation_db=None):
-    detector = BlastDetector(assembly, database, output, min_id, min_cov, mutation_db)
+
+def run_acquired_detection(assembly, database, output, min_id, min_cov,
+                           mutation_db=None, organism=None, threads=1):
+    detector = BlastDetector(assembly, database, output, min_id, min_cov,
+                             mutation_db, organism, threads)
     return detector.run()

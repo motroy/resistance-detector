@@ -1,0 +1,7 @@
+Sample	Type	Gene	Allele	Method	Result_Details	Identity_Confidence	Contig	Start	End	Copy_Number	Notes
+AR_0360.fna	Acquired gene	blaPDC-1	blaPDC-like	BLAST	Coverage: 100.00%	99.50%	CP027165.1	6150090	6151283	1	protein changes: T105A
+AR_0360.fna	Chromosomal gene	nalD	nalD	BLAST	Coverage: 100.00%	100.00%	CP027165.1	288816	289454	1	no protein changes vs reference
+AR_0360.fna	Chromosomal gene	mexR	mexR	BLAST	Coverage: 100.00%	100.00%	CP027165.1	5700965	5701408	1	no protein changes vs reference
+AR_0360.fna	Chromosomal gene	fosA_PA1129	fosA_PA1129	BLAST	Coverage: 100.00%	99.27%	CP027165.1	3157167	3157574	1	protein changes: R117L
+AR_0360.fna	Protein change	blaPDC-1	-	blast+gamma	T105A	100%	CP027165.1	-	-	-	reported as resistance mutation
+AR_0360.fna	Protein change	fosA_PA1129	-	blast+gamma	R117L	100%	CP027165.1	-	-	-	sequence difference, not a curated resistance mutation

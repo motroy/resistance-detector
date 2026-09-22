@@ -1,5 +1,5 @@
 Gene	Contig	Start	Stop	Match_Type	Description	Codon_Changes	BP_Changes	Transversions	Codon_Percent	BP_Percent	Percent_Length	Match_Length	Target_Length	Strand
-blaKPC-3	JAJOCJ010000039.1	11395	12277	Native	No coding mutations	0	0	0	1	1	1	882	882	+
+blaKPC-2	JAJOCJ010000039.1	11395	12277	Mutant	H272Y,	1	1	0	0.9966	0.9989	1	882	882	+
 ompK36	JAJOCJ010000003.1	202469	203579	Indel	6 bp Insertion at 406,	2	7	0	0.9946	0.9937	1.005	1110	1104	-
 acrB	JAJOCJ010000004.1	171140	174287	Native	No coding mutations	0	4	1	1	0.9987	1	3147	3147	-
 blaSHV-12	JAJOCJ010000069.1	23	884	Mutant	S234G,K235E,	2	5	0	0.9930	0.9942	1	861	861	+

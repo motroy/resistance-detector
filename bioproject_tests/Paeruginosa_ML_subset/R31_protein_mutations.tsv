@@ -1,0 +1,6 @@
+Gene	Contig	Start	End	Identity	Coverage	Match_Type	Changes	Method
+blaPDC-1	CP061850.1	226328	227522	99.50	100.00	Mutant	T105A;L176R	GAMMA
+nalD	CP061850.1	808000	808639	99.53	100.00	Mutant	A37T	GAMMA
+fosA_PA1129	CP061850.1	3885884	3886292	100.00	100.00	Native	No coding mutations	GAMMA
+mexR	CP061850.1	6778129	6778573	100.00	100.00	Native	No coding mutations	GAMMA
+blaKPC-2	CP061851.1	6249	7131	100.00	100.00	Native	No coding mutations	GAMMA

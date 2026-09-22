@@ -45,67 +45,36 @@ Both assemblies are ~5.9 Mb, consistent with a single *Klebsiella*-sized bacteri
 
 ## 2. Resistance Detection (fos-cazavi)
 
-Run with the bundled reference database (`fos_cazavi/data/example_database.fasta`, BLAST-indexed) and
-bundled primers/genes:
+Run with the bundled reference database and the current pipeline:
 
-```
-gunzip -k SRR28296939_myloasm_assembly.fasta.gz
-gunzip -k SRR28296940_myloasm_assembly.fasta.gz
+```bash
 fos-cazavi fos-cazavi-all \
-    -a SRR28296939_myloasm_assembly.fasta \
-    -o SRR28296939 \
+    -a <sample>_myloasm_assembly.fasta \
+    -o <sample> \
     -d fos_cazavi/data/example_database.fasta \
-    --genes fos_cazavi/data/example_database_deduplicated.fasta \
-    --mutations fos_cazavi/data/example_database_mutations.tsv
-fos-cazavi fos-cazavi-all \
-    -a SRR28296940_myloasm_assembly.fasta \
-    -o SRR28296940 \
-    -d fos_cazavi/data/example_database.fasta \
-    --genes fos_cazavi/data/example_database_deduplicated.fasta \
-    --mutations fos_cazavi/data/example_database_mutations.tsv
+    --organism Klebsiella_pneumoniae
 ```
 
-### Key findings
+Reference data: AMRFinderPlus 2026-08-07.1.
 
-Both isolates carry **blaKPC-2** (carbapenemase, CAZAVI-relevant) plus the same set of chromosomal
-porin/efflux/PBP genes (ompK35/ompK36/acrB/envZ/ftsI) and **fosAKP** (chromosomal fosfomycin gene, I91V).
+### Results
 
-| Gene | SRR28296939 | SRR28296940 |
-|---|---|---|
-| blaKPC-2 | 99.55% id / 100.34% cov — **3 bp in-frame insertion + A132T** (GAMMA `Match_Type=Indel`; no tracked X-loop/V240/T242 position altered) | 100.00% id / 100.00% cov — wild-type |
-| fosAKP | 98.81% id / 100.00% cov — I91V | 98.81% id / 100.00% cov — I91V |
-| ompK36 | 92.22% id / 102.45% cov — G213I (contig-edge truncation, no internal mutation) | same |
-| ompK35 | 99.35% id / 100.00% cov — D135G, D181R | same |
-| acrB | 99.84% id / 100.00% cov — G617A, F626A, A628T/V | same |
-| envZ | 99.93% id / 100.00% cov — G244S/D, T324Q | same |
-| ftsI | 99.32% id / 100.00% cov — A333P, Y350L, S357Q | same |
+| Sample | Beta-lactamases | blaKPC changes (Ambler) | Predicted FOS | Predicted CAZ/AVI |
+|---|---|---|---|---|
+| SRR28296939 | **blaKPC-179**, (intrinsic fosAKP) | A133T; insS@180 | Susceptible | **Resistant** |
+| SRR28296940 | blaKPC-2, (intrinsic fosAKP) | none | Susceptible | Susceptible |
 
-**Notable difference between isolates:** SRR28296939's blaKPC-2 carries a small in-frame insertion (3 bp
-at nucleotide 543) plus a separate A132T substitution, independently confirmed by GAMMA's protein-level
-alignment (`Match_Type=Indel`, `Codon_Changes=A132T`, `BP_Changes=3 bp Insertion at 543`), while
-SRR28296940's blaKPC-2 is fully wild-type. This is consistent with the two isolates being related but
-phenotypically/genotypically distinct KPC-producing strains, matching the premise of PRJNA1086695
-(paired isolates from the same study/outbreak).
+SRR28296939 carries a KPC whose change set matches NCBI allele **KPC-179**
+exactly: a single-residue insertion immediately after the Omega-loop residue
+D179, plus A133T. NCBI curates KPC-179 as an *inhibitor-resistant
+extended-spectrum class A beta-lactamase*, so the isolate is predicted
+ceftazidime-avibactam-resistant.
 
-**Bug fix note:** earlier runs of this pipeline (before the indel-aware mutation caller in
-`fos_cazavi/utils.py::detect_mutations_aligned()`/`detect_mutations_amplicon()` was added — see
-`PRJNA595047_test/RESULTS_SUMMARY.md` for the full writeup) reported SRR28296939's blaKPC-2 mutations as
-**V240G, T242G**. Those were fabricated point-substitution calls: the BLAST/SeqKit mutation caller used a
-fixed-position lookup into the translated query with no alignment, so the real 3 bp insertion at
-nucleotide 543 shifted every downstream "known mutation position" by one codon, causing the caller to
-read the wrong (frame-shifted) codons at positions 239/242. GAMMA's independent indel-aware alignment
-correctly classified this hit as `Match_Type=Indel` all along. After the fix, the BLAST and SeqKit paths
-both correctly report no mutation at the tracked positions 166–169/178/239/242 (none of them are actually
-altered — the real changes are the untracked insertion and A132T), consistent with GAMMA.
+The earlier committed run of these same assemblies reported a plain wild-type
+blaKPC and a susceptible call, because insertions were not represented in the
+variant caller and allele assignment did not exist. See
+[../../docs/METHODS.md](../../docs/METHODS.md).
 
-## Files in this folder
-
-- `SRR28296939.fastq.gz`, `SRR28296940.fastq.gz` — original input "read" files
-- `SRR28296939_myloasm/`, `SRR28296940_myloasm/` — myloasm run directories, including the
-  `myloasm_*.log` assembly log (full command, parameters, and per-stage timing/diagnostics) and the
-  gzipped final assembly graph (`final_contig_graph.gfa.gz`, GFA format, viewable in Bandage/IGV-graph)
-- `SRR28296939_myloasm_assembly.fasta.gz`, `SRR28296940_myloasm_assembly.fasta.gz` — gzipped final
-  assemblies used for resistance detection (pre-dereplication unitigs, see caveat above)
-- `SRR28296939_*`, `SRR28296940_*` — fos-cazavi outputs (`_summary.txt`, `_results.tsv`, `_all_results.tsv`,
-  `_unified_mutations.tsv`, `_genes.fasta`, `_blast.txt`, `_gamma.gamma`/`.psl`, `_amplicons.tsv`,
-  `_seqkit_primers.tsv`, `_analysis.log`)
+Neither isolate carries an acquired fosA-family enzyme or a loss-of-function
+change in the fosfomycin uptake genes, so both are predicted
+fosfomycin-susceptible.

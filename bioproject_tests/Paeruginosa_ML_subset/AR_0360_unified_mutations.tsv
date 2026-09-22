@@ -1,0 +1,3 @@
+Gene	Mutation	Confidence(%)	Methods	Contig	Reported_As_Resistance_Mutation
+blaPDC-1	T105A	100	blast+gamma	CP027165.1	yes
+fosA_PA1129	R117L	100	blast+gamma	CP027165.1	no

@@ -1,0 +1,9 @@
+Gene	Mutation	Confidence(%)	Methods	Contig	Reported_As_Resistance_Mutation
+blaCTX-M-15	1 SNPs in 97-785	50	gamma	NZ_JAWWVH010000165.1	no
+blaCTX-M-15	A81V	50	gamma	NZ_JAWWVH010000165.1	no
+glpT	E443Q	100	blast+gamma	NZ_JAWWVH010000003.1	no
+glpT	E448K	100	blast+gamma	NZ_JAWWVH010000003.1	no
+glpT	L297F	100	blast+gamma	NZ_JAWWVH010000003.1	no
+glpT	Q444E	100	blast+gamma	NZ_JAWWVH010000003.1	no
+ompC	R267C	100	blast+gamma	NZ_JAWWVH010000003.1	no
+ptsI	R367K	100	blast+gamma	NZ_JAWWVH010000006.1	no

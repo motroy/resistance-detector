@@ -1,4 +1,0 @@
-Contig	Gene	Identity%	Coverage%	Mutations	Method	Copy_Number
-contig_plasmid3_blaOXA48	blaOXA-48	100.00	100.00	-	BLAST	1
-contig_plasmid1_fosA3	fosA3	100.00	100.00	K90E/Q,H119L	BLAST	1
-contig_plasmid2_blaKPC3	blaKPC-31	99.89	100.00	D179Y/N,T243M	BLAST	1

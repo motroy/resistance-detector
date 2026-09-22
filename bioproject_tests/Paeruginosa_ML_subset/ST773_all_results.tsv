@@ -1,0 +1,11 @@
+Sample	Type	Gene	Allele	Method	Result_Details	Identity_Confidence	Contig	Start	End	Copy_Number	Notes
+ST773.fna	Acquired gene	blaPDC-1	blaPDC-like	BLAST	Coverage: 100.00%	99.08%	CP041945.1	934699	935892	1	protein changes: G27D;T105A;V205L;G391A
+ST773.fna	Acquired gene	blaNDM-1	blaNDM-1	BLAST	Coverage: 100.00%	100.00%	CP041945.1	2436768	2437580	1	no protein changes vs reference
+ST773.fna	Chromosomal gene	nalD	nalD	BLAST	Coverage: 100.00%	99.84%	CP041945.1	1513005	1513643	1	no protein changes vs reference
+ST773.fna	Chromosomal gene	mexR	mexR	BLAST	Coverage: 100.00%	98.65%	CP041945.1	484661	485104	1	protein changes: V126E
+ST773.fna	Chromosomal gene	fosA_PA1129	fosA_PA1129	BLAST	Coverage: 100.00%	99.75%	CP041945.1	4640571	4640978	1	no protein changes vs reference
+ST773.fna	Protein change	blaPDC-1	-	blast+gamma	G27D	100%	CP041945.1	-	-	-	reported as resistance mutation
+ST773.fna	Protein change	blaPDC-1	-	blast+gamma	G391A	100%	CP041945.1	-	-	-	reported as resistance mutation
+ST773.fna	Protein change	blaPDC-1	-	blast+gamma	T105A	100%	CP041945.1	-	-	-	reported as resistance mutation
+ST773.fna	Protein change	blaPDC-1	-	blast+gamma	V205L	100%	CP041945.1	-	-	-	reported as resistance mutation
+ST773.fna	Protein change	mexR	-	blast+gamma	V126E	100%	CP041945.1	-	-	-	sequence difference, not a curated resistance mutation

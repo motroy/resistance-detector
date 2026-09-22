@@ -1,22 +1,43 @@
-Sample	Type	Gene_Protein	Method	Result_Details	Identity_Confidence	Contig	Start	End	Copy_Number	Notes
-GCA_022423505.1_ASM2242350v1_genomic.fna	Acquired Gene	ompK36	BLAST	Coverage: 101.90%	92.62%	JAHUYV010000009.1	162302	163420	1	Mutations: G213I
-GCA_022423505.1_ASM2242350v1_genomic.fna	Acquired Gene	acrB	BLAST	Coverage: 100.00%	99.94%	JAHUYV010000002.1	198132	201278	1	Mutations: G617A,F626A,A628T/V
-GCA_022423505.1_ASM2242350v1_genomic.fna	Acquired Gene	ftsI	BLAST	Coverage: 100.00%	99.77%	JAHUYV010000006.1	144080	145846	1	Mutations: A333P,Y350L,S357Q
-GCA_022423505.1_ASM2242350v1_genomic.fna	Acquired Gene	fosAKP	BLAST	Coverage: 100.00%	99.76%	JAHUYV010000020.1	73622	74041	1	Mutations: -
-GCA_022423505.1_ASM2242350v1_genomic.fna	Acquired Gene	ompK35	BLAST	Coverage: 100.00%	99.35%	JAHUYV010000008.1	41172	42251	1	Mutations: D135G,D181R
-GCA_022423505.1_ASM2242350v1_genomic.fna	Acquired Gene	blaKPC-3	BLAST	Coverage: 100.00%	99.32%	JAHUYV010000037.1	7391	8266	1	Mutations: E167del,L168del,N169del
-GCA_022423505.1_ASM2242350v1_genomic.fna	Acquired Gene	envZ	BLAST	Coverage: 100.00%	99.04%	JAHUYV010000010.1	153951	155306	1	Mutations: G244S/D,T324Q
-GCA_022423505.1_ASM2242350v1_genomic.fna	Acquired Gene	blaSHV-12	BLAST	Coverage: 100.00%	98.95%	JAHUYV010000001.1	272420	273280	1	Mutations: G238A,E240G
-GCA_022423505.1_ASM2242350v1_genomic.fna	Mutation	blakpc	gamma	E167D (KPC-92 X-loop)	50%	JAHUYV010000037.1	7390	8266	5	Dual-method consensus
-GCA_022423505.1_ASM2242350v1_genomic.fna	Mutation	blakpc	seqkit	E167del	50%	-	-	-	5	Dual-method consensus
-GCA_022423505.1_ASM2242350v1_genomic.fna	Mutation	blakpc	seqkit	L168del	50%	-	-	-	5	Dual-method consensus
-GCA_022423505.1_ASM2242350v1_genomic.fna	Mutation	blakpc	gamma	N169D (KPC-92 X-loop)	50%	JAHUYV010000037.1	7390	8266	5	Dual-method consensus
-GCA_022423505.1_ASM2242350v1_genomic.fna	Mutation	blakpc	seqkit	N169del	50%	-	-	-	5	Dual-method consensus
-GCA_022423505.1_ASM2242350v1_genomic.fna	Gene Alignment	envZ	GAMMA	Wildtype / No mutations detected	99.56%	JAHUYV010000010.1	153950	155306	1	Coverage: 100.00%
-GCA_022423505.1_ASM2242350v1_genomic.fna	Gene Alignment	blaSHV-12	GAMMA	Wildtype / No mutations detected	98.61%	JAHUYV010000001.1	272419	273280	1	Coverage: 100.00%
-GCA_022423505.1_ASM2242350v1_genomic.fna	Gene Alignment	fosAKP	GAMMA	Wildtype / No mutations detected	99.29%	JAHUYV010000020.1	73621	74041	1	Coverage: 100.00%
-GCA_022423505.1_ASM2242350v1_genomic.fna	Gene Alignment	acrB	GAMMA	Wildtype / No mutations detected	100.00%	JAHUYV010000002.1	198131	201278	1	Coverage: 100.00%
-GCA_022423505.1_ASM2242350v1_genomic.fna	Gene Alignment	ftsI	GAMMA	Wildtype / No mutations detected	99.83%	JAHUYV010000006.1	144079	145846	1	Coverage: 100.00%
-GCA_022423505.1_ASM2242350v1_genomic.fna	Gene Alignment	ompK35	GAMMA	Wildtype / No mutations detected	100.00%	JAHUYV010000008.1	41171	42251	1	Coverage: 100.00%
-GCA_022423505.1_ASM2242350v1_genomic.fna	Gene Alignment	ompK36	GAMMA	Wildtype / No mutations detected	58.70%	JAHUYV010000009.1	162301	163420	1	Coverage: 101.40%
-GCA_022423505.1_ASM2242350v1_genomic.fna	Amplicon	blaKPC_ver	SeqKit/Bed	Length: 876bp	-	JAHUYV010000037.1	7390	8266	-	Genes/Mutations in region: blaKPC-3: E167del,L168del,N169del
+Sample	Type	Gene	Allele	Method	Result_Details	Identity_Confidence	Contig	Start	End	Copy_Number	Notes
+C-2_HC.fna	Chromosomal gene	acrB	acrB	BLAST	Coverage: 100.00%	99.94%	JAHUYV010000002.1	198132	201278	1	no protein changes vs reference
+C-2_HC.fna	Chromosomal gene	ftsI	ftsI	BLAST	Coverage: 100.00%	99.77%	JAHUYV010000006.1	144080	145846	1	protein changes: V375A
+C-2_HC.fna	Chromosomal gene	envZ	envZ	BLAST	Coverage: 100.00%	99.04%	JAHUYV010000010.1	153951	155306	1	protein changes: I15T;I258M
+C-2_HC.fna	Chromosomal gene	ompK35	ompK35	BLAST	Coverage: 100.00%	99.35%	JAHUYV010000008.1	41172	42251	1	no protein changes vs reference
+C-2_HC.fna	Acquired gene	blaCTX-M-15	blaCTX-M-15	BLAST	Coverage: 100.00%	100.00%	JAHUYV010000040.1	7418	8293	1	no protein changes vs reference
+C-2_HC.fna	Chromosomal gene	ompK36	ompK36	BLAST	Coverage: 100.00%	92.62%	JAHUYV010000009.1	162302	163420	1	protein changes: A183T;L184del;T192G;Y201F;N221H;L225N;S230del;K231R;A233D;L234K;insF@268;A269S;S271N;insGESDSI@271;L272S;L307I;I315L;D344E;S346D;H349R;N350R
+C-2_HC.fna	Acquired gene	blaKPC-2	blaKPC-92	BLAST	Coverage: 100.00%	99.21%	JAHUYV010000037.1	7391	8266	1	protein changes: E168D;L169_N170del;H274Y
+C-2_HC.fna	Acquired gene	blaSHV-12	blaSHV-like	BLAST	Coverage: 100.00%	98.95%	JAHUYV010000001.1	272420	273280	1	protein changes: Y3F;Q31L;S235G;K236E
+C-2_HC.fna	Chromosomal gene	fosAKP	fosAKP	BLAST	Coverage: 100.00%	99.76%	JAHUYV010000020.1	73622	74041	1	protein changes: Q130P
+C-2_HC.fna	Protein change	blaKPC-2	-	blast+gamma	E168D	100%	JAHUYV010000037.1	-	-	-	reported as resistance mutation
+C-2_HC.fna	Protein change	blaKPC-2	-	blast+gamma	H274Y	100%	JAHUYV010000037.1	-	-	-	reported as resistance mutation
+C-2_HC.fna	Protein change	blaKPC-2	-	blast	L169_N170del	50%	JAHUYV010000037.1	-	-	-	reported as resistance mutation
+C-2_HC.fna	Protein change	blaSHV-12	-	blast+gamma	K236E	100%	JAHUYV010000001.1	-	-	-	reported as resistance mutation
+C-2_HC.fna	Protein change	blaSHV-12	-	blast+gamma	Q31L	100%	JAHUYV010000001.1	-	-	-	reported as resistance mutation
+C-2_HC.fna	Protein change	blaSHV-12	-	blast+gamma	S235G	100%	JAHUYV010000001.1	-	-	-	reported as resistance mutation
+C-2_HC.fna	Protein change	blaSHV-12	-	blast+gamma	Y3F	100%	JAHUYV010000001.1	-	-	-	reported as resistance mutation
+C-2_HC.fna	Protein change	envZ	-	blast+gamma	I15T	100%	JAHUYV010000010.1	-	-	-	sequence difference, not a curated resistance mutation
+C-2_HC.fna	Protein change	envZ	-	blast+gamma	I258M	100%	JAHUYV010000010.1	-	-	-	sequence difference, not a curated resistance mutation
+C-2_HC.fna	Protein change	fosAKP	-	blast+gamma	Q130P	100%	JAHUYV010000020.1	-	-	-	sequence difference, not a curated resistance mutation
+C-2_HC.fna	Protein change	ftsI	-	blast+gamma	V375A	100%	JAHUYV010000006.1	-	-	-	sequence difference, not a curated resistance mutation
+C-2_HC.fna	Protein change	ompK36	-	blast	A183T	50%	JAHUYV010000009.1	-	-	-	sequence difference, not a curated resistance mutation
+C-2_HC.fna	Protein change	ompK36	-	blast	A233D	50%	JAHUYV010000009.1	-	-	-	sequence difference, not a curated resistance mutation
+C-2_HC.fna	Protein change	ompK36	-	blast	A269S	50%	JAHUYV010000009.1	-	-	-	sequence difference, not a curated resistance mutation
+C-2_HC.fna	Protein change	ompK36	-	blast	D344E	50%	JAHUYV010000009.1	-	-	-	sequence difference, not a curated resistance mutation
+C-2_HC.fna	Protein change	ompK36	-	blast	H349R	50%	JAHUYV010000009.1	-	-	-	sequence difference, not a curated resistance mutation
+C-2_HC.fna	Protein change	ompK36	-	blast	I315L	50%	JAHUYV010000009.1	-	-	-	sequence difference, not a curated resistance mutation
+C-2_HC.fna	Protein change	ompK36	-	blast	K231R	50%	JAHUYV010000009.1	-	-	-	sequence difference, not a curated resistance mutation
+C-2_HC.fna	Protein change	ompK36	-	blast	L184del	50%	JAHUYV010000009.1	-	-	-	sequence difference, not a curated resistance mutation
+C-2_HC.fna	Protein change	ompK36	-	blast	L225N	50%	JAHUYV010000009.1	-	-	-	sequence difference, not a curated resistance mutation
+C-2_HC.fna	Protein change	ompK36	-	blast	L234K	50%	JAHUYV010000009.1	-	-	-	sequence difference, not a curated resistance mutation
+C-2_HC.fna	Protein change	ompK36	-	blast	L272S	50%	JAHUYV010000009.1	-	-	-	sequence difference, not a curated resistance mutation
+C-2_HC.fna	Protein change	ompK36	-	blast	L307I	50%	JAHUYV010000009.1	-	-	-	sequence difference, not a curated resistance mutation
+C-2_HC.fna	Protein change	ompK36	-	blast	N221H	50%	JAHUYV010000009.1	-	-	-	sequence difference, not a curated resistance mutation
+C-2_HC.fna	Protein change	ompK36	-	blast	N350R	50%	JAHUYV010000009.1	-	-	-	sequence difference, not a curated resistance mutation
+C-2_HC.fna	Protein change	ompK36	-	blast	S230del	50%	JAHUYV010000009.1	-	-	-	sequence difference, not a curated resistance mutation
+C-2_HC.fna	Protein change	ompK36	-	blast	S271N	50%	JAHUYV010000009.1	-	-	-	sequence difference, not a curated resistance mutation
+C-2_HC.fna	Protein change	ompK36	-	blast	S346D	50%	JAHUYV010000009.1	-	-	-	sequence difference, not a curated resistance mutation
+C-2_HC.fna	Protein change	ompK36	-	blast	T192G	50%	JAHUYV010000009.1	-	-	-	sequence difference, not a curated resistance mutation
+C-2_HC.fna	Protein change	ompK36	-	blast	Y201F	50%	JAHUYV010000009.1	-	-	-	sequence difference, not a curated resistance mutation
+C-2_HC.fna	Protein change	ompK36	-	blast	insF@268	50%	JAHUYV010000009.1	-	-	-	sequence difference, not a curated resistance mutation
+C-2_HC.fna	Protein change	ompK36	-	blast	insGESDSI@271	50%	JAHUYV010000009.1	-	-	-	sequence difference, not a curated resistance mutation
+C-2_HC.fna	Amplicon	blaKPC_ver	-	SeqKit/amplicon	Length: 876bp	-	JAHUYV010000037.1	7390	8266	-	Genes in region: blaKPC-92: E168D;L169_N170del;H274Y

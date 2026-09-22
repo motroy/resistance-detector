@@ -1,0 +1,38 @@
+Sample	Type	Gene	Allele	Method	Result_Details	Identity_Confidence	Contig	Start	End	Copy_Number	Notes
+E2129.fna	Chromosomal gene	cyaA	cyaA	BLAST	Coverage: 100.00%	99.57%	NZ_JAWWVG010000021.1	42831	45377	1	protein changes: N142S
+E2129.fna	Chromosomal gene	lon	lon	BLAST	Coverage: 100.00%	99.53%	NZ_JAWWVG010000009.1	102279	104633	1	no protein changes vs reference
+E2129.fna	Chromosomal gene	ptsI	ptsI	BLAST	Coverage: 100.00%	99.71%	NZ_JAWWVG010000006.1	153815	155542	1	protein changes: R367K
+E2129.fna	Chromosomal gene	uhpB	uhpB	BLAST	Coverage: 100.00%	98.40%	NZ_JAWWVG010000036.1	12221	13723	1	protein changes: T374S
+E2129.fna	Chromosomal gene	uhpT	uhpT	BLAST	Coverage: 100.00%	99.42%	NZ_JAWWVG010000036.1	9363	10754	1	no protein changes vs reference
+E2129.fna	Chromosomal gene	glpT	glpT	BLAST	Coverage: 100.00%	99.71%	NZ_JAWWVG010000018.1	11359	12717	1	protein changes: M136V;E448K
+E2129.fna	Chromosomal gene	uhpC	uhpC	BLAST	Coverage: 100.00%	99.24%	NZ_JAWWVG010000036.1	10892	12211	1	protein changes: Y18H;T435A
+E2129.fna	Chromosomal gene	murA	murA	BLAST	Coverage: 100.00%	98.81%	NZ_JAWWVG010000010.1	85447	86706	1	no protein changes vs reference
+E2129.fna	Chromosomal gene	ompF	ompF	BLAST	Coverage: 100.00%	99.91%	NZ_JAWWVG010000004.1	106649	107737	1	protein changes: W83_F362del; premature stop at residue 83 (82/362 aa)
+E2129.fna	Chromosomal gene	ompC	ompC	BLAST	Coverage: 100.00%	94.89%	NZ_JAWWVG010000018.1	43604	44707	1	protein changes: G137D;N176S;P177V;G181_S184del;V186M;G216A;I218V;L296V;insGVIN@306;G309N
+E2129.fna	Chromosomal gene	galU	galU	BLAST	Coverage: 100.00%	99.67%	NZ_JAWWVG010000001.1	180148	181056	1	no protein changes vs reference
+E2129.fna	Acquired gene	blaNDM-5	blaNDM-5	BLAST	Coverage: 100.00%	100.00%	NZ_JAWWVG010000071.1	2298	3110	1	no protein changes vs reference
+E2129.fna	Chromosomal gene	uhpA	uhpA	BLAST	Coverage: 100.00%	97.29%	NZ_JAWWVG010000036.1	13723	14313	1	no protein changes vs reference
+E2129.fna	Acquired gene	fosA3	fosA3	BLAST	Coverage: 100.00%	100.00%	NZ_JAWWVG010000081.1	432	848	1	no protein changes vs reference
+E2129.fna	Protein change	cyaA	-	blast+gamma	N142S	100%	NZ_JAWWVG010000021.1	-	-	-	sequence difference, not a curated resistance mutation
+E2129.fna	Protein change	glpT	-	blast+gamma	E448K	100%	NZ_JAWWVG010000018.1	-	-	-	sequence difference, not a curated resistance mutation
+E2129.fna	Protein change	glpT	-	blast+gamma	M136V	100%	NZ_JAWWVG010000018.1	-	-	-	sequence difference, not a curated resistance mutation
+E2129.fna	Protein change	ompC	-	blast	G137D	50%	NZ_JAWWVG010000018.1	-	-	-	sequence difference, not a curated resistance mutation
+E2129.fna	Protein change	ompC	-	blast	G181_S184del	50%	NZ_JAWWVG010000018.1	-	-	-	sequence difference, not a curated resistance mutation
+E2129.fna	Protein change	ompC	-	blast	G216A	50%	NZ_JAWWVG010000018.1	-	-	-	sequence difference, not a curated resistance mutation
+E2129.fna	Protein change	ompC	-	blast	G309N	50%	NZ_JAWWVG010000018.1	-	-	-	sequence difference, not a curated resistance mutation
+E2129.fna	Protein change	ompC	-	blast	I218V	50%	NZ_JAWWVG010000018.1	-	-	-	sequence difference, not a curated resistance mutation
+E2129.fna	Protein change	ompC	-	blast	L296V	50%	NZ_JAWWVG010000018.1	-	-	-	sequence difference, not a curated resistance mutation
+E2129.fna	Protein change	ompC	-	blast	N176S	50%	NZ_JAWWVG010000018.1	-	-	-	sequence difference, not a curated resistance mutation
+E2129.fna	Protein change	ompC	-	blast	P177V	50%	NZ_JAWWVG010000018.1	-	-	-	sequence difference, not a curated resistance mutation
+E2129.fna	Protein change	ompC	-	blast	V186M	50%	NZ_JAWWVG010000018.1	-	-	-	sequence difference, not a curated resistance mutation
+E2129.fna	Protein change	ompC	-	blast	insGVIN@306	50%	NZ_JAWWVG010000018.1	-	-	-	sequence difference, not a curated resistance mutation
+E2129.fna	Protein change	ompF	-	blast	W83_F362del	50%	NZ_JAWWVG010000004.1	-	-	-	sequence difference, not a curated resistance mutation
+E2129.fna	Protein change	ptsI	-	blast+gamma	R367K	100%	NZ_JAWWVG010000006.1	-	-	-	sequence difference, not a curated resistance mutation
+E2129.fna	Protein change	uhpB	-	blast+gamma	T374S	100%	NZ_JAWWVG010000036.1	-	-	-	sequence difference, not a curated resistance mutation
+E2129.fna	Protein change	uhpC	-	blast+gamma	T435A	100%	NZ_JAWWVG010000036.1	-	-	-	sequence difference, not a curated resistance mutation
+E2129.fna	Protein change	uhpC	-	blast+gamma	Y18H	100%	NZ_JAWWVG010000036.1	-	-	-	sequence difference, not a curated resistance mutation
+E2129.fna	Amplicon	lon_ver2	-	SeqKit/amplicon	Length: 1222bp	-	NZ_JAWWVG010000004.1	75751	76973	-	Genes in region: none
+E2129.fna	Amplicon	uhpB_ver	-	SeqKit/amplicon	Length: 1603bp	-	NZ_JAWWVG010000036.1	12174	13777	-	Genes in region: uhpB: T374S; uhpC: Y18H;T435A; uhpA: no changes
+E2129.fna	Amplicon	uhpC_ver	-	SeqKit/amplicon	Length: 1449bp	-	NZ_JAWWVG010000036.1	10822	12271	-	Genes in region: uhpB: T374S; uhpC: Y18H;T435A
+E2129.fna	Amplicon	RT_uhpT	-	SeqKit/amplicon	Length: 166bp	-	NZ_JAWWVG010000036.1	10414	10580	-	Genes in region: uhpT: no changes
+E2129.fna	Amplicon	RT_rrsA	-	SeqKit/amplicon	Length: 105bp	-	NZ_JAWWVG010000090.1	1237	1342	-	Genes in region: none

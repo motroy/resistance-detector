@@ -1,0 +1,7 @@
+Sample	Type	Gene	Allele	Method	Result_Details	Identity_Confidence	Contig	Start	End	Copy_Number	Notes
+multi_mechanism.fasta	Acquired gene	blaKPC-2	blaKPC-33	BLAST	Coverage: 100.00%	99.89%	contig_blaKPC	801	1682	1	protein changes: D179Y
+multi_mechanism.fasta	Acquired gene	blaCTX-M-15	blaCTX-M-15	BLAST	Coverage: 100.00%	100.00%	contig_blaCTX_M	801	1676	1	no protein changes vs reference
+multi_mechanism.fasta	Chromosomal gene	fosAKP	fosAKP	BLAST	Coverage: 100.00%	100.00%	contig_fosAKP	801	1220	1	no protein changes vs reference
+multi_mechanism.fasta	Acquired gene	fosA3	fosA3	BLAST	Coverage: 100.00%	100.00%	contig_fosA3	801	1217	1	no protein changes vs reference
+multi_mechanism.fasta	Protein change	blaKPC-2	-	blast+gamma	D179Y	100%	contig_blaKPC	-	-	-	reported as resistance mutation
+multi_mechanism.fasta	Amplicon	blaKPC_ver	-	SeqKit/amplicon	Length: 882bp	-	contig_blaKPC	800	1682	-	Genes in region: blaKPC-33: D179Y

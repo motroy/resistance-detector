@@ -1,503 +1,150 @@
-import sys
-import os
+"""Orthogonal mutation detection with GAMMA, plus amplicon mapping with seqkit.
+
+GAMMA aligns the assembly against the same nucleotide reference database at the
+codon level and reports its own list of changes.  Running it alongside the
+BLAST-based caller gives a second, independently implemented opinion: a change
+reported by both tools is far less likely to be an artefact of either one.
+
+Two things are deliberately *not* done here:
+
+* A change is never invented from the presence of an amplicon.  Several of the
+  bundled primers are laboratory mutagenesis primers; a PCR product from them
+  says nothing about the genotype of a clinical isolate, so amplicons are
+  reported as coordinates only.
+* GAMMA's positions are converted to the same numbering the rest of the tool
+  uses before the two callers are compared, so agreement means agreement about
+  the same residue.
+"""
+
 import csv
-import subprocess
-from pathlib import Path
-from collections import defaultdict
 import re
-from .utils import (
-    load_primers, load_mutation_db, detect_mutations_amplicon,
-    load_gene_reference_sequences, KNOWN_MUTATIONS,
-)
+import subprocess
+import sys
+from collections import defaultdict
+from pathlib import Path
+
+from .references import gene_family
+from .utils import load_primers
+from .variants import sequential_to_ambler
+
+_SUBSTITUTION = re.compile(r'^([A-Z*])(\d+)([A-Z*])$')
+_INDEL = re.compile(r'^(\d+)\s*bp\s+(Deletion|Insertion|Duplication)\s+at\s+(\d+)$',
+                    re.IGNORECASE)
+
+# Families whose positions are reported in Ambler numbering elsewhere in the
+# tool, so GAMMA's sequential positions must be converted before comparison.
+_AMBLER_FAMILIES = ('blaKPC', 'blaSHV', 'blaOXA', 'blaCTX-M')
 
 
 class MutationDetector:
-    def __init__(self, assembly, output_prefix, genes_file=None, primers_file=None, mutation_db_file=None):
+    def __init__(self, assembly, output_prefix, genes_file=None, primers_file=None,
+                 mutation_db_file=None, organism=None, threads=1):
         self.assembly = assembly
         self.output_prefix = output_prefix
         self.genes_file = genes_file
         self.primers_file = primers_file
+        self.organism = organism
+        self.threads = max(1, int(threads or 1))
         self.gamma_results = []
         self.amplicon_results = []
-        self.seqkit_mut_results = []
         self.unified_results = []
+        self.primers = load_primers(primers_file) if primers_file else {}
 
-        if primers_file:
-            self.primers = load_primers(primers_file)
-        else:
-            self.primers = {}
-
-        # Raw (non-normalized) mutation DB, as needed by detect_mutations_amplicon()
-        # -- preserves whatever gene-name casing/variant the --mutations file or
-        # KNOWN_MUTATIONS fallback uses.
-        self.raw_mutation_db = load_mutation_db(mutation_db_file) if mutation_db_file else KNOWN_MUTATIONS
-
-        # Load mutation database for filtering GAMMA results
-        # Normalize keys to lowercase so lookups via _normalize_gene_name succeed
-        self.mutation_db = {
-            self._normalize_gene_name(k): v
-            for k, v in self.raw_mutation_db.items()
-        }
-
-        # Reference gene sequences (for indel-aware amplicon mutation detection)
-        self.reference_seqs = load_gene_reference_sequences(genes_file)
+    # ------------------------------------------------------------------ GAMMA
 
     def run_gamma(self):
-        """
-        Run GAMMA to detect mutations in resistance genes.
-
-        GAMMA performs protein-level alignment using nucleotide CDS sequences
-        and reports mutations in the Codon_Changes column of the .gamma output.
-        """
         if not self.genes_file or not Path(self.genes_file).exists():
             return
 
-        print("Running GAMMA for resistance gene mutation analysis...")
-
-        gamma_output_prefix = f"{self.output_prefix}_gamma"
-        gamma_output_file = f"{gamma_output_prefix}.gamma"
-
-        cmd = ['GAMMA.py', self.assembly, self.genes_file, gamma_output_prefix]
+        print("Running GAMMA for independent codon-level mutation analysis...")
+        output_prefix = f"{self.output_prefix}_gamma"
+        output_file = f"{output_prefix}.gamma"
 
         try:
-            result = subprocess.run(cmd, capture_output=True, text=True, check=True)
-
-            if not Path(gamma_output_file).exists():
-                print("WARNING: GAMMA output file not found")
-                return
-
-            with open(gamma_output_file, 'r') as f:
-                reader = csv.DictReader(f, delimiter='\t')
-                for row in reader:
-                    # Strip ambiguous match marker (‡) if present
-                    gene_name = row['Gene'].rstrip('\u2021')
-                    contig = row['Contig']
-                    start = int(row['Start'])
-                    stop = int(row['Stop'])
-                    match_type = row['Match_Type']
-                    # GAMMA's human-readable substitution/indel list (e.g. "L168P," or
-                    # "6 bp Deletion at 496,L166W,") is in the 'Description' column;
-                    # 'Codon_Changes' is just a numeric count of changed codons.
-                    codon_changes = row.get('Description', '0')
-                    codon_percent = float(row['Codon_Percent'])
-                    percent_length = float(row['Percent_Length'])
-
-                    identity = codon_percent * 100
-                    coverage = percent_length * 100
-
-                    raw_mutations = self._parse_gamma_codon_changes(codon_changes)
-                    mutations = self._filter_known_mutations(raw_mutations, gene_name)
-
-                    self.gamma_results.append({
-                        'protein': gene_name,
-                        'contig': contig,
-                        'contig_start': min(start, stop),
-                        'contig_end': max(start, stop),
-                        'identity': identity,
-                        'coverage': coverage,
-                        'mutations': mutations,
-                        'match_type': match_type,
-                    })
-
-            print(f"Found {len(self.gamma_results)} gene alignments")
-            for r in self.gamma_results:
-                if r['mutations']:
-                    print(f"  {r['protein']}: {len(r['mutations'])} mutations detected")
-
+            subprocess.run(['GAMMA.py', self.assembly, self.genes_file, output_prefix],
+                           capture_output=True, text=True, check=True)
         except FileNotFoundError:
-            print("WARNING: GAMMA not found, skipping gene mutation analysis")
-        except subprocess.CalledProcessError as e:
-            print(f"WARNING: GAMMA failed: {e.stderr}", file=sys.stderr)
-
-    @staticmethod
-    def _parse_gamma_codon_changes(codon_changes):
-        """Parse GAMMA's Codon_Changes field into a list of mutation strings.
-
-        GAMMA reports non-degenerate codon differences as comma-separated
-        substitution strings like 'D179Y,V240G' or '0' for wildtype matches.
-        Only standard amino acid substitution strings (e.g. 'D179Y') are returned;
-        indels, frameshifts, and truncation annotations are skipped.
-        """
-        if not codon_changes or codon_changes.strip().lower() in ('0', '-', '', 'no coding mutations'):
-            return []
-        mutations = []
-        for mut in codon_changes.split(','):
-            mut = mut.strip()
-            if re.match(r'^[A-Z*]\d+[A-Z*]$', mut):
-                mutations.append(mut)
-        return mutations
-
-    def _filter_known_mutations(self, raw_mutations, gene_name):
-        """
-        Filter raw mutations to only known resistance mutations from mutation_db.
-
-        raw_mutations: list of strings from _parse_gamma_codon_changes, e.g. ['D369N', 'G463D']
-        gene_name:     gene FASTA header (e.g. 'acrB_WP_002892069.1' or 'blaKPC-3')
-
-        Returns a list of mutation name strings (from mutation_db) for confirmed
-        resistance mutations only.  Unknown positional variants or non-resistance
-        positions are dropped.
-        """
-        gene_norm = self._normalize_gene_name(gene_name)
-
-        if gene_norm not in self.mutation_db:
-            return []
-
-        known = self.mutation_db[gene_norm]
-        filtered = []
-
-        for mut_str in raw_mutations:
-            # Only process standard substitution strings like "D369N", "G463*"
-            m = re.match(r'^([A-Z*])(\d+)([A-Z*])$', mut_str)
-            if not m:
-                continue  # skip frameshifts, indels, ? entries
-
-            ref, pos, var = m.group(1), int(m.group(2)), m.group(3)
-
-            if pos not in known:
-                continue  # not a known resistance position
-
-            known_info = known[pos]
-            if var in known_info.get('variants', []):
-                # Known resistance variant at a known position
-                filtered.append(known_info.get('name', mut_str))
-
-        return filtered
-
-    @staticmethod
-    def _normalize_gene_name(gene_name):
-        """
-        Normalize gene name for cross-method comparison.
-
-        Handles both primer-style names ('uhpB', 'blaKPC') and GAMMA
-        gene FASTA ID style ('acrB_WP_002892069.1', 'blaKPC-3').
-        Returns a lowercase base gene name for comparison.
-        """
-        # Strip accession suffix (e.g., acrB_WP_002892069.1 -> acrB)
-        base = gene_name.split('_')[0]
-        # Strip numeric variant suffix after hyphen (e.g., blaKPC-3 -> blaKPC)
-        base = base.split('-')[0]
-        # For bla genes, strip trailing digits from the class part (e.g., blaOXA -> blaOXA)
-        if base.lower().startswith('bla'):
-            base = 'bla' + base[3:].rstrip('0123456789')
-        # For fosA variants with numeric suffixes: fosA3/4/5/7/11 -> fosA
-        # fosAKP is unaffected because 'KP' contains no digits.
-        elif re.match(r'^fosA\d+$', base, re.IGNORECASE):
-            base = base.rstrip('0123456789')
-        return base.lower()
-
-    def _extract_pair_id_from_header(self, header, valid_pairs):
-        """
-        Extract pair_id from a seqkit amplicon FASTA header.
-
-        Seqkit amplicon headers embed the primer pair name in the header
-        (e.g., '>contig1_uhpB_ver:100-500'). Scans known pair IDs.
-        """
-        for pair_id in valid_pairs:
-            if pair_id in header:
-                return pair_id
-        return None
-
-    def _build_primer_pairs(self):
-        """
-        Group primers into forward/reverse pairs from self.primers.
-        Returns {pair_id: {'F': seq, 'R': seq, 'gene': str, 'mutation': str}}.
-        """
-        pairs = defaultdict(dict)
-        for name, info in self.primers.items():
-            pair_id = info.get('pair_id')
-            if not pair_id or pair_id == '-':
-                continue
-
-            gene = info.get('gene', '') or ''
-            mutation_anno = info.get('mutation')
-
-            if pair_id not in pairs:
-                pairs[pair_id] = {
-                    'gene': gene,
-                    'mutation': mutation_anno,
-                }
-
-            # Determine forward/reverse using the same heuristics as detect_amplicons
-            if name.endswith('_F') or 'Fwd' in name or '-F' in name or '_F' in name:
-                pairs[pair_id]['F'] = info['seq']
-                pairs[pair_id]['F_name'] = name
-            elif name.endswith('_R') or 'Rev' in name or '-R' in name or '_R' in name:
-                pairs[pair_id]['R'] = info['seq']
-                pairs[pair_id]['R_name'] = name
-        return pairs
-
-    def detect_seqkit_mutations(self):
-        """
-        Detect resistance mutations using the seqkit amplicon method.
-
-        Runs seqkit amplicon to extract amplicon sequences, then:
-        - For mutation-annotated primer pairs: amplicon presence confirms
-          the annotated mutation (primer is mutation-specific).
-        - For gene-verification primer pairs: translates the amplicon in
-          all 3 frames and calls detect_mutations() to find mutations.
-
-        Returns a list of dicts:
-            {gene, pair_id, mutations (list), method='seqkit'}
-        """
-        if not self.primers:
-            return []
-
-        print("Running SeqKit for targeted mutation detection (amplicon extraction)...")
-
-        pairs = self._build_primer_pairs()
-
-        # Keep only pairs that have both primers and a gene annotation
-        _skip_purposes = ('deletion', 'cloning', 'pBAD', 'pDS', 'RT-qPCR', 'Quantification')
-        valid_pairs = {}
-        for pid, p in pairs.items():
-            if 'F' not in p or 'R' not in p:
-                continue
-            gene = p.get('gene', '') or ''
-            if not gene or gene in ('-', ''):
-                continue
-            # Skip cloning/RT-qPCR pairs that are not for mutation/gene verification
-            purpose_hint = p.get('mutation', '') or ''
-            if any(skip in purpose_hint for skip in _skip_purposes):
-                continue
-            valid_pairs[pid] = p
-
-        if not valid_pairs:
-            print("  No valid primer pairs for seqkit mutation detection")
-            return []
-
-        seqkit_primer_file = f"{self.output_prefix}_seqkit_mut_primers.tsv"
-        with open(seqkit_primer_file, 'w') as f:
-            for pair_id, p in valid_pairs.items():
-                f.write(f"{pair_id}\t{p['F']}\t{p['R']}\n")
-
-        seqkit_mut_results = []
-
-        try:
-            # --bed puts the primer pair name in column 4 and the amplicon
-            # sequence in column 7 (BED6+1). The default FASTA output's
-            # header only contains the matched contig's description, not
-            # the primer pair name, so it cannot be used to recover which
-            # pair produced which amplicon.
-            result = subprocess.run(
-                ['seqkit', 'amplicon', '-p', seqkit_primer_file, '--bed', self.assembly],
-                capture_output=True, text=True
-            )
-
-            if not result.stdout.strip():
-                print("  SeqKit: no amplicons found")
-                return []
-
-            amplicons = []
-            for line in result.stdout.strip().split('\n'):
-                fields = line.split('\t')
-                if len(fields) < 7:
-                    continue
-                pair_id, seq = fields[3], fields[6]
-                amplicons.append((pair_id, seq))
-
-            print(f"  SeqKit (Targeted): Extracted {len(amplicons)} amplicons for mutation analysis")
-
-            for pair_id, seq in amplicons:
-                if pair_id not in valid_pairs:
-                    continue
-
-                p = valid_pairs[pair_id]
-                gene = p.get('gene', '')
-                mutation_anno = p.get('mutation')
-
-                if not gene or gene in ('-', ''):
-                    continue
-
-                mutations_found = []
-
-                if mutation_anno and mutation_anno.strip() and mutation_anno.strip() not in ('-', ''):
-                    # Mutation-specific primer: amplicon presence = mutation confirmed.
-                    # Annotation format: "<gene> <MutName>" e.g. "uhpB G469R"
-                    parts = mutation_anno.strip().split()
-                    # Exclude non-mutation annotations
-                    skip_words = {'deletion', 'cloning', 'verification', 'expression', 'expression(reverse)'}
-                    if len(parts) >= 2 and not any(w.lower() in skip_words for w in parts):
-                        mut_name = parts[-1]  # e.g. "G469R"
-                        mutations_found = [mut_name]
-                else:
-                    # Gene-level verification primer: align the amplicon
-                    # against the gene's reference sequence (when available)
-                    # so mutation positions are read indel-aware, the same
-                    # fix applied to the BLAST detection path.
-                    mutations_found = detect_mutations_amplicon(
-                        gene, seq, self.raw_mutation_db, self.reference_seqs
-                    )
-
-                if mutations_found:
-                    seqkit_mut_results.append({
-                        'gene': gene,
-                        'pair_id': pair_id,
-                        'mutations': mutations_found,
-                        'method': 'seqkit',
-                    })
-
-        except FileNotFoundError:
-            print("WARNING: seqkit not found, skipping seqkit mutation analysis")
-        except subprocess.CalledProcessError as e:
-            print(f"WARNING: seqkit amplicon failed: {e.stderr}", file=sys.stderr)
-        finally:
-            try:
-                os.remove(seqkit_primer_file)
-            except Exception:
-                pass
-
-        self.seqkit_mut_results = seqkit_mut_results
-        gene_count = len({r['gene'] for r in seqkit_mut_results})
-        if gene_count > 0:
-            print(f"  SeqKit (Targeted): Detected mutations in {gene_count} gene(s) across {len(seqkit_mut_results)} amplicon(s)")
-        else:
-            print("  SeqKit (Targeted): No specific mutations detected in extracted amplicons")
-        return seqkit_mut_results
-
-    def merge_detection_results(self, seqkit_mut_results):
-        """
-        Merge GAMMA and seqkit mutation results with confidence scores.
-
-        Confidence scoring:
-          - 100% : mutation found by BOTH GAMMA AND seqkit
-          -  50% : mutation found by only ONE method
-
-        Returns a list of dicts (sorted by gene then mutation):
-        {
-            'gene'         : normalized gene name (str),
-            'mutation'     : mutation string e.g. 'D179Y' (str),
-            'confidence'   : 50 or 100 (int),
-            'methods'      : list of method names, e.g. ['gamma', 'seqkit'],
-            'gamma_detail' : matching GAMMA result dict, or None,
-            'seqkit_detail': matching seqkit result dict, or None,
-        }
-        """
-        # Index seqkit results by normalized (gene, mutation)
-        seqkit_by_key = {}
-        for r in seqkit_mut_results:
-            gene_norm = self._normalize_gene_name(r['gene'])
-            for mut in r.get('mutations', []):
-                key = (gene_norm, mut)
-                if key not in seqkit_by_key:
-                    seqkit_by_key[key] = r
-
-        unified = []
-        processed_seqkit_keys = set()
-        seen_gamma_entries = set()
-
-        # Iterate through ALL gamma results (preserving instances)
-        # This ensures multi-copy genes are reported individually
-        for r in self.gamma_results:
-            gene_norm = self._normalize_gene_name(r['protein'])
-            mutations = r.get('mutations', [])
-
-            contig = r.get('contig', '')
-            start = r.get('contig_start', -1)
-            end = r.get('contig_end', -1)
-
-            for mutation in mutations:
-                # Deduplicate exact same mutation event (same gene, mutation, location)
-                # This handles accidental duplicates in input while allowing multi-copy genes (different locs)
-                unique_key = (gene_norm, mutation, contig, start, end)
-                if unique_key in seen_gamma_entries:
-                    continue
-                seen_gamma_entries.add(unique_key)
-
-                key = (gene_norm, mutation)
-                in_seqkit = key in seqkit_by_key
-
-                methods = ['gamma']
-                if in_seqkit:
-                    methods.append('seqkit')
-                    processed_seqkit_keys.add(key)
-
-                confidence = 100 if in_seqkit else 50
-
-                unified.append({
-                    'gene': gene_norm,
-                    'mutation': mutation,
-                    'confidence': confidence,
-                    'methods': methods,
-                    'gamma_detail': r,
-                    'seqkit_detail': seqkit_by_key.get(key),
-                })
-
-        # Process remaining SeqKit results (not matched to any GAMMA instance)
-        for key, r in seqkit_by_key.items():
-            if key not in processed_seqkit_keys:
-                gene_norm, mutation = key
-                unified.append({
-                    'gene': gene_norm,
-                    'mutation': mutation,
-                    'confidence': 50,
-                    'methods': ['seqkit'],
-                    'gamma_detail': None,
-                    'seqkit_detail': r,
-                })
-
-        # Sort unified results
-        unified.sort(key=lambda x: (x['gene'], x['mutation']))
-
-        self.unified_results = unified
-        return unified
-
-    def write_unified_report(self):
-        """Write the unified dual-method mutation report (TSV).
-
-        Always (re)writes the report file, even when empty, so a clean
-        re-run doesn't leave a stale report from a previous run with
-        mutations behind.
-        """
-        report_file = f"{self.output_prefix}_unified_mutations.tsv"
-
-        if not self.unified_results:
-            if os.path.exists(report_file):
-                os.remove(report_file)
+            print("WARNING: GAMMA not found, skipping the second-opinion analysis")
+            return
+        except subprocess.CalledProcessError as error:
+            print(f"WARNING: GAMMA failed: {error.stderr}", file=sys.stderr)
             return
 
-        print(f"Writing unified mutation report to {report_file}...")
+        if not Path(output_file).exists():
+            print("WARNING: GAMMA output file not found")
+            return
 
-        with open(report_file, 'w') as f:
-            f.write('\t'.join([
-                'Gene', 'Mutation', 'Confidence(%)', 'Methods',
-                'GAMMA_Contig', 'GAMMA_Identity(%)', 'GAMMA_Coverage(%)',
-                'SeqKit_PairID',
-            ]) + '\n')
+        with open(output_file) as handle:
+            for row in csv.DictReader(handle, delimiter='\t'):
+                gene = row['Gene'].rstrip('‡')
+                start, stop = int(row['Start']), int(row['Stop'])
+                changes = self._parse_gamma_description(row.get('Description', ''), gene)
+                self.gamma_results.append({
+                    'protein': gene,
+                    'contig': row['Contig'],
+                    'contig_start': min(start, stop),
+                    'contig_end': max(start, stop),
+                    'identity': float(row['Codon_Percent']) * 100,
+                    'coverage': float(row['Percent_Length']) * 100,
+                    'match_type': row['Match_Type'],
+                    'mutations': changes,
+                })
 
-            for r in self.unified_results:
-                gm = r['gamma_detail']
-                sk = r['seqkit_detail']
+        print(f"Found {len(self.gamma_results)} gene alignments")
 
-                gm_contig = gm['contig'] if gm else '-'
-                gm_identity = f"{gm['identity']:.2f}" if gm else '-'
-                gm_coverage = f"{gm['coverage']:.2f}" if gm else '-'
-                sk_pair = sk['pair_id'] if sk else '-'
+    @staticmethod
+    def _parse_gamma_description(description, gene_name):
+        """Turn GAMMA's Description field into comparable change labels.
 
-                f.write('\t'.join([
-                    r['gene'],
-                    r['mutation'],
-                    str(r['confidence']),
-                    '+'.join(r['methods']),
-                    gm_contig,
-                    gm_identity,
-                    gm_coverage,
-                    sk_pair,
-                ]) + '\n')
+        GAMMA writes substitutions as ``D179Y`` in sequential numbering and
+        indels as ``6 bp Deletion at 496`` (a nucleotide offset).  Substitutions
+        are renumbered for class A beta-lactamases; indels are kept as a
+        descriptive label because the two callers describe them differently.
+        """
+        if not description:
+            return []
+
+        ambler = gene_family(gene_name) in _AMBLER_FAMILIES
+        changes = []
+        for token in description.split(','):
+            token = token.strip()
+            if not token or token in ('0', '-'):
+                continue
+
+            substitution = _SUBSTITUTION.match(token)
+            if substitution:
+                reference_aa, position, variant_aa = substitution.groups()
+                position = int(position)
+                if ambler:
+                    position = sequential_to_ambler(position)
+                changes.append(f"{reference_aa}{position}{variant_aa}")
+                continue
+
+            indel = _INDEL.match(token)
+            if indel:
+                length, kind, offset = indel.groups()
+                codon = (int(offset) - 1) // 3 + 1
+                if ambler:
+                    codon = sequential_to_ambler(codon)
+                changes.append(f"{int(length)}bp{kind.lower()}@codon{codon}")
+                continue
+
+            changes.append(token)
+        return changes
+
+    # --------------------------------------------------------------- amplicons
 
     def detect_amplicons(self):
-        """Detect amplicon coordinates using seqkit amplicon (BED output)"""
+        """Map primer-pair amplicon coordinates with seqkit (reporting only)."""
         if not self.primers:
             return
 
         print("Running SeqKit for amplicon coordinate mapping...")
-
         pairs = defaultdict(dict)
         for name, info in self.primers.items():
             pair_id = info.get('pair_id')
             if not pair_id or pair_id == '-':
                 continue
-
             if name.endswith('_F') or 'Fwd' in name or '-F' in name or '_F' in name:
                 pairs[pair_id]['F'] = info['seq']
                 pairs[pair_id]['F_name'] = name
@@ -505,169 +152,196 @@ class MutationDetector:
                 pairs[pair_id]['R'] = info['seq']
                 pairs[pair_id]['R_name'] = name
 
-        if not pairs:
-            print("No primer pairs identified for amplicon detection")
+        complete_pairs = {pair_id: pair for pair_id, pair in pairs.items()
+                          if 'F' in pair and 'R' in pair}
+        if not complete_pairs:
+            print("No complete primer pairs identified for amplicon detection")
             return
 
-        seqkit_primer_file = f"{self.output_prefix}_seqkit_primers.tsv"
-        with open(seqkit_primer_file, 'w') as f:
-            for pair_id, p in pairs.items():
-                if 'F' in p and 'R' in p:
-                    f.write(f"{pair_id}\t{p['F']}\t{p['R']}\n")
-
-        cmd = [
-            'seqkit', 'amplicon',
-            '-p', seqkit_primer_file,
-            self.assembly,
-            '--bed'
-        ]
+        primer_file = f"{self.output_prefix}_seqkit_primers.tsv"
+        with open(primer_file, 'w') as handle:
+            for pair_id, pair in complete_pairs.items():
+                handle.write(f"{pair_id}\t{pair['F']}\t{pair['R']}\n")
 
         try:
-            result = subprocess.run(cmd, capture_output=True, text=True, check=True)
+            completed = subprocess.run(
+                ['seqkit', 'amplicon', '-j', str(self.threads),
+                 '-p', primer_file, self.assembly, '--bed'],
+                capture_output=True, text=True, check=True)
+        except FileNotFoundError:
+            print("WARNING: seqkit not found, skipping amplicon mapping")
+            return
+        except subprocess.CalledProcessError as error:
+            print(f"ERROR running seqkit: {error.stderr}", file=sys.stderr)
+            return
 
-            for line in result.stdout.strip().split('\n'):
-                if not line: continue
-                fields = line.split('\t')
-                if len(fields) < 6: continue
+        for line in completed.stdout.strip().split('\n'):
+            if not line:
+                continue
+            fields = line.split('\t')
+            if len(fields) < 6:
+                continue
+            contig, start, end, pair_id = fields[0], int(fields[1]), int(fields[2]), fields[3]
+            self.amplicon_results.append({
+                'pair_id': pair_id,
+                'contig': contig,
+                'start': start,
+                'end': end,
+                'length': end - start,
+                'f_primer': complete_pairs.get(pair_id, {}).get('F_name', '?'),
+                'r_primer': complete_pairs.get(pair_id, {}).get('R_name', '?'),
+                'mutations_found': [],
+            })
 
-                contig = fields[0]
-                start = int(fields[1])
-                end = int(fields[2])
-                pair_id = fields[3]
-                strand = fields[5]
-
-                f_primer = pairs[pair_id].get('F_name', '?')
-                r_primer = pairs[pair_id].get('R_name', '?')
-
-                self.amplicon_results.append({
-                    'pair_id': pair_id,
-                    'contig': contig,
-                    'start': start,
-                    'end': end,
-                    'length': end - start,
-                    'f_primer': f_primer,
-                    'r_primer': r_primer,
-                    'mutations_found': []
-                })
-
-            print(f"  SeqKit (Mapping): Mapped coordinates for {len(self.amplicon_results)} amplicons")
-
-        except subprocess.CalledProcessError as e:
-            print(f"ERROR running seqkit: {e.stderr}", file=sys.stderr)
-        except Exception as e:
-            print(f"ERROR processing amplicons: {e}", file=sys.stderr)
+        print(f"  SeqKit: mapped coordinates for {len(self.amplicon_results)} amplicons")
 
     def analyze_amplicons(self, blast_results=None):
-        """
-        Check if detected genes fall within amplicons.
-        blast_results: list of dictionaries from BlastDetector
-        """
-        if not self.amplicon_results:
+        """Note which detected genes fall inside each mapped amplicon."""
+        if not self.amplicon_results or not blast_results:
             return
 
-        if not blast_results:
-            return
-
-        print("Checking for mutations within amplicons...")
-
-        for amp in self.amplicon_results:
-            amp_contig = amp['contig']
-            amp_start = amp['start']
-            amp_end = amp['end']
-
-            for res in blast_results:
-                if res['contig'] != amp_contig:
+        for amplicon in self.amplicon_results:
+            for result in blast_results:
+                if result['contig'] != amplicon['contig']:
                     continue
+                start = min(result['start'], result['end']) - 1
+                end = max(result['start'], result['end'])
+                if max(amplicon['start'], start) < min(amplicon['end'], end):
+                    changes = ';'.join(result['changes']) if result['changes'] else 'no changes'
+                    amplicon['mutations_found'].append(f"{result['allele']}: {changes}")
 
-                res_start = res['start']
-                res_end = res['end']
+    # ------------------------------------------------------------------ merging
 
-                start = min(res_start, res_end) - 1
-                end = max(res_start, res_end)
+    def merge_detection_results(self, blast_results=None):
+        """Cross-reference the BLAST caller and GAMMA.
 
-                if max(amp_start, start) < min(amp_end, end):
-                    mut_str = res['mutations']
-                    if mut_str != '-':
-                        amp['mutations_found'].append(f"{res['gene']}: {mut_str}")
-                    else:
-                        amp['mutations_found'].append(f"{res['gene']}: (wildtype)")
+        Confidence is 100% when both callers report the same change at the same
+        residue of the same gene copy, and 50% when only one does.
+        """
+        gamma_by_gene = defaultdict(list)
+        for result in self.gamma_results:
+            gamma_by_gene[gene_family(result['protein'])].append(result)
+
+        unified = []
+        seen = set()
+
+        for result in blast_results or []:
+            family = gene_family(result['gene'])
+            gamma_changes = {change
+                             for gamma in gamma_by_gene.get(family, [])
+                             for change in gamma['mutations']}
+            gamma_detail = gamma_by_gene.get(family, [None])[0]
+
+            for change in result['changes']:
+                key = (family, change, result['contig'], result['start'])
+                if key in seen:
+                    continue
+                seen.add(key)
+                confirmed = change in gamma_changes
+                unified.append({
+                    'gene': result['gene'],
+                    'family': family,
+                    'mutation': change,
+                    'confidence': 100 if confirmed else 50,
+                    'methods': ['blast', 'gamma'] if confirmed else ['blast'],
+                    'reported': change in result['reported_mutations'] or result['acquired'],
+                    'gamma_detail': gamma_detail if confirmed else None,
+                    'contig': result['contig'],
+                })
+
+        # Changes GAMMA found in genes the BLAST caller did not report at all.
+        blast_families = {gene_family(result['gene']) for result in blast_results or []}
+        for family, gamma_results in gamma_by_gene.items():
+            if family in blast_families:
+                continue
+            for gamma in gamma_results:
+                for change in gamma['mutations']:
+                    unified.append({
+                        'gene': gamma['protein'],
+                        'family': family,
+                        'mutation': change,
+                        'confidence': 50,
+                        'methods': ['gamma'],
+                        'reported': False,
+                        'gamma_detail': gamma,
+                        'contig': gamma['contig'],
+                    })
+
+        unified.sort(key=lambda item: (item['gene'], item['mutation']))
+        self.unified_results = unified
+        return unified
+
+    # ------------------------------------------------------------------ reports
+
+    def write_unified_report(self):
+        report_file = f"{self.output_prefix}_unified_mutations.tsv"
+        if not self.unified_results:
+            if Path(report_file).exists():
+                Path(report_file).unlink()
+            return
+
+        print(f"Writing unified mutation report to {report_file}...")
+        with open(report_file, 'w') as handle:
+            handle.write('\t'.join([
+                'Gene', 'Mutation', 'Confidence(%)', 'Methods', 'Contig',
+                'Reported_As_Resistance_Mutation',
+            ]) + '\n')
+            for item in self.unified_results:
+                handle.write('\t'.join([
+                    item['gene'],
+                    item['mutation'],
+                    str(item['confidence']),
+                    '+'.join(item['methods']),
+                    item['contig'],
+                    'yes' if item['reported'] else 'no',
+                ]) + '\n')
 
     def write_gamma_report(self):
-        """Write GAMMA mutation detection results."""
         if not self.gamma_results:
             return
-
         report_file = f"{self.output_prefix}_protein_mutations.tsv"
-        print(f"Writing GAMMA mutation results to {report_file}...")
-
-        with open(report_file, 'w') as f:
-            f.write('\t'.join(['Gene', 'Contig', 'Start', 'End', 'Identity',
-                              'Coverage', 'Match_Type', 'Mutations', 'Method']) + '\n')
-
-            for r in self.gamma_results:
-                mutations_str = ';'.join(r['mutations']) if r['mutations'] else '-'
-                f.write('\t'.join([
-                    r['protein'],
-                    r['contig'],
-                    str(r['contig_start']),
-                    str(r['contig_end']),
-                    f"{r['identity']:.2f}",
-                    f"{r['coverage']:.2f}",
-                    r['match_type'],
-                    mutations_str,
-                    'GAMMA'
+        print(f"Writing GAMMA results to {report_file}...")
+        with open(report_file, 'w') as handle:
+            handle.write('\t'.join(['Gene', 'Contig', 'Start', 'End', 'Identity',
+                                    'Coverage', 'Match_Type', 'Changes', 'Method']) + '\n')
+            for result in self.gamma_results:
+                handle.write('\t'.join([
+                    result['protein'], result['contig'], str(result['contig_start']),
+                    str(result['contig_end']), f"{result['identity']:.2f}",
+                    f"{result['coverage']:.2f}", result['match_type'],
+                    ';'.join(result['mutations']) if result['mutations'] else '-',
+                    'GAMMA',
                 ]) + '\n')
 
     def write_amplicon_report(self):
-        """Write amplicon detection results to TSV file"""
         if not self.amplicon_results:
             return
-
         report_file = f"{self.output_prefix}_amplicons.tsv"
-
         print(f"Writing amplicon results to {report_file}...")
-
-        with open(report_file, 'w') as f:
-            f.write('\t'.join(['Pair_ID', 'Contig', 'Start', 'End', 'Length',
-                              'Mutations_Found', 'Method']) + '\n')
-
-            for amp in self.amplicon_results:
-                mut_str = ';'.join(amp['mutations_found']) if amp['mutations_found'] else '-'
-                f.write('\t'.join([
-                    amp['pair_id'],
-                    amp['contig'],
-                    str(amp['start']),
-                    str(amp['end']),
-                    str(amp['length']),
-                    mut_str,
-                    'Seqkit/Amplicon'
+        with open(report_file, 'w') as handle:
+            handle.write('\t'.join(['Pair_ID', 'Contig', 'Start', 'End', 'Length',
+                                    'Genes_In_Region', 'Method']) + '\n')
+            for amplicon in self.amplicon_results:
+                handle.write('\t'.join([
+                    amplicon['pair_id'], amplicon['contig'], str(amplicon['start']),
+                    str(amplicon['end']), str(amplicon['length']),
+                    ';'.join(amplicon['mutations_found']) if amplicon['mutations_found'] else '-',
+                    'SeqKit/amplicon',
                 ]) + '\n')
 
     def run(self, blast_results=None):
-        """
-        Run the full mutation detection pipeline:
-          1. GAMMA    – protein-level gene alignment, Codon_Changes mutation parsing
-          2. seqkit   – amplicon extraction + sequence-level mutation detection
-          3. merge    – cross-reference both methods, assign confidence scores
-          4. seqkit BED – amplicon location detection (cross-ref with BLAST)
-
-        Returns:
-            (gamma_results, amplicon_results, seqkit_mut_results, unified_results)
-        """
         self.run_gamma()
-        seqkit_mut_results = self.detect_seqkit_mutations()
-        unified_results = self.merge_detection_results(seqkit_mut_results)
-
+        unified = self.merge_detection_results(blast_results)
         self.detect_amplicons()
         self.analyze_amplicons(blast_results)
-
         self.write_gamma_report()
         self.write_amplicon_report()
         self.write_unified_report()
+        return self.gamma_results, self.amplicon_results, [], unified
 
-        return self.gamma_results, self.amplicon_results, seqkit_mut_results, unified_results
 
-
-def run_mutation_detection(assembly, output, genes, primers, blast_results=None, mutation_db_file=None):
-    detector = MutationDetector(assembly, output, genes, primers, mutation_db_file)
+def run_mutation_detection(assembly, output, genes, primers, blast_results=None,
+                           mutation_db_file=None, organism=None, threads=1):
+    detector = MutationDetector(assembly, output, genes, primers, mutation_db_file,
+                                organism, threads)
     return detector.run(blast_results)

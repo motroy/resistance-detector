@@ -1,0 +1,5 @@
+Gene	Contig	Start	End	Identity	Coverage	Match_Type	Changes	Method
+blaKPC-2	contig_blaKPC	800	1682	99.66	100.00	Mutant	D179Y	GAMMA
+fosA3	contig_fosA3	800	1217	100.00	100.00	Native	No coding mutations	GAMMA
+fosAKP	contig_fosAKP	800	1220	100.00	100.00	Native	No coding mutations	GAMMA
+blaCTX-M-15	contig_blaCTX_M	800	1676	100.00	100.00	Native	No coding mutations	GAMMA

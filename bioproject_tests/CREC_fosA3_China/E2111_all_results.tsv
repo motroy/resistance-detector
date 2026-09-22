@@ -1,0 +1,28 @@
+Sample	Type	Gene	Allele	Method	Result_Details	Identity_Confidence	Contig	Start	End	Copy_Number	Notes
+E2111.fna	Chromosomal gene	cyaA	cyaA	BLAST	Coverage: 100.00%	99.96%	NZ_JAWWVH010000019.1	41485	44031	1	no protein changes vs reference
+E2111.fna	Chromosomal gene	lon	lon	BLAST	Coverage: 100.00%	99.62%	NZ_JAWWVH010000009.1	81151	83505	1	no protein changes vs reference
+E2111.fna	Chromosomal gene	ptsI	ptsI	BLAST	Coverage: 100.00%	99.48%	NZ_JAWWVH010000006.1	194266	195993	1	protein changes: R367K
+E2111.fna	Chromosomal gene	uhpB	uhpB	BLAST	Coverage: 100.00%	100.00%	NZ_JAWWVH010000013.1	22789	24291	1	no protein changes vs reference
+E2111.fna	Chromosomal gene	uhpT	uhpT	BLAST	Coverage: 100.00%	100.00%	NZ_JAWWVH010000013.1	25758	27149	1	no protein changes vs reference
+E2111.fna	Chromosomal gene	uhpC	uhpC	BLAST	Coverage: 100.00%	100.00%	NZ_JAWWVH010000013.1	24301	25620	1	no protein changes vs reference
+E2111.fna	Chromosomal gene	glpT	glpT	BLAST	Coverage: 100.00%	96.98%	NZ_JAWWVH010000003.1	114442	115800	1	protein changes: L297F;E443Q;Q444E;E448K
+E2111.fna	Chromosomal gene	murA	murA	BLAST	Coverage: 100.00%	98.89%	NZ_JAWWVH010000004.1	30482	31741	1	no protein changes vs reference
+E2111.fna	Chromosomal gene	ompC	ompC	BLAST	Coverage: 100.00%	99.91%	NZ_JAWWVH010000003.1	73341	74444	1	protein changes: R267C
+E2111.fna	Chromosomal gene	ompF	ompF	BLAST	Coverage: 100.00%	100.00%	NZ_JAWWVH010000001.1	295219	296307	1	no protein changes vs reference
+E2111.fna	Chromosomal gene	galU	galU	BLAST	Coverage: 100.00%	100.00%	NZ_JAWWVH010000014.1	41610	42518	1	no protein changes vs reference
+E2111.fna	Acquired gene	blaNDM-5	blaNDM-5	BLAST	Coverage: 100.00%	100.00%	NZ_JAWWVH010000078.1	4862	5674	1	no protein changes vs reference
+E2111.fna	Chromosomal gene	uhpA	uhpA	BLAST	Coverage: 100.00%	100.00%	NZ_JAWWVH010000013.1	22199	22789	1	no protein changes vs reference
+E2111.fna	Acquired gene	fosA3	fosA3	BLAST	Coverage: 100.00%	100.00%	NZ_JAWWVH010000105.1	1867	2283	1	no protein changes vs reference
+E2111.fna	Protein change	blaCTX-M-15	-	gamma	1 SNPs in 97-785	50%	NZ_JAWWVH010000165.1	-	-	-	sequence difference, not a curated resistance mutation
+E2111.fna	Protein change	blaCTX-M-15	-	gamma	A81V	50%	NZ_JAWWVH010000165.1	-	-	-	sequence difference, not a curated resistance mutation
+E2111.fna	Protein change	glpT	-	blast+gamma	E443Q	100%	NZ_JAWWVH010000003.1	-	-	-	sequence difference, not a curated resistance mutation
+E2111.fna	Protein change	glpT	-	blast+gamma	E448K	100%	NZ_JAWWVH010000003.1	-	-	-	sequence difference, not a curated resistance mutation
+E2111.fna	Protein change	glpT	-	blast+gamma	L297F	100%	NZ_JAWWVH010000003.1	-	-	-	sequence difference, not a curated resistance mutation
+E2111.fna	Protein change	glpT	-	blast+gamma	Q444E	100%	NZ_JAWWVH010000003.1	-	-	-	sequence difference, not a curated resistance mutation
+E2111.fna	Protein change	ompC	-	blast+gamma	R267C	100%	NZ_JAWWVH010000003.1	-	-	-	sequence difference, not a curated resistance mutation
+E2111.fna	Protein change	ptsI	-	blast+gamma	R367K	100%	NZ_JAWWVH010000006.1	-	-	-	sequence difference, not a curated resistance mutation
+E2111.fna	Amplicon	lon_ver2	-	SeqKit/amplicon	Length: 1222bp	-	NZ_JAWWVH010000001.1	325817	327039	-	Genes in region: none
+E2111.fna	Amplicon	uhpB_ver	-	SeqKit/amplicon	Length: 1603bp	-	NZ_JAWWVH010000013.1	22734	24337	-	Genes in region: uhpB: no changes; uhpC: no changes; uhpA: no changes
+E2111.fna	Amplicon	uhpC_ver	-	SeqKit/amplicon	Length: 1449bp	-	NZ_JAWWVH010000013.1	24240	25689	-	Genes in region: uhpB: no changes; uhpC: no changes
+E2111.fna	Amplicon	RT_uhpT	-	SeqKit/amplicon	Length: 166bp	-	NZ_JAWWVH010000013.1	25931	26097	-	Genes in region: uhpT: no changes
+E2111.fna	Amplicon	RT_rrsA	-	SeqKit/amplicon	Length: 105bp	-	NZ_JAWWVH010000124.1	360	465	-	Genes in region: none

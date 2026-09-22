@@ -1,81 +1,56 @@
 # Testing
 
-## Running Tests
-
-Install dependencies and run the full test suite:
-
 ```bash
 pip install "fos-cazavi[dev]"
-python -m pytest tests/ -v
+python3 -m pytest tests/ -q
 ```
 
-## Test Results
+Tests that need BLAST+ skip themselves automatically when it is not installed.
 
+## What is tested
+
+### `tests/test_variants.py` — the variant caller, directly
+
+* Ambler numbering: positions 58 and 253 are absent, anchors are correct, and
+  the mapping round-trips.
+* Substitutions, in-frame deletions (including adjacent ones merged into a
+  range) and insertions are each reported as what they are.
+* A deletion does not shift the calls that follow it — the failure mode that
+  fabricates downstream substitutions.
+* Premature stops, frameshifts and truncations are detected, and a small
+  in-frame deletion is *not* mistaken for a knockout.
+* Gene spans are recovered correctly from partial alignments, from the reverse
+  strand, and are flagged when they run off a contig.
+
+### `tests/test_pipeline.py` — the real pipeline on synthetic genomes
+
+Genes are taken from the bundled reference data, mutated at a known position,
+embedded in a contig, and run through BLAST and the caller. Checks include:
+
+* wild-type KPC-2 is typed as KPC-2 and called susceptible;
+* H274Y is typed as KPC-3 and is *not* treated as a resistance marker;
+* D179Y is typed as KPC-33 and called resistant;
+* an Omega-loop deletion is called resistant on the mechanism;
+* an undocumented hotspot change gives Indeterminate;
+* a gene on the reverse strand gives the same call;
+* NDM-1 gives a resistant CAZ/AVI call even alongside wild-type KPC;
+* acquired fosA3 gives fosfomycin resistance, intrinsic fosAKP does not;
+* a nonsense mutation in `uhpT` gives fosfomycin resistance, and the same gene
+  cut by a contig boundary does not;
+* curated chromosomal mutations are not reported without `--organism`;
+* the summary files are written and parse correctly.
+
+### `tests/test_scenarios.py` — ground-truth scenarios
+
+`create_test_genomes.py` writes 14 synthetic genomes together with the
+phenotype each is built to produce (`expected_results.tsv`). The test
+regenerates them, runs the pipeline over each, and asserts the declared
+expectation for both drugs. Regenerate them yourself with:
+
+```bash
+python3 create_test_genomes.py test_data
 ```
-============================= test session starts ==============================
-platform linux -- Python 3.11.14, pytest-9.0.2
-collected 305 items
 
-305 passed in 8.6s
-```
+## Validation on real genomes
 
-**All 305 tests pass.** No external tools (BLAST, GAMMA, seqkit) are required to run the tests — all tool-dependent logic is tested via synthetic inputs.
-
-## Test Coverage Summary
-
-| Test Module | What Is Covered |
-|---|---|
-| `test_blast_parsing.py` | BLAST output parsing: identity/coverage filtering, gene name extraction from various ID formats, multi-hit handling, copy-number annotation, edge cases |
-| `test_genome_creation.py` | Reference database loading (30 genes verified), `introduce_mutation()` utility, synthetic contig construction for all FOS and CAZAVI genome scenarios |
-| `test_gamma_parsing.py` | GAMMA Codon_Changes field parsing for KPC (D179Y, V240G, T243M), OXA-48 (P68A, Y211S), CMY-178 (N70T), porins (OmpK35/36), AcrB, gene name normalization, and fosA variant names (fosA3/4/5/7/11) |
-| `test_mutation_detection.py` | `detect_mutations()` for all gene families: wildtype no-call verification plus every documented resistance mutation across FOS and CAZAVI pathways |
-| `test_dual_detection.py` | Dual-method (GAMMA + SeqKit amplicon) confidence scoring: 100% when both methods agree, 50% when only one detects a mutation |
-| `test_cli_summary.py` | Copy-number aggregation and machine-readable JSON/TSV summary generation |
-| `test_phenotype.py` | Genotype-to-phenotype prediction rules for FOS and CAZ/AVI (`fos_cazavi/phenotype.py`) |
-
-## Genes and Mutations Covered by Tests
-
-**Fosfomycin (FOS) — Plasmidic:**
-
-| Gene | Mutations Tested |
-|---|---|
-| fosA3, fosA4, fosA5, fosA7, fosA11 | K90E, H119Q (+ wildtype) |
-| fosAKP | I91V (+ wildtype) |
-
-**Fosfomycin (FOS) — Chromosomal:**
-
-| Gene | Mutations Tested |
-|---|---|
-| murA | D369N, L370I |
-| uhpB | G469R, H350Y, H350Q |
-| uhpC | F384L |
-| uhpA | D54N, R139C, R139H |
-| uhpT | G55D, W198\*, E258\*, W350\* |
-| glpT | E44\*, W88\*, G90D, W234\*, R362C, R362H |
-| cyaA | G463D, G463\* |
-| ptsI | H191Y, H191Q |
-| galU | R282V |
-| lon | Q558\* |
-
-**Ceftazidime-Avibactam (CAZAVI) — Plasmidic:**
-
-| Gene | Mutations Tested |
-|---|---|
-| blaKPC-2, -3, -31, -190 | D179Y, V240G, T243M (incl. double mutants) |
-| blaOXA-48 | P68A, Y211S (incl. double mutant) |
-| blaCMY-178 | N70T |
-| blaSHV-12 | G238S, E240K |
-
-**Ceftazidime-Avibactam (CAZAVI) — Chromosomal:**
-
-| Gene | Mutations Tested |
-|---|---|
-| ompK36 | G134D, G134\*, D135\*, G213D |
-| ompK35 | G134D, D135\*, D181G, D181\* |
-| acrB | G617D, G617N, F626L, A628T, A628V |
-| mexR | W69G, W69\*, A75V |
-| nalD | Q153\*, L174R |
-| ftsI | A333V, A333T, Y350C, Y350S, S357N |
-| envZ | G244S, G244D, T324I, T324A |
-
-See [VALIDATION.md](VALIDATION.md) for end-to-end validation against real, published genomes.
+See [VALIDATION.md](VALIDATION.md).

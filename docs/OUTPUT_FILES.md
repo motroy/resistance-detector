@@ -1,107 +1,87 @@
-# Output Files
+# Output files
 
 | File | Description |
 |------|-------------|
-| `*_results.tsv` | Tab-delimited gene detection results (BLAST), including a `Copy_Number` column |
-| `*_genes.fasta` | FASTA sequences of detected genes |
-| `*_summary.txt` | Human-readable summary of all findings: predicted FOS/CAZ-AVI phenotypes, per-gene copy number, mutations |
-| `*_summary.json` | Machine-parsable summary: predicted phenotypes, per-gene copy number and loci, plus mutations/gene-alignments/amplicons |
-| `*_summary.tsv` | Machine-parsable, one-row-per-gene summary with `Copy_Number`, loci, max identity/coverage, and predicted phenotypes/evidence/disclaimer as dedicated trailing columns |
-| `*_all_results.tsv` | Combined TSV of all detections (acquired genes, mutations, gene alignments, amplicons), including a `Copy_Number` column |
-| `*_analysis.log` | Log of command, parameters, and tool versions |
-| `*_blast.txt` | Raw BLAST output |
-| `*_amplicons.tsv` | Amplicon detection results (with --primers) |
-| `*_protein_mutations.tsv` | Protein mutation results (GAMMA) |
-| `*_gamma_prefix.gamma` | Raw GAMMA output |
-| `*_unified_mutations.tsv` | Unified dual-method mutation report |
+| `*_results.tsv` | One row per detected gene copy: gene, assigned allele, identity, coverage, completeness, protein changes, loss of function, copy number |
+| `*_summary.tsv` | One row per gene, with loci, allele(s), changes and the predicted phenotypes as trailing columns |
+| `*_summary.json` | The same content as a structured document, including full per-locus detail and the reference data version |
+| `*_summary.txt` | Human-readable summary, phenotypes first |
+| `*_all_results.tsv` | Everything (genes, protein changes, GAMMA alignments, amplicons) in one long table |
+| `*_genes.fasta` | The extracted gene sequences, with the assigned allele in the header |
+| `*_unified_mutations.tsv` | Protein changes with their cross-caller confidence |
+| `*_protein_mutations.tsv` | Raw GAMMA results |
+| `*_amplicons.tsv` | Amplicon coordinates (`seqkit`) |
+| `*_blast.txt`, `*_gamma.gamma`, `*_gamma.psl` | Raw tool output |
+| `*_analysis.log` | Command, parameters and tool versions |
 
-## Predicted Phenotypes
+## Combined tables (`batch` and `combine`)
 
-Every summary output includes a genotype-derived, conclusive **Susceptible**/**Resistant** call for
-each drug, plus the supporting evidence (which gene/mutation triggered the call):
+| File | Contents |
+|---|---|
+| `*_combined_summary.tsv` | One row per sample |
+| `*_combined_genes.tsv` | One row per detected gene copy, across all samples |
 
-- **Fosfomycin (FOS)**: Resistant if an acquired `fosA`-family enzyme (`fosA`, `fosA3/4/5/7/11`) is
-  detected, or if a loss-of-function mutation (premature stop codon or in-frame deletion) is found in
-  a fosfomycin uptake/regulatory gene (`murA, uhpT, uhpA, uhpB, uhpC, glpT, cyaA, ptsI, galU, lon`).
-  The near-universal chromosomal `fosAKP` I91V variant is intrinsic and is *not* treated as a
-  resistance signal.
-- **Ceftazidime-Avibactam (CAZ/AVI)**: Resistant if a `blaKPC` hit carries a tracked Omega-loop/X-loop
-  substitution (e.g. L166W, E167D, N169D, D179Y/N, V240G, T243M) or an in-frame indel in that region;
-  wildtype `blaKPC` (no tracked mutation) is Susceptible.
+`*_combined_summary.tsv` columns: `Sample`, `Organism`, the two
+`Predicted_Phenotype_*` calls, `Acquired_Genes`, `Carbapenemases`,
+`Fosfomycin_Enzymes`, `Loss_Of_Function`, `Reported_Mutations`,
+`Genes_Detected`, `Incomplete_Genes`, both `*_Evidence` columns, and
+`Reference_Data`.
 
-This is implemented in `fos_cazavi/phenotype.py` and is a **genotype-based prediction only** — not a
-substitute for phenotypic antimicrobial susceptibility testing (AST). See
-[VALIDATION.md](VALIDATION.md) for cross-checks of these calls against published, phenotypically
-characterized genomes.
+`Incomplete_Genes` is the QC column: it lists genes that ran off a contig
+boundary and so could not be fully assessed in that sample.
 
-## Example Results
+## Key columns in `*_results.tsv`
 
-### Summary Output (`*_summary.txt`)
+| Column | Meaning |
+|---|---|
+| `Gene` | The reference gene the locus was called against |
+| `Allele` | The allele assigned from the observed protein changes (`blaKPC-31`, `novel blaKPC variant (...)`, or the gene name when no typing applies) |
+| `Complete` | `no (contig boundary)` means the gene runs off the end of a contig and could not be fully assessed |
+| `Reported_Mutations` | Changes this tool reports as resistance mutations for fosfomycin or ceftazidime-avibactam |
+| `Other_Drug_Mutations` | Curated mutations found at this locus but described for a different drug (carbapenems, tigecycline, …), shown as context only |
+| `All_Protein_Changes` | Every difference from the reference protein, including neutral ones |
+| `Loss_Of_Function` | Premature stop, frameshift or truncation, with the residue numbers |
 
-This is real output from `fos-cazavi fos-cazavi-all` on `test_genomes/ecoli_multi_resistance.fasta` (see `example_results/ecoli_multi_summary.txt`):
+`Reported_Mutations` and `All_Protein_Changes` are deliberately separate. A
+difference from a reference is not the same thing as a resistance mutation, and
+the output never blurs the two.
 
-```
-======================================================================
-FOS-CAZAVI Resistance Detection Summary
-======================================================================
+## Predicted phenotypes
 
-Assembly: test_genomes/ecoli_multi_resistance.fasta
+Each summary carries a call for both drugs, with the evidence that produced it.
 
-PREDICTED PHENOTYPES (genotype-based):
---------------------------------------------------
-  Fosfomycin (FOS): Resistant
-    - Acquired fosfomycin-inactivating enzyme fosA3 detected (100.00% identity, 100.00% coverage)
-  Ceftazidime-Avibactam (CAZ/AVI): Resistant
-    - blaKPC variant blaKPC-31 carries Omega-loop/X-loop resistance marker(s): D179Y/N,T243M
-    - blaKPC mutation D179Y/N detected in blakpc (Omega-loop/X-loop avibactam-resistance marker)
-    - blaKPC mutation T243M detected in blakpc (Omega-loop/X-loop avibactam-resistance marker)
-  Note: Genotype-based prediction only; not a substitute for phenotypic antimicrobial susceptibility testing (AST).
+| Call | Meaning |
+|---|---|
+| `Resistant` | A mechanism with established published evidence is present |
+| `Indeterminate` | Something relevant was found but its effect is not established, or a target gene could not be assessed |
+| `Susceptible` | The known mechanisms were looked for and not found |
 
-Total genes detected: 3
-Method: BLAST+
+**Fosfomycin** is Resistant for an acquired fosA-family enzyme (the fosA family,
+fosB, fosC2, fosL1/L2), or loss of function in `uhpT`, `uhpA`, `uhpB`, `uhpC`,
+`glpT`, `cyaA`, `ptsI` or `galU`, or a point mutation in those genes curated
+*for fosfomycin* in the declared organism. The intrinsic chromosomal enzymes
+(`fosAKP` in *K. pneumoniae*, `fosA_PA1129` in *P. aeruginosa*) are never scored
+as resistance, and a lone fosA hit with no intrinsic copy recognised gives
+Indeterminate rather than Resistant — see [METHODS.md](METHODS.md#6-fosfomycin).
 
-FOSFOMYCIN RESISTANCE GENES:
---------------------------------------------------
-  fosA3 (copy number: 1): 100.00% identity, 100.00% coverage
-    Mutations: K90E/Q,H119L
+**Ceftazidime-avibactam** is Resistant for a metallo-beta-lactamase (avibactam
+does not inhibit those), or for a blaKPC carrying a documented escape variant or
+an in-frame indel in the Omega loop. A blaKPC change in a hotspot that is not
+documented gives Indeterminate, as do the contributory chromosomal changes —
+curated avibactam-annotated mutations in `envZ`, `ftsI` or `ompK36`, and
+`ompK36` loss of function alongside a blaKPC. OXA-48-like enzymes are inhibited
+by avibactam and do not on their own produce a Resistant call.
 
-CEFTAZIDIME-AVIBACTAM RESISTANCE (KPC):
---------------------------------------------------
-  blaKPC-31 (copy number: 1): 99.89% identity, 100.00% coverage
-    Mutations: D179Y/N,T243M
+Numbering for class A beta-lactamases is standardised Ambler numbering. See
+[METHODS.md](METHODS.md) for the full rules, the evidence behind them, and the
+method's limits.
 
-CEFTAZIDIME-AVIBACTAM RESISTANCE (OXA):
---------------------------------------------------
-  blaOXA-48 (copy number: 1): 100.00% identity, 100.00% coverage
-```
+## Confidence in `*_unified_mutations.tsv`
 
-Here the acquired `blaKPC` hit's closest reference is `blaKPC-31` (which already carries the same X-loop
-D179Y substitution natively), and it also carries the introduced T243M mutation, so it predicts
-CAZ/AVI-Resistant. A `blaKPC` hit with no tracked Omega-loop/X-loop mutation instead predicts
-CAZ/AVI-Susceptible — wildtype `blaKPC` is not inherently avibactam-resistant.
+| Confidence | Meaning |
+|---|---|
+| 100% | The BLAST-based caller and GAMMA both report this change at this residue |
+| 50% | Only one of the two reports it |
 
-### BLAST Results (`*_results.tsv`)
-
-```tsv
-Contig	Gene	Identity%	Coverage%	Mutations	Method	Copy_Number
-contig_plasmid3_blaOXA48	blaOXA-48	100.00	100.00	-	BLAST	1
-contig_plasmid1_fosA3	fosA3	100.00	100.00	K90E/Q,H119L	BLAST	1
-contig_plasmid2_blaKPC3	blaKPC-31	99.89	100.00	D179Y/N,T243M	BLAST	1
-```
-
-`Copy_Number` is the number of distinct genomic loci where that gene was detected (after redundancy filtering). A gene detected on two different contigs/loci will show `Copy_Number: 2` on both rows.
-
-### Machine-Readable Summary (`*_summary.tsv` / `*_summary.json`)
-
-`*_summary.tsv` aggregates results to one row per gene, with the predicted phenotypes, evidence, and
-disclaimer included as dedicated trailing columns on every row (so each line is fully self-contained
-for downstream scripting/filtering, with no comment lines to skip):
-
-```tsv
-Sample	Gene	Copy_Number	Loci	Max_Identity%	Max_Coverage%	Mutations	Predicted_Phenotype_Fosfomycin	Fosfomycin_Evidence	Predicted_Phenotype_Ceftazidime_Avibactam	Ceftazidime_Avibactam_Evidence	Phenotype_Disclaimer
-ecoli_multi_resistance.fasta	blaOXA-48	1	contig_plasmid3_blaOXA48:30001-30798	100.00	100.00	-	Resistant	Acquired fosfomycin-inactivating enzyme fosA3 detected (100.00% identity, 100.00% coverage)	Resistant	blaKPC variant blaKPC-31 carries Omega-loop/X-loop resistance marker(s): D179Y/N,T243M; blaKPC mutation D179Y/N detected in blakpc (Omega-loop/X-loop avibactam-resistance marker); blaKPC mutation T243M detected in blakpc (Omega-loop/X-loop avibactam-resistance marker)	Genotype-based prediction only; not a substitute for phenotypic antimicrobial susceptibility testing (AST).
-ecoli_multi_resistance.fasta	fosA3	1	contig_plasmid1_fosA3:20001-20417	100.00	100.00	H119L,K90E/Q	Resistant	Acquired fosfomycin-inactivating enzyme fosA3 detected (100.00% identity, 100.00% coverage)	Resistant	blaKPC variant blaKPC-31 carries Omega-loop/X-loop resistance marker(s): D179Y/N,T243M; blaKPC mutation D179Y/N detected in blakpc (Omega-loop/X-loop avibactam-resistance marker); blaKPC mutation T243M detected in blakpc (Omega-loop/X-loop avibactam-resistance marker)	Genotype-based prediction only; not a substitute for phenotypic antimicrobial susceptibility testing (AST).
-ecoli_multi_resistance.fasta	blaKPC-31	1	contig_plasmid2_blaKPC3:25001-25882	99.89	100.00	D179Y/N,T243M	Resistant	Acquired fosfomycin-inactivating enzyme fosA3 detected (100.00% identity, 100.00% coverage)	Resistant	blaKPC variant blaKPC-31 carries Omega-loop/X-loop resistance marker(s): D179Y/N,T243M; blaKPC mutation D179Y/N detected in blakpc (Omega-loop/X-loop avibactam-resistance marker); blaKPC mutation T243M detected in blakpc (Omega-loop/X-loop avibactam-resistance marker)	Genotype-based prediction only; not a substitute for phenotypic antimicrobial susceptibility testing (AST).
-```
-
-`*_summary.json` contains the same `predicted_phenotypes` block plus the per-gene aggregation (with full per-locus detail), mutation, gene-alignment, and amplicon results, for easy parsing by downstream scripts/pipelines. See `example_results/ecoli_multi_summary.json` for the full file.
+The `Reported_As_Resistance_Mutation` column says whether the change is one the
+phenotype logic acts on, or simply a sequence difference.

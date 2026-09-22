@@ -1,0 +1,5 @@
+Gene	Contig	Start	End	Identity	Coverage	Match_Type	Changes	Method
+nalD	CP027165.1	288815	289454	100.00	100.00	Native	No coding mutations	GAMMA
+fosA_PA1129	CP027165.1	3157166	3157574	99.26	100.00	Mutant	R117L	GAMMA
+mexR	CP027165.1	5700964	5701408	100.00	100.00	Native	No coding mutations	GAMMA
+blaPDC-1	CP027165.1	6150089	6151283	99.75	100.00	Mutant	T105A	GAMMA
