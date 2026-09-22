@@ -20,12 +20,12 @@ Method: BLAST+ with codon-aware variant calling
 
 ACQUIRED RESISTANCE GENES:
 --------------------------------------------------
-  blaCMY-2 (gene blaCMY-2, copy number 1): 99.83% identity, 100.00% coverage
+  blaCMY-like (gene blaCMY-2, copy number 1): 99.83% identity, 100.00% coverage
     Protein changes vs blaCMY-2: A171S, W221R
   blaKPC-3 (gene blaKPC-2, copy number 1): 99.89% identity, 100.00% coverage
     Protein changes vs blaKPC-2: H274Y
   blaCTX-M-15 (gene blaCTX-M-15, copy number 1): 100.00% identity, 100.00% coverage
-  blaSHV-12 (gene blaSHV-12, copy number 1): 98.95% identity, 100.00% coverage
+  blaSHV-like (gene blaSHV-12, copy number 1): 98.95% identity, 100.00% coverage
     Protein changes vs blaSHV-12: Y3F, Q31L, S235G, K236E
 
 CHROMOSOMAL TARGET GENES:

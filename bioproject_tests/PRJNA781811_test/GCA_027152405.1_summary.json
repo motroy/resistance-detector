@@ -125,7 +125,7 @@
           "contig": "JAJOCX010000009.1",
           "start": 211459,
           "end": 212319,
-          "allele": "blaSHV-12",
+          "allele": "blaSHV-like",
           "identity": "99.19",
           "coverage": "100.00",
           "complete": true,

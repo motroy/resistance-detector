@@ -1,0 +1,20 @@
+Sample	Type	Gene	Allele	Method	Result_Details	Identity_Confidence	Contig	Start	End	Copy_Number	Notes
+PA99.fna	Acquired gene	blaPDC-1	blaPDC-like	BLAST	Coverage: 100.00%	99.58%	CP042967.1	4045720	4046913	1	protein changes: T105A
+PA99.fna	Acquired gene	blaIMP-1	blaIMP-1	BLAST	Coverage: 100.00%	100.00%	CP042967.1	5277660	5278400	3	no protein changes vs reference
+PA99.fna	Acquired gene	blaIMP-1	blaIMP-1	BLAST	Coverage: 100.00%	100.00%	CP042967.1	4658222	4658962	3	no protein changes vs reference
+PA99.fna	Acquired gene	blaIMP-1	blaIMP-like	BLAST	Coverage: 100.00%	99.86%	CP042967.1	5738449	5739188	3	protein changes: G47A;V48L;V49_A62del;Y63F;I65_E75del;K76N;L77M;T79W;V82L;E83_N246del; premature stop at residue 58 (57/246 aa)
+PA99.fna	Chromosomal gene	nalD	nalD	BLAST	Coverage: 100.00%	99.69%	CP042967.1	4711323	4711961	1	protein changes: L153Q
+PA99.fna	Chromosomal gene	mexR	mexR	BLAST	Coverage: 100.00%	99.78%	CP042967.1	3561931	3562374	1	no protein changes vs reference
+PA99.fna	Chromosomal gene	fosA_PA1129	fosA_PA1129	BLAST	Coverage: 100.00%	99.75%	CP042967.1	832339	832746	1	no protein changes vs reference
+PA99.fna	Protein change	blaIMP-1	-	blast	E83_N246del	50%	CP042967.1	-	-	-	reported as resistance mutation
+PA99.fna	Protein change	blaIMP-1	-	blast	G47A	50%	CP042967.1	-	-	-	reported as resistance mutation
+PA99.fna	Protein change	blaIMP-1	-	blast	I65_E75del	50%	CP042967.1	-	-	-	reported as resistance mutation
+PA99.fna	Protein change	blaIMP-1	-	blast	K76N	50%	CP042967.1	-	-	-	reported as resistance mutation
+PA99.fna	Protein change	blaIMP-1	-	blast	L77M	50%	CP042967.1	-	-	-	reported as resistance mutation
+PA99.fna	Protein change	blaIMP-1	-	blast	T79W	50%	CP042967.1	-	-	-	reported as resistance mutation
+PA99.fna	Protein change	blaIMP-1	-	blast	V48L	50%	CP042967.1	-	-	-	reported as resistance mutation
+PA99.fna	Protein change	blaIMP-1	-	blast	V49_A62del	50%	CP042967.1	-	-	-	reported as resistance mutation
+PA99.fna	Protein change	blaIMP-1	-	blast	V82L	50%	CP042967.1	-	-	-	reported as resistance mutation
+PA99.fna	Protein change	blaIMP-1	-	blast	Y63F	50%	CP042967.1	-	-	-	reported as resistance mutation
+PA99.fna	Protein change	blaPDC-1	-	blast+gamma	T105A	100%	CP042967.1	-	-	-	reported as resistance mutation
+PA99.fna	Protein change	nalD	-	blast+gamma	L153Q	100%	CP042967.1	-	-	-	sequence difference, not a curated resistance mutation

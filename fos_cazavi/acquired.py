@@ -195,6 +195,14 @@ class BlastDetector:
             if family == 'blaKPC':
                 allele_row = betalactamase.identify_kpc_allele(change_labels)
                 allele_name = betalactamase.describe_kpc_result(change_labels, allele_row)
+            elif is_acquired_gene(gene) and change_labels:
+                # Allele-level typing is only done for blaKPC.  Elsewhere the
+                # matched reference is merely the closest of many near-identical
+                # alleles - blaIMP-18 and blaIMP-99 are 99.7% identical - so
+                # naming a specific allele would assert more than the data
+                # supports.  The family is reported instead; the Gene column
+                # still records which reference was closest.
+                allele_name = f"{family}-like"
 
             # Curated chromosomal mutations are numbered against the organism's
             # own reference protein, so they are matched against a second call

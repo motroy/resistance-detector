@@ -66,14 +66,33 @@ FOS_TRANSPORT_GENES = ('uhpT', 'uhpA', 'uhpB', 'uhpC', 'glpT', 'cyaA', 'ptsI', '
 # isolates, so they are reported but never scored as acquired resistance.
 INTRINSIC_GENES = ('fosAKP', 'fosA6', 'fosA_PA1129')
 
-# This tool reports on two drugs.  A curated mutation carries the scope it was
-# curated for, so a tigecycline or carbapenem mutation is never presented as a
-# fosfomycin or ceftazidime-avibactam finding.
 # Genera whose chromosome normally carries a fosA-family enzyme.  In these, a
 # lone fosA hit with no recognised intrinsic copy is ambiguous: it may be a
 # divergent chromosomal enzyme rather than an acquired one.
 INTRINSIC_FOSA_ORGANISMS = ('Klebsiella_pneumoniae', 'Pseudomonas_aeruginosa')
 
+# Species that are intrinsically resistant to fosfomycin, so that a "no acquired
+# mechanism found" result must not be reported as susceptible.  P. aeruginosa
+# carries the chromosomal FosA (PA1129) and has no fosfomycin breakpoints in the
+# EUCAST/CLSI tables; fosfomycin is not an agent for it.
+INTRINSIC_FOS_RESISTANT_ORGANISMS = ('Pseudomonas_aeruginosa',)
+
+# Species whose dominant ceftazidime-avibactam resistance mechanism this tool
+# does not assess.  In P. aeruginosa that is the chromosomal AmpC (PDC/blaPAO):
+# derepression and PDC variants drive most CAZ/AVI resistance, and neither the
+# expression level nor the PDC variant catalogue is covered here, so a negative
+# result cannot be reported as susceptible.
+UNASSESSED_CAZAVI_MECHANISM = {
+    'Pseudomonas_aeruginosa': (
+        'chromosomal AmpC (PDC/blaPAO) derepression and PDC variants, which '
+        'drive most ceftazidime-avibactam resistance in this species, are not '
+        'assessed by this tool'
+    ),
+}
+
+# This tool reports on two drugs.  A curated mutation carries the scope it was
+# curated for, so a tigecycline or carbapenem mutation is never presented as a
+# fosfomycin or ceftazidime-avibactam finding.
 FOS_SCOPE = 'fosfomycin'
 CAZAVI_SCOPE = 'ceftazidime-avibactam'
 AVIBACTAM_COMBINATION_SCOPE = 'avibactam-combination'

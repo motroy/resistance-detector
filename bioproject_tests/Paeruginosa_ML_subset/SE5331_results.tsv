@@ -1,0 +1,6 @@
+Contig	Gene	Allele	Identity%	Coverage%	Complete	Reported_Mutations	Other_Drug_Mutations	All_Protein_Changes	Loss_Of_Function	Method	Copy_Number
+CP046402.2	blaPDC-1	blaPDC-like	99.25	100.00	yes	G27D,A97V,T105A,V205L,G391A	-	G27D;A97V;T105A;V205L;G391A	-	BLAST	1
+CP046402.2	blaGES-61	blaGES-like	99.88	100.00	yes	E38Q	-	E38Q	-	BLAST	1
+CP046402.2	nalD	nalD	99.37	100.00	yes	-	-	-	-	BLAST	1
+CP046402.2	mexR	mexR	98.87	100.00	yes	-	-	V126E	-	BLAST	1
+CP046402.2	fosA_PA1129	fosA_PA1129	99.02	100.00	yes	-	-	D135N	-	BLAST	1

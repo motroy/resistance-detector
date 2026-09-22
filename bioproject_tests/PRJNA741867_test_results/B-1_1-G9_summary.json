@@ -169,7 +169,7 @@
           "contig": "JAHUYY010000001.1",
           "start": 299664,
           "end": 300524,
-          "allele": "blaSHV-12",
+          "allele": "blaSHV-like",
           "identity": "98.95",
           "coverage": "100.00",
           "complete": true,

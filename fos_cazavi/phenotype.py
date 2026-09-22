@@ -20,7 +20,8 @@ from . import betalactamase
 from .references import (
     AVIBACTAM_COMBINATION_SCOPE, CAZAVI_CONTRIBUTORY_GENES, CAZAVI_SCOPE,
     FOSA_FAMILIES, FOS_SCOPE, FOS_TRANSPORT_GENES, INTRINSIC_FOSA_ORGANISMS,
-    INTRINSIC_GENES, PORIN_GENES, gene_family, is_mbl, mutation_scope,
+    INTRINSIC_FOS_RESISTANT_ORGANISMS, INTRINSIC_GENES, PORIN_GENES,
+    UNASSESSED_CAZAVI_MECHANISM, gene_family, is_mbl, mutation_scope,
 )
 
 RESISTANT = 'Resistant'
@@ -100,6 +101,16 @@ def predict_fos_phenotype(blast_results, unified_results=None, organism=None):
                         f"Curated fosfomycin-resistance mutation(s) in {gene}: "
                         f"{', '.join(fosfomycin_mutations)}")
 
+    if organism in INTRINSIC_FOS_RESISTANT_ORGANISMS:
+        # Species-level intrinsic resistance outranks the acquired-mechanism
+        # search: reporting "susceptible" here would be wrong whatever the
+        # genotype shows.
+        species = organism.replace('_', ' ')
+        resistant.insert(0, (
+            f"{species} is intrinsically resistant to fosfomycin (chromosomal "
+            f"FosA; no fosfomycin breakpoints are defined for this species). "
+            f"This is species-level intrinsic resistance, not an acquired mechanism"))
+
     return _resolve(
         resistant, uncertain,
         'No acquired fosfomycin-modifying enzyme and no loss-of-function change '
@@ -148,7 +159,7 @@ def _contributory_cazavi_evidence(blast_results, kpc_present):
     return evidence
 
 
-def predict_cazavi_phenotype(blast_results, unified_results=None):
+def predict_cazavi_phenotype(blast_results, unified_results=None, organism=None):
     """Predict ceftazidime-avibactam susceptibility."""
     resistant, uncertain = [], []
     kpc_seen = False
@@ -188,6 +199,13 @@ def predict_cazavi_phenotype(blast_results, unified_results=None):
 
     uncertain.extend(_contributory_cazavi_evidence(blast_results, kpc_present))
 
+    unassessed = UNASSESSED_CAZAVI_MECHANISM.get(organism)
+    if unassessed and not resistant:
+        # Without the dominant mechanism in view, "susceptible" would overstate
+        # what was actually ruled out.
+        uncertain.append(
+            f"No mechanism this tool assesses was found, but {unassessed}")
+
     if kpc_seen and not resistant and not uncertain:
         nothing_found = ('blaKPC detected but carrying no Omega-loop, 237-243 or '
                          'insertion-loop change associated with avibactam escape, '
@@ -204,6 +222,7 @@ def predict_cazavi_phenotype(blast_results, unified_results=None):
 def predict_phenotypes(blast_results, unified_results=None, organism=None):
     return {
         'fosfomycin': predict_fos_phenotype(blast_results, unified_results, organism),
-        'ceftazidime_avibactam': predict_cazavi_phenotype(blast_results, unified_results),
+        'ceftazidime_avibactam': predict_cazavi_phenotype(
+            blast_results, unified_results, organism),
         'disclaimer': DISCLAIMER,
     }

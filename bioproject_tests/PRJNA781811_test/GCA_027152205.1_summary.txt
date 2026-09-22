@@ -20,7 +20,7 @@ Method: BLAST+ with codon-aware variant calling
 
 ACQUIRED RESISTANCE GENES:
 --------------------------------------------------
-  blaSHV-12 (gene blaSHV-12, copy number 1): 99.30% identity, 100.00% coverage
+  blaSHV-like (gene blaSHV-12, copy number 1): 99.30% identity, 100.00% coverage
     Protein changes vs blaSHV-12: S235G, K236E
 
 CHROMOSOMAL TARGET GENES:

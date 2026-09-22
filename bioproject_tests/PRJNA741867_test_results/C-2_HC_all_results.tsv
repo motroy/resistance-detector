@@ -6,7 +6,7 @@ GCA_022423505.1.fna	Chromosomal gene	ompK35	ompK35	BLAST	Coverage: 100.00%	99.35
 GCA_022423505.1.fna	Acquired gene	blaCTX-M-15	blaCTX-M-15	BLAST	Coverage: 100.00%	100.00%	JAHUYV010000040.1	7418	8293	1	no protein changes vs reference
 GCA_022423505.1.fna	Chromosomal gene	ompK36	ompK36	BLAST	Coverage: 100.00%	92.62%	JAHUYV010000009.1	162302	163420	1	protein changes: A183T;L184del;T192G;Y201F;N221H;L225N;S230del;K231R;A233D;L234K;insF@268;A269S;S271N;insGESDSI@271;L272S;L307I;I315L;D344E;S346D;H349R;N350R
 GCA_022423505.1.fna	Acquired gene	blaKPC-2	blaKPC-92	BLAST	Coverage: 100.00%	99.21%	JAHUYV010000037.1	7391	8266	1	protein changes: E168D;L169_N170del;H274Y
-GCA_022423505.1.fna	Acquired gene	blaSHV-12	blaSHV-12	BLAST	Coverage: 100.00%	98.95%	JAHUYV010000001.1	272420	273280	1	protein changes: Y3F;Q31L;S235G;K236E
+GCA_022423505.1.fna	Acquired gene	blaSHV-12	blaSHV-like	BLAST	Coverage: 100.00%	98.95%	JAHUYV010000001.1	272420	273280	1	protein changes: Y3F;Q31L;S235G;K236E
 GCA_022423505.1.fna	Chromosomal gene	fosAKP	fosAKP	BLAST	Coverage: 100.00%	99.76%	JAHUYV010000020.1	73622	74041	1	protein changes: Q130P
 GCA_022423505.1.fna	Protein change	blaKPC-2	-	blast+gamma	E168D	100%	JAHUYV010000037.1	-	-	-	reported as resistance mutation
 GCA_022423505.1.fna	Protein change	blaKPC-2	-	blast+gamma	H274Y	100%	JAHUYV010000037.1	-	-	-	reported as resistance mutation

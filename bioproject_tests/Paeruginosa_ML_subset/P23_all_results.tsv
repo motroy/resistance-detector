@@ -1,0 +1,10 @@
+Sample	Type	Gene	Allele	Method	Result_Details	Identity_Confidence	Contig	Start	End	Copy_Number	Notes
+P23.fna	Acquired gene	blaPDC-1	blaPDC-like	BLAST	Coverage: 100.00%	99.58%	CP065417.1	971498	972691	1	protein changes: T105A;L176R
+P23.fna	Acquired gene	blaKPC-2	blaKPC-2	BLAST	Coverage: 100.00%	100.00%	CP065418.1	3841	4722	1	no protein changes vs reference
+P23.fna	Chromosomal gene	nalD	nalD	BLAST	Coverage: 100.00%	99.69%	CP065417.1	1553158	1553796	1	protein changes: A37T
+P23.fna	Chromosomal gene	mexR	mexR	BLAST	Coverage: 100.00%	99.55%	CP065417.1	503033	503476	1	no protein changes vs reference
+P23.fna	Chromosomal gene	fosA_PA1129	fosA_PA1129	BLAST	Coverage: 100.00%	99.02%	CP065417.1	4615443	4615850	1	no protein changes vs reference
+P23.fna	Protein change	blaPDC-1	-	blast+gamma	L176R	100%	CP065417.1	-	-	-	reported as resistance mutation
+P23.fna	Protein change	blaPDC-1	-	blast+gamma	T105A	100%	CP065417.1	-	-	-	reported as resistance mutation
+P23.fna	Protein change	nalD	-	blast+gamma	A37T	100%	CP065417.1	-	-	-	sequence difference, not a curated resistance mutation
+P23.fna	Amplicon	blaKPC_ver	-	SeqKit/amplicon	Length: 882bp	-	CP065418.1	3840	4722	-	Genes in region: blaKPC-2: no changes

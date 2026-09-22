@@ -5,7 +5,7 @@ GCA_038433235.1.fna	Chromosomal gene	envZ	envZ	BLAST	Coverage: 100.00%	99.85%	JB
 GCA_038433235.1.fna	Chromosomal gene	ompK35	ompK35	BLAST	Coverage: 100.00%	99.44%	JBCEBJ010000004.1	258287	259366	1	no protein changes vs reference
 GCA_038433235.1.fna	Chromosomal gene	ompK36	ompK36	BLAST	Coverage: 91.58%	99.90%	JBCEBJ010000036.1	1	1011	1	protein changes: M1_K31del; premature stop at residue 337 (336/367 aa); gene incomplete (contig boundary)
 GCA_038433235.1.fna	Acquired gene	blaCTX-M-15	blaCTX-M-15	BLAST	Coverage: 100.00%	100.00%	JBCEBJ010000075.1	2638	3513	1	no protein changes vs reference
-GCA_038433235.1.fna	Acquired gene	blaSHV-12	blaSHV-12	BLAST	Coverage: 100.00%	99.42%	JBCEBJ010000013.1	128677	129537	1	protein changes: S235G;K236E
+GCA_038433235.1.fna	Acquired gene	blaSHV-12	blaSHV-like	BLAST	Coverage: 100.00%	99.42%	JBCEBJ010000013.1	128677	129537	1	protein changes: S235G;K236E
 GCA_038433235.1.fna	Acquired gene	blaKPC-2	novel blaKPC variant (R164_I173del)	BLAST	Coverage: 100.00%	96.60%	JBCEBJ010000045.1	14086	14937	1	protein changes: R164_I173del
 GCA_038433235.1.fna	Chromosomal gene	fosAKP	fosAKP	BLAST	Coverage: 100.00%	98.81%	JBCEBJ010000023.1	13910	14329	1	protein changes: I91V;Q130P;D138E
 GCA_038433235.1.fna	Protein change	blaKPC-2	-	blast	R164_I173del	50%	JBCEBJ010000045.1	-	-	-	reported as resistance mutation

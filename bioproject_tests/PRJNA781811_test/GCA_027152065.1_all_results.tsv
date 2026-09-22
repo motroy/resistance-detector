@@ -5,7 +5,7 @@ GCA_027152065.1.fna	Chromosomal gene	envZ	envZ	BLAST	Coverage: 100.00%	99.85%	JA
 GCA_027152065.1.fna	Chromosomal gene	ompK36	ompK36	BLAST	Coverage: 100.00%	99.37%	JAJOCT010000004.1	127765	128874	1	protein changes: insGD@133
 GCA_027152065.1.fna	Chromosomal gene	ompK35	ompK35	BLAST	Coverage: 100.00%	99.35%	JAJOCT010000007.1	36930	38010	1	protein changes: E42R;H43_Y58del;I61L;G62D;L63_Y76del;G77H;E80R;Y81H;N82Q;M83Q;D84_G114del;N116R;G118_N139del;Y140H;T141L;D142C;N143P;M145R;T146P;G147E;T149_Y155del;F160_S212del;N213Q;V216A;Q218R;K219_G279del;S283_A352del;V356Q;Y357H;insGRV@357;F359C; premature stop at residue 89 (88/359 aa)
 GCA_027152065.1.fna	Acquired gene	blaKPC-2	blaKPC-3	BLAST	Coverage: 100.00%	99.89%	JAJOCT010000053.1	7103	7984	1	protein changes: H274Y
-GCA_027152065.1.fna	Acquired gene	blaSHV-12	blaSHV-12	BLAST	Coverage: 100.00%	99.42%	JAJOCT010000011.1	7142	8002	1	protein changes: S235G;K236E
+GCA_027152065.1.fna	Acquired gene	blaSHV-12	blaSHV-like	BLAST	Coverage: 100.00%	99.42%	JAJOCT010000011.1	7142	8002	1	protein changes: S235G;K236E
 GCA_027152065.1.fna	Chromosomal gene	fosAKP	fosAKP	BLAST	Coverage: 100.00%	98.81%	JAJOCT010000006.1	255909	256328	1	protein changes: I91V;Q130P;D138E
 GCA_027152065.1.fna	Protein change	blaKPC-2	-	blast+gamma	H274Y	100%	JAJOCT010000053.1	-	-	-	reported as resistance mutation
 GCA_027152065.1.fna	Protein change	blaSHV-12	-	blast+gamma	K236E	100%	JAJOCT010000011.1	-	-	-	reported as resistance mutation

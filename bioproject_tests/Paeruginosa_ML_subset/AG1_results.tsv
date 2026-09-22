@@ -1,0 +1,7 @@
+Contig	Gene	Allele	Identity%	Coverage%	Complete	Reported_Mutations	Other_Drug_Mutations	All_Protein_Changes	Loss_Of_Function	Method	Copy_Number
+CP045739.1	blaPDC-1	blaPDC-like	99.41	100.00	yes	T105A	-	T105A	-	BLAST	1
+CP045739.1	blaVIM-2	blaVIM-2	100.00	100.00	yes	-	-	-	-	BLAST	1
+CP045739.1	blaIMP-99	blaIMP-like	99.86	100.00	yes	S69I	-	S69I	-	BLAST	1
+CP045739.1	nalD	nalD	99.84	100.00	yes	-	-	-	-	BLAST	1
+CP045739.1	mexR	mexR	98.87	100.00	yes	-	-	V126E	-	BLAST	1
+CP045739.1	fosA_PA1129	fosA_PA1129	98.53	100.00	yes	-	-	Y55C;E110_D135del	premature stop at residue 110 (109/135 aa)	BLAST	1

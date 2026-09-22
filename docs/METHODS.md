@@ -121,6 +121,13 @@ The observed change set is matched against every NCBI blaKPC allele. An exact
 match names the allele (`blaKPC-31`, `blaKPC-66`, …); anything else is reported
 as `novel blaKPC variant (…)` with its changes listed.
 
+blaKPC is the only family with true allele typing. For any other acquired gene,
+an exact match to a reference is reported by that name, but an **inexact** match
+is reported as the family (`blaIMP-like`, `blaGES-like`) rather than as a
+specific allele: family members are often 99%+ identical to each other, so the
+closest reference is not evidence of which allele is actually present. The
+`Gene` column still records which reference was closest.
+
 The ceftazidime-avibactam call then uses two lines of evidence:
 
 1. **Allele identity** — NCBI curates certain alleles as
@@ -140,7 +147,15 @@ A change that falls in a hotspot but is not documented produces
 
 **Metallo-beta-lactamases** (NDM, VIM, IMP, SPM, GIM, SIM) are not inhibited by
 avibactam, so their presence alone gives a Resistant call regardless of any KPC
-present. OXA-48-like enzymes *are* inhibited by avibactam and do not on their
+present. Every known allele of these families is included in the database
+because they are highly diverse — 62 of the 108 blaIMP alleles are below 90%
+identity to blaIMP-1, so a couple of representatives would miss most of the
+family.
+
+**Species whose dominant mechanism is not assessed.** In *P. aeruginosa*,
+PDC/AmpC derepression and PDC variants drive most ceftazidime-avibactam
+resistance, and this tool assesses neither. A negative result for that species
+is therefore `Indeterminate` with the gap stated, not `Susceptible`. OXA-48-like enzymes *are* inhibited by avibactam and do not on their
 own produce a Resistant call.
 
 ### Contributory chromosomal changes
@@ -178,6 +193,14 @@ mutation columns but are not scored into the ceftazidime-avibactam call.
 * `fosAKP` (the *K. pneumoniae* chromosomal enzyme, which AMRFinderPlus calls
   FosA6) and `fosA_PA1129` (the *P. aeruginosa* one) are intrinsic, present in
   susceptible isolates, and **never** scored as resistance.
+
+### Species with intrinsic fosfomycin resistance
+
+*P. aeruginosa* is intrinsically resistant to fosfomycin (chromosomal FosA, and
+no fosfomycin breakpoints in the EUCAST/CLSI tables). For such species the call
+is **Resistant** on species grounds regardless of genotype, stated explicitly as
+intrinsic rather than acquired, so a "no acquired mechanism found" result is
+never rendered as susceptible.
 
 ### Telling an acquired fosA from an intrinsic one
 
@@ -241,6 +264,12 @@ inferred from amplicon presence.
 * **Chromosomal point mutations for other species.** Only the three organisms
   above have curated positions. Other species get acquired-gene and KPC results
   only.
+* **P. aeruginosa ceftazidime-avibactam.** PDC/AmpC derepression, PDC variants
+  and OprD loss are not assessed, so any call not driven by a
+  metallo-beta-lactamase is `Indeterminate`. The tool is not currently
+  informative for CAZ/AVI in this species.
+* **Acquired class D oxacillinases** other than the OXA-48-like group
+  (e.g. OXA-2, OXA-4, OXA-21) are not in the database.
 * **Novel mechanisms.** Anything not in the reference data cannot be found.
 * **This is a genotypic prediction.** It is not a substitute for phenotypic
   antimicrobial susceptibility testing.

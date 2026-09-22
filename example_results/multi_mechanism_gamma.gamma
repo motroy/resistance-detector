@@ -1,4 +1,5 @@
 Gene	Contig	Start	Stop	Match_Type	Description	Codon_Changes	BP_Changes	Transversions	Codon_Percent	BP_Percent	Percent_Length	Match_Length	Target_Length	Strand
 blaKPC-2	contig_blaKPC	800	1682	Mutant	D178Y,	1	1	1	0.9966	0.9989	1	882	882	+
 fosA3	contig_fosA3	800	1217	Native	No coding mutations	0	0	0	1	1	1	417	417	+
+fosAKP	contig_fosAKP	800	1220	Native	No coding mutations	0	0	0	1	1	1	420	420	+
 blaCTX-M-15	contig_blaCTX_M	800	1676	Native	No coding mutations	0	0	0	1	1	1	876	876	+

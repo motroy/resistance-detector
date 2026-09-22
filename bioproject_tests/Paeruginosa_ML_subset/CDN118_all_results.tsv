@@ -1,0 +1,8 @@
+Sample	Type	Gene	Allele	Method	Result_Details	Identity_Confidence	Contig	Start	End	Copy_Number	Notes
+CDN118.fna	Acquired gene	blaPDC-1	blaPDC-like	BLAST	Coverage: 100.00%	99.50%	CP054591.1	5598195	5599388	1	protein changes: T105A
+CDN118.fna	Acquired gene	blaVIM-2	blaVIM-2	BLAST	Coverage: 100.00%	100.00%	CP054591.1	382652	383452	1	no protein changes vs reference
+CDN118.fna	Chromosomal gene	nalD	nalD	BLAST	Coverage: 100.00%	100.00%	CP054591.1	4996137	4996775	1	no protein changes vs reference
+CDN118.fna	Chromosomal gene	mexR	mexR	BLAST	Coverage: 100.00%	100.00%	CP054591.1	6048060	6048503	1	no protein changes vs reference
+CDN118.fna	Chromosomal gene	fosA_PA1129	fosA_PA1129	BLAST	Coverage: 100.00%	99.27%	CP054591.1	1945157	1945564	1	protein changes: R117L
+CDN118.fna	Protein change	blaPDC-1	-	blast+gamma	T105A	100%	CP054591.1	-	-	-	reported as resistance mutation
+CDN118.fna	Protein change	fosA_PA1129	-	blast+gamma	R117L	100%	CP054591.1	-	-	-	sequence difference, not a curated resistance mutation

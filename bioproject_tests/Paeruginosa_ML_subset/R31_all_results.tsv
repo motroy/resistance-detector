@@ -1,0 +1,10 @@
+Sample	Type	Gene	Allele	Method	Result_Details	Identity_Confidence	Contig	Start	End	Copy_Number	Notes
+R31.fna	Acquired gene	blaPDC-1	blaPDC-like	BLAST	Coverage: 100.00%	99.58%	CP061850.1	226329	227522	1	protein changes: T105A;L176R
+R31.fna	Acquired gene	blaKPC-2	blaKPC-2	BLAST	Coverage: 100.00%	100.00%	CP061851.1	6250	7131	1	no protein changes vs reference
+R31.fna	Chromosomal gene	nalD	nalD	BLAST	Coverage: 100.00%	99.69%	CP061850.1	808001	808639	1	protein changes: A37T
+R31.fna	Chromosomal gene	mexR	mexR	BLAST	Coverage: 100.00%	99.55%	CP061850.1	6778130	6778573	1	no protein changes vs reference
+R31.fna	Chromosomal gene	fosA_PA1129	fosA_PA1129	BLAST	Coverage: 100.00%	99.02%	CP061850.1	3885885	3886292	1	no protein changes vs reference
+R31.fna	Protein change	blaPDC-1	-	blast+gamma	L176R	100%	CP061850.1	-	-	-	reported as resistance mutation
+R31.fna	Protein change	blaPDC-1	-	blast+gamma	T105A	100%	CP061850.1	-	-	-	reported as resistance mutation
+R31.fna	Protein change	nalD	-	blast+gamma	A37T	100%	CP061850.1	-	-	-	sequence difference, not a curated resistance mutation
+R31.fna	Amplicon	blaKPC_ver	-	SeqKit/amplicon	Length: 882bp	-	CP061851.1	6249	7131	-	Genes in region: blaKPC-2: no changes

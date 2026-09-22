@@ -1,0 +1,9 @@
+Gene	Mutation	Confidence(%)	Methods	Contig	Reported_As_Resistance_Mutation
+blaGES-70	R162P	50	blast	CP054843.1	yes
+blaPDC-1	A97V	100	blast+gamma	CP054843.1	yes
+blaPDC-1	G27D	100	blast+gamma	CP054843.1	yes
+blaPDC-1	G391A	100	blast+gamma	CP054843.1	yes
+blaPDC-1	T105A	100	blast+gamma	CP054843.1	yes
+blaPDC-1	V205L	100	blast+gamma	CP054843.1	yes
+fosA_PA1129	D135N	100	blast+gamma	CP054843.1	no
+mexR	V126E	100	blast+gamma	CP054843.1	no

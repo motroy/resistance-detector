@@ -4,7 +4,7 @@ GCA_027152205.1.fna	Chromosomal gene	ftsI	ftsI	BLAST	Coverage: 100.00%	99.49%	JA
 GCA_027152205.1.fna	Chromosomal gene	envZ	envZ	BLAST	Coverage: 100.00%	99.85%	JAJOCR010000017.1	48608	49963	1	protein changes: I15T;I258M
 GCA_027152205.1.fna	Chromosomal gene	ompK36	ompK36	BLAST	Coverage: 100.00%	99.91%	JAJOCR010000001.1	208185	209288	1	no protein changes vs reference
 GCA_027152205.1.fna	Chromosomal gene	ompK35	ompK35	BLAST	Coverage: 100.00%	99.63%	JAJOCR010000009.1	36931	38010	1	no protein changes vs reference
-GCA_027152205.1.fna	Acquired gene	blaSHV-12	blaSHV-12	BLAST	Coverage: 100.00%	99.30%	JAJOCR010000018.1	27872	28732	1	protein changes: S235G;K236E
+GCA_027152205.1.fna	Acquired gene	blaSHV-12	blaSHV-like	BLAST	Coverage: 100.00%	99.30%	JAJOCR010000018.1	27872	28732	1	protein changes: S235G;K236E
 GCA_027152205.1.fna	Chromosomal gene	fosAKP	fosAKP	BLAST	Coverage: 100.00%	99.52%	JAJOCR010000005.1	14363	14782	1	protein changes: I91V;Q130P
 GCA_027152205.1.fna	Protein change	blaSHV-12	-	blast+gamma	K236E	100%	JAJOCR010000018.1	-	-	-	reported as resistance mutation
 GCA_027152205.1.fna	Protein change	blaSHV-12	-	blast+gamma	S235G	100%	JAJOCR010000018.1	-	-	-	reported as resistance mutation

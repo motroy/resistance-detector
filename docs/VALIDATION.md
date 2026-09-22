@@ -12,6 +12,7 @@ with the current code and the current reference data (AMRFinderPlus
 | `PRJNA595047_test/` | 4 *K. pneumoniae* | In vitro selection of KPC Omega-loop deletion mutants | **4/4 concordant** with the study's own strain naming |
 | `PRJNA1086695_test/` | 2 long-read assemblies | Assembly + detection | blaKPC-179 identified in one isolate |
 | `PRJNA781811_test/` | 18 *K. pneumoniae* / *K. variicola* | Bacteraemia isolate collection | Genotype-only comparison; 1 unambiguous acquired fosA, 3 ambiguous (Indeterminate) |
+| `Paeruginosa_ML_subset/` | 12 *P. aeruginosa* | ML AMR-prediction dataset (Noman *et al.*) | Scope/robustness test on a new species; gene-level concordance, not phenotype |
 
 ## PRJNA741867 — the clearest test
 
@@ -73,6 +74,21 @@ fos-cazavi fos-cazavi-all \
 
 Each folder's `RESULTS_SUMMARY.md` or `COMPARISON_TO_PAPER.md` has the full
 per-genome detail.
+
+## The *P. aeruginosa* subset
+
+Twelve complete genomes from a 1,437-genome machine-learning AMR dataset. This
+is explicitly **not** a phenotype validation — that table's per-drug labels are
+near-invariant and mostly computational predictions, and it reports ceftazidime
+rather than ceftazidime-avibactam. It is a scope and robustness test, and a
+gene-level comparison against the paper's own gene calls.
+
+It found four real defects, all since fixed: fosfomycin reported Susceptible for
+an intrinsically resistant species; CAZ/AVI reported Susceptible without having
+looked at the dominant mechanism (PDC/AmpC); most blaIMP alleles undetectable
+because the family is far more diverse than two references cover; and allele
+names asserted more precisely than 99.7%-identical references can support. See
+[../bioproject_tests/Paeruginosa_ML_subset/RESULTS_SUMMARY.md](../bioproject_tests/Paeruginosa_ML_subset/RESULTS_SUMMARY.md).
 
 ## The fosfomycin side
 

@@ -1,0 +1,7 @@
+Sample	Type	Gene	Allele	Method	Result_Details	Identity_Confidence	Contig	Start	End	Copy_Number	Notes
+AR442.fna	Acquired gene	blaPDC-1	blaPDC-like	BLAST	Coverage: 100.00%	99.58%	CP029090.1	7225112	7226305	1	protein changes: T105A;L176R
+AR442.fna	Chromosomal gene	nalD	nalD	BLAST	Coverage: 100.00%	100.00%	CP029090.1	648381	649019	1	no protein changes vs reference
+AR442.fna	Chromosomal gene	mexR	mexR	BLAST	Coverage: 100.00%	99.78%	CP029090.1	6703753	6704196	1	no protein changes vs reference
+AR442.fna	Chromosomal gene	fosA_PA1129	fosA_PA1129	BLAST	Coverage: 100.00%	99.51%	CP029090.1	3988054	3988461	1	no protein changes vs reference
+AR442.fna	Protein change	blaPDC-1	-	blast+gamma	L176R	100%	CP029090.1	-	-	-	reported as resistance mutation
+AR442.fna	Protein change	blaPDC-1	-	blast+gamma	T105A	100%	CP029090.1	-	-	-	reported as resistance mutation

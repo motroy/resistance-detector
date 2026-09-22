@@ -377,3 +377,63 @@ class TestIntrinsicVersusAcquiredFosA:
                          organism='Escherichia')
         prediction = predict_phenotypes(results, organism='Escherichia')['fosfomycin']
         assert prediction['phenotype'] == 'Resistant'
+
+
+class TestPseudomonasAeruginosa:
+    """P. aeruginosa needs species-level handling: it is intrinsically
+    fosfomycin-resistant, and its dominant CAZ/AVI mechanism (PDC/AmpC) is not
+    assessed by this tool."""
+
+    def test_fosfomycin_is_intrinsically_resistant(
+            self, tmp_path, database, reference_cds):
+        _, results = run(tmp_path, database,
+                         {'contig1': embed(reference_cds['fosA_PA1129'])},
+                         organism='Pseudomonas_aeruginosa')
+        prediction = predict_phenotypes(
+            results, organism='Pseudomonas_aeruginosa')['fosfomycin']
+        assert prediction['phenotype'] == 'Resistant'
+        assert any('intrinsically resistant' in item for item in prediction['evidence'])
+
+    def test_cazavi_without_a_mechanism_is_indeterminate_not_susceptible(
+            self, tmp_path, database, reference_cds):
+        # PDC derepression drives most CAZ/AVI resistance in this species and is
+        # not assessed, so "susceptible" would overstate what was ruled out.
+        _, results = run(tmp_path, database,
+                         {'contig1': embed(reference_cds['fosA_PA1129'])},
+                         organism='Pseudomonas_aeruginosa')
+        prediction = predict_phenotypes(
+            results, organism='Pseudomonas_aeruginosa')['ceftazidime_avibactam']
+        assert prediction['phenotype'] == 'Indeterminate'
+        assert any('PDC' in item for item in prediction['evidence'])
+
+    def test_metallo_betalactamase_still_gives_a_definite_resistant_call(
+            self, tmp_path, database, reference_cds):
+        _, results = run(tmp_path, database,
+                         {'contig1': embed(reference_cds['blaVIM-2'])},
+                         organism='Pseudomonas_aeruginosa')
+        prediction = predict_phenotypes(
+            results, organism='Pseudomonas_aeruginosa')['ceftazidime_avibactam']
+        assert prediction['phenotype'] == 'Resistant'
+
+    def test_enterobacterales_are_unaffected_by_the_pseudomonas_rules(
+            self, tmp_path, database, reference_cds):
+        _, results = run(tmp_path, database, {'contig1': embed(reference_cds['blaKPC-2'])},
+                         organism='Klebsiella_pneumoniae')
+        phenotypes = predict_phenotypes(results, organism='Klebsiella_pneumoniae')
+        assert phenotypes['ceftazidime_avibactam']['phenotype'] == 'Susceptible'
+        assert phenotypes['fosfomycin']['phenotype'] == 'Susceptible'
+
+
+class TestAlleleNamingHonesty:
+    def test_exact_match_keeps_the_allele_name(self, tmp_path, database, reference_cds):
+        _, results = run(tmp_path, database, {'contig1': embed(reference_cds['blaVIM-2'])})
+        assert find(results, 'blaVIM-2')['allele'] == 'blaVIM-2'
+
+    def test_inexact_match_reports_the_family_not_a_guessed_allele(
+            self, tmp_path, database, reference_cds):
+        # blaIMP alleles are up to 99.7% identical to each other, so the closest
+        # reference is not evidence of which allele this actually is.
+        altered = substitute(reference_cds['blaIMP-1'], 50, 'Y')
+        _, results = run(tmp_path, database, {'contig1': embed(altered)})
+        hit = next(r for r in results if r['gene'].startswith('blaIMP'))
+        assert hit['allele'] == 'blaIMP-like'

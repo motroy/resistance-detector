@@ -129,7 +129,7 @@
           "contig": "JBCEBJ010000013.1",
           "start": 128677,
           "end": 129537,
-          "allele": "blaSHV-12",
+          "allele": "blaSHV-like",
           "identity": "99.42",
           "coverage": "100.00",
           "complete": true,

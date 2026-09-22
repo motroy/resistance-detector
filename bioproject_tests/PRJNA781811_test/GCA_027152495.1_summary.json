@@ -141,7 +141,7 @@
           "contig": "JAJOCY010000011.1",
           "start": 143601,
           "end": 144461,
-          "allele": "blaSHV-12",
+          "allele": "blaSHV-like",
           "identity": "90.83",
           "coverage": "100.00",
           "complete": true,
@@ -215,7 +215,7 @@
           "contig": "JAJOCY010000015.1",
           "start": 132100,
           "end": 132511,
-          "allele": "fosA9",
+          "allele": "fosA-like",
           "identity": "98.54",
           "coverage": "98.10",
           "complete": true,
@@ -1340,7 +1340,7 @@
     "fosfomycin": {
       "phenotype": "Indeterminate",
       "evidence": [
-        "fosA-family enzyme fosA9 detected (98.54% identity), but no intrinsic chromosomal fosA was recognised in this Klebsiella pneumoniae genome. Every isolate of this species carries one, so this may be a divergent chromosomal enzyme rather than an acquired gene"
+        "fosA-family enzyme fosA-like detected (98.54% identity), but no intrinsic chromosomal fosA was recognised in this Klebsiella pneumoniae genome. Every isolate of this species carries one, so this may be a divergent chromosomal enzyme rather than an acquired gene"
       ]
     },
     "ceftazidime_avibactam": {

@@ -1,0 +1,8 @@
+Contig	Gene	Allele	Identity%	Coverage%	Complete	Reported_Mutations	Other_Drug_Mutations	All_Protein_Changes	Loss_Of_Function	Method	Copy_Number
+CP042967.1	blaPDC-1	blaPDC-like	99.58	100.00	yes	T105A	-	T105A	-	BLAST	1
+CP042967.1	blaIMP-1	blaIMP-1	100.00	100.00	yes	-	-	-	-	BLAST	3
+CP042967.1	blaIMP-1	blaIMP-1	100.00	100.00	yes	-	-	-	-	BLAST	3
+CP042967.1	blaIMP-1	blaIMP-like	99.86	100.00	yes	G47A,V48L,V49_A62del,Y63F,I65_E75del,K76N,L77M,T79W,V82L,E83_N246del	-	G47A;V48L;V49_A62del;Y63F;I65_E75del;K76N;L77M;T79W;V82L;E83_N246del	premature stop at residue 58 (57/246 aa)	BLAST	3
+CP042967.1	nalD	nalD	99.69	100.00	yes	-	-	L153Q	-	BLAST	1
+CP042967.1	mexR	mexR	99.78	100.00	yes	-	-	-	-	BLAST	1
+CP042967.1	fosA_PA1129	fosA_PA1129	99.75	100.00	yes	-	-	-	-	BLAST	1

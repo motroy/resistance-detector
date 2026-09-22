@@ -1,0 +1,13 @@
+Gene	Mutation	Confidence(%)	Methods	Contig	Reported_As_Resistance_Mutation
+blaIMP-1	E83_N246del	50	blast	CP042967.1	yes
+blaIMP-1	G47A	50	blast	CP042967.1	yes
+blaIMP-1	I65_E75del	50	blast	CP042967.1	yes
+blaIMP-1	K76N	50	blast	CP042967.1	yes
+blaIMP-1	L77M	50	blast	CP042967.1	yes
+blaIMP-1	T79W	50	blast	CP042967.1	yes
+blaIMP-1	V48L	50	blast	CP042967.1	yes
+blaIMP-1	V49_A62del	50	blast	CP042967.1	yes
+blaIMP-1	V82L	50	blast	CP042967.1	yes
+blaIMP-1	Y63F	50	blast	CP042967.1	yes
+blaPDC-1	T105A	100	blast+gamma	CP042967.1	yes
+nalD	L153Q	100	blast+gamma	CP042967.1	no

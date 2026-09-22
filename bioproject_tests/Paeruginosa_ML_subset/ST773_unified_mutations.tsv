@@ -1,0 +1,6 @@
+Gene	Mutation	Confidence(%)	Methods	Contig	Reported_As_Resistance_Mutation
+blaPDC-1	G27D	100	blast+gamma	CP041945.1	yes
+blaPDC-1	G391A	100	blast+gamma	CP041945.1	yes
+blaPDC-1	T105A	100	blast+gamma	CP041945.1	yes
+blaPDC-1	V205L	100	blast+gamma	CP041945.1	yes
+mexR	V126E	100	blast+gamma	CP041945.1	no

@@ -24,7 +24,7 @@ ACQUIRED RESISTANCE GENES:
   blaCTX-M-15 (gene blaCTX-M-15, copy number 1): 100.00% identity, 100.00% coverage
   blaKPC-46 (gene blaKPC-2, copy number 1): 99.77% identity, 100.00% coverage
     Protein changes vs blaKPC-2: L169P, H274Y
-  blaSHV-12 (gene blaSHV-12, copy number 1): 98.95% identity, 100.00% coverage
+  blaSHV-like (gene blaSHV-12, copy number 1): 98.95% identity, 100.00% coverage
     Protein changes vs blaSHV-12: Y3F, Q31L, S235G, K236E
 
 CHROMOSOMAL TARGET GENES:

@@ -61,11 +61,10 @@ ACQUIRED_ALLELES = [
     'blaKPC-2',                     # canonical KPC reference for allele typing
     # Class D carbapenemases - inhibited by avibactam
     'blaOXA-48', 'blaOXA-181', 'blaOXA-232',
-    # Metallo-beta-lactamases - NOT inhibited by avibactam
-    'blaNDM-1', 'blaNDM-5', 'blaVIM-1', 'blaVIM-2', 'blaIMP-1', 'blaIMP-4',
-    'blaSPM-1', 'blaGIM-1', 'blaSIM-1',
-    # ESBL / AmpC context
-    'blaCTX-M-15', 'blaSHV-12', 'blaCMY-2',
+    # ESBL / AmpC context.  blaPDC is the P. aeruginosa chromosomal AmpC: every
+    # isolate has it, so its presence is context, not a finding - what matters
+    # clinically is expression and PDC variant, neither of which is assessed.
+    'blaCTX-M-15', 'blaSHV-12', 'blaCMY-2', 'blaPDC-1',
     # Acquired fosfomycin-modifying enzymes.  fosA6 and fosA_PA1129 are
     # deliberately absent here and listed as intrinsic below.
     'fosA', 'fosA2', 'fosA3', 'fosA4', 'fosA5', 'fosA7', 'fosA8', 'fosA9',
@@ -81,6 +80,26 @@ ACQUIRED_ALLELES = [
 # carried as `fosAKP` in the chromosomal reference set and encodes an identical
 # protein; having both would split hits between two names for one gene.
 INTRINSIC_ALLELES = ['fosA_PA1129']
+
+# Families where EVERY known allele is included rather than a representative.
+# These are highly diverse - 62 of the 108 blaIMP alleles are under 90% identity
+# to blaIMP-1 - so a couple of references would miss most of the family at the
+# default identity threshold.  Their presence is what drives a resistant
+# ceftazidime-avibactam call, so family-level sensitivity matters more than
+# keeping the database small.
+ACQUIRED_FAMILIES = [
+    # Metallo-beta-lactamases - NOT inhibited by avibactam
+    'blaNDM', 'blaVIM', 'blaIMP', 'blaSPM', 'blaGIM', 'blaSIM',
+    # Class A carbapenemases/ESBLs that avibactam does inhibit
+    'blaGES',
+]
+
+
+def alleles_in_families(amr_cds, families):
+    """Every `<family>-<number>` allele present in AMR_CDS.fa."""
+    pattern = re.compile(r'^(' + '|'.join(families) + r')-\d+$')
+    return sorted(name for name in amr_cds if pattern.match(name))
+
 
 # Chromosomal genes kept in the nucleotide database purely so the locus can be
 # found in an assembly (BLAST/GAMMA/amplicons).  They are carried over from the
@@ -334,7 +353,10 @@ def main():
 
     # ---- nucleotide database ------------------------------------------------
     records, missing = [], []
-    for allele in ACQUIRED_ALLELES + INTRINSIC_ALLELES:
+    family_alleles = alleles_in_families(amr_cds, ACQUIRED_FAMILIES)
+    print(f"Including {len(family_alleles)} alleles from the diverse families: "
+          f"{', '.join(ACQUIRED_FAMILIES)}")
+    for allele in ACQUIRED_ALLELES + INTRINSIC_ALLELES + family_alleles:
         record = amr_cds.get(allele)
         if record is None:
             missing.append(allele)
