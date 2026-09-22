@@ -34,13 +34,14 @@ class BlastDetector:
     """Find reference genes in an assembly and call their variants."""
 
     def __init__(self, assembly, database, output_prefix, min_identity=90,
-                 min_coverage=80, mutation_db_file=None, organism=None):
+                 min_coverage=80, mutation_db_file=None, organism=None, threads=1):
         self.assembly = assembly
         self.database = database
         self.output_prefix = output_prefix
         self.min_identity = min_identity
         self.min_coverage = min_coverage
         self.organism = organism
+        self.threads = max(1, int(threads or 1))
         self.results = []
         self.detected_genes = []
 
@@ -89,6 +90,7 @@ class BlastDetector:
             # correct; capping the list here would hide the true best match.
             '-max_target_seqs', '5000',
             '-perc_identity', str(max(self.min_identity - 5, 70)),
+            '-num_threads', str(self.threads),
         ]
         try:
             completed = subprocess.run(command, capture_output=True, text=True, check=True)
@@ -354,7 +356,7 @@ class BlastDetector:
 
 
 def run_acquired_detection(assembly, database, output, min_id, min_cov,
-                           mutation_db=None, organism=None):
+                           mutation_db=None, organism=None, threads=1):
     detector = BlastDetector(assembly, database, output, min_id, min_cov,
-                             mutation_db, organism)
+                             mutation_db, organism, threads)
     return detector.run()

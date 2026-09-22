@@ -9,9 +9,14 @@ def setup_logger(output_prefix, args):
     """Setup logging to file and console"""
     log_file = f"{output_prefix}_analysis.log"
 
-    # Create logger
+    # Create logger.  Handlers from a previous sample are closed and dropped
+    # first: this logger is a process-wide singleton, so leaving them attached
+    # would send every later sample's log into the first sample's file.
     logger = logging.getLogger('fos_cazavi')
     logger.setLevel(logging.INFO)
+    for handler in list(logger.handlers):
+        logger.removeHandler(handler)
+        handler.close()
 
     # File handler
     fh = logging.FileHandler(log_file, mode='w')
@@ -26,10 +31,8 @@ def setup_logger(output_prefix, args):
     fh.setFormatter(formatter)
     ch.setFormatter(formatter)
 
-    # Add handlers
-    if not logger.handlers:
-        logger.addHandler(fh)
-        logger.addHandler(ch)
+    logger.addHandler(fh)
+    logger.addHandler(ch)
 
     # Log run details
     logger.info("=" * 60)

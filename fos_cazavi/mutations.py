@@ -38,12 +38,13 @@ _AMBLER_FAMILIES = ('blaKPC', 'blaSHV', 'blaOXA', 'blaCTX-M')
 
 class MutationDetector:
     def __init__(self, assembly, output_prefix, genes_file=None, primers_file=None,
-                 mutation_db_file=None, organism=None):
+                 mutation_db_file=None, organism=None, threads=1):
         self.assembly = assembly
         self.output_prefix = output_prefix
         self.genes_file = genes_file
         self.primers_file = primers_file
         self.organism = organism
+        self.threads = max(1, int(threads or 1))
         self.gamma_results = []
         self.amplicon_results = []
         self.unified_results = []
@@ -164,7 +165,8 @@ class MutationDetector:
 
         try:
             completed = subprocess.run(
-                ['seqkit', 'amplicon', '-p', primer_file, self.assembly, '--bed'],
+                ['seqkit', 'amplicon', '-j', str(self.threads),
+                 '-p', primer_file, self.assembly, '--bed'],
                 capture_output=True, text=True, check=True)
         except FileNotFoundError:
             print("WARNING: seqkit not found, skipping amplicon mapping")
@@ -339,6 +341,7 @@ class MutationDetector:
 
 
 def run_mutation_detection(assembly, output, genes, primers, blast_results=None,
-                           mutation_db_file=None, organism=None):
-    detector = MutationDetector(assembly, output, genes, primers, mutation_db_file, organism)
+                           mutation_db_file=None, organism=None, threads=1):
+    detector = MutationDetector(assembly, output, genes, primers, mutation_db_file,
+                                organism, threads)
     return detector.run(blast_results)

@@ -14,6 +14,22 @@
 | `*_blast.txt`, `*_gamma.gamma`, `*_gamma.psl` | Raw tool output |
 | `*_analysis.log` | Command, parameters and tool versions |
 
+## Combined tables (`batch` and `combine`)
+
+| File | Contents |
+|---|---|
+| `*_combined_summary.tsv` | One row per sample |
+| `*_combined_genes.tsv` | One row per detected gene copy, across all samples |
+
+`*_combined_summary.tsv` columns: `Sample`, `Organism`, the two
+`Predicted_Phenotype_*` calls, `Acquired_Genes`, `Carbapenemases`,
+`Fosfomycin_Enzymes`, `Loss_Of_Function`, `Reported_Mutations`,
+`Genes_Detected`, `Incomplete_Genes`, both `*_Evidence` columns, and
+`Reference_Data`.
+
+`Incomplete_Genes` is the QC column: it lists genes that ran off a contig
+boundary and so could not be fully assessed in that sample.
+
 ## Key columns in `*_results.tsv`
 
 | Column | Meaning |

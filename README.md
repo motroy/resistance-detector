@@ -36,6 +36,8 @@ it and the drug it belongs to.
   changes; agreement between the two is recorded per change.
 - **Says when it cannot tell.** Genes running off a contig boundary are flagged
   rather than silently called.
+- **Scales to collections.** `batch` analyses assemblies in parallel and emits
+  one combined table per run; `--threads` passes through to blastn and seqkit.
 
 ## Quick start
 
@@ -46,6 +48,14 @@ fos-cazavi fos-cazavi-all \
     -a your_assembly.fasta \
     -o results \
     --organism Klebsiella_pneumoniae
+```
+
+For a collection, `batch` runs samples in parallel and writes one table for all
+of them:
+
+```bash
+fos-cazavi batch -i assemblies/ -o results/ \
+    --organism Klebsiella_pneumoniae -j 8
 ```
 
 The reference data is bundled; `-d` is optional. `--organism` is required for

@@ -5,6 +5,9 @@ from collections import Counter
 from pathlib import Path
 
 from .acquired import run_acquired_detection
+from .batch import (
+    default_jobs, find_assemblies, find_summaries, run_batch, write_combined,
+)
 from .db import create_db
 from .mutations import run_mutation_detection
 from .phenotype import predict_phenotypes
@@ -297,7 +300,7 @@ def handle_acquired(args):
     log_tool_versions(logger)
     blast_results = run_acquired_detection(
         args.assembly, args.database, args.output, args.min_id, args.min_cov,
-        args.mutations, getattr(args, 'organism', None))
+        args.mutations, getattr(args, 'organism', None), args.threads)
     write_summary(args.output, args.assembly, blast_results, None, None,
                   organism=getattr(args, 'organism', None))
 
@@ -308,7 +311,7 @@ def handle_mutations(args):
     gamma_results, amplicon_results, _, unified_results = run_mutation_detection(
         args.assembly, args.output, args.genes, args.primers,
         blast_results=None, mutation_db_file=getattr(args, 'mutations', None),
-        organism=getattr(args, 'organism', None))
+        organism=getattr(args, 'organism', None), threads=args.threads)
     write_summary(args.output, args.assembly, None, gamma_results, amplicon_results,
                   None, unified_results, organism=getattr(args, 'organism', None))
 
@@ -328,15 +331,42 @@ def handle_all(args):
 
     blast_results = run_acquired_detection(
         args.assembly, args.database, args.output, args.min_id, args.min_cov,
-        args.mutations, args.organism)
+        args.mutations, args.organism, args.threads)
 
     gamma_results, amplicon_results, _, unified_results = run_mutation_detection(
         args.assembly, args.output, args.genes, args.primers,
         blast_results=blast_results, mutation_db_file=args.mutations,
-        organism=args.organism)
+        organism=args.organism, threads=args.threads)
 
     write_summary(args.output, args.assembly, blast_results, gamma_results,
                   amplicon_results, None, unified_results, organism=args.organism)
+
+
+def handle_batch(args):
+    assemblies = find_assemblies(args.input)
+    if not assemblies:
+        print('ERROR: no assemblies found', file=sys.stderr)
+        return 1
+
+    if args.genes == _DEFAULT_GENES and Path(args.database).exists():
+        args.genes = args.database
+
+    if not args.organism:
+        print("NOTE: --organism was not given, so curated chromosomal point "
+              "mutations will not be evaluated.", file=sys.stderr)
+
+    return run_batch(assemblies, args.output, args.database, args.genes,
+                     args.primers, args.mutations, args.min_id, args.min_cov,
+                     args.organism, args.jobs, args.threads)
+
+
+def handle_combine(args):
+    summaries = find_summaries(args.input)
+    if not summaries:
+        print('ERROR: no *_summary.json files found', file=sys.stderr)
+        return 1
+    write_combined(summaries, args.output)
+    return 0
 
 
 def main():
@@ -353,6 +383,10 @@ def main():
     parent = argparse.ArgumentParser(add_help=False)
     parent.add_argument('-a', '--assembly', required=True, help='Input assembly file (FASTA)')
     parent.add_argument('-o', '--output', required=True, help='Output prefix')
+    parent.add_argument('-t', '--threads', type=int, default=1,
+                        help='Threads for the external tools, i.e. blastn and '
+                             'seqkit (default: 1). For many assemblies prefer '
+                             '`batch --jobs`, which parallelises across samples.')
     parent.add_argument('--organism', choices=SUPPORTED_ORGANISMS,
                         help='Organism of the sample. Required for curated chromosomal '
                              'point mutations, which are only meaningful against a '
@@ -393,9 +427,42 @@ def main():
                             help='Minimum percent coverage (default: 80)')
     parser_all.set_defaults(func=handle_all)
 
+    parser_batch = subparsers.add_parser(
+        'batch', help='Analyse many assemblies and write one combined table')
+    parser_batch.add_argument('-i', '--input', nargs='+', required=True,
+                              help='Assembly files and/or directories of assemblies')
+    parser_batch.add_argument('-o', '--output', required=True, help='Output directory')
+    parser_batch.add_argument('--organism', choices=SUPPORTED_ORGANISMS,
+                              help='Organism of the samples (applies to all of them)')
+    parser_batch.add_argument('-j', '--jobs', type=int, default=default_jobs(),
+                              help='Assemblies to analyse in parallel '
+                                   f'(default: {default_jobs()} on this machine)')
+    parser_batch.add_argument('-t', '--threads', type=int, default=1,
+                              help='Threads per assembly for blastn/seqkit (default: 1)')
+    parser_batch.add_argument('-d', '--database', default=_DEFAULT_GENES,
+                              help='Resistance gene database (FASTA) [default: bundled]')
+    parser_batch.add_argument('--genes', default=_DEFAULT_GENES,
+                              help='Nucleotide CDS database for GAMMA [default: bundled]')
+    parser_batch.add_argument('--primers', default=_DEFAULT_PRIMERS,
+                              help='Primer definitions file (TSV) [default: bundled]')
+    parser_batch.add_argument('--mutations', help='Point mutation definitions file (TSV)')
+    parser_batch.add_argument('--min_id', type=float, default=90.0,
+                              help='Minimum percent identity (default: 90)')
+    parser_batch.add_argument('--min_cov', type=float, default=80.0,
+                              help='Minimum percent coverage (default: 80)')
+    parser_batch.set_defaults(func=handle_batch)
+
+    parser_combine = subparsers.add_parser(
+        'combine', help='Combine existing results into one table')
+    parser_combine.add_argument('-i', '--input', nargs='+', required=True,
+                                help='Result directories, or *_summary.json files')
+    parser_combine.add_argument('-o', '--output', required=True,
+                                help='Output prefix for the combined tables')
+    parser_combine.set_defaults(func=handle_combine)
+
     args = parser.parse_args()
-    args.func(args)
+    return args.func(args) or 0
 
 
 if __name__ == '__main__':
-    main()
+    sys.exit(main())
