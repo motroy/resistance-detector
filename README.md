@@ -86,6 +86,20 @@ KPC-92) in each resistant isolate. Five further sets are included. See
 [docs/VALIDATION.md](docs/VALIDATION.md), and
 [docs/METHODS.md](docs/METHODS.md#9-known-limits) for what the method cannot do.
 
+## Reproducing the validation
+
+```bash
+scripts/run_validation.sh -j 6
+```
+
+All 52 assemblies across six published sets, ~35 s on six cores. The committed
+results come from a run logged with
+[dochist](https://github.com/motroy/dochist-docs) — see
+[docs/PROVENANCE.md](docs/PROVENANCE.md) for the FAIR report (every command,
+every artifact checksummed) and [demo/](demo/README.md) for a recording of it.
+
+![Validation run](demo/validation-run.gif)
+
 ## Documentation
 
 - [Methods — how every call is made, and its limits](docs/METHODS.md)
@@ -94,6 +108,7 @@ KPC-92) in each resistant isolate. Five further sets are included. See
 - [Output files](docs/OUTPUT_FILES.md)
 - [Testing](docs/TESTING.md)
 - [Validation against published genomes](docs/VALIDATION.md)
+- [Provenance record for the committed validation run](docs/PROVENANCE.md)
 
 ## Repository layout
 

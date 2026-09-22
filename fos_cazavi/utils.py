@@ -5,8 +5,12 @@ import subprocess
 import sys
 from pathlib import Path
 
-def setup_logger(output_prefix, args):
-    """Setup logging to file and console"""
+def setup_logger(output_prefix, args, console=True):
+    """Set up logging to the sample's log file, and optionally to the console.
+
+    Batch workers pass ``console=False``: their log file already records
+    everything, and fifty samples logging to one terminal at once is unreadable.
+    """
     log_file = f"{output_prefix}_analysis.log"
 
     # Create logger.  Handlers from a previous sample are closed and dropped
@@ -32,7 +36,8 @@ def setup_logger(output_prefix, args):
     ch.setFormatter(formatter)
 
     logger.addHandler(fh)
-    logger.addHandler(ch)
+    if console:
+        logger.addHandler(ch)
 
     # Log run details
     logger.info("=" * 60)

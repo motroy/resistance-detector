@@ -1,68 +1,68 @@
 Sample	Type	Gene	Allele	Method	Result_Details	Identity_Confidence	Contig	Start	End	Copy_Number	Notes
-SRR28296939.fasta	Chromosomal gene	acrB	acrB	BLAST	Coverage: 100.00%	99.84%	u1	171239	174385	1	protein changes: R716L
-SRR28296939.fasta	Chromosomal gene	ftsI	ftsI	BLAST	Coverage: 100.00%	99.32%	u77	186809	188575	1	protein changes: V375A;A433V
-SRR28296939.fasta	Chromosomal gene	envZ	envZ	BLAST	Coverage: 100.00%	99.93%	u110	48666	50021	1	protein changes: I258M
-SRR28296939.fasta	Chromosomal gene	ompK35	ompK35	BLAST	Coverage: 100.00%	99.35%	u44	64642	65720	1	protein changes: N29T;G30A;N31T;K32N;L33_V44del;T47S;N48_K226del;A227M;A229K;A231S;T232A;A234_Q288del;K290S;K292P;D293P;L294M;Q295A;S296_Y339del;K341P;G344T;V345I;A346P;T347P;D348M;D349P;Q350V;A351S;V353_F359del; premature stop at residue 63 (62/359 aa)
-SRR28296939.fasta	Acquired gene	blaKPC-2	blaKPC-179	BLAST	Coverage: 100.00%	99.55%	u87	6026	6910	1	protein changes: A133T;insS@180
-SRR28296939.fasta	Chromosomal gene	ompK36	ompK36	BLAST	Coverage: 100.00%	92.22%	u55	216041	217165	1	protein changes: insGD@133;A183T;L184del;T192G;Y201F;N221H;L225N;S230del;K231R;A233D;L234K;insF@268;A269S;S271N;insGESDSI@271;L272S;L307I;I315L;D344E;S346D;H349R;N350R
-SRR28296939.fasta	Chromosomal gene	fosAKP	fosAKP	BLAST	Coverage: 100.00%	98.81%	u58	14021	14440	1	protein changes: I91V;Q130P;D138E
-SRR28296939.fasta	Protein change	acrB	-	blast+gamma	R716L	100%	u1	-	-	-	sequence difference, not a curated resistance mutation
-SRR28296939.fasta	Protein change	blaKPC-2	-	blast+gamma	A133T	100%	u87	-	-	-	reported as resistance mutation
-SRR28296939.fasta	Protein change	blaKPC-2	-	blast	insS@180	50%	u87	-	-	-	reported as resistance mutation
-SRR28296939.fasta	Protein change	envZ	-	blast+gamma	I258M	100%	u110	-	-	-	sequence difference, not a curated resistance mutation
-SRR28296939.fasta	Protein change	fosAKP	-	blast+gamma	D138E	100%	u58	-	-	-	sequence difference, not a curated resistance mutation
-SRR28296939.fasta	Protein change	fosAKP	-	blast+gamma	I91V	100%	u58	-	-	-	sequence difference, not a curated resistance mutation
-SRR28296939.fasta	Protein change	fosAKP	-	blast+gamma	Q130P	100%	u58	-	-	-	sequence difference, not a curated resistance mutation
-SRR28296939.fasta	Protein change	ftsI	-	blast+gamma	A433V	100%	u77	-	-	-	sequence difference, not a curated resistance mutation
-SRR28296939.fasta	Protein change	ftsI	-	blast+gamma	V375A	100%	u77	-	-	-	sequence difference, not a curated resistance mutation
-SRR28296939.fasta	Protein change	ompK35	-	blast	A227M	50%	u44	-	-	-	sequence difference, not a curated resistance mutation
-SRR28296939.fasta	Protein change	ompK35	-	blast	A229K	50%	u44	-	-	-	sequence difference, not a curated resistance mutation
-SRR28296939.fasta	Protein change	ompK35	-	blast	A231S	50%	u44	-	-	-	sequence difference, not a curated resistance mutation
-SRR28296939.fasta	Protein change	ompK35	-	blast	A234_Q288del	50%	u44	-	-	-	sequence difference, not a curated resistance mutation
-SRR28296939.fasta	Protein change	ompK35	-	blast	A346P	50%	u44	-	-	-	sequence difference, not a curated resistance mutation
-SRR28296939.fasta	Protein change	ompK35	-	blast	A351S	50%	u44	-	-	-	sequence difference, not a curated resistance mutation
-SRR28296939.fasta	Protein change	ompK35	-	blast	D293P	50%	u44	-	-	-	sequence difference, not a curated resistance mutation
-SRR28296939.fasta	Protein change	ompK35	-	blast	D348M	50%	u44	-	-	-	sequence difference, not a curated resistance mutation
-SRR28296939.fasta	Protein change	ompK35	-	blast	D349P	50%	u44	-	-	-	sequence difference, not a curated resistance mutation
-SRR28296939.fasta	Protein change	ompK35	-	blast	G30A	50%	u44	-	-	-	sequence difference, not a curated resistance mutation
-SRR28296939.fasta	Protein change	ompK35	-	blast	G344T	50%	u44	-	-	-	sequence difference, not a curated resistance mutation
-SRR28296939.fasta	Protein change	ompK35	-	blast	K290S	50%	u44	-	-	-	sequence difference, not a curated resistance mutation
-SRR28296939.fasta	Protein change	ompK35	-	blast	K292P	50%	u44	-	-	-	sequence difference, not a curated resistance mutation
-SRR28296939.fasta	Protein change	ompK35	-	blast	K32N	50%	u44	-	-	-	sequence difference, not a curated resistance mutation
-SRR28296939.fasta	Protein change	ompK35	-	blast	K341P	50%	u44	-	-	-	sequence difference, not a curated resistance mutation
-SRR28296939.fasta	Protein change	ompK35	-	blast	L294M	50%	u44	-	-	-	sequence difference, not a curated resistance mutation
-SRR28296939.fasta	Protein change	ompK35	-	blast	L33_V44del	50%	u44	-	-	-	sequence difference, not a curated resistance mutation
-SRR28296939.fasta	Protein change	ompK35	-	blast	N29T	50%	u44	-	-	-	sequence difference, not a curated resistance mutation
-SRR28296939.fasta	Protein change	ompK35	-	blast	N31T	50%	u44	-	-	-	sequence difference, not a curated resistance mutation
-SRR28296939.fasta	Protein change	ompK35	-	blast	N48_K226del	50%	u44	-	-	-	sequence difference, not a curated resistance mutation
-SRR28296939.fasta	Protein change	ompK35	-	blast	Q295A	50%	u44	-	-	-	sequence difference, not a curated resistance mutation
-SRR28296939.fasta	Protein change	ompK35	-	blast	Q350V	50%	u44	-	-	-	sequence difference, not a curated resistance mutation
-SRR28296939.fasta	Protein change	ompK35	-	blast	S296_Y339del	50%	u44	-	-	-	sequence difference, not a curated resistance mutation
-SRR28296939.fasta	Protein change	ompK35	-	blast	T232A	50%	u44	-	-	-	sequence difference, not a curated resistance mutation
-SRR28296939.fasta	Protein change	ompK35	-	blast	T347P	50%	u44	-	-	-	sequence difference, not a curated resistance mutation
-SRR28296939.fasta	Protein change	ompK35	-	blast	T47S	50%	u44	-	-	-	sequence difference, not a curated resistance mutation
-SRR28296939.fasta	Protein change	ompK35	-	blast	V345I	50%	u44	-	-	-	sequence difference, not a curated resistance mutation
-SRR28296939.fasta	Protein change	ompK35	-	blast	V353_F359del	50%	u44	-	-	-	sequence difference, not a curated resistance mutation
-SRR28296939.fasta	Protein change	ompK36	-	blast	A183T	50%	u55	-	-	-	sequence difference, not a curated resistance mutation
-SRR28296939.fasta	Protein change	ompK36	-	blast	A233D	50%	u55	-	-	-	sequence difference, not a curated resistance mutation
-SRR28296939.fasta	Protein change	ompK36	-	blast	A269S	50%	u55	-	-	-	sequence difference, not a curated resistance mutation
-SRR28296939.fasta	Protein change	ompK36	-	blast	D344E	50%	u55	-	-	-	sequence difference, not a curated resistance mutation
-SRR28296939.fasta	Protein change	ompK36	-	blast	H349R	50%	u55	-	-	-	sequence difference, not a curated resistance mutation
-SRR28296939.fasta	Protein change	ompK36	-	blast	I315L	50%	u55	-	-	-	sequence difference, not a curated resistance mutation
-SRR28296939.fasta	Protein change	ompK36	-	blast	K231R	50%	u55	-	-	-	sequence difference, not a curated resistance mutation
-SRR28296939.fasta	Protein change	ompK36	-	blast	L184del	50%	u55	-	-	-	sequence difference, not a curated resistance mutation
-SRR28296939.fasta	Protein change	ompK36	-	blast	L225N	50%	u55	-	-	-	sequence difference, not a curated resistance mutation
-SRR28296939.fasta	Protein change	ompK36	-	blast	L234K	50%	u55	-	-	-	sequence difference, not a curated resistance mutation
-SRR28296939.fasta	Protein change	ompK36	-	blast	L272S	50%	u55	-	-	-	sequence difference, not a curated resistance mutation
-SRR28296939.fasta	Protein change	ompK36	-	blast	L307I	50%	u55	-	-	-	sequence difference, not a curated resistance mutation
-SRR28296939.fasta	Protein change	ompK36	-	blast	N221H	50%	u55	-	-	-	sequence difference, not a curated resistance mutation
-SRR28296939.fasta	Protein change	ompK36	-	blast	N350R	50%	u55	-	-	-	sequence difference, not a curated resistance mutation
-SRR28296939.fasta	Protein change	ompK36	-	blast	S230del	50%	u55	-	-	-	sequence difference, not a curated resistance mutation
-SRR28296939.fasta	Protein change	ompK36	-	blast	S271N	50%	u55	-	-	-	sequence difference, not a curated resistance mutation
-SRR28296939.fasta	Protein change	ompK36	-	blast	S346D	50%	u55	-	-	-	sequence difference, not a curated resistance mutation
-SRR28296939.fasta	Protein change	ompK36	-	blast	T192G	50%	u55	-	-	-	sequence difference, not a curated resistance mutation
-SRR28296939.fasta	Protein change	ompK36	-	blast	Y201F	50%	u55	-	-	-	sequence difference, not a curated resistance mutation
-SRR28296939.fasta	Protein change	ompK36	-	blast	insF@268	50%	u55	-	-	-	sequence difference, not a curated resistance mutation
-SRR28296939.fasta	Protein change	ompK36	-	blast	insGD@133	50%	u55	-	-	-	sequence difference, not a curated resistance mutation
-SRR28296939.fasta	Protein change	ompK36	-	blast	insGESDSI@271	50%	u55	-	-	-	sequence difference, not a curated resistance mutation
-SRR28296939.fasta	Amplicon	blaKPC_ver	-	SeqKit/amplicon	Length: 885bp	-	u87	6025	6910	-	Genes in region: blaKPC-179: A133T;insS@180
+SRR28296939.fna	Chromosomal gene	acrB	acrB	BLAST	Coverage: 100.00%	99.84%	u1	171239	174385	1	protein changes: R716L
+SRR28296939.fna	Chromosomal gene	ftsI	ftsI	BLAST	Coverage: 100.00%	99.32%	u77	186809	188575	1	protein changes: V375A;A433V
+SRR28296939.fna	Chromosomal gene	envZ	envZ	BLAST	Coverage: 100.00%	99.93%	u110	48666	50021	1	protein changes: I258M
+SRR28296939.fna	Chromosomal gene	ompK35	ompK35	BLAST	Coverage: 100.00%	99.35%	u44	64642	65720	1	protein changes: N29T;G30A;N31T;K32N;L33_V44del;T47S;N48_K226del;A227M;A229K;A231S;T232A;A234_Q288del;K290S;K292P;D293P;L294M;Q295A;S296_Y339del;K341P;G344T;V345I;A346P;T347P;D348M;D349P;Q350V;A351S;V353_F359del; premature stop at residue 63 (62/359 aa)
+SRR28296939.fna	Acquired gene	blaKPC-2	blaKPC-179	BLAST	Coverage: 100.00%	99.55%	u87	6026	6910	1	protein changes: A133T;insS@180
+SRR28296939.fna	Chromosomal gene	ompK36	ompK36	BLAST	Coverage: 100.00%	92.22%	u55	216041	217165	1	protein changes: insGD@133;A183T;L184del;T192G;Y201F;N221H;L225N;S230del;K231R;A233D;L234K;insF@268;A269S;S271N;insGESDSI@271;L272S;L307I;I315L;D344E;S346D;H349R;N350R
+SRR28296939.fna	Chromosomal gene	fosAKP	fosAKP	BLAST	Coverage: 100.00%	98.81%	u58	14021	14440	1	protein changes: I91V;Q130P;D138E
+SRR28296939.fna	Protein change	acrB	-	blast+gamma	R716L	100%	u1	-	-	-	sequence difference, not a curated resistance mutation
+SRR28296939.fna	Protein change	blaKPC-2	-	blast+gamma	A133T	100%	u87	-	-	-	reported as resistance mutation
+SRR28296939.fna	Protein change	blaKPC-2	-	blast	insS@180	50%	u87	-	-	-	reported as resistance mutation
+SRR28296939.fna	Protein change	envZ	-	blast+gamma	I258M	100%	u110	-	-	-	sequence difference, not a curated resistance mutation
+SRR28296939.fna	Protein change	fosAKP	-	blast+gamma	D138E	100%	u58	-	-	-	sequence difference, not a curated resistance mutation
+SRR28296939.fna	Protein change	fosAKP	-	blast+gamma	I91V	100%	u58	-	-	-	sequence difference, not a curated resistance mutation
+SRR28296939.fna	Protein change	fosAKP	-	blast+gamma	Q130P	100%	u58	-	-	-	sequence difference, not a curated resistance mutation
+SRR28296939.fna	Protein change	ftsI	-	blast+gamma	A433V	100%	u77	-	-	-	sequence difference, not a curated resistance mutation
+SRR28296939.fna	Protein change	ftsI	-	blast+gamma	V375A	100%	u77	-	-	-	sequence difference, not a curated resistance mutation
+SRR28296939.fna	Protein change	ompK35	-	blast	A227M	50%	u44	-	-	-	sequence difference, not a curated resistance mutation
+SRR28296939.fna	Protein change	ompK35	-	blast	A229K	50%	u44	-	-	-	sequence difference, not a curated resistance mutation
+SRR28296939.fna	Protein change	ompK35	-	blast	A231S	50%	u44	-	-	-	sequence difference, not a curated resistance mutation
+SRR28296939.fna	Protein change	ompK35	-	blast	A234_Q288del	50%	u44	-	-	-	sequence difference, not a curated resistance mutation
+SRR28296939.fna	Protein change	ompK35	-	blast	A346P	50%	u44	-	-	-	sequence difference, not a curated resistance mutation
+SRR28296939.fna	Protein change	ompK35	-	blast	A351S	50%	u44	-	-	-	sequence difference, not a curated resistance mutation
+SRR28296939.fna	Protein change	ompK35	-	blast	D293P	50%	u44	-	-	-	sequence difference, not a curated resistance mutation
+SRR28296939.fna	Protein change	ompK35	-	blast	D348M	50%	u44	-	-	-	sequence difference, not a curated resistance mutation
+SRR28296939.fna	Protein change	ompK35	-	blast	D349P	50%	u44	-	-	-	sequence difference, not a curated resistance mutation
+SRR28296939.fna	Protein change	ompK35	-	blast	G30A	50%	u44	-	-	-	sequence difference, not a curated resistance mutation
+SRR28296939.fna	Protein change	ompK35	-	blast	G344T	50%	u44	-	-	-	sequence difference, not a curated resistance mutation
+SRR28296939.fna	Protein change	ompK35	-	blast	K290S	50%	u44	-	-	-	sequence difference, not a curated resistance mutation
+SRR28296939.fna	Protein change	ompK35	-	blast	K292P	50%	u44	-	-	-	sequence difference, not a curated resistance mutation
+SRR28296939.fna	Protein change	ompK35	-	blast	K32N	50%	u44	-	-	-	sequence difference, not a curated resistance mutation
+SRR28296939.fna	Protein change	ompK35	-	blast	K341P	50%	u44	-	-	-	sequence difference, not a curated resistance mutation
+SRR28296939.fna	Protein change	ompK35	-	blast	L294M	50%	u44	-	-	-	sequence difference, not a curated resistance mutation
+SRR28296939.fna	Protein change	ompK35	-	blast	L33_V44del	50%	u44	-	-	-	sequence difference, not a curated resistance mutation
+SRR28296939.fna	Protein change	ompK35	-	blast	N29T	50%	u44	-	-	-	sequence difference, not a curated resistance mutation
+SRR28296939.fna	Protein change	ompK35	-	blast	N31T	50%	u44	-	-	-	sequence difference, not a curated resistance mutation
+SRR28296939.fna	Protein change	ompK35	-	blast	N48_K226del	50%	u44	-	-	-	sequence difference, not a curated resistance mutation
+SRR28296939.fna	Protein change	ompK35	-	blast	Q295A	50%	u44	-	-	-	sequence difference, not a curated resistance mutation
+SRR28296939.fna	Protein change	ompK35	-	blast	Q350V	50%	u44	-	-	-	sequence difference, not a curated resistance mutation
+SRR28296939.fna	Protein change	ompK35	-	blast	S296_Y339del	50%	u44	-	-	-	sequence difference, not a curated resistance mutation
+SRR28296939.fna	Protein change	ompK35	-	blast	T232A	50%	u44	-	-	-	sequence difference, not a curated resistance mutation
+SRR28296939.fna	Protein change	ompK35	-	blast	T347P	50%	u44	-	-	-	sequence difference, not a curated resistance mutation
+SRR28296939.fna	Protein change	ompK35	-	blast	T47S	50%	u44	-	-	-	sequence difference, not a curated resistance mutation
+SRR28296939.fna	Protein change	ompK35	-	blast	V345I	50%	u44	-	-	-	sequence difference, not a curated resistance mutation
+SRR28296939.fna	Protein change	ompK35	-	blast	V353_F359del	50%	u44	-	-	-	sequence difference, not a curated resistance mutation
+SRR28296939.fna	Protein change	ompK36	-	blast	A183T	50%	u55	-	-	-	sequence difference, not a curated resistance mutation
+SRR28296939.fna	Protein change	ompK36	-	blast	A233D	50%	u55	-	-	-	sequence difference, not a curated resistance mutation
+SRR28296939.fna	Protein change	ompK36	-	blast	A269S	50%	u55	-	-	-	sequence difference, not a curated resistance mutation
+SRR28296939.fna	Protein change	ompK36	-	blast	D344E	50%	u55	-	-	-	sequence difference, not a curated resistance mutation
+SRR28296939.fna	Protein change	ompK36	-	blast	H349R	50%	u55	-	-	-	sequence difference, not a curated resistance mutation
+SRR28296939.fna	Protein change	ompK36	-	blast	I315L	50%	u55	-	-	-	sequence difference, not a curated resistance mutation
+SRR28296939.fna	Protein change	ompK36	-	blast	K231R	50%	u55	-	-	-	sequence difference, not a curated resistance mutation
+SRR28296939.fna	Protein change	ompK36	-	blast	L184del	50%	u55	-	-	-	sequence difference, not a curated resistance mutation
+SRR28296939.fna	Protein change	ompK36	-	blast	L225N	50%	u55	-	-	-	sequence difference, not a curated resistance mutation
+SRR28296939.fna	Protein change	ompK36	-	blast	L234K	50%	u55	-	-	-	sequence difference, not a curated resistance mutation
+SRR28296939.fna	Protein change	ompK36	-	blast	L272S	50%	u55	-	-	-	sequence difference, not a curated resistance mutation
+SRR28296939.fna	Protein change	ompK36	-	blast	L307I	50%	u55	-	-	-	sequence difference, not a curated resistance mutation
+SRR28296939.fna	Protein change	ompK36	-	blast	N221H	50%	u55	-	-	-	sequence difference, not a curated resistance mutation
+SRR28296939.fna	Protein change	ompK36	-	blast	N350R	50%	u55	-	-	-	sequence difference, not a curated resistance mutation
+SRR28296939.fna	Protein change	ompK36	-	blast	S230del	50%	u55	-	-	-	sequence difference, not a curated resistance mutation
+SRR28296939.fna	Protein change	ompK36	-	blast	S271N	50%	u55	-	-	-	sequence difference, not a curated resistance mutation
+SRR28296939.fna	Protein change	ompK36	-	blast	S346D	50%	u55	-	-	-	sequence difference, not a curated resistance mutation
+SRR28296939.fna	Protein change	ompK36	-	blast	T192G	50%	u55	-	-	-	sequence difference, not a curated resistance mutation
+SRR28296939.fna	Protein change	ompK36	-	blast	Y201F	50%	u55	-	-	-	sequence difference, not a curated resistance mutation
+SRR28296939.fna	Protein change	ompK36	-	blast	insF@268	50%	u55	-	-	-	sequence difference, not a curated resistance mutation
+SRR28296939.fna	Protein change	ompK36	-	blast	insGD@133	50%	u55	-	-	-	sequence difference, not a curated resistance mutation
+SRR28296939.fna	Protein change	ompK36	-	blast	insGESDSI@271	50%	u55	-	-	-	sequence difference, not a curated resistance mutation
+SRR28296939.fna	Amplicon	blaKPC_ver	-	SeqKit/amplicon	Length: 885bp	-	u87	6025	6910	-	Genes in region: blaKPC-179: A133T;insS@180

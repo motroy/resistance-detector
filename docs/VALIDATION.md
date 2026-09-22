@@ -84,16 +84,31 @@ pipeline changed several calls. Each change is a correction:
 
 ## Reproducing this
 
-```bash
-datasets download genome accession <accession> --include genome
-unzip ncbi_dataset.zip
+Every set, end to end, with one command. Assemblies are fetched from NCBI on
+first run (accessions are in each set's `accessions.tsv`) and cached:
 
-fos-cazavi fos-cazavi-all \
-    -a ncbi_dataset/data/<accession>/<accession>_*_genomic.fna \
-    -o <accession> \
-    -d fos_cazavi/data/example_database.fasta \
-    --organism Klebsiella_pneumoniae
+```bash
+scripts/run_validation.sh -j 6
 ```
+
+That analyses all 52 assemblies and writes
+`bioproject_tests/all_validation_combined_summary.tsv` — one row per sample
+across every set — plus the per-gene table beside it. It takes about 35 seconds
+on six cores once the assemblies are cached.
+
+### Provenance
+
+The committed results were produced by a run logged with
+[dochist](https://github.com/motroy/dochist-docs), which records each command
+and checksums every artifact it produces:
+
+* [`docs/PROVENANCE.md`](PROVENANCE.md) — FAIR compliance report for the run:
+  7 commands, 112 artifacts with SHA-256 checksums, environment snapshot.
+* [`scripts/rerun_validation.sh`](../scripts/rerun_validation.sh) — the
+  reproduction script `dochist extract` derived from that session.
+* [`demo/validation-run.cast`](../demo/validation-run.cast) — the run itself,
+  replayable with `asciinema play`, and rendered as a GIF in
+  [`demo/`](../demo/README.md).
 
 Each folder's `RESULTS_SUMMARY.md` or `COMPARISON_TO_PAPER.md` has the full
 per-genome detail.

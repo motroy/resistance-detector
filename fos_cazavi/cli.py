@@ -357,7 +357,7 @@ def handle_batch(args):
 
     return run_batch(assemblies, args.output, args.database, args.genes,
                      args.primers, args.mutations, args.min_id, args.min_cov,
-                     args.organism, args.jobs, args.threads)
+                     args.organism, args.jobs, args.threads, args.verbose)
 
 
 def handle_combine(args):
@@ -445,6 +445,10 @@ def main():
                               help='Nucleotide CDS database for GAMMA [default: bundled]')
     parser_batch.add_argument('--primers', default=_DEFAULT_PRIMERS,
                               help='Primer definitions file (TSV) [default: bundled]')
+    parser_batch.add_argument('-v', '--verbose', action='store_true',
+                              help='Stream each sample\'s full output. By default '
+                                   'it goes to <sample>_run.log and only one '
+                                   'progress line per sample is printed.')
     parser_batch.add_argument('--mutations', help='Point mutation definitions file (TSV)')
     parser_batch.add_argument('--min_id', type=float, default=90.0,
                               help='Minimum percent identity (default: 90)')

@@ -1,41 +1,41 @@
 Sample	Type	Gene	Allele	Method	Result_Details	Identity_Confidence	Contig	Start	End	Copy_Number	Notes
-GCA_022423575.1.fna	Chromosomal gene	acrB	acrB	BLAST	Coverage: 100.00%	99.94%	JAHUYY010000002.1	252180	255326	1	no protein changes vs reference
-GCA_022423575.1.fna	Chromosomal gene	ftsI	ftsI	BLAST	Coverage: 100.00%	99.77%	JAHUYY010000005.1	144417	146183	1	protein changes: V375A
-GCA_022423575.1.fna	Chromosomal gene	envZ	envZ	BLAST	Coverage: 100.00%	99.04%	JAHUYY010000010.1	153951	155306	1	protein changes: I15T;I258M
-GCA_022423575.1.fna	Chromosomal gene	ompK35	ompK35	BLAST	Coverage: 100.00%	99.35%	JAHUYY010000008.1	41172	42251	1	no protein changes vs reference
-GCA_022423575.1.fna	Acquired gene	blaKPC-2	blaKPC-3	BLAST	Coverage: 100.00%	99.89%	JAHUYY010000035.1	13999	14880	1	protein changes: H274Y
-GCA_022423575.1.fna	Acquired gene	blaCTX-M-15	blaCTX-M-15	BLAST	Coverage: 100.00%	100.00%	JAHUYY010000057.1	654	1529	1	no protein changes vs reference
-GCA_022423575.1.fna	Chromosomal gene	ompK36	ompK36	BLAST	Coverage: 100.00%	92.62%	JAHUYY010000009.1	162419	163537	1	protein changes: A183T;L184del;T192G;Y201F;N221H;L225N;S230del;K231R;A233D;L234K;insF@268;A269S;S271N;insGESDSI@271;L272S;L307I;I315L;D344E;S346D;H349R;N350R
-GCA_022423575.1.fna	Acquired gene	blaSHV-12	blaSHV-like	BLAST	Coverage: 100.00%	98.95%	JAHUYY010000001.1	299664	300524	1	protein changes: Y3F;Q31L;S235G;K236E
-GCA_022423575.1.fna	Chromosomal gene	fosAKP	fosAKP	BLAST	Coverage: 100.00%	99.76%	JAHUYY010000019.1	73622	74041	1	protein changes: Q130P
-GCA_022423575.1.fna	Protein change	blaKPC-2	-	blast+gamma	H274Y	100%	JAHUYY010000035.1	-	-	-	reported as resistance mutation
-GCA_022423575.1.fna	Protein change	blaSHV-12	-	blast+gamma	K236E	100%	JAHUYY010000001.1	-	-	-	reported as resistance mutation
-GCA_022423575.1.fna	Protein change	blaSHV-12	-	blast+gamma	Q31L	100%	JAHUYY010000001.1	-	-	-	reported as resistance mutation
-GCA_022423575.1.fna	Protein change	blaSHV-12	-	blast+gamma	S235G	100%	JAHUYY010000001.1	-	-	-	reported as resistance mutation
-GCA_022423575.1.fna	Protein change	blaSHV-12	-	blast+gamma	Y3F	100%	JAHUYY010000001.1	-	-	-	reported as resistance mutation
-GCA_022423575.1.fna	Protein change	envZ	-	blast+gamma	I15T	100%	JAHUYY010000010.1	-	-	-	sequence difference, not a curated resistance mutation
-GCA_022423575.1.fna	Protein change	envZ	-	blast+gamma	I258M	100%	JAHUYY010000010.1	-	-	-	sequence difference, not a curated resistance mutation
-GCA_022423575.1.fna	Protein change	fosAKP	-	blast+gamma	Q130P	100%	JAHUYY010000019.1	-	-	-	sequence difference, not a curated resistance mutation
-GCA_022423575.1.fna	Protein change	ftsI	-	blast+gamma	V375A	100%	JAHUYY010000005.1	-	-	-	sequence difference, not a curated resistance mutation
-GCA_022423575.1.fna	Protein change	ompK36	-	blast	A183T	50%	JAHUYY010000009.1	-	-	-	sequence difference, not a curated resistance mutation
-GCA_022423575.1.fna	Protein change	ompK36	-	blast	A233D	50%	JAHUYY010000009.1	-	-	-	sequence difference, not a curated resistance mutation
-GCA_022423575.1.fna	Protein change	ompK36	-	blast	A269S	50%	JAHUYY010000009.1	-	-	-	sequence difference, not a curated resistance mutation
-GCA_022423575.1.fna	Protein change	ompK36	-	blast	D344E	50%	JAHUYY010000009.1	-	-	-	sequence difference, not a curated resistance mutation
-GCA_022423575.1.fna	Protein change	ompK36	-	blast	H349R	50%	JAHUYY010000009.1	-	-	-	sequence difference, not a curated resistance mutation
-GCA_022423575.1.fna	Protein change	ompK36	-	blast	I315L	50%	JAHUYY010000009.1	-	-	-	sequence difference, not a curated resistance mutation
-GCA_022423575.1.fna	Protein change	ompK36	-	blast	K231R	50%	JAHUYY010000009.1	-	-	-	sequence difference, not a curated resistance mutation
-GCA_022423575.1.fna	Protein change	ompK36	-	blast	L184del	50%	JAHUYY010000009.1	-	-	-	sequence difference, not a curated resistance mutation
-GCA_022423575.1.fna	Protein change	ompK36	-	blast	L225N	50%	JAHUYY010000009.1	-	-	-	sequence difference, not a curated resistance mutation
-GCA_022423575.1.fna	Protein change	ompK36	-	blast	L234K	50%	JAHUYY010000009.1	-	-	-	sequence difference, not a curated resistance mutation
-GCA_022423575.1.fna	Protein change	ompK36	-	blast	L272S	50%	JAHUYY010000009.1	-	-	-	sequence difference, not a curated resistance mutation
-GCA_022423575.1.fna	Protein change	ompK36	-	blast	L307I	50%	JAHUYY010000009.1	-	-	-	sequence difference, not a curated resistance mutation
-GCA_022423575.1.fna	Protein change	ompK36	-	blast	N221H	50%	JAHUYY010000009.1	-	-	-	sequence difference, not a curated resistance mutation
-GCA_022423575.1.fna	Protein change	ompK36	-	blast	N350R	50%	JAHUYY010000009.1	-	-	-	sequence difference, not a curated resistance mutation
-GCA_022423575.1.fna	Protein change	ompK36	-	blast	S230del	50%	JAHUYY010000009.1	-	-	-	sequence difference, not a curated resistance mutation
-GCA_022423575.1.fna	Protein change	ompK36	-	blast	S271N	50%	JAHUYY010000009.1	-	-	-	sequence difference, not a curated resistance mutation
-GCA_022423575.1.fna	Protein change	ompK36	-	blast	S346D	50%	JAHUYY010000009.1	-	-	-	sequence difference, not a curated resistance mutation
-GCA_022423575.1.fna	Protein change	ompK36	-	blast	T192G	50%	JAHUYY010000009.1	-	-	-	sequence difference, not a curated resistance mutation
-GCA_022423575.1.fna	Protein change	ompK36	-	blast	Y201F	50%	JAHUYY010000009.1	-	-	-	sequence difference, not a curated resistance mutation
-GCA_022423575.1.fna	Protein change	ompK36	-	blast	insF@268	50%	JAHUYY010000009.1	-	-	-	sequence difference, not a curated resistance mutation
-GCA_022423575.1.fna	Protein change	ompK36	-	blast	insGESDSI@271	50%	JAHUYY010000009.1	-	-	-	sequence difference, not a curated resistance mutation
-GCA_022423575.1.fna	Amplicon	blaKPC_ver	-	SeqKit/amplicon	Length: 882bp	-	JAHUYY010000035.1	13998	14880	-	Genes in region: blaKPC-3: H274Y
+B-1_1-G9.fna	Chromosomal gene	acrB	acrB	BLAST	Coverage: 100.00%	99.94%	JAHUYY010000002.1	252180	255326	1	no protein changes vs reference
+B-1_1-G9.fna	Chromosomal gene	ftsI	ftsI	BLAST	Coverage: 100.00%	99.77%	JAHUYY010000005.1	144417	146183	1	protein changes: V375A
+B-1_1-G9.fna	Chromosomal gene	envZ	envZ	BLAST	Coverage: 100.00%	99.04%	JAHUYY010000010.1	153951	155306	1	protein changes: I15T;I258M
+B-1_1-G9.fna	Chromosomal gene	ompK35	ompK35	BLAST	Coverage: 100.00%	99.35%	JAHUYY010000008.1	41172	42251	1	no protein changes vs reference
+B-1_1-G9.fna	Acquired gene	blaKPC-2	blaKPC-3	BLAST	Coverage: 100.00%	99.89%	JAHUYY010000035.1	13999	14880	1	protein changes: H274Y
+B-1_1-G9.fna	Acquired gene	blaCTX-M-15	blaCTX-M-15	BLAST	Coverage: 100.00%	100.00%	JAHUYY010000057.1	654	1529	1	no protein changes vs reference
+B-1_1-G9.fna	Chromosomal gene	ompK36	ompK36	BLAST	Coverage: 100.00%	92.62%	JAHUYY010000009.1	162419	163537	1	protein changes: A183T;L184del;T192G;Y201F;N221H;L225N;S230del;K231R;A233D;L234K;insF@268;A269S;S271N;insGESDSI@271;L272S;L307I;I315L;D344E;S346D;H349R;N350R
+B-1_1-G9.fna	Acquired gene	blaSHV-12	blaSHV-like	BLAST	Coverage: 100.00%	98.95%	JAHUYY010000001.1	299664	300524	1	protein changes: Y3F;Q31L;S235G;K236E
+B-1_1-G9.fna	Chromosomal gene	fosAKP	fosAKP	BLAST	Coverage: 100.00%	99.76%	JAHUYY010000019.1	73622	74041	1	protein changes: Q130P
+B-1_1-G9.fna	Protein change	blaKPC-2	-	blast+gamma	H274Y	100%	JAHUYY010000035.1	-	-	-	reported as resistance mutation
+B-1_1-G9.fna	Protein change	blaSHV-12	-	blast+gamma	K236E	100%	JAHUYY010000001.1	-	-	-	reported as resistance mutation
+B-1_1-G9.fna	Protein change	blaSHV-12	-	blast+gamma	Q31L	100%	JAHUYY010000001.1	-	-	-	reported as resistance mutation
+B-1_1-G9.fna	Protein change	blaSHV-12	-	blast+gamma	S235G	100%	JAHUYY010000001.1	-	-	-	reported as resistance mutation
+B-1_1-G9.fna	Protein change	blaSHV-12	-	blast+gamma	Y3F	100%	JAHUYY010000001.1	-	-	-	reported as resistance mutation
+B-1_1-G9.fna	Protein change	envZ	-	blast+gamma	I15T	100%	JAHUYY010000010.1	-	-	-	sequence difference, not a curated resistance mutation
+B-1_1-G9.fna	Protein change	envZ	-	blast+gamma	I258M	100%	JAHUYY010000010.1	-	-	-	sequence difference, not a curated resistance mutation
+B-1_1-G9.fna	Protein change	fosAKP	-	blast+gamma	Q130P	100%	JAHUYY010000019.1	-	-	-	sequence difference, not a curated resistance mutation
+B-1_1-G9.fna	Protein change	ftsI	-	blast+gamma	V375A	100%	JAHUYY010000005.1	-	-	-	sequence difference, not a curated resistance mutation
+B-1_1-G9.fna	Protein change	ompK36	-	blast	A183T	50%	JAHUYY010000009.1	-	-	-	sequence difference, not a curated resistance mutation
+B-1_1-G9.fna	Protein change	ompK36	-	blast	A233D	50%	JAHUYY010000009.1	-	-	-	sequence difference, not a curated resistance mutation
+B-1_1-G9.fna	Protein change	ompK36	-	blast	A269S	50%	JAHUYY010000009.1	-	-	-	sequence difference, not a curated resistance mutation
+B-1_1-G9.fna	Protein change	ompK36	-	blast	D344E	50%	JAHUYY010000009.1	-	-	-	sequence difference, not a curated resistance mutation
+B-1_1-G9.fna	Protein change	ompK36	-	blast	H349R	50%	JAHUYY010000009.1	-	-	-	sequence difference, not a curated resistance mutation
+B-1_1-G9.fna	Protein change	ompK36	-	blast	I315L	50%	JAHUYY010000009.1	-	-	-	sequence difference, not a curated resistance mutation
+B-1_1-G9.fna	Protein change	ompK36	-	blast	K231R	50%	JAHUYY010000009.1	-	-	-	sequence difference, not a curated resistance mutation
+B-1_1-G9.fna	Protein change	ompK36	-	blast	L184del	50%	JAHUYY010000009.1	-	-	-	sequence difference, not a curated resistance mutation
+B-1_1-G9.fna	Protein change	ompK36	-	blast	L225N	50%	JAHUYY010000009.1	-	-	-	sequence difference, not a curated resistance mutation
+B-1_1-G9.fna	Protein change	ompK36	-	blast	L234K	50%	JAHUYY010000009.1	-	-	-	sequence difference, not a curated resistance mutation
+B-1_1-G9.fna	Protein change	ompK36	-	blast	L272S	50%	JAHUYY010000009.1	-	-	-	sequence difference, not a curated resistance mutation
+B-1_1-G9.fna	Protein change	ompK36	-	blast	L307I	50%	JAHUYY010000009.1	-	-	-	sequence difference, not a curated resistance mutation
+B-1_1-G9.fna	Protein change	ompK36	-	blast	N221H	50%	JAHUYY010000009.1	-	-	-	sequence difference, not a curated resistance mutation
+B-1_1-G9.fna	Protein change	ompK36	-	blast	N350R	50%	JAHUYY010000009.1	-	-	-	sequence difference, not a curated resistance mutation
+B-1_1-G9.fna	Protein change	ompK36	-	blast	S230del	50%	JAHUYY010000009.1	-	-	-	sequence difference, not a curated resistance mutation
+B-1_1-G9.fna	Protein change	ompK36	-	blast	S271N	50%	JAHUYY010000009.1	-	-	-	sequence difference, not a curated resistance mutation
+B-1_1-G9.fna	Protein change	ompK36	-	blast	S346D	50%	JAHUYY010000009.1	-	-	-	sequence difference, not a curated resistance mutation
+B-1_1-G9.fna	Protein change	ompK36	-	blast	T192G	50%	JAHUYY010000009.1	-	-	-	sequence difference, not a curated resistance mutation
+B-1_1-G9.fna	Protein change	ompK36	-	blast	Y201F	50%	JAHUYY010000009.1	-	-	-	sequence difference, not a curated resistance mutation
+B-1_1-G9.fna	Protein change	ompK36	-	blast	insF@268	50%	JAHUYY010000009.1	-	-	-	sequence difference, not a curated resistance mutation
+B-1_1-G9.fna	Protein change	ompK36	-	blast	insGESDSI@271	50%	JAHUYY010000009.1	-	-	-	sequence difference, not a curated resistance mutation
+B-1_1-G9.fna	Amplicon	blaKPC_ver	-	SeqKit/amplicon	Length: 882bp	-	JAHUYY010000035.1	13998	14880	-	Genes in region: blaKPC-3: H274Y

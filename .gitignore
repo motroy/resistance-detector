@@ -63,3 +63,4 @@ ncbi-blast-*/
 # Synthetic scenario genomes (regenerate with create_test_genomes.py)
 test_data/*.fasta
 !test_data/kpn_wildtype.fasta
+.validation_genomes

@@ -12,6 +12,7 @@ small. Total CPU use is roughly ``jobs x threads``, so keep the product at or
 below the number of cores.
 """
 
+import contextlib
 import csv
 import json
 import os
@@ -89,36 +90,68 @@ def _sample_name(assembly):
 
 
 def run_one(task):
-    """Analyse a single assembly. Runs in a worker process."""
-    # Imported here so each worker sets up its own module state.
+    """Analyse a single assembly. Runs in a worker process.
+
+    Unless the run is verbose, everything the pipeline prints is captured into
+    ``<prefix>_run.log`` instead of the terminal: fifty samples x twenty lines
+    of tool chatter buries the one line per sample that actually matters.
+    """
+    assembly = task['assembly']
+    prefix = task['prefix']
+    verbose = task.get('verbose', False)
+
+    log_handle = None
+    try:
+        if verbose:
+            redirect = contextlib.nullcontext()
+        else:
+            log_handle = open(f"{prefix}_run.log", 'w')
+            redirect = contextlib.redirect_stdout(log_handle)
+
+        with redirect:
+            return _analyse(task, assembly, prefix)
+    except Exception:                                    # noqa: BLE001
+        return {'sample': _sample_name(assembly), 'prefix': prefix,
+                'error': traceback.format_exc(), 'fos': '-', 'cazavi': '-'}
+    finally:
+        if log_handle is not None:
+            log_handle.close()
+
+
+def _analyse(task, assembly, prefix):
+    """The actual pipeline for one assembly, imported per worker process."""
+    import argparse
+
     from .acquired import run_acquired_detection
     from .cli import write_summary
     from .mutations import run_mutation_detection
+    from .phenotype import predict_phenotypes
     from .utils import setup_logger
 
-    import argparse
+    setup_logger(prefix, argparse.Namespace(**task),
+                 console=task.get('verbose', False))
 
-    assembly = task['assembly']
-    prefix = task['prefix']
-    try:
-        setup_logger(prefix, argparse.Namespace(**task))
+    blast_results = run_acquired_detection(
+        assembly, task['database'], prefix, task['min_id'], task['min_cov'],
+        task['mutations'], task['organism'], task['threads'])
 
-        blast_results = run_acquired_detection(
-            assembly, task['database'], prefix, task['min_id'], task['min_cov'],
-            task['mutations'], task['organism'], task['threads'])
+    gamma_results, amplicon_results, _, unified_results = run_mutation_detection(
+        assembly, prefix, task['genes'], task['primers'],
+        blast_results=blast_results, mutation_db_file=task['mutations'],
+        organism=task['organism'], threads=task['threads'])
 
-        gamma_results, amplicon_results, _, unified_results = run_mutation_detection(
-            assembly, prefix, task['genes'], task['primers'],
-            blast_results=blast_results, mutation_db_file=task['mutations'],
-            organism=task['organism'], threads=task['threads'])
+    write_summary(prefix, assembly, blast_results, gamma_results,
+                  amplicon_results, None, unified_results,
+                  organism=task['organism'])
 
-        write_summary(prefix, assembly, blast_results, gamma_results,
-                      amplicon_results, None, unified_results,
-                      organism=task['organism'])
-        return {'sample': _sample_name(assembly), 'prefix': prefix, 'error': None}
-    except Exception:                                    # noqa: BLE001
-        return {'sample': _sample_name(assembly), 'prefix': prefix,
-                'error': traceback.format_exc()}
+    phenotypes = predict_phenotypes(blast_results, unified_results, task['organism'])
+    return {
+        'sample': _sample_name(assembly),
+        'prefix': prefix,
+        'error': None,
+        'fos': phenotypes['fosfomycin']['phenotype'],
+        'cazavi': phenotypes['ceftazidime_avibactam']['phenotype'],
+    }
 
 
 def summarise(summary_json):
@@ -241,7 +274,7 @@ def write_combined(summaries, output_prefix):
 
 
 def run_batch(assemblies, output_dir, database, genes, primers, mutations,
-              min_id, min_cov, organism, jobs, threads):
+              min_id, min_cov, organism, jobs, threads, verbose=False):
     """Analyse every assembly, then write the combined tables."""
     output_dir = Path(output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
@@ -261,29 +294,41 @@ def run_batch(assemblies, output_dir, database, genes, primers, mutations,
             'min_cov': min_cov,
             'organism': organism,
             'threads': threads,
+            'verbose': verbose,
         })
 
     print(f"Analysing {len(tasks)} assemblies with {jobs} parallel job(s), "
           f"{threads} thread(s) each")
 
-    failures = []
+    total = len(tasks)
+    results = []
+
+    def report(result):
+        done = len(results)
+        if result['error']:
+            print(f"  [{done:>3}/{total}] {result['sample']:<28} FAILED", flush=True)
+        else:
+            print(f"  [{done:>3}/{total}] {result['sample']:<28} "
+                  f"FOS={result['fos']:<14} CAZ/AVI={result['cazavi']}", flush=True)
+
     if jobs <= 1:
-        results = [run_one(task) for task in tasks]
+        for task in tasks:
+            results.append(run_one(task))
+            report(results[-1])
     else:
-        results = []
         with ProcessPoolExecutor(max_workers=jobs) as pool:
-            futures = {pool.submit(run_one, task): task for task in tasks}
+            futures = [pool.submit(run_one, task) for task in tasks]
             for future in as_completed(futures):
                 results.append(future.result())
+                report(results[-1])
 
-    for result in results:
-        if result['error']:
-            failures.append(result)
-            print(f"ERROR: {result['sample']} failed:\n{result['error']}",
-                  file=sys.stderr)
+    failures = [r for r in results if r['error']]
+    for failure in failures:
+        print(f"ERROR: {failure['sample']} failed:\n{failure['error']}",
+              file=sys.stderr)
 
     succeeded = [r for r in results if not r['error']]
-    print(f"Completed {len(succeeded)}/{len(tasks)} assemblies")
+    print(f"Completed {len(succeeded)}/{total} assemblies")
 
     summaries = [Path(f"{r['prefix']}_summary.json") for r in succeeded]
     summaries = [path for path in summaries if path.exists()]
