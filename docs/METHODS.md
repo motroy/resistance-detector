@@ -123,6 +123,34 @@ avibactam, so their presence alone gives a Resistant call regardless of any KPC
 present. OXA-48-like enzymes *are* inhibited by avibactam and do not on their
 own produce a Resistant call.
 
+### Contributory chromosomal changes
+
+Some chromosomal changes raise ceftazidime-avibactam MICs by reducing drug entry
+or altering the target, rather than by defeating avibactam. They amplify a
+beta-lactamase instead of conferring resistance themselves, so they are scored
+as **uncertain evidence**: on their own they give `Indeterminate`, and alongside
+a KPC escape variant they appear as supporting context. They never produce a
+Resistant call by themselves.
+
+| Finding | Condition |
+|---|---|
+| Curated mutation in `envZ`, `ftsI` or `ompK36` whose AMRFinderPlus subclass mentions AVIBACTAM (e.g. `envZ_R397C`, `ftsI_L367Q`, `ftsI_A413V`, `ompK36_A21V`) | `--organism` declared |
+| Loss of function in the porin `ompK36` | A blaKPC is also present, and the gene is complete |
+
+Two deliberate exclusions:
+
+* **OmpK35 is not scored.** Its truncation is near-universal background in
+  clinical *K. pneumoniae*; scoring it would make `Indeterminate` the default
+  for most isolates without discriminating anything. It is still detected and
+  reported.
+* **OmpK36 loss is scored only alongside a KPC**, the context the literature
+  documents. Porin loss with no carbapenemase to amplify is not evidence of
+  ceftazidime-avibactam resistance.
+
+Avibactam combinations with a different partner drug (ceftibuten-avibactam,
+aztreonam-avibactam, and the *P. aeruginosa* `mexR` set) are reported in the
+mutation columns but are not scored into the ceftazidime-avibactam call.
+
 ## 6. Fosfomycin
 
 * An acquired fosfomycin-modifying enzyme (fosA3/4/5/7/10/11, fosB, fosC2,
@@ -166,9 +194,12 @@ inferred from amplicon presence.
   These are flagged, not guessed at.
 * **Gene absence.** A gene missing from an assembly may be genuinely deleted or
   merely unassembled. Absence is not scored as resistance.
-* **Expression.** Porin loss, efflux upregulation and gene copy number all
-  affect real MICs. Copy number is reported; expression is not measured, and
-  promoter/regulatory changes outside coding sequences are not examined.
+* **Expression.** Efflux upregulation and gene copy number affect real MICs.
+  Copy number is reported; expression is not measured, and promoter/regulatory
+  changes outside coding sequences are not examined. Porin and PBP3 changes are
+  scored only as contributory evidence (section 5), never as a Resistant call,
+  so an isolate whose resistance is driven purely by such a mechanism will read
+  `Indeterminate` rather than `Resistant`.
 * **Chromosomal point mutations for other species.** Only the three organisms
   above have curated positions. Other species get acquired-gene and KPC results
   only.

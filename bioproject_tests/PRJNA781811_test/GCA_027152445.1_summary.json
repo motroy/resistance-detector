@@ -970,7 +970,7 @@
     "ceftazidime_avibactam": {
       "phenotype": "Susceptible",
       "evidence": [
-        "blaKPC detected but carrying no Omega-loop, 237-243 or insertion-loop change associated with avibactam escape; avibactam is expected to inhibit it"
+        "blaKPC detected but carrying no Omega-loop, 237-243 or insertion-loop change associated with avibactam escape, and no contributory porin/PBP3/EnvZ change; avibactam is expected to inhibit it"
       ]
     },
     "disclaimer": "Genotype-based prediction only; not a substitute for phenotypic antimicrobial susceptibility testing (AST)."

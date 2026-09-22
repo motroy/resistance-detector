@@ -18,7 +18,8 @@ antimicrobial susceptibility testing.
 
 from . import betalactamase
 from .references import (
-    FOSA_FAMILIES, FOS_TRANSPORT_GENES, INTRINSIC_GENES, gene_family, is_mbl,
+    CAZAVI_CONTRIBUTORY_GENES, FOSA_FAMILIES, FOS_TRANSPORT_GENES,
+    INTRINSIC_GENES, PORIN_GENES, gene_family, is_mbl,
 )
 
 RESISTANT = 'Resistant'
@@ -79,10 +80,55 @@ def predict_fos_phenotype(blast_results, unified_results=None):
         'in the fosfomycin uptake/regulatory genes were detected')
 
 
+def _contributory_cazavi_evidence(blast_results, kpc_present):
+    """Chromosomal changes that raise ceftazidime-avibactam MICs without being
+    sufficient on their own.
+
+    OmpK36 loss, PBP3 (FtsI) changes and EnvZ changes act by reducing drug entry
+    or altering the target, which amplifies a beta-lactamase rather than
+    defeating avibactam. They are reported as uncertain evidence, so on their own
+    they give Indeterminate, and alongside a KPC escape variant they appear as
+    supporting context.
+    """
+    evidence = []
+
+    for result in blast_results or []:
+        gene = result['gene']
+        if gene not in CAZAVI_CONTRIBUTORY_GENES:
+            continue
+
+        for row in result.get('curated_mutations', []):
+            subclass = (row.get('Subclass') or '').upper()
+            if 'AVIBACTAM' not in subclass:
+                continue
+            evidence.append(
+                f"{row['Label']} in {gene}: curated by AMRFinderPlus for "
+                f"{subclass.replace('/', ', ')}. This contributes to raised "
+                f"ceftazidime-avibactam MICs but is not on its own established "
+                f"as conferring resistance")
+
+        # A knocked-out porin is stronger evidence than any single substitution
+        # in it, but only in the context where it is documented to matter: a KPC
+        # whose activity reduced drug entry amplifies.
+        if (gene in PORIN_GENES and kpc_present
+                and result.get('loss_of_function') and result.get('complete')):
+            evidence.append(
+                f"Loss of function in porin {gene} ({result['lof_description']}) "
+                f"alongside blaKPC: reduced drug entry raises ceftazidime-avibactam "
+                f"MICs, though it is not on its own established as conferring "
+                f"resistance")
+
+    return evidence
+
+
 def predict_cazavi_phenotype(blast_results, unified_results=None):
     """Predict ceftazidime-avibactam susceptibility."""
     resistant, uncertain = [], []
     kpc_seen = False
+    # OmpK36 loss is scored only alongside a KPC, the context the literature
+    # documents; it is computed up front because the porin hit can come first.
+    kpc_present = any(gene_family(result['gene']) == 'blaKPC'
+                      for result in blast_results or [])
 
     for result in blast_results or []:
         gene = result['gene']
@@ -113,13 +159,17 @@ def predict_cazavi_phenotype(blast_results, unified_results=None):
         elif assessment['call'] == 'Indeterminate':
             uncertain.extend(f"{prefix}: {item}" for item in assessment['evidence'])
 
+    uncertain.extend(_contributory_cazavi_evidence(blast_results, kpc_present))
+
     if kpc_seen and not resistant and not uncertain:
         nothing_found = ('blaKPC detected but carrying no Omega-loop, 237-243 or '
-                         'insertion-loop change associated with avibactam escape; '
-                         'avibactam is expected to inhibit it')
+                         'insertion-loop change associated with avibactam escape, '
+                         'and no contributory porin/PBP3/EnvZ change; avibactam is '
+                         'expected to inhibit it')
     else:
         nothing_found = ('No ceftazidime-avibactam resistance mechanism detected '
-                         '(no metallo-beta-lactamase, no blaKPC escape variant)')
+                         '(no metallo-beta-lactamase, no blaKPC escape variant, no '
+                         'contributory porin/PBP3/EnvZ change)')
 
     return _resolve(resistant, uncertain, nothing_found)
 

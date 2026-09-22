@@ -12,7 +12,7 @@ PREDICTED PHENOTYPES (genotype-based):
   Fosfomycin (FOS): Susceptible
     - No acquired fosfomycin-modifying enzyme and no loss-of-function change in the fosfomycin uptake/regulatory genes were detected
   Ceftazidime-Avibactam (CAZ/AVI): Susceptible
-    - blaKPC detected but carrying no Omega-loop, 237-243 or insertion-loop change associated with avibactam escape; avibactam is expected to inhibit it
+    - blaKPC detected but carrying no Omega-loop, 237-243 or insertion-loop change associated with avibactam escape, and no contributory porin/PBP3/EnvZ change; avibactam is expected to inhibit it
   Note: Genotype-based prediction only; not a substitute for phenotypic antimicrobial susceptibility testing (AST).
 
 Total genes detected: 9

@@ -205,7 +205,8 @@ class BlastDetector:
             if curated_reference and not is_acquired_gene(gene):
                 curated_call = call_variants(curated_reference[1], sequence)
 
-            reported, unreported = self._classify_changes(gene, family, call, curated_call)
+            reported, unreported, curated_rows = self._classify_changes(
+                gene, family, call, curated_call)
 
             result = {
                 'contig': hit['query_id'],
@@ -219,6 +220,7 @@ class BlastDetector:
                 'acquired': is_acquired_gene(gene),
                 'changes': change_labels,
                 'reported_mutations': reported,
+                'curated_mutations': curated_rows,
                 'other_changes': unreported,
                 'loss_of_function': call['loss_of_function'],
                 'lof_description': loss_of_function_label(call, numbering),
@@ -250,6 +252,11 @@ class BlastDetector:
         gene a difference from the reference is usually just natural sequence
         variation, so only positions curated for the sample's organism are
         reported - and only when the organism was actually declared.
+
+        Returns ``(reported_labels, other_labels, curated_rows)``.  The curated
+        rows carry the drug class each mutation was curated for, which is what
+        lets the phenotype logic tell a ceftazidime-avibactam mutation from,
+        say, a tigecycline one.
         """
         labels = [change['label'] for change in call['changes']]
 
@@ -260,21 +267,22 @@ class BlastDetector:
             assessment = betalactamase.assess_kpc_changes(labels)
             flagged = [label for label in labels
                        if any(label in item for item in assessment['evidence'])]
-            return flagged, [label for label in labels if label not in flagged]
+            return flagged, [label for label in labels if label not in flagged], []
 
         if is_acquired_gene(gene):
-            return labels, []
+            return labels, [], []
 
         curated = self.point_mutations.get((gene, self.organism), {}) if self.organism else {}
         source = curated_call or call
-        reported, other = [], []
+        reported, other, rows = [], [], []
         for change in source['changes']:
             entry = curated.get(mutation_lookup_key(change))
             if entry:
                 reported.append(entry['Label'])
+                rows.append(entry)
             else:
                 other.append(change['label'])
-        return reported, other
+        return reported, other, rows
 
     # ----------------------------------------------------------------- reports
 

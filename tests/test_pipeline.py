@@ -20,9 +20,14 @@ pytestmark = requires_blast
 def substitute(cds_sequence, position, new_residue, codon_table=None):
     """Replace the codon at 1-based residue ``position``."""
     codons = {'Y': 'TAT', 'P': 'CCT', 'G': 'GGT', 'M': 'ATG', '*': 'TAA',
-              'N': 'AAT', 'K': 'AAA', 'A': 'GCT'}
+              'N': 'AAT', 'K': 'AAA', 'A': 'GCT', 'C': 'TGT', 'Q': 'CAA',
+              'V': 'GTT'}
     index = (position - 1) * 3
     return cds_sequence[:index] + codons[new_residue] + cds_sequence[index + 3:]
+
+
+def ambler_substitute_kpc(cds_sequence, ambler_position, new_residue):
+    return substitute(cds_sequence, ambler_to_sequential(ambler_position), new_residue)
 
 
 def delete_residues(cds_sequence, position, count):
@@ -207,3 +212,79 @@ class TestChromosomalMutationsNeedAnOrganism:
         assert gene['loss_of_function']
         # ...but position-specific curated calls are not made blind.
         assert gene['reported_mutations'] == []
+
+
+class TestContributoryCazaviEvidence:
+    """Porin, PBP3 and EnvZ changes raise MICs but are not sufficient alone, so
+    they must produce Indeterminate rather than Resistant or Susceptible."""
+
+    def test_envz_r397c_gives_indeterminate(self, tmp_path, database, reference_cds):
+        # envZ_R397C is curated by AMRFinderPlus for CEFTAZIDIME-AVIBACTAM.
+        sequence = substitute(reference_cds['envZ'], 397, 'C')
+        _, results = run(tmp_path, database, {'contig1': embed(sequence)},
+                         organism='Klebsiella_pneumoniae')
+        envz = find(results, 'envZ')
+        assert 'envZ_R397C' in envz['reported_mutations']
+        prediction = predict_phenotypes(results)['ceftazidime_avibactam']
+        assert prediction['phenotype'] == 'Indeterminate'
+        assert any('envZ_R397C' in item for item in prediction['evidence'])
+
+    def test_ftsi_l367q_gives_indeterminate(self, tmp_path, database, reference_cds):
+        sequence = substitute(reference_cds['ftsI'], 367, 'Q')
+        _, results = run(tmp_path, database, {'contig1': embed(sequence)},
+                         organism='Klebsiella_pneumoniae')
+        assert 'ftsI_L367Q' in find(results, 'ftsI')['reported_mutations']
+        assert (predict_phenotypes(results)['ceftazidime_avibactam']['phenotype']
+                == 'Indeterminate')
+
+    def test_ompk36_a21v_gives_indeterminate(self, tmp_path, database, reference_cds):
+        sequence = substitute(reference_cds['ompK36'], 21, 'V')
+        _, results = run(tmp_path, database, {'contig1': embed(sequence)},
+                         organism='Klebsiella_pneumoniae')
+        assert 'ompK36_A21V' in find(results, 'ompK36')['reported_mutations']
+        assert (predict_phenotypes(results)['ceftazidime_avibactam']['phenotype']
+                == 'Indeterminate')
+
+    def test_contributory_change_does_not_override_a_resistant_call(
+            self, tmp_path, database, reference_cds):
+        # With a KPC escape variant present the call stays Resistant, and the
+        # porin change appears as supporting context.
+        _, results = run(tmp_path, database, {
+            'contig1': embed(substitute(reference_cds['envZ'], 397, 'C')),
+            'contig2': embed(ambler_substitute_kpc(reference_cds['blaKPC-2'], 179, 'Y')),
+        }, organism='Klebsiella_pneumoniae')
+        prediction = predict_phenotypes(results)['ceftazidime_avibactam']
+        assert prediction['phenotype'] == 'Resistant'
+        assert any('D179Y' in item for item in prediction['evidence'])
+        assert any('envZ_R397C' in item for item in prediction['evidence'])
+
+    def test_porin_knockout_with_betalactamase_gives_indeterminate(
+            self, tmp_path, database, reference_cds):
+        broken_porin = substitute(reference_cds['ompK36'], 60, '*')
+        _, results = run(tmp_path, database, {
+            'contig1': embed(broken_porin),
+            'contig2': embed(reference_cds['blaKPC-2']),
+        }, organism='Klebsiella_pneumoniae')
+        assert find(results, 'ompK36')['loss_of_function']
+        prediction = predict_phenotypes(results)['ceftazidime_avibactam']
+        assert prediction['phenotype'] == 'Indeterminate'
+        assert any('porin' in item for item in prediction['evidence'])
+
+    def test_porin_knockout_without_betalactamase_is_not_scored(
+            self, tmp_path, database, reference_cds):
+        # Porin loss amplifies a beta-lactamase; on its own it is not evidence
+        # of ceftazidime-avibactam resistance.
+        broken_porin = substitute(reference_cds['ompK36'], 60, '*')
+        _, results = run(tmp_path, database, {'contig1': embed(broken_porin)},
+                         organism='Klebsiella_pneumoniae')
+        assert find(results, 'ompK36')['loss_of_function']
+        assert (predict_phenotypes(results)['ceftazidime_avibactam']['phenotype']
+                == 'Susceptible')
+
+    def test_contributory_genes_are_silent_without_organism(
+            self, tmp_path, database, reference_cds):
+        sequence = substitute(reference_cds['envZ'], 397, 'C')
+        _, results = run(tmp_path, database, {'contig1': embed(sequence)})
+        assert find(results, 'envZ')['reported_mutations'] == []
+        assert (predict_phenotypes(results)['ceftazidime_avibactam']['phenotype']
+                == 'Susceptible')

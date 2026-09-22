@@ -48,8 +48,10 @@ as resistance.
 **Ceftazidime-avibactam** is Resistant for a metallo-beta-lactamase (avibactam
 does not inhibit those), or for a blaKPC carrying a documented escape variant or
 an in-frame indel in the Omega loop. A blaKPC change in a hotspot that is not
-documented gives Indeterminate. OXA-48-like enzymes are inhibited by avibactam
-and do not on their own produce a Resistant call.
+documented gives Indeterminate, as do the contributory chromosomal changes —
+curated avibactam-annotated mutations in `envZ`, `ftsI` or `ompK36`, and
+`ompK36` loss of function alongside a blaKPC. OXA-48-like enzymes are inhibited
+by avibactam and do not on their own produce a Resistant call.
 
 Numbering for class A beta-lactamases is standardised Ambler numbering. See
 [METHODS.md](METHODS.md) for the full rules, the evidence behind them, and the
