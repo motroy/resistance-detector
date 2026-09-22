@@ -1,0 +1,5 @@
+Gene	Contig	Start	Stop	Match_Type	Description	Codon_Changes	BP_Changes	Transversions	Codon_Percent	BP_Percent	Percent_Length	Match_Length	Target_Length	Strand
+blaPDC-1	CP029148.1	28027	29221	Mutant	P7S,T105A,V205L,G391A,	4	9	2	0.9899	0.9925	1	1194	1194	-
+nalD	CP029148.1	606412	607051	Native	No coding mutations	0	1	1	1	0.9984	1	639	639	-
+fosA_PA1129	CP029148.1	3693140	3693548	Native	No coding mutations	0	1	0	1	0.9975	1	408	408	-
+mexR	CP029148.1	6702520	6702964	Mutant	V126E,	1	5	1	0.9932	0.9887	1	444	444	-

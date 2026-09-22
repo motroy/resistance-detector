@@ -1,0 +1,16 @@
+Gene	Contig	Start	Stop	Match_Type	Description	Codon_Changes	BP_Changes	Transversions	Codon_Percent	BP_Percent	Percent_Length	Match_Length	Target_Length	Strand
+ompF	NZ_JAWWVJ010000002.1	250689	251778	Native	No coding mutations	0	0	0	1	1	1	1089	1089	-
+ompC	NZ_JAWWVJ010000003.1	150132	151227	Indel	81 bp Insertion at 525,90 bp Deletion at 547,183 coding mutations	213	275	34	0.4212	0.7509	0.9918	1095	1104	+
+glpT	NZ_JAWWVJ010000003.1	110621	111980	Native	No coding mutations	0	0	0	1	1	1	1359	1359	+
+ptsI	NZ_JAWWVJ010000006.1	18404	20132	Mutant	K49N,	1	1	1	0.9983	0.9994	1	1728	1728	+
+galU	NZ_JAWWVJ010000009.1	94771	95680	Native	No coding mutations	0	0	0	1	1	1	909	909	+
+lon	NZ_JAWWVJ010000013.1	72558	74913	Native	No coding mutations	0	9	1	1	0.9962	1	2355	2355	+
+cyaA	NZ_JAWWVJ010000016.1	41654	44201	Mutant	F566L,	1	2	0	0.9988	0.9992	1	2547	2547	-
+murA	NZ_JAWWVJ010000017.1	50570	51830	Mutant	P99S,	1	16	4	0.9976	0.9873	1	1260	1260	-
+uhpT	NZ_JAWWVJ010000041.1	28176	29568	Native	No coding mutations	0	0	0	1	1	1	1392	1392	-
+uhpC	NZ_JAWWVJ010000041.1	29705	31025	Native	No coding mutations	0	0	0	1	1	1	1320	1320	-
+uhpB	NZ_JAWWVJ010000041.1	31034	32537	Native	No coding mutations	0	0	0	1	1	1	1503	1503	-
+uhpA	NZ_JAWWVJ010000041.1	32536	33127	Native	No coding mutations	0	0	0	1	1	1	591	591	-
+blaNDM-5	NZ_JAWWVJ010000079.1	273	1086	Native	No coding mutations	0	0	0	1	1	1	813	813	+
+fosA3	NZ_JAWWVJ010000083.1	431	848	Native	No coding mutations	0	0	0	1	1	1	417	417	+
+blaCTX-M-15	NZ_JAWWVJ010000088.1	479	1355	Mutant	A80V,G239S,	2	2	0	0.9932	0.9977	1	876	876	+

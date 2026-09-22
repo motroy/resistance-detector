@@ -108,6 +108,10 @@ def alleles_in_families(amr_cds, families):
 CHROMOSOMAL_GENES = [
     'murA', 'uhpT', 'glpT', 'uhpA', 'uhpB', 'uhpC', 'cyaA', 'ptsI', 'galU',
     'lon', 'acrB', 'ompK36', 'ompK35', 'ftsI', 'envZ', 'mexR', 'nalD', 'fosAKP',
+    # E. coli porins: loss of either, alongside an AmpC or ESBL, is a documented
+    # route to carbapenem and ceftazidime-avibactam resistance without any
+    # carbapenemase being present.
+    'ompC', 'ompF',
 ]
 
 # Point-mutation reference proteins, taken from AMRFinderPlus.  The positions in

@@ -20,8 +20,9 @@ from . import betalactamase
 from .references import (
     AVIBACTAM_COMBINATION_SCOPE, CAZAVI_CONTRIBUTORY_GENES, CAZAVI_SCOPE,
     FOSA_FAMILIES, FOS_SCOPE, FOS_TRANSPORT_GENES, INTRINSIC_FOSA_ORGANISMS,
-    INTRINSIC_FOS_RESISTANT_ORGANISMS, INTRINSIC_GENES, PORIN_GENES,
-    UNASSESSED_CAZAVI_MECHANISM, gene_family, is_mbl, mutation_scope,
+    INTRINSIC_FOS_RESISTANT_ORGANISMS, INTRINSIC_GENES,
+    PERMEABILITY_AMPLIFIED_FAMILIES, PORIN_GENES, UNASSESSED_CAZAVI_MECHANISM,
+    gene_family, is_mbl, mutation_scope,
 )
 
 RESISTANT = 'Resistant'
@@ -117,7 +118,7 @@ def predict_fos_phenotype(blast_results, unified_results=None, organism=None):
         'in the fosfomycin uptake/regulatory genes were detected')
 
 
-def _contributory_cazavi_evidence(blast_results, kpc_present):
+def _contributory_cazavi_evidence(blast_results, amplifiable_enzymes):
     """Chromosomal changes that raise ceftazidime-avibactam MICs without being
     sufficient on their own.
 
@@ -146,15 +147,16 @@ def _contributory_cazavi_evidence(blast_results, kpc_present):
                 f"as conferring resistance")
 
         # A knocked-out porin is stronger evidence than any single substitution
-        # in it, but only in the context where it is documented to matter: a KPC
-        # whose activity reduced drug entry amplifies.
-        if (gene in PORIN_GENES and kpc_present
+        # in it, but only where it is documented to matter: alongside a
+        # beta-lactamase whose activity reduced drug entry amplifies.
+        if (gene in PORIN_GENES and amplifiable_enzymes
                 and result.get('loss_of_function') and result.get('complete')):
             evidence.append(
                 f"Loss of function in porin {gene} ({result['lof_description']}) "
-                f"alongside blaKPC: reduced drug entry raises ceftazidime-avibactam "
-                f"MICs, though it is not on its own established as conferring "
-                f"resistance")
+                f"alongside {', '.join(sorted(amplifiable_enzymes))}: reduced drug "
+                f"entry combined with beta-lactamase activity is a documented route "
+                f"to raised ceftazidime-avibactam MICs, though it is not on its own "
+                f"established as conferring resistance")
 
     return evidence
 
@@ -165,8 +167,10 @@ def predict_cazavi_phenotype(blast_results, unified_results=None, organism=None)
     kpc_seen = False
     # OmpK36 loss is scored only alongside a KPC, the context the literature
     # documents; it is computed up front because the porin hit can come first.
-    kpc_present = any(gene_family(result['gene']) == 'blaKPC'
-                      for result in blast_results or [])
+    amplifiable_enzymes = {
+        result['gene'] for result in blast_results or []
+        if gene_family(result['gene']) in PERMEABILITY_AMPLIFIED_FAMILIES
+    }
 
     for result in blast_results or []:
         gene = result['gene']
@@ -197,7 +201,7 @@ def predict_cazavi_phenotype(blast_results, unified_results=None, organism=None)
         elif assessment['call'] == 'Indeterminate':
             uncertain.extend(f"{prefix}: {item}" for item in assessment['evidence'])
 
-    uncertain.extend(_contributory_cazavi_evidence(blast_results, kpc_present))
+    uncertain.extend(_contributory_cazavi_evidence(blast_results, amplifiable_enzymes))
 
     unassessed = UNASSESSED_CAZAVI_MECHANISM.get(organism)
     if unassessed and not resistant:

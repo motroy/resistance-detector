@@ -67,10 +67,12 @@ PREDICTED PHENOTYPES (genotype-based):
 
 ## Validation
 
-On six *K. pneumoniae* ST307 assemblies from a published study of
-ceftazidime-avibactam resistance emerging on therapy, the tool reproduced all
-six reported phenotypes and assigned the exact blaKPC allele (KPC-46, KPC-66,
-KPC-92) in each resistant isolate. Four further BioProjects are included. See
+Against **measured MICs** in ten carbapenem-resistant *E. coli*: fosfomycin
+10/10 correct, ceftazidime-avibactam 9/10 resistant with the tenth reported
+`Indeterminate` rather than wrong. On six *K. pneumoniae* ST307 assemblies from
+a study of CAZ/AVI resistance emerging on therapy, it reproduced all six
+reported phenotypes and assigned the exact blaKPC allele (KPC-46, KPC-66,
+KPC-92) in each resistant isolate. Five further sets are included. See
 [docs/VALIDATION.md](docs/VALIDATION.md), and
 [docs/METHODS.md](docs/METHODS.md#9-known-limits) for what the method cannot do.
 

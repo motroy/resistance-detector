@@ -170,7 +170,7 @@ Resistant call by themselves.
 | Finding | Condition |
 |---|---|
 | Curated mutation in `envZ`, `ftsI` or `ompK36` whose AMRFinderPlus subclass mentions AVIBACTAM (e.g. `envZ_R397C`, `ftsI_L367Q`, `ftsI_A413V`, `ompK36_A21V`) | `--organism` declared |
-| Loss of function in the porin `ompK36` | A blaKPC is also present, and the gene is complete |
+| Loss of function in a porin (`ompK36` in *K. pneumoniae*, `ompC`/`ompF` in *E. coli*) | A beta-lactamase whose activity reduced permeability amplifies is also present (KPC, CMY, CTX-M, SHV, PDC), and the gene is complete |
 
 Two deliberate exclusions:
 
@@ -178,9 +178,10 @@ Two deliberate exclusions:
   clinical *K. pneumoniae*; scoring it would make `Indeterminate` the default
   for most isolates without discriminating anything. It is still detected and
   reported.
-* **OmpK36 loss is scored only alongside a KPC**, the context the literature
-  documents. Porin loss with no carbapenemase to amplify is not evidence of
-  ceftazidime-avibactam resistance.
+* **Porin loss is scored only alongside a beta-lactamase** it could amplify.
+  Porin loss by itself is not evidence of ceftazidime-avibactam resistance.
+  This combination is what explains a CAZ/AVI-resistant isolate with no
+  carbapenemase at all — see the E2257 case in the CREC validation set.
 
 Avibactam combinations with a different partner drug (ceftibuten-avibactam,
 aztreonam-avibactam, and the *P. aeruginosa* `mexR` set) are reported in the

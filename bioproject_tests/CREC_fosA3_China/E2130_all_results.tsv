@@ -1,0 +1,98 @@
+Sample	Type	Gene	Allele	Method	Result_Details	Identity_Confidence	Contig	Start	End	Copy_Number	Notes
+E2130.fna	Chromosomal gene	cyaA	cyaA	BLAST	Coverage: 100.00%	96.94%	NZ_JAWWVF010000026.1	21430	23976	1	protein changes: N142S;A349E;S352T;S356K;G359E;E362D
+E2130.fna	Chromosomal gene	lon	lon	BLAST	Coverage: 100.00%	98.98%	NZ_JAWWVF010000025.1	40098	42452	1	no protein changes vs reference
+E2130.fna	Chromosomal gene	ptsI	ptsI	BLAST	Coverage: 100.00%	99.48%	NZ_JAWWVF010000004.1	221032	222759	1	protein changes: R367K
+E2130.fna	Chromosomal gene	uhpB	uhpB	BLAST	Coverage: 100.00%	96.28%	NZ_JAWWVF010000002.1	86944	88446	1	protein changes: P84S;T166I;S460C;H482T
+E2130.fna	Chromosomal gene	uhpT	uhpT	BLAST	Coverage: 100.00%	98.49%	NZ_JAWWVF010000002.1	90031	91422	1	no protein changes vs reference
+E2130.fna	Chromosomal gene	glpT	glpT	BLAST	Coverage: 100.00%	96.98%	NZ_JAWWVF010000004.1	39868	41226	1	protein changes: L297F;E443Q;Q444E;E448K
+E2130.fna	Chromosomal gene	murA	murA	BLAST	Coverage: 100.00%	98.89%	NZ_JAWWVF010000007.1	79959	81218	1	no protein changes vs reference
+E2130.fna	Chromosomal gene	uhpC	uhpC	BLAST	Coverage: 100.00%	97.35%	NZ_JAWWVF010000002.1	88456	89775	1	protein changes: Y18H;S417A
+E2130.fna	Chromosomal gene	galU	galU	BLAST	Coverage: 100.00%	99.01%	NZ_JAWWVF010000028.1	37461	38369	1	no protein changes vs reference
+E2130.fna	Acquired gene	blaCTX-M-15	blaCTX-M-like	BLAST	Coverage: 100.00%	99.89%	NZ_JAWWVF010000109.1	2753	3628	1	protein changes: A81V
+E2130.fna	Acquired gene	blaNDM-5	blaNDM-5	BLAST	Coverage: 100.00%	100.00%	NZ_JAWWVF010000124.1	274	1086	1	no protein changes vs reference
+E2130.fna	Chromosomal gene	ompC	ompC	BLAST	Coverage: 100.00%	90.35%	NZ_JAWWVF010000012.1	122707	123801	1	protein changes: V24I;K48D;D49S;V50K;Q54K;S85E;A86P;N88S;E89D;N91S;G137D;N165D;N176S;P177A;S178H;G181_S184del;V186M;N188T;insD@191;A193V;L194F;R195E;D208N;G216A;I218V;D225W;A226D;T229N;A230T;A231G;Y232L;N235T;Q346R;N357D
+E2130.fna	Chromosomal gene	ompF	ompF	BLAST	Coverage: 100.00%	90.57%	NZ_JAWWVF010000011.1	63720	64792	1	protein changes: G48D;E51V;M60K;T99K;Y112F;V115A;F118I;insA@185;D186G;T187I;A188P;R189E;Y204F;N220D;L221A;Q225E;P226F;L227R;N229Q;A233_A250del;A251L;Y253S;E255Q;T256_D312del;N315_F362del; premature stop at residue 241 (240/362 aa)
+E2130.fna	Chromosomal gene	uhpA	uhpA	BLAST	Coverage: 100.00%	97.80%	NZ_JAWWVF010000002.1	86354	86944	1	no protein changes vs reference
+E2130.fna	Acquired gene	fosA3	fosA3	BLAST	Coverage: 100.00%	100.00%	NZ_JAWWVF010000134.1	1866	2282	1	no protein changes vs reference
+E2130.fna	Protein change	blaCTX-M-15	-	blast+gamma	A81V	100%	NZ_JAWWVF010000109.1	-	-	-	reported as resistance mutation
+E2130.fna	Protein change	cyaA	-	blast+gamma	A349E	100%	NZ_JAWWVF010000026.1	-	-	-	sequence difference, not a curated resistance mutation
+E2130.fna	Protein change	cyaA	-	blast+gamma	E362D	100%	NZ_JAWWVF010000026.1	-	-	-	sequence difference, not a curated resistance mutation
+E2130.fna	Protein change	cyaA	-	blast+gamma	G359E	100%	NZ_JAWWVF010000026.1	-	-	-	sequence difference, not a curated resistance mutation
+E2130.fna	Protein change	cyaA	-	blast+gamma	N142S	100%	NZ_JAWWVF010000026.1	-	-	-	sequence difference, not a curated resistance mutation
+E2130.fna	Protein change	cyaA	-	blast+gamma	S352T	100%	NZ_JAWWVF010000026.1	-	-	-	sequence difference, not a curated resistance mutation
+E2130.fna	Protein change	cyaA	-	blast+gamma	S356K	100%	NZ_JAWWVF010000026.1	-	-	-	sequence difference, not a curated resistance mutation
+E2130.fna	Protein change	glpT	-	blast+gamma	E443Q	100%	NZ_JAWWVF010000004.1	-	-	-	sequence difference, not a curated resistance mutation
+E2130.fna	Protein change	glpT	-	blast+gamma	E448K	100%	NZ_JAWWVF010000004.1	-	-	-	sequence difference, not a curated resistance mutation
+E2130.fna	Protein change	glpT	-	blast+gamma	L297F	100%	NZ_JAWWVF010000004.1	-	-	-	sequence difference, not a curated resistance mutation
+E2130.fna	Protein change	glpT	-	blast+gamma	Q444E	100%	NZ_JAWWVF010000004.1	-	-	-	sequence difference, not a curated resistance mutation
+E2130.fna	Protein change	ompC	-	blast	A193V	50%	NZ_JAWWVF010000012.1	-	-	-	sequence difference, not a curated resistance mutation
+E2130.fna	Protein change	ompC	-	blast	A226D	50%	NZ_JAWWVF010000012.1	-	-	-	sequence difference, not a curated resistance mutation
+E2130.fna	Protein change	ompC	-	blast	A230T	50%	NZ_JAWWVF010000012.1	-	-	-	sequence difference, not a curated resistance mutation
+E2130.fna	Protein change	ompC	-	blast	A231G	50%	NZ_JAWWVF010000012.1	-	-	-	sequence difference, not a curated resistance mutation
+E2130.fna	Protein change	ompC	-	blast	A86P	50%	NZ_JAWWVF010000012.1	-	-	-	sequence difference, not a curated resistance mutation
+E2130.fna	Protein change	ompC	-	blast	D208N	50%	NZ_JAWWVF010000012.1	-	-	-	sequence difference, not a curated resistance mutation
+E2130.fna	Protein change	ompC	-	blast	D225W	50%	NZ_JAWWVF010000012.1	-	-	-	sequence difference, not a curated resistance mutation
+E2130.fna	Protein change	ompC	-	blast	D49S	50%	NZ_JAWWVF010000012.1	-	-	-	sequence difference, not a curated resistance mutation
+E2130.fna	Protein change	ompC	-	blast	E89D	50%	NZ_JAWWVF010000012.1	-	-	-	sequence difference, not a curated resistance mutation
+E2130.fna	Protein change	ompC	-	blast	G137D	50%	NZ_JAWWVF010000012.1	-	-	-	sequence difference, not a curated resistance mutation
+E2130.fna	Protein change	ompC	-	blast	G181_S184del	50%	NZ_JAWWVF010000012.1	-	-	-	sequence difference, not a curated resistance mutation
+E2130.fna	Protein change	ompC	-	blast	G216A	50%	NZ_JAWWVF010000012.1	-	-	-	sequence difference, not a curated resistance mutation
+E2130.fna	Protein change	ompC	-	blast	I218V	50%	NZ_JAWWVF010000012.1	-	-	-	sequence difference, not a curated resistance mutation
+E2130.fna	Protein change	ompC	-	blast	K48D	50%	NZ_JAWWVF010000012.1	-	-	-	sequence difference, not a curated resistance mutation
+E2130.fna	Protein change	ompC	-	blast	L194F	50%	NZ_JAWWVF010000012.1	-	-	-	sequence difference, not a curated resistance mutation
+E2130.fna	Protein change	ompC	-	blast	N165D	50%	NZ_JAWWVF010000012.1	-	-	-	sequence difference, not a curated resistance mutation
+E2130.fna	Protein change	ompC	-	blast	N176S	50%	NZ_JAWWVF010000012.1	-	-	-	sequence difference, not a curated resistance mutation
+E2130.fna	Protein change	ompC	-	blast	N188T	50%	NZ_JAWWVF010000012.1	-	-	-	sequence difference, not a curated resistance mutation
+E2130.fna	Protein change	ompC	-	blast	N235T	50%	NZ_JAWWVF010000012.1	-	-	-	sequence difference, not a curated resistance mutation
+E2130.fna	Protein change	ompC	-	blast	N357D	50%	NZ_JAWWVF010000012.1	-	-	-	sequence difference, not a curated resistance mutation
+E2130.fna	Protein change	ompC	-	blast	N88S	50%	NZ_JAWWVF010000012.1	-	-	-	sequence difference, not a curated resistance mutation
+E2130.fna	Protein change	ompC	-	blast	N91S	50%	NZ_JAWWVF010000012.1	-	-	-	sequence difference, not a curated resistance mutation
+E2130.fna	Protein change	ompC	-	blast	P177A	50%	NZ_JAWWVF010000012.1	-	-	-	sequence difference, not a curated resistance mutation
+E2130.fna	Protein change	ompC	-	blast	Q346R	50%	NZ_JAWWVF010000012.1	-	-	-	sequence difference, not a curated resistance mutation
+E2130.fna	Protein change	ompC	-	blast	Q54K	50%	NZ_JAWWVF010000012.1	-	-	-	sequence difference, not a curated resistance mutation
+E2130.fna	Protein change	ompC	-	blast	R195E	50%	NZ_JAWWVF010000012.1	-	-	-	sequence difference, not a curated resistance mutation
+E2130.fna	Protein change	ompC	-	blast	S178H	50%	NZ_JAWWVF010000012.1	-	-	-	sequence difference, not a curated resistance mutation
+E2130.fna	Protein change	ompC	-	blast	S85E	50%	NZ_JAWWVF010000012.1	-	-	-	sequence difference, not a curated resistance mutation
+E2130.fna	Protein change	ompC	-	blast	T229N	50%	NZ_JAWWVF010000012.1	-	-	-	sequence difference, not a curated resistance mutation
+E2130.fna	Protein change	ompC	-	blast	V186M	50%	NZ_JAWWVF010000012.1	-	-	-	sequence difference, not a curated resistance mutation
+E2130.fna	Protein change	ompC	-	blast	V24I	50%	NZ_JAWWVF010000012.1	-	-	-	sequence difference, not a curated resistance mutation
+E2130.fna	Protein change	ompC	-	blast	V50K	50%	NZ_JAWWVF010000012.1	-	-	-	sequence difference, not a curated resistance mutation
+E2130.fna	Protein change	ompC	-	blast	Y232L	50%	NZ_JAWWVF010000012.1	-	-	-	sequence difference, not a curated resistance mutation
+E2130.fna	Protein change	ompC	-	blast	insD@191	50%	NZ_JAWWVF010000012.1	-	-	-	sequence difference, not a curated resistance mutation
+E2130.fna	Protein change	ompF	-	blast	A188P	50%	NZ_JAWWVF010000011.1	-	-	-	sequence difference, not a curated resistance mutation
+E2130.fna	Protein change	ompF	-	blast	A233_A250del	50%	NZ_JAWWVF010000011.1	-	-	-	sequence difference, not a curated resistance mutation
+E2130.fna	Protein change	ompF	-	blast	A251L	50%	NZ_JAWWVF010000011.1	-	-	-	sequence difference, not a curated resistance mutation
+E2130.fna	Protein change	ompF	-	blast	D186G	50%	NZ_JAWWVF010000011.1	-	-	-	sequence difference, not a curated resistance mutation
+E2130.fna	Protein change	ompF	-	blast	E255Q	50%	NZ_JAWWVF010000011.1	-	-	-	sequence difference, not a curated resistance mutation
+E2130.fna	Protein change	ompF	-	blast	E51V	50%	NZ_JAWWVF010000011.1	-	-	-	sequence difference, not a curated resistance mutation
+E2130.fna	Protein change	ompF	-	blast	F118I	50%	NZ_JAWWVF010000011.1	-	-	-	sequence difference, not a curated resistance mutation
+E2130.fna	Protein change	ompF	-	blast	G48D	50%	NZ_JAWWVF010000011.1	-	-	-	sequence difference, not a curated resistance mutation
+E2130.fna	Protein change	ompF	-	blast	L221A	50%	NZ_JAWWVF010000011.1	-	-	-	sequence difference, not a curated resistance mutation
+E2130.fna	Protein change	ompF	-	blast	L227R	50%	NZ_JAWWVF010000011.1	-	-	-	sequence difference, not a curated resistance mutation
+E2130.fna	Protein change	ompF	-	blast	M60K	50%	NZ_JAWWVF010000011.1	-	-	-	sequence difference, not a curated resistance mutation
+E2130.fna	Protein change	ompF	-	blast	N220D	50%	NZ_JAWWVF010000011.1	-	-	-	sequence difference, not a curated resistance mutation
+E2130.fna	Protein change	ompF	-	blast	N229Q	50%	NZ_JAWWVF010000011.1	-	-	-	sequence difference, not a curated resistance mutation
+E2130.fna	Protein change	ompF	-	blast	N315_F362del	50%	NZ_JAWWVF010000011.1	-	-	-	sequence difference, not a curated resistance mutation
+E2130.fna	Protein change	ompF	-	blast	P226F	50%	NZ_JAWWVF010000011.1	-	-	-	sequence difference, not a curated resistance mutation
+E2130.fna	Protein change	ompF	-	blast	Q225E	50%	NZ_JAWWVF010000011.1	-	-	-	sequence difference, not a curated resistance mutation
+E2130.fna	Protein change	ompF	-	blast	R189E	50%	NZ_JAWWVF010000011.1	-	-	-	sequence difference, not a curated resistance mutation
+E2130.fna	Protein change	ompF	-	blast	T187I	50%	NZ_JAWWVF010000011.1	-	-	-	sequence difference, not a curated resistance mutation
+E2130.fna	Protein change	ompF	-	blast	T256_D312del	50%	NZ_JAWWVF010000011.1	-	-	-	sequence difference, not a curated resistance mutation
+E2130.fna	Protein change	ompF	-	blast	T99K	50%	NZ_JAWWVF010000011.1	-	-	-	sequence difference, not a curated resistance mutation
+E2130.fna	Protein change	ompF	-	blast	V115A	50%	NZ_JAWWVF010000011.1	-	-	-	sequence difference, not a curated resistance mutation
+E2130.fna	Protein change	ompF	-	blast	Y112F	50%	NZ_JAWWVF010000011.1	-	-	-	sequence difference, not a curated resistance mutation
+E2130.fna	Protein change	ompF	-	blast	Y204F	50%	NZ_JAWWVF010000011.1	-	-	-	sequence difference, not a curated resistance mutation
+E2130.fna	Protein change	ompF	-	blast	Y253S	50%	NZ_JAWWVF010000011.1	-	-	-	sequence difference, not a curated resistance mutation
+E2130.fna	Protein change	ompF	-	blast	insA@185	50%	NZ_JAWWVF010000011.1	-	-	-	sequence difference, not a curated resistance mutation
+E2130.fna	Protein change	ptsI	-	blast+gamma	R367K	100%	NZ_JAWWVF010000004.1	-	-	-	sequence difference, not a curated resistance mutation
+E2130.fna	Protein change	uhpB	-	blast+gamma	H482T	100%	NZ_JAWWVF010000002.1	-	-	-	sequence difference, not a curated resistance mutation
+E2130.fna	Protein change	uhpB	-	blast+gamma	P84S	100%	NZ_JAWWVF010000002.1	-	-	-	sequence difference, not a curated resistance mutation
+E2130.fna	Protein change	uhpB	-	blast+gamma	S460C	100%	NZ_JAWWVF010000002.1	-	-	-	sequence difference, not a curated resistance mutation
+E2130.fna	Protein change	uhpB	-	blast+gamma	T166I	100%	NZ_JAWWVF010000002.1	-	-	-	sequence difference, not a curated resistance mutation
+E2130.fna	Protein change	uhpC	-	blast+gamma	S417A	100%	NZ_JAWWVF010000002.1	-	-	-	sequence difference, not a curated resistance mutation
+E2130.fna	Protein change	uhpC	-	blast+gamma	Y18H	100%	NZ_JAWWVF010000002.1	-	-	-	sequence difference, not a curated resistance mutation
+E2130.fna	Amplicon	uhpB_ver	-	SeqKit/amplicon	Length: 1603bp	-	NZ_JAWWVF010000002.1	86889	88492	-	Genes in region: uhpB: P84S;T166I;S460C;H482T; uhpC: Y18H;S417A; uhpA: no changes
+E2130.fna	Amplicon	uhpC_ver	-	SeqKit/amplicon	Length: 1449bp	-	NZ_JAWWVF010000002.1	88395	89844	-	Genes in region: uhpB: P84S;T166I;S460C;H482T; uhpC: Y18H;S417A
+E2130.fna	Amplicon	lon_ver1	-	SeqKit/amplicon	Length: 1039bp	-	NZ_JAWWVF010000011.1	95142	96181	-	Genes in region: none
+E2130.fna	Amplicon	lon_ver2	-	SeqKit/amplicon	Length: 1222bp	-	NZ_JAWWVF010000011.1	94302	95524	-	Genes in region: none
+E2130.fna	Amplicon	RT_rrsA	-	SeqKit/amplicon	Length: 105bp	-	NZ_JAWWVF010000147.1	1233	1338	-	Genes in region: none

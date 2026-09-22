@@ -437,3 +437,48 @@ class TestAlleleNamingHonesty:
         _, results = run(tmp_path, database, {'contig1': embed(altered)})
         hit = next(r for r in results if r['gene'].startswith('blaIMP'))
         assert hit['allele'] == 'blaIMP-like'
+
+
+class TestPorinAmplification:
+    """Porin loss alongside a beta-lactamase avibactam inhibits is a documented
+    route to resistance without any carbapenemase (E. coli E2257 in the CREC
+    validation set: OmpF truncation + CMY-2, CZA MIC >128)."""
+
+    def test_porin_loss_with_ampc_is_indeterminate_not_susceptible(
+            self, tmp_path, database, reference_cds):
+        broken_porin = substitute(reference_cds['ompF'], 257, '*')
+        _, results = run(tmp_path, database, {
+            'contig1': embed(broken_porin),
+            'contig2': embed(reference_cds['blaCMY-2']),
+        }, organism='Escherichia')
+        assert find(results, 'ompF')['loss_of_function']
+        prediction = predict_phenotypes(
+            results, organism='Escherichia')['ceftazidime_avibactam']
+        assert prediction['phenotype'] == 'Indeterminate'
+        assert any('ompF' in item and 'blaCMY-2' in item
+                   for item in prediction['evidence'])
+
+    def test_porin_loss_without_a_betalactamase_is_not_scored(
+            self, tmp_path, database, reference_cds):
+        broken_porin = substitute(reference_cds['ompF'], 257, '*')
+        _, results = run(tmp_path, database, {'contig1': embed(broken_porin)},
+                         organism='Escherichia')
+        assert (predict_phenotypes(results, organism='Escherichia')
+                ['ceftazidime_avibactam']['phenotype'] == 'Susceptible')
+
+    def test_intact_porin_with_ampc_is_susceptible(
+            self, tmp_path, database, reference_cds):
+        _, results = run(tmp_path, database, {
+            'contig1': embed(reference_cds['ompF']),
+            'contig2': embed(reference_cds['blaCMY-2']),
+        }, organism='Escherichia')
+        assert (predict_phenotypes(results, organism='Escherichia')
+                ['ceftazidime_avibactam']['phenotype'] == 'Susceptible')
+
+    def test_acquired_fosa3_in_ecoli_is_unambiguously_resistant(
+            self, tmp_path, database, reference_cds):
+        # E. coli has no intrinsic chromosomal fosA, so a fosA3 hit is acquired.
+        _, results = run(tmp_path, database, {'contig1': embed(reference_cds['fosA3'])},
+                         organism='Escherichia')
+        prediction = predict_phenotypes(results, organism='Escherichia')['fosfomycin']
+        assert prediction['phenotype'] == 'Resistant'

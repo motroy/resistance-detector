@@ -42,14 +42,21 @@ MBL_FAMILIES = ('blaNDM', 'blaVIM', 'blaIMP', 'blaSPM', 'blaGIM', 'blaSIM')
 # regulates porin expression.  These raise MICs in combination with a
 # beta-lactamase rather than conferring resistance by themselves, so they are
 # scored as uncertain evidence, never as a Resistant call.
-CAZAVI_CONTRIBUTORY_GENES = ('envZ', 'ftsI', 'ompK36')
+CAZAVI_CONTRIBUTORY_GENES = ('envZ', 'ftsI', 'ompK36', 'ompC', 'ompF')
 
-# Porin whose loss of function amplifies a KPC carbapenemase.  OmpK35 is
+# Porins whose loss of function amplifies a beta-lactamase: OmpK36 in
+# K. pneumoniae, OmpC/OmpF in E. coli.  OmpK35 is
 # deliberately excluded: its truncation is near-universal background in clinical
 # K. pneumoniae, so scoring it would make Indeterminate the default for most
 # isolates without discriminating anything.  OmpK36 is the porin the
 # ceftazidime-avibactam literature implicates.
-PORIN_GENES = ('ompK36',)
+PORIN_GENES = ('ompK36', 'ompC', 'ompF')
+
+# Beta-lactamases whose activity reduced drug entry can amplify enough to raise
+# ceftazidime-avibactam MICs.  Avibactam inhibits all of these, so none of them
+# alone is resistance - but combined with porin loss they are a documented route
+# to a resistant phenotype without any carbapenemase.
+PERMEABILITY_AMPLIFIED_FAMILIES = ('blaKPC', 'blaCMY', 'blaCTX-M', 'blaSHV', 'blaPDC')
 
 # Enzymes that inactivate fosfomycin.
 FOSA_FAMILIES = ('fosA', 'fosB', 'fosC', 'fosL')

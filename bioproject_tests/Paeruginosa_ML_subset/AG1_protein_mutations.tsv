@@ -1,0 +1,7 @@
+Gene	Contig	Start	End	Identity	Coverage	Match_Type	Changes	Method
+blaIMP-18	CP045739.1	6121109	6121850	100.00	100.00	Native	No coding mutations	GAMMA
+blaVIM-2	CP045739.1	3528228	3529029	100.00	100.00	Native	No coding mutations	GAMMA
+mexR	CP045739.1	555373	555817	99.32	100.00	Mutant	V126E	GAMMA
+blaPDC-1	CP045739.1	1034175	1035369	99.75	100.00	Mutant	T105A	GAMMA
+nalD	CP045739.1	1752288	1752927	100.00	100.00	Native	No coding mutations	GAMMA
+fosA_PA1129	CP045739.1	4948503	4948911	98.53	100.00	Truncation	truncation at codon 110 (of 136 codons);2 coding mutations	GAMMA

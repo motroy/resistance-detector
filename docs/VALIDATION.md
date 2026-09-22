@@ -8,11 +8,34 @@ with the current code and the current reference data (AMRFinderPlus
 
 | Folder | Genomes | Study | Outcome |
 |---|---|---|---|
+| `CREC_fosA3_China/` | 10 *E. coli* | fosA3 in carbapenem-resistant *E. coli* (Zhang *et al.* 2025) | **Measured MICs for both drugs**: fosfomycin 10/10, CAZ/AVI 9/10 resistant + 1 indeterminate, 0 wrong |
 | `PRJNA741867_test_results/` | 6 *K. pneumoniae* ST307 | Clinical ceftazidime-avibactam-selected KPC variants | **6/6 concordant**, exact allele assignment for all three resistant isolates |
 | `PRJNA595047_test/` | 4 *K. pneumoniae* | In vitro selection of KPC Omega-loop deletion mutants | **4/4 concordant** with the study's own strain naming |
 | `PRJNA1086695_test/` | 2 long-read assemblies | Assembly + detection | blaKPC-179 identified in one isolate |
 | `PRJNA781811_test/` | 18 *K. pneumoniae* / *K. variicola* | Bacteraemia isolate collection | Genotype-only comparison; 1 unambiguous acquired fosA, 3 ambiguous (Indeterminate) |
 | `Paeruginosa_ML_subset/` | 12 *P. aeruginosa* | ML AMR-prediction dataset (Noman *et al.*) | Scope/robustness test on a new species; gene-level concordance, not phenotype |
+
+## CREC fosA3 — the only set with measured MICs
+
+Ten carbapenem-resistant *E. coli* with broth MICs for **both** drugs (Zhang
+*et al.*, J Glob Antimicrob Resist 42 (2025) 80–87, Table 1; accessions from
+Table S4). Every other set here compares genotype with a study's reported
+genotype or narrative phenotype.
+
+* **Fosfomycin 10/10 correct.** All carry `fosA3` (FOS MIC 256–>256). *E. coli*
+  has no intrinsic chromosomal fosA, so there is none of the ambiguity that
+  makes lone fosA hits uncertain in *Klebsiella*. This is the first test of the
+  fosfomycin side against real MICs.
+* **Ceftazidime-avibactam 9/10 resistant, 1 indeterminate, 0 wrong.** Nine carry
+  an NDM metallo-beta-lactamase.
+* **E2257** is CAZ/AVI resistant (>128) with *no carbapenemase* anywhere in the
+  assembly. It carries `blaCMY-2`, `blaCTX-M-15` and a premature stop at residue
+  257 of OmpF — AmpC plus lost permeability. It is reported `Indeterminate` with
+  that mechanism named, rather than susceptible.
+
+Finding E2257 changed the tool: *E. coli* `ompC`/`ompF` were not in the database
+at all, and the porin-amplification rule was gated on blaKPC alone. See
+[../bioproject_tests/CREC_fosA3_China/RESULTS_SUMMARY.md](../bioproject_tests/CREC_fosA3_China/RESULTS_SUMMARY.md).
 
 ## PRJNA741867 — the clearest test
 
@@ -92,8 +115,8 @@ names asserted more precisely than 99.7%-identical references can support. See
 
 ## The fosfomycin side
 
-The fosfomycin half has no paired MIC data in any of these BioProjects, so it is
-validated by mechanism rather than against measured phenotypes:
+The fosfomycin half is now validated against measured MICs in the CREC set
+above (10/10), and by mechanism elsewhere:
 
 * Acquired enzyme detection was exercised on the 18-genome PRJNA781811 set,
   where it separates one unambiguous acquired fosA3 from 14 intrinsic-only
@@ -107,11 +130,15 @@ validated by mechanism rather than against measured phenotypes:
 
 ## How far this goes
 
-These are genotype-to-published-phenotype comparisons on a few dozen genomes,
-most of them *K. pneumoniae*. The ceftazidime-avibactam side is validated
-against reported phenotypes; the fosfomycin side is not, because no isolate here
-has a measured fosfomycin MIC. There is also no *E. coli* or *P. aeruginosa*
-validation set. The synthetic scenarios in `create_test_genomes.py` cover the
-logic paths the real genomes do not, but a synthetic genome only tests that the
-code does what it was designed to do — not that the design matches biology.
-Treat the tool accordingly, and see [METHODS.md](METHODS.md#9-known-limits).
+About fifty genomes across four species, of which ten have measured MICs for
+both drugs and the rest are genotype-to-reported-genotype or
+genotype-to-narrative-phenotype comparisons.
+
+The biggest remaining gap is **specificity**. Almost every validation isolate is
+resistant to something: there is no fosfomycin-susceptible and no
+CAZ/AVI-susceptible clinical isolate with a measured MIC in any of these sets,
+so the false-positive rate is untested against real data. The synthetic
+scenarios cover the susceptible logic paths, but a synthetic genome only tests
+that the code does what it was designed to do — not that the design matches
+biology. Treat the tool accordingly, and see
+[METHODS.md](METHODS.md#9-known-limits).

@@ -1,0 +1,8 @@
+Gene	Contig	Start	End	Identity	Coverage	Match_Type	Changes	Method
+blaIMP-60	CP042967.1	5738448	5739188	26.32	99.87	Indel Truncation	1bpdeletion@codon47;truncation at codon 58 (of 247 codons);182 coding mutations	GAMMA
+fosA_PA1129	CP042967.1	832338	832746	100.00	100.00	Native	No coding mutations	GAMMA
+mexR	CP042967.1	3561930	3562374	100.00	100.00	Native	No coding mutations	GAMMA
+blaPDC-1	CP042967.1	4045719	4046913	99.75	100.00	Mutant	T105A	GAMMA
+nalD	CP042967.1	4711322	4711961	99.53	100.00	Mutant	L153Q	GAMMA
+blaIMP-1	CP042967.1	4658221	4658962	100.00	100.00	Native	No coding mutations	GAMMA
+blaIMP-1	CP042967.1	5277659	5278400	100.00	100.00	Native	No coding mutations	GAMMA

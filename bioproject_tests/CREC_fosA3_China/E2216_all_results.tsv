@@ -1,0 +1,38 @@
+Sample	Type	Gene	Allele	Method	Result_Details	Identity_Confidence	Contig	Start	End	Copy_Number	Notes
+E2216.fna	Chromosomal gene	cyaA	cyaA	BLAST	Coverage: 100.00%	99.57%	NZ_JAWWVE010000021.1	41276	43822	1	protein changes: N142S
+E2216.fna	Chromosomal gene	lon	lon	BLAST	Coverage: 100.00%	99.49%	NZ_JAWWVE010000010.1	67147	69501	1	no protein changes vs reference
+E2216.fna	Chromosomal gene	ptsI	ptsI	BLAST	Coverage: 100.00%	99.77%	NZ_JAWWVE010000006.1	49592	51319	1	protein changes: R367K
+E2216.fna	Chromosomal gene	uhpB	uhpB	BLAST	Coverage: 100.00%	99.67%	NZ_JAWWVE010000014.1	96910	98412	1	no protein changes vs reference
+E2216.fna	Chromosomal gene	uhpT	uhpT	BLAST	Coverage: 100.00%	99.21%	NZ_JAWWVE010000014.1	99879	101270	1	no protein changes vs reference
+E2216.fna	Chromosomal gene	glpT	glpT	BLAST	Coverage: 100.00%	98.90%	NZ_JAWWVE010000006.1	251618	252976	1	protein changes: E448K
+E2216.fna	Chromosomal gene	uhpC	uhpC	BLAST	Coverage: 100.00%	99.09%	NZ_JAWWVE010000014.1	98422	99741	1	no protein changes vs reference
+E2216.fna	Chromosomal gene	murA	murA	BLAST	Coverage: 100.00%	98.57%	NZ_JAWWVE010000001.1	80166	81425	1	no protein changes vs reference
+E2216.fna	Acquired gene	blaCMY-2	blaCMY-2	BLAST	Coverage: 100.00%	100.00%	NZ_JAWWVE010000038.1	19677	20822	1	no protein changes vs reference
+E2216.fna	Chromosomal gene	ompF	ompF	BLAST	Coverage: 100.00%	100.00%	NZ_JAWWVE010000004.1	106546	107634	1	no protein changes vs reference
+E2216.fna	Chromosomal gene	ompC	ompC	BLAST	Coverage: 100.00%	94.90%	NZ_JAWWVE010000028.1	38574	39677	1	protein changes: N176S;P177V;G181_S184del;V186M;D192G;R195L;A226D;T229S;A230P;A231L;L296V;insGTIA@306;G309N
+E2216.fna	Chromosomal gene	galU	galU	BLAST	Coverage: 100.00%	99.01%	NZ_JAWWVE010000005.1	83929	84837	1	no protein changes vs reference
+E2216.fna	Acquired gene	blaCTX-M-15	blaCTX-M-like	BLAST	Coverage: 100.00%	99.89%	NZ_JAWWVE010000056.1	1632	2507	1	protein changes: A81V
+E2216.fna	Acquired gene	blaNDM-5	blaNDM-5	BLAST	Coverage: 100.00%	100.00%	NZ_JAWWVE010000053.1	278	1090	1	no protein changes vs reference
+E2216.fna	Chromosomal gene	uhpA	uhpA	BLAST	Coverage: 100.00%	96.95%	NZ_JAWWVE010000014.1	96320	96910	1	no protein changes vs reference
+E2216.fna	Acquired gene	fosA3	fosA3	BLAST	Coverage: 100.00%	100.00%	NZ_JAWWVE010000057.1	1868	2284	1	no protein changes vs reference
+E2216.fna	Protein change	blaCTX-M-15	-	blast+gamma	A81V	100%	NZ_JAWWVE010000056.1	-	-	-	reported as resistance mutation
+E2216.fna	Protein change	cyaA	-	blast+gamma	N142S	100%	NZ_JAWWVE010000021.1	-	-	-	sequence difference, not a curated resistance mutation
+E2216.fna	Protein change	glpT	-	blast+gamma	E448K	100%	NZ_JAWWVE010000006.1	-	-	-	sequence difference, not a curated resistance mutation
+E2216.fna	Protein change	ompC	-	blast	A226D	50%	NZ_JAWWVE010000028.1	-	-	-	sequence difference, not a curated resistance mutation
+E2216.fna	Protein change	ompC	-	blast	A230P	50%	NZ_JAWWVE010000028.1	-	-	-	sequence difference, not a curated resistance mutation
+E2216.fna	Protein change	ompC	-	blast	A231L	50%	NZ_JAWWVE010000028.1	-	-	-	sequence difference, not a curated resistance mutation
+E2216.fna	Protein change	ompC	-	blast	D192G	50%	NZ_JAWWVE010000028.1	-	-	-	sequence difference, not a curated resistance mutation
+E2216.fna	Protein change	ompC	-	blast	G181_S184del	50%	NZ_JAWWVE010000028.1	-	-	-	sequence difference, not a curated resistance mutation
+E2216.fna	Protein change	ompC	-	blast	G309N	50%	NZ_JAWWVE010000028.1	-	-	-	sequence difference, not a curated resistance mutation
+E2216.fna	Protein change	ompC	-	blast	L296V	50%	NZ_JAWWVE010000028.1	-	-	-	sequence difference, not a curated resistance mutation
+E2216.fna	Protein change	ompC	-	blast	N176S	50%	NZ_JAWWVE010000028.1	-	-	-	sequence difference, not a curated resistance mutation
+E2216.fna	Protein change	ompC	-	blast	P177V	50%	NZ_JAWWVE010000028.1	-	-	-	sequence difference, not a curated resistance mutation
+E2216.fna	Protein change	ompC	-	blast	R195L	50%	NZ_JAWWVE010000028.1	-	-	-	sequence difference, not a curated resistance mutation
+E2216.fna	Protein change	ompC	-	blast	T229S	50%	NZ_JAWWVE010000028.1	-	-	-	sequence difference, not a curated resistance mutation
+E2216.fna	Protein change	ompC	-	blast	V186M	50%	NZ_JAWWVE010000028.1	-	-	-	sequence difference, not a curated resistance mutation
+E2216.fna	Protein change	ompC	-	blast	insGTIA@306	50%	NZ_JAWWVE010000028.1	-	-	-	sequence difference, not a curated resistance mutation
+E2216.fna	Protein change	ptsI	-	blast+gamma	R367K	100%	NZ_JAWWVE010000006.1	-	-	-	sequence difference, not a curated resistance mutation
+E2216.fna	Amplicon	lon_ver2	-	SeqKit/amplicon	Length: 1222bp	-	NZ_JAWWVE010000004.1	75647	76869	-	Genes in region: none
+E2216.fna	Amplicon	uhpC_ver	-	SeqKit/amplicon	Length: 1449bp	-	NZ_JAWWVE010000014.1	98361	99810	-	Genes in region: uhpB: no changes; uhpC: no changes
+E2216.fna	Amplicon	RT_uhpT	-	SeqKit/amplicon	Length: 166bp	-	NZ_JAWWVE010000014.1	100052	100218	-	Genes in region: uhpT: no changes
+E2216.fna	Amplicon	RT_rrsA	-	SeqKit/amplicon	Length: 105bp	-	NZ_JAWWVE010000065.1	360	465	-	Genes in region: none

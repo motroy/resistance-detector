@@ -1,0 +1,6 @@
+Pair_ID	Contig	Start	End	Length	Genes_In_Region	Method
+lon_ver2	NZ_JAWWVL010000006.1	75751	76973	1222	-	SeqKit/amplicon
+uhpB_ver	NZ_JAWWVL010000017.1	18698	20301	1603	uhpB: T374S;uhpC: Y18H;T435A;uhpA: no changes	SeqKit/amplicon
+uhpC_ver	NZ_JAWWVL010000017.1	17346	18795	1449	uhpB: T374S;uhpC: Y18H;T435A	SeqKit/amplicon
+RT_uhpT	NZ_JAWWVL010000017.1	16938	17104	166	uhpT: no changes	SeqKit/amplicon
+RT_rrsA	NZ_JAWWVL010000099.1	1237	1342	105	-	SeqKit/amplicon
