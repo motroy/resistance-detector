@@ -18,8 +18,9 @@ antimicrobial susceptibility testing.
 
 from . import betalactamase
 from .references import (
-    CAZAVI_CONTRIBUTORY_GENES, FOSA_FAMILIES, FOS_TRANSPORT_GENES,
-    INTRINSIC_GENES, PORIN_GENES, gene_family, is_mbl,
+    AVIBACTAM_COMBINATION_SCOPE, CAZAVI_CONTRIBUTORY_GENES, CAZAVI_SCOPE,
+    FOSA_FAMILIES, FOS_SCOPE, FOS_TRANSPORT_GENES, INTRINSIC_FOSA_ORGANISMS,
+    INTRINSIC_GENES, PORIN_GENES, gene_family, is_mbl, mutation_scope,
 )
 
 RESISTANT = 'Resistant'
@@ -39,9 +40,17 @@ def _resolve(resistant_evidence, uncertain_evidence, nothing_found_message):
     return {'phenotype': SUSCEPTIBLE, 'evidence': [nothing_found_message]}
 
 
-def predict_fos_phenotype(blast_results, unified_results=None):
+def predict_fos_phenotype(blast_results, unified_results=None, organism=None):
     """Predict fosfomycin susceptibility."""
     resistant, uncertain = [], []
+
+    # Klebsiella and P. aeruginosa always carry a chromosomal fosA.  If one was
+    # recognised, any *additional* fosA-family gene is genuinely acquired.  If
+    # none was, a lone fosA hit cannot be told apart from a divergent copy of
+    # that chromosomal gene by sequence identity alone.
+    intrinsic_found = any(result['gene'] in INTRINSIC_GENES
+                          for result in blast_results or [])
+    intrinsic_expected = organism in INTRINSIC_FOSA_ORGANISMS
 
     for result in blast_results or []:
         gene = result['gene']
@@ -53,9 +62,17 @@ def predict_fos_phenotype(blast_results, unified_results=None):
             continue
 
         if family in FOSA_FAMILIES:
-            resistant.append(
-                f"Acquired fosfomycin-modifying enzyme {result['allele']} "
-                f"({result['identity']}% identity, {result['coverage']}% coverage)")
+            if intrinsic_expected and not intrinsic_found:
+                uncertain.append(
+                    f"fosA-family enzyme {result['allele']} detected "
+                    f"({result['identity']}% identity), but no intrinsic "
+                    f"chromosomal fosA was recognised in this {organism.replace('_', ' ')} "
+                    f"genome. Every isolate of this species carries one, so this may "
+                    f"be a divergent chromosomal enzyme rather than an acquired gene")
+            else:
+                resistant.append(
+                    f"Acquired fosfomycin-modifying enzyme {result['allele']} "
+                    f"({result['identity']}% identity, {result['coverage']}% coverage)")
             continue
 
         if gene in FOS_TRANSPORT_GENES or gene == 'murA':
@@ -69,10 +86,19 @@ def predict_fos_phenotype(blast_results, unified_results=None):
                         f"Apparent loss of function in {gene} "
                         f"({result['lof_description']}), but the gene runs off a contig "
                         f"boundary - could be an assembly artefact")
-            elif result.get('reported_mutations'):
-                resistant.append(
-                    f"Curated fosfomycin-resistance mutation(s) in {gene}: "
-                    f"{', '.join(result['reported_mutations'])}")
+            else:
+                # Only mutations curated *for fosfomycin* count here.  Several
+                # of these genes also carry mutations curated for other drugs -
+                # cyaA_S352T is fosmidomycin, galU_R101C is cephalosporin - and
+                # scoring those would be a plain false positive.
+                fosfomycin_mutations = [
+                    row['Label'] for row in result.get('curated_mutations', [])
+                    if mutation_scope(row) == FOS_SCOPE
+                ]
+                if fosfomycin_mutations:
+                    resistant.append(
+                        f"Curated fosfomycin-resistance mutation(s) in {gene}: "
+                        f"{', '.join(fosfomycin_mutations)}")
 
     return _resolve(
         resistant, uncertain,
@@ -98,9 +124,10 @@ def _contributory_cazavi_evidence(blast_results, kpc_present):
             continue
 
         for row in result.get('curated_mutations', []):
-            subclass = (row.get('Subclass') or '').upper()
-            if 'AVIBACTAM' not in subclass:
+            scope = mutation_scope(row)
+            if scope not in (CAZAVI_SCOPE, AVIBACTAM_COMBINATION_SCOPE):
                 continue
+            subclass = (row.get('Subclass') or '').upper()
             evidence.append(
                 f"{row['Label']} in {gene}: curated by AMRFinderPlus for "
                 f"{subclass.replace('/', ', ')}. This contributes to raised "
@@ -174,9 +201,9 @@ def predict_cazavi_phenotype(blast_results, unified_results=None):
     return _resolve(resistant, uncertain, nothing_found)
 
 
-def predict_phenotypes(blast_results, unified_results=None):
+def predict_phenotypes(blast_results, unified_results=None, organism=None):
     return {
-        'fosfomycin': predict_fos_phenotype(blast_results, unified_results),
+        'fosfomycin': predict_fos_phenotype(blast_results, unified_results, organism),
         'ceftazidime_avibactam': predict_cazavi_phenotype(blast_results, unified_results),
         'disclaimer': DISCLAIMER,
     }

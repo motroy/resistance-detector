@@ -5,7 +5,7 @@ GCA_027152495.1.fna	Chromosomal gene	envZ	envZ	BLAST	Coverage: 100.00%	94.17%	JA
 GCA_027152495.1.fna	Chromosomal gene	ompK35	ompK35	BLAST	Coverage: 100.00%	96.02%	JAJOCY010000001.1	104323	105402	1	protein changes: I74T;T93P;I183V;S211G;I241V
 GCA_027152495.1.fna	Chromosomal gene	ompK36	ompK36	BLAST	Coverage: 100.00%	94.56%	JAJOCY010000005.1	132605	133696	1	protein changes: L184_P186del;T192G;L194Q;L205V;Y210F;N221H;L225T;G226D;S230N;K231del;A233V;R236N;I254V;I315L;H349R;I353V
 GCA_027152495.1.fna	Acquired gene	blaSHV-12	blaSHV-12	BLAST	Coverage: 100.00%	90.83%	JAJOCY010000011.1	143601	144461	1	protein changes: I4V;I8V;H20D;S22G;I43V;T54A;M66V;V72L;D85V;E89D;K91R;A111V;V116I;M126L;A132G;E165A;S193A;R195H;R202Q;S220A;A224P;S235G;K236E;N249D;N250G;A252P;Q274H
-GCA_027152495.1.fna	Acquired gene	fosA5	fosA5	BLAST	Coverage: 98.10%	93.93%	JAJOCY010000015.1	132100	132511	1	protein changes: M29T;V57I;A86V;A138D;E139Q
+GCA_027152495.1.fna	Acquired gene	fosA9	fosA9	BLAST	Coverage: 98.10%	98.54%	JAJOCY010000015.1	132100	132511	1	protein changes: A138D;E139Q
 GCA_027152495.1.fna	Protein change	acrB	-	blast+gamma	A648G	100%	JAJOCY010000002.1	-	-	-	sequence difference, not a curated resistance mutation
 GCA_027152495.1.fna	Protein change	acrB	-	blast+gamma	A841S	100%	JAJOCY010000002.1	-	-	-	sequence difference, not a curated resistance mutation
 GCA_027152495.1.fna	Protein change	acrB	-	blast+gamma	E682Q	100%	JAJOCY010000002.1	-	-	-	sequence difference, not a curated resistance mutation
@@ -40,15 +40,8 @@ GCA_027152495.1.fna	Protein change	envZ	-	blast+gamma	A448T	100%	JAJOCY010000016
 GCA_027152495.1.fna	Protein change	envZ	-	blast+gamma	I15T	100%	JAJOCY010000016.1	-	-	-	sequence difference, not a curated resistance mutation
 GCA_027152495.1.fna	Protein change	envZ	-	blast+gamma	I258M	100%	JAJOCY010000016.1	-	-	-	sequence difference, not a curated resistance mutation
 GCA_027152495.1.fna	Protein change	envZ	-	blast+gamma	R449K	100%	JAJOCY010000016.1	-	-	-	sequence difference, not a curated resistance mutation
-GCA_027152495.1.fna	Protein change	fosA5	-	blast	A138D	50%	JAJOCY010000015.1	-	-	-	reported as resistance mutation
-GCA_027152495.1.fna	Protein change	fosA5	-	blast	A86V	50%	JAJOCY010000015.1	-	-	-	reported as resistance mutation
-GCA_027152495.1.fna	Protein change	fosA5	-	blast	E139Q	50%	JAJOCY010000015.1	-	-	-	reported as resistance mutation
-GCA_027152495.1.fna	Protein change	fosA5	-	blast	M29T	50%	JAJOCY010000015.1	-	-	-	reported as resistance mutation
-GCA_027152495.1.fna	Protein change	fosA5	-	blast	V57I	50%	JAJOCY010000015.1	-	-	-	reported as resistance mutation
-GCA_027152495.1.fna	Protein change	fosAKP	-	gamma	A86V	50%	JAJOCY010000015.1	-	-	-	sequence difference, not a curated resistance mutation
-GCA_027152495.1.fna	Protein change	fosAKP	-	gamma	I91V	50%	JAJOCY010000015.1	-	-	-	sequence difference, not a curated resistance mutation
-GCA_027152495.1.fna	Protein change	fosAKP	-	gamma	Q130P	50%	JAJOCY010000015.1	-	-	-	sequence difference, not a curated resistance mutation
-GCA_027152495.1.fna	Protein change	fosAKP	-	gamma	V57I	50%	JAJOCY010000015.1	-	-	-	sequence difference, not a curated resistance mutation
+GCA_027152495.1.fna	Protein change	fosA9	-	blast+gamma	A138D	100%	JAJOCY010000015.1	-	-	-	reported as resistance mutation
+GCA_027152495.1.fna	Protein change	fosA9	-	blast+gamma	E139Q	100%	JAJOCY010000015.1	-	-	-	reported as resistance mutation
 GCA_027152495.1.fna	Protein change	ftsI	-	blast+gamma	A36T	100%	JAJOCY010000013.1	-	-	-	sequence difference, not a curated resistance mutation
 GCA_027152495.1.fna	Protein change	ftsI	-	blast+gamma	I48V	100%	JAJOCY010000013.1	-	-	-	sequence difference, not a curated resistance mutation
 GCA_027152495.1.fna	Protein change	ftsI	-	blast+gamma	V332I	100%	JAJOCY010000013.1	-	-	-	sequence difference, not a curated resistance mutation

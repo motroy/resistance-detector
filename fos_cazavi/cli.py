@@ -121,7 +121,7 @@ def write_machine_summary(output_prefix, assembly, blast_results, gamma_results,
                           amplicon_results, unified_results, organism=None):
     sample = Path(assembly).name
     gene_entries = _aggregate_genes(blast_results)
-    phenotypes = predict_phenotypes(blast_results, unified_results)
+    phenotypes = predict_phenotypes(blast_results, unified_results, organism)
 
     summary = {
         'sample': sample,
@@ -209,7 +209,7 @@ def write_summary(output_prefix, assembly, blast_results, gamma_results,
         handle.write(f"Organism: {organism_note}\n")
         handle.write(f"Reference data: {data_version()}\n\n")
 
-        phenotypes = predict_phenotypes(blast_results, unified_results)
+        phenotypes = predict_phenotypes(blast_results, unified_results, organism)
         handle.write('PREDICTED PHENOTYPES (genotype-based):\n')
         handle.write('-' * 50 + '\n')
         for drug, key in (('Fosfomycin (FOS)', 'fosfomycin'),

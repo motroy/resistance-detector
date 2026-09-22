@@ -40,19 +40,26 @@ def test_scenarios_were_generated(scenario_dir):
     assert len(load_expectations(scenario_dir)) >= 10
 
 
-@pytest.mark.parametrize('index', range(14))
-def test_scenario_matches_expected_phenotype(index, scenario_dir, database, tmp_path):
-    expectations = load_expectations(scenario_dir)
-    if index >= len(expectations):
-        pytest.skip('scenario not defined')
-    expectation = expectations[index]
+# Parametrised from the committed expectations so the count never drifts out of
+# sync with create_test_genomes.py.
+_COMMITTED = ROOT / 'test_data' / 'expected_results.tsv'
+_SCENARIO_NAMES = ([row['Genome'] for row in
+                    csv.DictReader(open(_COMMITTED), delimiter='\t')]
+                   if _COMMITTED.exists() else [])
+
+
+@pytest.mark.parametrize('genome', _SCENARIO_NAMES)
+def test_scenario_matches_expected_phenotype(genome, scenario_dir, database, tmp_path):
+    expectations = {row['Genome']: row for row in load_expectations(scenario_dir)}
+    expectation = expectations[genome]
 
     detector = BlastDetector(
         str(scenario_dir / expectation['Genome']), database,
         str(tmp_path / expectation['Genome']),
         organism=expectation['Organism'])
     results = detector.run()
-    prediction = predict_phenotypes(results)
+    # Mirror the CLI exactly: the organism reaches the phenotype logic too.
+    prediction = predict_phenotypes(results, organism=expectation['Organism'])
 
     assert prediction['fosfomycin']['phenotype'] == expectation['Expected_Fosfomycin'], (
         f"{expectation['Genome']}: {expectation['Rationale']}\n"

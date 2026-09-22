@@ -1,94 +1,94 @@
-Gene	Organism	Reference_Protein	Position	Ref	Variant	Kind	Label	Class	Subclass	Source
-acrB	Escherichia	WP_086259262.1	620	R	C	substitution	acrB_R620C	TETRACYCLINE	TIGECYCLINE	AMRFinderPlus
-acrB	Escherichia	WP_086259262.1	717	R	L	substitution	acrB_R717L	MACROLIDE	AZITHROMYCIN/CLARITHROMYCIN/ERYTHROMYCIN	AMRFinderPlus
-acrB	Escherichia	WP_086259262.1	717	R	Q	substitution	acrB_R717Q	MACROLIDE	AZITHROMYCIN/CLARITHROMYCIN/ERYTHROMYCIN	AMRFinderPlus
-cyaA	Escherichia	WP_000281668.1	352	S	T	substitution	cyaA_S352T	FOSMIDOMYCIN	FOSMIDOMYCIN	AMRFinderPlus
-envZ	Klebsiella_pneumoniae	WP_317867775.1	397	R	C	substitution	envZ_R397C	BETA-LACTAM	CEFTAZIDIME-AVIBACTAM	AMRFinderPlus
-envZ	Klebsiella_pneumoniae	WP_317867775.1	412	I	L	substitution	envZ_I412L	BETA-LACTAM	CEFTAZIDIME-AVIBACTAM	AMRFinderPlus
-ftsI	Escherichia	WP_000642196.1	335	R	RVPYR	insertion	ftsI_R335RVPYR	BETA-LACTAM	CEPHALOSPORIN	AMRFinderPlus
-ftsI	Escherichia	WP_000642196.1	336	I	IKYRI	insertion	ftsI_I336IKYRI	BETA-LACTAM	AZTREONAM/CEFIDEROCOL/CEPHALOSPORIN	AMRFinderPlus
-ftsI	Escherichia	WP_000642196.1	336	I	IPYRI	insertion	ftsI_I336IPYRI	BETA-LACTAM	AZTREONAM	AMRFinderPlus
-ftsI	Escherichia	WP_000642196.1	337	N	NYRIN	insertion	ftsI_N337NYRIN	BETA-LACTAM	AZTREONAM/CEFIDEROCOL/CEPHALOSPORIN	AMRFinderPlus
-ftsI	Escherichia	WP_000642196.1	350	L	F	substitution	ftsI_L350F	BETA-LACTAM	CEFTIBUTEN/CEFTIBUTEN-AVIBACTAM	AMRFinderPlus
-ftsI	Escherichia	WP_000642196.1	363	G	S	substitution	ftsI_G363S	BETA-LACTAM	CEFTIBUTEN/CEFTIBUTEN-AVIBACTAM	AMRFinderPlus
-ftsI	Escherichia	WP_000642196.1	363	G	V	substitution	ftsI_G363V	BETA-LACTAM	CEFTIBUTEN/CEFTIBUTEN-AVIBACTAM	AMRFinderPlus
-ftsI	Escherichia	WP_000642196.1	365	S	Y	substitution	ftsI_S365Y	BETA-LACTAM	CEFTIBUTEN/CEFTIBUTEN-AVIBACTAM	AMRFinderPlus
-ftsI	Escherichia	WP_000642196.1	498	A	T	substitution	ftsI_A498T	BETA-LACTAM	CEPHALOSPORIN	AMRFinderPlus
-ftsI	Klebsiella_pneumoniae	WP_016532398.1	355	V	G	substitution	ftsI_V355G	BETA-LACTAM	CEFTIBUTEN/CEFTIBUTEN-AVIBACTAM	AMRFinderPlus
-ftsI	Klebsiella_pneumoniae	WP_016532398.1	367	L	Q	substitution	ftsI_L367Q	BETA-LACTAM	CEFTAZIDIME-AVIBACTAM	AMRFinderPlus
-ftsI	Klebsiella_pneumoniae	WP_016532398.1	413	A	V	substitution	ftsI_A413V	BETA-LACTAM	CEFTAZIDIME-AVIBACTAM	AMRFinderPlus
-ftsI	Pseudomonas_aeruginosa	WP_003094139.1	63	G	S	substitution	ftsI_G63S	BETA-LACTAM	CARBAPENEM	AMRFinderPlus
-ftsI	Pseudomonas_aeruginosa	WP_003094139.1	367	Y	C	substitution	ftsI_Y367C	BETA-LACTAM	CARBAPENEM	AMRFinderPlus
-ftsI	Pseudomonas_aeruginosa	WP_003094139.1	368	S	L	substitution	ftsI_S368L	BETA-LACTAM	CARBAPENEM	AMRFinderPlus
-ftsI	Pseudomonas_aeruginosa	WP_003094139.1	394	H	R	substitution	ftsI_H394R	BETA-LACTAM	CARBAPENEM	AMRFinderPlus
-ftsI	Pseudomonas_aeruginosa	WP_003094139.1	419	A	G	substitution	ftsI_A419G	BETA-LACTAM	CARBAPENEM	AMRFinderPlus
-ftsI	Pseudomonas_aeruginosa	WP_003094139.1	427	N	L	substitution	ftsI_N427L	BETA-LACTAM	CARBAPENEM	AMRFinderPlus
-ftsI	Pseudomonas_aeruginosa	WP_003094139.1	427	N	S	substitution	ftsI_N427S	BETA-LACTAM	CARBAPENEM	AMRFinderPlus
-ftsI	Pseudomonas_aeruginosa	WP_003094139.1	434	L	V	substitution	ftsI_L434V	BETA-LACTAM	CARBAPENEM	AMRFinderPlus
-ftsI	Pseudomonas_aeruginosa	WP_003094139.1	454	A	V	substitution	ftsI_A454V	BETA-LACTAM	CARBAPENEM	AMRFinderPlus
-ftsI	Pseudomonas_aeruginosa	WP_003094139.1	458	Q	R	substitution	ftsI_Q458R	BETA-LACTAM	CARBAPENEM	AMRFinderPlus
-ftsI	Pseudomonas_aeruginosa	WP_003094139.1	461	L	V	substitution	ftsI_L461V	BETA-LACTAM	CARBAPENEM	AMRFinderPlus
-ftsI	Pseudomonas_aeruginosa	WP_003094139.1	471	V	G	substitution	ftsI_V471G	BETA-LACTAM	CARBAPENEM	AMRFinderPlus
-ftsI	Pseudomonas_aeruginosa	WP_003094139.1	475	Q	R	substitution	ftsI_Q475R	BETA-LACTAM	CARBAPENEM	AMRFinderPlus
-ftsI	Pseudomonas_aeruginosa	WP_003094139.1	504	R	C	substitution	ftsI_R504C	BETA-LACTAM	CARBAPENEM	AMRFinderPlus
-ftsI	Pseudomonas_aeruginosa	WP_003094139.1	504	R	L	substitution	ftsI_R504L	BETA-LACTAM	CARBAPENEM	AMRFinderPlus
-ftsI	Pseudomonas_aeruginosa	WP_003094139.1	507	F	L	substitution	ftsI_F507L	BETA-LACTAM	CARBAPENEM	AMRFinderPlus
-ftsI	Pseudomonas_aeruginosa	WP_003094139.1	523	V	A	substitution	ftsI_V523A	BETA-LACTAM	CARBAPENEM	AMRFinderPlus
-ftsI	Pseudomonas_aeruginosa	WP_003094139.1	523	V	M	substitution	ftsI_V523M	BETA-LACTAM	CARBAPENEM	AMRFinderPlus
-ftsI	Pseudomonas_aeruginosa	WP_003094139.1	527	P	S	substitution	ftsI_P527S	BETA-LACTAM	CARBAPENEM	AMRFinderPlus
-ftsI	Pseudomonas_aeruginosa	WP_003094139.1	533	F	L	substitution	ftsI_F533L	BETA-LACTAM	CARBAPENEM	AMRFinderPlus
-ftsI	Pseudomonas_aeruginosa	WP_003094139.1	538	S	L	substitution	ftsI_S538L	BETA-LACTAM	CARBAPENEM	AMRFinderPlus
-ftsI	Pseudomonas_aeruginosa	WP_003094139.1	539	A	T	substitution	ftsI_A539T	BETA-LACTAM	CARBAPENEM	AMRFinderPlus
-galU	Pseudomonas_aeruginosa	WP_003088639.1	101	R	C	substitution	galU_R101C	BETA-LACTAM	CEPHALOSPORIN	AMRFinderPlus
-glpT	Pseudomonas_aeruginosa	WP_003096330.1	211	T	P	substitution	glpT_T211P	FOSFOMYCIN	FOSFOMYCIN	AMRFinderPlus
-lon	Escherichia	WP_001295325.1	403	P	L	substitution	lon_P403L	TETRACYCLINE	TIGECYCLINE	AMRFinderPlus
-mexR	Pseudomonas_aeruginosa	WP_003114897.1	3	Y	*	nonsense	mexR_Y3Ter	MULTIDRUG	AZTREONAM-AVIBACTAM/CARBAPENEM/CEPHALOSPORIN/CHLORAMPHENICOL/VABORBACTAM	AMRFinderPlus
-mexR	Pseudomonas_aeruginosa	WP_003114897.1	31	Q	*	nonsense	mexR_Q31Ter	MULTIDRUG	AZTREONAM-AVIBACTAM/CARBAPENEM/CEPHALOSPORIN/CHLORAMPHENICOL/VABORBACTAM	AMRFinderPlus
-mexR	Pseudomonas_aeruginosa	WP_003114897.1	37	P	R	substitution	mexR_P37R	BETA-LACTAM	CARBAPENEM	AMRFinderPlus
-mexR	Pseudomonas_aeruginosa	WP_003114897.1	49	Q	*	nonsense	mexR_Q49Ter	MULTIDRUG	AZTREONAM-AVIBACTAM/CARBAPENEM/CEPHALOSPORIN/CHLORAMPHENICOL/VABORBACTAM	AMRFinderPlus
-mexR	Pseudomonas_aeruginosa	WP_003114897.1	57	L	P	substitution	mexR_L57P	MULTIDRUG	AZTREONAM-AVIBACTAM/CARBAPENEM/CEPHALOSPORIN/CHLORAMPHENICOL/VABORBACTAM	AMRFinderPlus
-mexR	Pseudomonas_aeruginosa	WP_003114897.1	57	L	Q	substitution	mexR_L57Q	MULTIDRUG	AZTREONAM-AVIBACTAM/CARBAPENEM/CEPHALOSPORIN/CHLORAMPHENICOL/VABORBACTAM	AMRFinderPlus
-mexR	Pseudomonas_aeruginosa	WP_003114897.1	62	C	*	nonsense	mexR_C62Ter	MULTIDRUG	AZTREONAM-AVIBACTAM/CARBAPENEM/CEPHALOSPORIN/CHLORAMPHENICOL/VABORBACTAM	AMRFinderPlus
-mexR	Pseudomonas_aeruginosa	WP_003114897.1	70	R	Q	substitution	mexR_R70Q	MULTIDRUG	AZTREONAM-AVIBACTAM/CARBAPENEM/CEPHALOSPORIN/CHLORAMPHENICOL/VABORBACTAM	AMRFinderPlus
-mexR	Pseudomonas_aeruginosa	WP_003114897.1	83	R	C	substitution	mexR_R83C	MULTIDRUG	AZTREONAM-AVIBACTAM/CARBAPENEM/CEPHALOSPORIN/CHLORAMPHENICOL/VABORBACTAM	AMRFinderPlus
-mexR	Pseudomonas_aeruginosa	WP_003114897.1	89	D	N	substitution	mexR_D89N	MULTIDRUG	AZTREONAM-AVIBACTAM/CARBAPENEM/CEPHALOSPORIN/CHLORAMPHENICOL/VABORBACTAM	AMRFinderPlus
-mexR	Pseudomonas_aeruginosa	WP_003114897.1	94	Q	*	nonsense	mexR_Q94Ter	MULTIDRUG	AZTREONAM-AVIBACTAM/CARBAPENEM/CEPHALOSPORIN/CHLORAMPHENICOL/VABORBACTAM	AMRFinderPlus
-mexR	Pseudomonas_aeruginosa	WP_003114897.1	101	G	E	substitution	mexR_G101E	MULTIDRUG	AZTREONAM-AVIBACTAM/CARBAPENEM/CEPHALOSPORIN/CHLORAMPHENICOL/VABORBACTAM	AMRFinderPlus
-mexR	Pseudomonas_aeruginosa	WP_003114897.1	106	Q	*	nonsense	mexR_Q106Ter	MULTIDRUG	AZTREONAM-AVIBACTAM/CARBAPENEM/CEPHALOSPORIN/CHLORAMPHENICOL/VABORBACTAM	AMRFinderPlus
-mexR	Pseudomonas_aeruginosa	WP_003114897.1	109	E	*	nonsense	mexR_E109Ter	MULTIDRUG	AZTREONAM-AVIBACTAM/CARBAPENEM/CEPHALOSPORIN/CHLORAMPHENICOL/VABORBACTAM	AMRFinderPlus
-mexR	Pseudomonas_aeruginosa	WP_003114897.1	130	T	P	substitution	mexR_T130P	MULTIDRUG	AZTREONAM-AVIBACTAM/CARBAPENEM/CEPHALOSPORIN/CHLORAMPHENICOL/VABORBACTAM	AMRFinderPlus
-mexR	Pseudomonas_aeruginosa	WP_003114897.1	137	Q	H	substitution	mexR_Q137H	BETA-LACTAM	CARBAPENEM	AMRFinderPlus
-mexR	Pseudomonas_aeruginosa	WP_003114897.1	137	Q	P	substitution	mexR_Q137P	BETA-LACTAM	CARBAPENEM	AMRFinderPlus
-mexR	Pseudomonas_aeruginosa	WP_003114897.1	138	C	A	substitution	mexR_C138A	BETA-LACTAM	CARBAPENEM	AMRFinderPlus
-mexR	Pseudomonas_aeruginosa	WP_003114897.1	138	C	G	substitution	mexR_C138G	BETA-LACTAM	CARBAPENEM	AMRFinderPlus
-murA	Escherichia	WP_000357259.1	115	C	D	substitution	murA_C115D	FOSFOMYCIN	FOSFOMYCIN	AMRFinderPlus
-murA	Escherichia	WP_000357259.1	115	C	E	substitution	murA_C115E	FOSFOMYCIN	FOSFOMYCIN	AMRFinderPlus
-murA	Escherichia	WP_000357259.1	115	C	S	substitution	murA_C115S	FOSFOMYCIN	FOSFOMYCIN	AMRFinderPlus
-murA	Escherichia	WP_000357259.1	370	L	I	substitution	murA_L370I	FOSFOMYCIN	FOSFOMYCIN	AMRFinderPlus
-murA	Escherichia	WP_000357259.1	396	D	N	substitution	murA_D396N	FOSFOMYCIN	FOSFOMYCIN	AMRFinderPlus
-nalD	Pseudomonas_aeruginosa	WP_003092152.1	11	T	N	substitution	nalD_T11N	MULTIDRUG	AZTREONAM/CARBAPENEM/CHLORAMPHENICOL/TETRACYCLINE/VABORBACTAM	AMRFinderPlus
-nalD	Pseudomonas_aeruginosa	WP_003092152.1	45	G	D	substitution	nalD_G45D	MULTIDRUG	AZTREONAM/CARBAPENEM/CHLORAMPHENICOL/TETRACYCLINE/VABORBACTAM	AMRFinderPlus
-nalD	Pseudomonas_aeruginosa	WP_003092152.1	114	Q	*	nonsense	nalD_Q114Ter	MULTIDRUG	AZTREONAM/CARBAPENEM/CHLORAMPHENICOL/TETRACYCLINE/VABORBACTAM	AMRFinderPlus
-nalD	Pseudomonas_aeruginosa	WP_003092152.1	158	T	I	substitution	nalD_T158I	MULTIDRUG	AZTREONAM/CARBAPENEM/CHLORAMPHENICOL/TETRACYCLINE/VABORBACTAM	AMRFinderPlus
-nalD	Pseudomonas_aeruginosa	WP_003092152.1	198	F	L	substitution	nalD_F198L	MULTIDRUG	AZTREONAM/CARBAPENEM/CHLORAMPHENICOL/TETRACYCLINE/VABORBACTAM	AMRFinderPlus
-ompK35	Klebsiella_pneumoniae	WP_004141771.1	132	E	K	substitution	ompK35_E132K	BETA-LACTAM	CARBAPENEM	AMRFinderPlus
-ompK35	Klebsiella_pneumoniae	WP_004141771.1	230	W	*	nonsense	ompK35_W230Ter	BETA-LACTAM	CARBAPENEM	AMRFinderPlus
-ompK36	Klebsiella_pneumoniae	WP_002913005.1	21	A	V	substitution	ompK36_A21V	BETA-LACTAM	CEFTIBUTEN/CEFTIBUTEN-AVIBACTAM	AMRFinderPlus
-ompK36	Klebsiella_pneumoniae	WP_002913005.1	66	Q	*	nonsense	ompK36_Q66Ter	BETA-LACTAM	CARBAPENEM	AMRFinderPlus
-ompK36	Klebsiella_pneumoniae	WP_002913005.1	70	Q	*	nonsense	ompK36_Q70Ter	BETA-LACTAM	CARBAPENEM	AMRFinderPlus
-ompK36	Klebsiella_pneumoniae	WP_002913005.1	78	E	*	nonsense	ompK36_E78Ter	BETA-LACTAM	CARBAPENEM	AMRFinderPlus
-ompK36	Klebsiella_pneumoniae	WP_002913005.1	87	E	*	nonsense	ompK36_E87Ter	BETA-LACTAM	CARBAPENEM	AMRFinderPlus
-ompK36	Klebsiella_pneumoniae	WP_002913005.1	125	W	*	nonsense	ompK36_W125Ter	BETA-LACTAM	CARBAPENEM	AMRFinderPlus
-ompK36	Klebsiella_pneumoniae	WP_002913005.1	126	T	*	nonsense	ompK36_T126Ter	BETA-LACTAM	CARBAPENEM	AMRFinderPlus
-ompK36	Klebsiella_pneumoniae	WP_002913005.1	133	G	D	substitution	ompK36_G133D	BETA-LACTAM	CARBAPENEM	AMRFinderPlus
-ompK36	Klebsiella_pneumoniae	WP_002913005.1	135	D	DD	insertion	ompK36_D135DD	BETA-LACTAM	CARBAPENEM	AMRFinderPlus
-ompK36	Klebsiella_pneumoniae	WP_002913005.1	135	D	DGD	insertion	ompK36_D135DGD	BETA-LACTAM	CARBAPENEM	AMRFinderPlus
-ompK36	Klebsiella_pneumoniae	WP_002913005.1	136	T	TDT	insertion	ompK36_T136TDT	BETA-LACTAM	CARBAPENEM	AMRFinderPlus
-ompK36	Klebsiella_pneumoniae	WP_002913005.1	192	T	del	deletion	ompK36_T192del	BETA-LACTAM	CARBAPENEM	AMRFinderPlus
-ompK36	Klebsiella_pneumoniae	WP_002913005.1	261	T	*	nonsense	ompK36_T261Ter	BETA-LACTAM	CARBAPENEM	AMRFinderPlus
-ompK36	Klebsiella_pneumoniae	WP_002913005.1	307	L	*	nonsense	ompK36_L307Ter	BETA-LACTAM	CARBAPENEM	AMRFinderPlus
-ompK36	Klebsiella_pneumoniae	WP_002913005.1	313	Q	*	nonsense	ompK36_Q313Ter	BETA-LACTAM	CARBAPENEM	AMRFinderPlus
-ompK36	Klebsiella_pneumoniae	WP_002913005.1	333	T	N	substitution	ompK36_T333N	BETA-LACTAM	CARBAPENEM	AMRFinderPlus
-ptsI	Escherichia	WP_000623140.1	25	V	I	substitution	ptsI_V25I	FOSFOMYCIN	FOSFOMYCIN	AMRFinderPlus
-uhpA	Escherichia	WP_000633668.1	97	G	D	substitution	uhpA_G97D	FOSFOMYCIN	FOSFOMYCIN	AMRFinderPlus
-uhpT	Escherichia	WP_000879194.1	350	E	Q	substitution	uhpT_E350Q	FOSFOMYCIN	FOSFOMYCIN	AMRFinderPlus
+Gene	Organism	Reference_Protein	Position	Ref	Variant	Kind	Label	Class	Subclass	Drug_Scope	Source
+acrB	Escherichia	WP_086259262.1	620	R	C	substitution	acrB_R620C	TETRACYCLINE	TIGECYCLINE	other	AMRFinderPlus
+acrB	Escherichia	WP_086259262.1	717	R	L	substitution	acrB_R717L	MACROLIDE	AZITHROMYCIN/CLARITHROMYCIN/ERYTHROMYCIN	other	AMRFinderPlus
+acrB	Escherichia	WP_086259262.1	717	R	Q	substitution	acrB_R717Q	MACROLIDE	AZITHROMYCIN/CLARITHROMYCIN/ERYTHROMYCIN	other	AMRFinderPlus
+cyaA	Escherichia	WP_000281668.1	352	S	T	substitution	cyaA_S352T	FOSMIDOMYCIN	FOSMIDOMYCIN	other	AMRFinderPlus
+envZ	Klebsiella_pneumoniae	WP_317867775.1	397	R	C	substitution	envZ_R397C	BETA-LACTAM	CEFTAZIDIME-AVIBACTAM	ceftazidime-avibactam	AMRFinderPlus
+envZ	Klebsiella_pneumoniae	WP_317867775.1	412	I	L	substitution	envZ_I412L	BETA-LACTAM	CEFTAZIDIME-AVIBACTAM	ceftazidime-avibactam	AMRFinderPlus
+ftsI	Escherichia	WP_000642196.1	335	R	RVPYR	insertion	ftsI_R335RVPYR	BETA-LACTAM	CEPHALOSPORIN	other	AMRFinderPlus
+ftsI	Escherichia	WP_000642196.1	336	I	IKYRI	insertion	ftsI_I336IKYRI	BETA-LACTAM	AZTREONAM/CEFIDEROCOL/CEPHALOSPORIN	other	AMRFinderPlus
+ftsI	Escherichia	WP_000642196.1	336	I	IPYRI	insertion	ftsI_I336IPYRI	BETA-LACTAM	AZTREONAM	other	AMRFinderPlus
+ftsI	Escherichia	WP_000642196.1	337	N	NYRIN	insertion	ftsI_N337NYRIN	BETA-LACTAM	AZTREONAM/CEFIDEROCOL/CEPHALOSPORIN	other	AMRFinderPlus
+ftsI	Escherichia	WP_000642196.1	350	L	F	substitution	ftsI_L350F	BETA-LACTAM	CEFTIBUTEN/CEFTIBUTEN-AVIBACTAM	avibactam-combination	AMRFinderPlus
+ftsI	Escherichia	WP_000642196.1	363	G	S	substitution	ftsI_G363S	BETA-LACTAM	CEFTIBUTEN/CEFTIBUTEN-AVIBACTAM	avibactam-combination	AMRFinderPlus
+ftsI	Escherichia	WP_000642196.1	363	G	V	substitution	ftsI_G363V	BETA-LACTAM	CEFTIBUTEN/CEFTIBUTEN-AVIBACTAM	avibactam-combination	AMRFinderPlus
+ftsI	Escherichia	WP_000642196.1	365	S	Y	substitution	ftsI_S365Y	BETA-LACTAM	CEFTIBUTEN/CEFTIBUTEN-AVIBACTAM	avibactam-combination	AMRFinderPlus
+ftsI	Escherichia	WP_000642196.1	498	A	T	substitution	ftsI_A498T	BETA-LACTAM	CEPHALOSPORIN	other	AMRFinderPlus
+ftsI	Klebsiella_pneumoniae	WP_016532398.1	355	V	G	substitution	ftsI_V355G	BETA-LACTAM	CEFTIBUTEN/CEFTIBUTEN-AVIBACTAM	avibactam-combination	AMRFinderPlus
+ftsI	Klebsiella_pneumoniae	WP_016532398.1	367	L	Q	substitution	ftsI_L367Q	BETA-LACTAM	CEFTAZIDIME-AVIBACTAM	ceftazidime-avibactam	AMRFinderPlus
+ftsI	Klebsiella_pneumoniae	WP_016532398.1	413	A	V	substitution	ftsI_A413V	BETA-LACTAM	CEFTAZIDIME-AVIBACTAM	ceftazidime-avibactam	AMRFinderPlus
+ftsI	Pseudomonas_aeruginosa	WP_003094139.1	63	G	S	substitution	ftsI_G63S	BETA-LACTAM	CARBAPENEM	other	AMRFinderPlus
+ftsI	Pseudomonas_aeruginosa	WP_003094139.1	367	Y	C	substitution	ftsI_Y367C	BETA-LACTAM	CARBAPENEM	other	AMRFinderPlus
+ftsI	Pseudomonas_aeruginosa	WP_003094139.1	368	S	L	substitution	ftsI_S368L	BETA-LACTAM	CARBAPENEM	other	AMRFinderPlus
+ftsI	Pseudomonas_aeruginosa	WP_003094139.1	394	H	R	substitution	ftsI_H394R	BETA-LACTAM	CARBAPENEM	other	AMRFinderPlus
+ftsI	Pseudomonas_aeruginosa	WP_003094139.1	419	A	G	substitution	ftsI_A419G	BETA-LACTAM	CARBAPENEM	other	AMRFinderPlus
+ftsI	Pseudomonas_aeruginosa	WP_003094139.1	427	N	L	substitution	ftsI_N427L	BETA-LACTAM	CARBAPENEM	other	AMRFinderPlus
+ftsI	Pseudomonas_aeruginosa	WP_003094139.1	427	N	S	substitution	ftsI_N427S	BETA-LACTAM	CARBAPENEM	other	AMRFinderPlus
+ftsI	Pseudomonas_aeruginosa	WP_003094139.1	434	L	V	substitution	ftsI_L434V	BETA-LACTAM	CARBAPENEM	other	AMRFinderPlus
+ftsI	Pseudomonas_aeruginosa	WP_003094139.1	454	A	V	substitution	ftsI_A454V	BETA-LACTAM	CARBAPENEM	other	AMRFinderPlus
+ftsI	Pseudomonas_aeruginosa	WP_003094139.1	458	Q	R	substitution	ftsI_Q458R	BETA-LACTAM	CARBAPENEM	other	AMRFinderPlus
+ftsI	Pseudomonas_aeruginosa	WP_003094139.1	461	L	V	substitution	ftsI_L461V	BETA-LACTAM	CARBAPENEM	other	AMRFinderPlus
+ftsI	Pseudomonas_aeruginosa	WP_003094139.1	471	V	G	substitution	ftsI_V471G	BETA-LACTAM	CARBAPENEM	other	AMRFinderPlus
+ftsI	Pseudomonas_aeruginosa	WP_003094139.1	475	Q	R	substitution	ftsI_Q475R	BETA-LACTAM	CARBAPENEM	other	AMRFinderPlus
+ftsI	Pseudomonas_aeruginosa	WP_003094139.1	504	R	C	substitution	ftsI_R504C	BETA-LACTAM	CARBAPENEM	other	AMRFinderPlus
+ftsI	Pseudomonas_aeruginosa	WP_003094139.1	504	R	L	substitution	ftsI_R504L	BETA-LACTAM	CARBAPENEM	other	AMRFinderPlus
+ftsI	Pseudomonas_aeruginosa	WP_003094139.1	507	F	L	substitution	ftsI_F507L	BETA-LACTAM	CARBAPENEM	other	AMRFinderPlus
+ftsI	Pseudomonas_aeruginosa	WP_003094139.1	523	V	A	substitution	ftsI_V523A	BETA-LACTAM	CARBAPENEM	other	AMRFinderPlus
+ftsI	Pseudomonas_aeruginosa	WP_003094139.1	523	V	M	substitution	ftsI_V523M	BETA-LACTAM	CARBAPENEM	other	AMRFinderPlus
+ftsI	Pseudomonas_aeruginosa	WP_003094139.1	527	P	S	substitution	ftsI_P527S	BETA-LACTAM	CARBAPENEM	other	AMRFinderPlus
+ftsI	Pseudomonas_aeruginosa	WP_003094139.1	533	F	L	substitution	ftsI_F533L	BETA-LACTAM	CARBAPENEM	other	AMRFinderPlus
+ftsI	Pseudomonas_aeruginosa	WP_003094139.1	538	S	L	substitution	ftsI_S538L	BETA-LACTAM	CARBAPENEM	other	AMRFinderPlus
+ftsI	Pseudomonas_aeruginosa	WP_003094139.1	539	A	T	substitution	ftsI_A539T	BETA-LACTAM	CARBAPENEM	other	AMRFinderPlus
+galU	Pseudomonas_aeruginosa	WP_003088639.1	101	R	C	substitution	galU_R101C	BETA-LACTAM	CEPHALOSPORIN	other	AMRFinderPlus
+glpT	Pseudomonas_aeruginosa	WP_003096330.1	211	T	P	substitution	glpT_T211P	FOSFOMYCIN	FOSFOMYCIN	fosfomycin	AMRFinderPlus
+lon	Escherichia	WP_001295325.1	403	P	L	substitution	lon_P403L	TETRACYCLINE	TIGECYCLINE	other	AMRFinderPlus
+mexR	Pseudomonas_aeruginosa	WP_003114897.1	3	Y	*	nonsense	mexR_Y3Ter	MULTIDRUG	AZTREONAM-AVIBACTAM/CARBAPENEM/CEPHALOSPORIN/CHLORAMPHENICOL/VABORBACTAM	avibactam-combination	AMRFinderPlus
+mexR	Pseudomonas_aeruginosa	WP_003114897.1	31	Q	*	nonsense	mexR_Q31Ter	MULTIDRUG	AZTREONAM-AVIBACTAM/CARBAPENEM/CEPHALOSPORIN/CHLORAMPHENICOL/VABORBACTAM	avibactam-combination	AMRFinderPlus
+mexR	Pseudomonas_aeruginosa	WP_003114897.1	37	P	R	substitution	mexR_P37R	BETA-LACTAM	CARBAPENEM	other	AMRFinderPlus
+mexR	Pseudomonas_aeruginosa	WP_003114897.1	49	Q	*	nonsense	mexR_Q49Ter	MULTIDRUG	AZTREONAM-AVIBACTAM/CARBAPENEM/CEPHALOSPORIN/CHLORAMPHENICOL/VABORBACTAM	avibactam-combination	AMRFinderPlus
+mexR	Pseudomonas_aeruginosa	WP_003114897.1	57	L	P	substitution	mexR_L57P	MULTIDRUG	AZTREONAM-AVIBACTAM/CARBAPENEM/CEPHALOSPORIN/CHLORAMPHENICOL/VABORBACTAM	avibactam-combination	AMRFinderPlus
+mexR	Pseudomonas_aeruginosa	WP_003114897.1	57	L	Q	substitution	mexR_L57Q	MULTIDRUG	AZTREONAM-AVIBACTAM/CARBAPENEM/CEPHALOSPORIN/CHLORAMPHENICOL/VABORBACTAM	avibactam-combination	AMRFinderPlus
+mexR	Pseudomonas_aeruginosa	WP_003114897.1	62	C	*	nonsense	mexR_C62Ter	MULTIDRUG	AZTREONAM-AVIBACTAM/CARBAPENEM/CEPHALOSPORIN/CHLORAMPHENICOL/VABORBACTAM	avibactam-combination	AMRFinderPlus
+mexR	Pseudomonas_aeruginosa	WP_003114897.1	70	R	Q	substitution	mexR_R70Q	MULTIDRUG	AZTREONAM-AVIBACTAM/CARBAPENEM/CEPHALOSPORIN/CHLORAMPHENICOL/VABORBACTAM	avibactam-combination	AMRFinderPlus
+mexR	Pseudomonas_aeruginosa	WP_003114897.1	83	R	C	substitution	mexR_R83C	MULTIDRUG	AZTREONAM-AVIBACTAM/CARBAPENEM/CEPHALOSPORIN/CHLORAMPHENICOL/VABORBACTAM	avibactam-combination	AMRFinderPlus
+mexR	Pseudomonas_aeruginosa	WP_003114897.1	89	D	N	substitution	mexR_D89N	MULTIDRUG	AZTREONAM-AVIBACTAM/CARBAPENEM/CEPHALOSPORIN/CHLORAMPHENICOL/VABORBACTAM	avibactam-combination	AMRFinderPlus
+mexR	Pseudomonas_aeruginosa	WP_003114897.1	94	Q	*	nonsense	mexR_Q94Ter	MULTIDRUG	AZTREONAM-AVIBACTAM/CARBAPENEM/CEPHALOSPORIN/CHLORAMPHENICOL/VABORBACTAM	avibactam-combination	AMRFinderPlus
+mexR	Pseudomonas_aeruginosa	WP_003114897.1	101	G	E	substitution	mexR_G101E	MULTIDRUG	AZTREONAM-AVIBACTAM/CARBAPENEM/CEPHALOSPORIN/CHLORAMPHENICOL/VABORBACTAM	avibactam-combination	AMRFinderPlus
+mexR	Pseudomonas_aeruginosa	WP_003114897.1	106	Q	*	nonsense	mexR_Q106Ter	MULTIDRUG	AZTREONAM-AVIBACTAM/CARBAPENEM/CEPHALOSPORIN/CHLORAMPHENICOL/VABORBACTAM	avibactam-combination	AMRFinderPlus
+mexR	Pseudomonas_aeruginosa	WP_003114897.1	109	E	*	nonsense	mexR_E109Ter	MULTIDRUG	AZTREONAM-AVIBACTAM/CARBAPENEM/CEPHALOSPORIN/CHLORAMPHENICOL/VABORBACTAM	avibactam-combination	AMRFinderPlus
+mexR	Pseudomonas_aeruginosa	WP_003114897.1	130	T	P	substitution	mexR_T130P	MULTIDRUG	AZTREONAM-AVIBACTAM/CARBAPENEM/CEPHALOSPORIN/CHLORAMPHENICOL/VABORBACTAM	avibactam-combination	AMRFinderPlus
+mexR	Pseudomonas_aeruginosa	WP_003114897.1	137	Q	H	substitution	mexR_Q137H	BETA-LACTAM	CARBAPENEM	other	AMRFinderPlus
+mexR	Pseudomonas_aeruginosa	WP_003114897.1	137	Q	P	substitution	mexR_Q137P	BETA-LACTAM	CARBAPENEM	other	AMRFinderPlus
+mexR	Pseudomonas_aeruginosa	WP_003114897.1	138	C	A	substitution	mexR_C138A	BETA-LACTAM	CARBAPENEM	other	AMRFinderPlus
+mexR	Pseudomonas_aeruginosa	WP_003114897.1	138	C	G	substitution	mexR_C138G	BETA-LACTAM	CARBAPENEM	other	AMRFinderPlus
+murA	Escherichia	WP_000357259.1	115	C	D	substitution	murA_C115D	FOSFOMYCIN	FOSFOMYCIN	fosfomycin	AMRFinderPlus
+murA	Escherichia	WP_000357259.1	115	C	E	substitution	murA_C115E	FOSFOMYCIN	FOSFOMYCIN	fosfomycin	AMRFinderPlus
+murA	Escherichia	WP_000357259.1	115	C	S	substitution	murA_C115S	FOSFOMYCIN	FOSFOMYCIN	fosfomycin	AMRFinderPlus
+murA	Escherichia	WP_000357259.1	370	L	I	substitution	murA_L370I	FOSFOMYCIN	FOSFOMYCIN	fosfomycin	AMRFinderPlus
+murA	Escherichia	WP_000357259.1	396	D	N	substitution	murA_D396N	FOSFOMYCIN	FOSFOMYCIN	fosfomycin	AMRFinderPlus
+nalD	Pseudomonas_aeruginosa	WP_003092152.1	11	T	N	substitution	nalD_T11N	MULTIDRUG	AZTREONAM/CARBAPENEM/CHLORAMPHENICOL/TETRACYCLINE/VABORBACTAM	other	AMRFinderPlus
+nalD	Pseudomonas_aeruginosa	WP_003092152.1	45	G	D	substitution	nalD_G45D	MULTIDRUG	AZTREONAM/CARBAPENEM/CHLORAMPHENICOL/TETRACYCLINE/VABORBACTAM	other	AMRFinderPlus
+nalD	Pseudomonas_aeruginosa	WP_003092152.1	114	Q	*	nonsense	nalD_Q114Ter	MULTIDRUG	AZTREONAM/CARBAPENEM/CHLORAMPHENICOL/TETRACYCLINE/VABORBACTAM	other	AMRFinderPlus
+nalD	Pseudomonas_aeruginosa	WP_003092152.1	158	T	I	substitution	nalD_T158I	MULTIDRUG	AZTREONAM/CARBAPENEM/CHLORAMPHENICOL/TETRACYCLINE/VABORBACTAM	other	AMRFinderPlus
+nalD	Pseudomonas_aeruginosa	WP_003092152.1	198	F	L	substitution	nalD_F198L	MULTIDRUG	AZTREONAM/CARBAPENEM/CHLORAMPHENICOL/TETRACYCLINE/VABORBACTAM	other	AMRFinderPlus
+ompK35	Klebsiella_pneumoniae	WP_004141771.1	132	E	K	substitution	ompK35_E132K	BETA-LACTAM	CARBAPENEM	other	AMRFinderPlus
+ompK35	Klebsiella_pneumoniae	WP_004141771.1	230	W	*	nonsense	ompK35_W230Ter	BETA-LACTAM	CARBAPENEM	other	AMRFinderPlus
+ompK36	Klebsiella_pneumoniae	WP_002913005.1	21	A	V	substitution	ompK36_A21V	BETA-LACTAM	CEFTIBUTEN/CEFTIBUTEN-AVIBACTAM	avibactam-combination	AMRFinderPlus
+ompK36	Klebsiella_pneumoniae	WP_002913005.1	66	Q	*	nonsense	ompK36_Q66Ter	BETA-LACTAM	CARBAPENEM	other	AMRFinderPlus
+ompK36	Klebsiella_pneumoniae	WP_002913005.1	70	Q	*	nonsense	ompK36_Q70Ter	BETA-LACTAM	CARBAPENEM	other	AMRFinderPlus
+ompK36	Klebsiella_pneumoniae	WP_002913005.1	78	E	*	nonsense	ompK36_E78Ter	BETA-LACTAM	CARBAPENEM	other	AMRFinderPlus
+ompK36	Klebsiella_pneumoniae	WP_002913005.1	87	E	*	nonsense	ompK36_E87Ter	BETA-LACTAM	CARBAPENEM	other	AMRFinderPlus
+ompK36	Klebsiella_pneumoniae	WP_002913005.1	125	W	*	nonsense	ompK36_W125Ter	BETA-LACTAM	CARBAPENEM	other	AMRFinderPlus
+ompK36	Klebsiella_pneumoniae	WP_002913005.1	126	T	*	nonsense	ompK36_T126Ter	BETA-LACTAM	CARBAPENEM	other	AMRFinderPlus
+ompK36	Klebsiella_pneumoniae	WP_002913005.1	133	G	D	substitution	ompK36_G133D	BETA-LACTAM	CARBAPENEM	other	AMRFinderPlus
+ompK36	Klebsiella_pneumoniae	WP_002913005.1	135	D	DD	insertion	ompK36_D135DD	BETA-LACTAM	CARBAPENEM	other	AMRFinderPlus
+ompK36	Klebsiella_pneumoniae	WP_002913005.1	135	D	DGD	insertion	ompK36_D135DGD	BETA-LACTAM	CARBAPENEM	other	AMRFinderPlus
+ompK36	Klebsiella_pneumoniae	WP_002913005.1	136	T	TDT	insertion	ompK36_T136TDT	BETA-LACTAM	CARBAPENEM	other	AMRFinderPlus
+ompK36	Klebsiella_pneumoniae	WP_002913005.1	192	T	del	deletion	ompK36_T192del	BETA-LACTAM	CARBAPENEM	other	AMRFinderPlus
+ompK36	Klebsiella_pneumoniae	WP_002913005.1	261	T	*	nonsense	ompK36_T261Ter	BETA-LACTAM	CARBAPENEM	other	AMRFinderPlus
+ompK36	Klebsiella_pneumoniae	WP_002913005.1	307	L	*	nonsense	ompK36_L307Ter	BETA-LACTAM	CARBAPENEM	other	AMRFinderPlus
+ompK36	Klebsiella_pneumoniae	WP_002913005.1	313	Q	*	nonsense	ompK36_Q313Ter	BETA-LACTAM	CARBAPENEM	other	AMRFinderPlus
+ompK36	Klebsiella_pneumoniae	WP_002913005.1	333	T	N	substitution	ompK36_T333N	BETA-LACTAM	CARBAPENEM	other	AMRFinderPlus
+ptsI	Escherichia	WP_000623140.1	25	V	I	substitution	ptsI_V25I	FOSFOMYCIN	FOSFOMYCIN	fosfomycin	AMRFinderPlus
+uhpA	Escherichia	WP_000633668.1	97	G	D	substitution	uhpA_G97D	FOSFOMYCIN	FOSFOMYCIN	fosfomycin	AMRFinderPlus
+uhpT	Escherichia	WP_000879194.1	350	E	Q	substitution	uhpT_E350Q	FOSFOMYCIN	FOSFOMYCIN	fosfomycin	AMRFinderPlus

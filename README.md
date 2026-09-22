@@ -1,7 +1,11 @@
 # FOS-CAZAVI Resistance Detector
 
-A CLI tool for detecting ceftazidime-avibactam (CAZ/AVI) and fosfomycin (FOS)
+A CLI tool for detecting fosfomycin (FOS) and ceftazidime-avibactam (CAZ/AVI)
 resistance genes and mutations in bacterial genome assemblies.
+
+Both drugs are treated as first-class targets: acquired enzymes and the
+chromosomal mechanisms for each, with every call carrying the evidence behind
+it and the drug it belongs to.
 
 ## What it does
 
@@ -20,8 +24,14 @@ resistance genes and mutations in bacterial genome assemblies.
 - **Detects metallo-beta-lactamases** (NDM, VIM, IMP, SPM, GIM, SIM), which
   avibactam does not inhibit, and which therefore make CAZ/AVI inactive
   regardless of any KPC present.
-- **Distinguishes acquired from intrinsic.** The intrinsic `fosAKP` of *K.
-  pneumoniae* is never scored as acquired fosfomycin resistance.
+- **Distinguishes acquired from intrinsic.** The chromosomal fosA of *K.
+  pneumoniae* and *P. aeruginosa* is never scored as acquired fosfomycin
+  resistance, and a lone fosA hit that cannot be told apart from the species'
+  own chromosomal copy is reported as Indeterminate rather than asserted.
+- **Keeps to its two drugs.** Most curated mutations in these genes were
+  described for other antibiotics; each is tagged with the drug it belongs to,
+  so a carbapenem or tigecycline mutation is never presented as a FOS or
+  CAZ/AVI finding.
 - **Cross-checks with a second caller.** GAMMA independently reports codon
   changes; agreement between the two is recorded per change.
 - **Says when it cannot tell.** Genes running off a contig boundary are flagged

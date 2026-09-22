@@ -21,7 +21,7 @@ def substitute(cds_sequence, position, new_residue, codon_table=None):
     """Replace the codon at 1-based residue ``position``."""
     codons = {'Y': 'TAT', 'P': 'CCT', 'G': 'GGT', 'M': 'ATG', '*': 'TAA',
               'N': 'AAT', 'K': 'AAA', 'A': 'GCT', 'C': 'TGT', 'Q': 'CAA',
-              'V': 'GTT'}
+              'V': 'GTT', 'T': 'ACT', 'I': 'ATT'}
     index = (position - 1) * 3
     return cds_sequence[:index] + codons[new_residue] + cds_sequence[index + 3:]
 
@@ -288,3 +288,92 @@ class TestContributoryCazaviEvidence:
         assert find(results, 'envZ')['reported_mutations'] == []
         assert (predict_phenotypes(results)['ceftazidime_avibactam']['phenotype']
                 == 'Susceptible')
+
+
+class TestDrugScope:
+    """This tool reports on fosfomycin and ceftazidime-avibactam. A mutation
+    curated for a different drug must never be presented as a finding for
+    either of them."""
+
+    def test_fosmidomycin_mutation_in_cyaa_is_not_fosfomycin_resistance(
+            self, tmp_path, database, reference_cds):
+        # cyaA_S352T is curated for FOSMIDOMYCIN - a different drug whose name
+        # merely looks similar. cyaA is a fosfomycin uptake/regulatory gene, so
+        # an unscoped implementation reports this as fosfomycin resistance.
+        sequence = substitute(reference_cds['cyaA'], 352, 'T')
+        _, results = run(tmp_path, database, {'contig1': embed(sequence)},
+                         organism='Escherichia')
+        cyaa = find(results, 'cyaA')
+        assert 'cyaA_S352T' not in cyaa['reported_mutations']
+        assert any('cyaA_S352T' in item for item in cyaa['other_drug_mutations'])
+        prediction = predict_phenotypes(results)['fosfomycin']
+        assert prediction['phenotype'] == 'Susceptible'
+
+    def test_cephalosporin_mutation_in_galu_is_not_fosfomycin_resistance(
+            self, tmp_path, database, reference_cds):
+        # galU_R101C is curated for CEPHALOSPORIN; galU is a fosfomycin gene.
+        sequence = substitute(reference_cds['galU'], 101, 'C')
+        _, results = run(tmp_path, database, {'contig1': embed(sequence)},
+                         organism='Pseudomonas_aeruginosa')
+        galu = find(results, 'galU')
+        assert 'galU_R101C' not in galu['reported_mutations']
+        assert predict_phenotypes(results)['fosfomycin']['phenotype'] == 'Susceptible'
+
+    def test_genuine_fosfomycin_mutation_is_still_scored(
+            self, tmp_path, database, reference_cds):
+        # murA_L370I is curated for FOSFOMYCIN and must still be reported.
+        sequence = substitute(reference_cds['murA'], 370, 'I')
+        _, results = run(tmp_path, database, {'contig1': embed(sequence)},
+                         organism='Escherichia')
+        assert 'murA_L370I' in find(results, 'murA')['reported_mutations']
+        prediction = predict_phenotypes(results)['fosfomycin']
+        assert prediction['phenotype'] == 'Resistant'
+        assert any('murA' in item for item in prediction['evidence'])
+
+
+class TestIntrinsicFosAEnzymes:
+    def test_kp_chromosomal_fosa_is_treated_as_intrinsic(
+            self, tmp_path, database, reference_cds):
+        # The K. pneumoniae chromosomal enzyme (fosAKP, which AMRFinderPlus
+        # calls fosA6) is present in fosfomycin-susceptible isolates.
+        _, results = run(tmp_path, database, {'contig1': embed(reference_cds['fosAKP'])},
+                         organism='Klebsiella_pneumoniae')
+        gene = find(results, 'fosAKP')
+        assert gene is not None and not gene['acquired']
+        assert predict_phenotypes(results)['fosfomycin']['phenotype'] == 'Susceptible'
+
+    def test_acquired_fosa2_is_resistance(self, tmp_path, database, reference_cds):
+        _, results = run(tmp_path, database, {'contig1': embed(reference_cds['fosA2'])})
+        assert predict_phenotypes(results)['fosfomycin']['phenotype'] == 'Resistant'
+
+
+class TestIntrinsicVersusAcquiredFosA:
+    """Every Klebsiella carries a chromosomal fosA. A lone fosA hit with no
+    intrinsic copy recognised cannot be told apart from a divergent chromosomal
+    enzyme by identity alone, so it must not be asserted as acquired."""
+
+    def test_acquired_fosa_alongside_intrinsic_is_resistant(
+            self, tmp_path, database, reference_cds):
+        _, results = run(tmp_path, database, {
+            'contig1': embed(reference_cds['fosA3']),
+            'contig2': embed(reference_cds['fosAKP']),
+        }, organism='Klebsiella_pneumoniae')
+        prediction = predict_phenotypes(results, organism='Klebsiella_pneumoniae')['fosfomycin']
+        assert prediction['phenotype'] == 'Resistant'
+        assert any('Acquired' in item for item in prediction['evidence'])
+
+    def test_lone_fosa_without_intrinsic_copy_is_indeterminate(
+            self, tmp_path, database, reference_cds):
+        _, results = run(tmp_path, database, {'contig1': embed(reference_cds['fosA3'])},
+                         organism='Klebsiella_pneumoniae')
+        prediction = predict_phenotypes(results, organism='Klebsiella_pneumoniae')['fosfomycin']
+        assert prediction['phenotype'] == 'Indeterminate'
+        assert any('divergent chromosomal enzyme' in item
+                   for item in prediction['evidence'])
+
+    def test_lone_fosa_in_ecoli_is_resistant(self, tmp_path, database, reference_cds):
+        # E. coli has no intrinsic chromosomal fosA, so there is no ambiguity.
+        _, results = run(tmp_path, database, {'contig1': embed(reference_cds['fosA3'])},
+                         organism='Escherichia')
+        prediction = predict_phenotypes(results, organism='Escherichia')['fosfomycin']
+        assert prediction['phenotype'] == 'Resistant'

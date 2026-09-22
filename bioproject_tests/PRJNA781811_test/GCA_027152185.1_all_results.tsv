@@ -12,8 +12,8 @@ GCA_027152185.1.fna	Protein change	blaSHV-12	-	blast+gamma	Q31L	100%	JAJOCU01000
 GCA_027152185.1.fna	Protein change	envZ	-	blast+gamma	I15T	100%	JAJOCU010000003.1	-	-	-	sequence difference, not a curated resistance mutation
 GCA_027152185.1.fna	Protein change	envZ	-	blast+gamma	I258M	100%	JAJOCU010000003.1	-	-	-	sequence difference, not a curated resistance mutation
 GCA_027152185.1.fna	Protein change	fosA5	-	blast+gamma	A138D	100%	JAJOCU010000004.1	-	-	-	reported as resistance mutation
-GCA_027152185.1.fna	Protein change	fosA5	-	blast+gamma	A86V	100%	JAJOCU010000004.1	-	-	-	reported as resistance mutation
-GCA_027152185.1.fna	Protein change	fosA5	-	blast+gamma	M29T	100%	JAJOCU010000004.1	-	-	-	reported as resistance mutation
+GCA_027152185.1.fna	Protein change	fosA5	-	blast	A86V	50%	JAJOCU010000004.1	-	-	-	reported as resistance mutation
+GCA_027152185.1.fna	Protein change	fosA5	-	blast	M29T	50%	JAJOCU010000004.1	-	-	-	reported as resistance mutation
 GCA_027152185.1.fna	Protein change	ftsI	-	blast+gamma	V375A	100%	JAJOCU010000004.1	-	-	-	sequence difference, not a curated resistance mutation
 GCA_027152185.1.fna	Protein change	ompK36	-	blast	A193W	50%	JAJOCU010000013.1	-	-	-	sequence difference, not a curated resistance mutation
 GCA_027152185.1.fna	Protein change	ompK36	-	blast	D227E	50%	JAJOCU010000013.1	-	-	-	sequence difference, not a curated resistance mutation

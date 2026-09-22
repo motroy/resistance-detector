@@ -12,4 +12,5 @@ acquired_fosa3.fasta	Escherichia	Resistant	Susceptible	Acquired fosA3 inactivate
 uhpt_nonsense.fasta	Escherichia	Resistant	Susceptible	Premature stop in uhpT abolishes fosfomycin uptake
 glpt_frameshift.fasta	Escherichia	Resistant	Susceptible	Single-base insertion breaks the glpT reading frame
 wildtype_transporters.fasta	Escherichia	Susceptible	Susceptible	Intact uptake genes and no acquired enzyme
-multi_mechanism.fasta	Klebsiella_pneumoniae	Resistant	Resistant	Both drugs compromised in one isolate
+multi_mechanism.fasta	Klebsiella_pneumoniae	Resistant	Resistant	Both drugs compromised in one isolate: acquired fosA3 alongside the intrinsic chromosomal fosA, plus a KPC escape variant
+lone_fosa_no_intrinsic_copy.fasta	Klebsiella_pneumoniae	Indeterminate	Susceptible	A single fosA hit with no intrinsic chromosomal copy recognised cannot be told apart from a divergent chromosomal enzyme

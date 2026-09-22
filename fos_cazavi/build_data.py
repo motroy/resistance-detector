@@ -66,10 +66,21 @@ ACQUIRED_ALLELES = [
     'blaSPM-1', 'blaGIM-1', 'blaSIM-1',
     # ESBL / AmpC context
     'blaCTX-M-15', 'blaSHV-12', 'blaCMY-2',
-    # Fosfomycin-modifying enzymes
-    'fosA3', 'fosA4', 'fosA5', 'fosA7', 'fosA10', 'fosA11',
-    'fosC2', 'fosB', 'fosL1',
+    # Acquired fosfomycin-modifying enzymes.  fosA6 and fosA_PA1129 are
+    # deliberately absent here and listed as intrinsic below.
+    'fosA', 'fosA2', 'fosA3', 'fosA4', 'fosA5', 'fosA7', 'fosA8', 'fosA9',
+    'fosA10', 'fosA11', 'fosA12', 'fosA13',
+    'fosC2', 'fosB', 'fosL1', 'fosL2',
 ]
+
+# Fosfomycin-modifying enzymes that are a normal part of a species' chromosome.
+# They are detected so the user sees them, but they are present in
+# fosfomycin-susceptible isolates and are never scored as acquired resistance:
+# fosA_PA1129 is the P. aeruginosa chromosomal enzyme.  The K. pneumoniae one,
+# which AMRFinderPlus calls fosA6, is not listed here because it is already
+# carried as `fosAKP` in the chromosomal reference set and encodes an identical
+# protein; having both would split hits between two names for one gene.
+INTRINSIC_ALLELES = ['fosA_PA1129']
 
 # Chromosomal genes kept in the nucleotide database purely so the locus can be
 # found in an assembly (BLAST/GAMMA/amplicons).  They are carried over from the
@@ -176,6 +187,23 @@ def validate_cds(record):
     return problems
 
 
+# This tool reports on two drugs.  Every curated mutation is tagged with which
+# of them it belongs to, so a mutation curated for tigecycline or carbapenems
+# can never be presented as a fosfomycin or ceftazidime-avibactam finding.
+def drug_scope(class_field, subclass_field):
+    """Classify a curated mutation against this tool's scope."""
+    combined = f"{class_field}/{subclass_field}".upper()
+    if 'FOSFOMYCIN' in combined:
+        return 'fosfomycin'
+    if 'CEFTAZIDIME-AVIBACTAM' in combined:
+        return 'ceftazidime-avibactam'
+    if 'AVIBACTAM' in combined:
+        # Ceftibuten- or aztreonam-avibactam: the inhibitor is shared but the
+        # partner drug is not, so these are context, not in-scope findings.
+        return 'avibactam-combination'
+    return 'other'
+
+
 def build_point_mutations(amr_dir, proteins):
     """Curated point mutations, each validated against its reference protein."""
     rows, dropped = [], []
@@ -237,6 +265,7 @@ def build_point_mutations(amr_dir, proteins):
             'Label': symbol,
             'Class': row['class'],
             'Subclass': row['subclass'],
+            'Drug_Scope': drug_scope(row['class'], row['subclass']),
             'Source': 'AMRFinderPlus',
         })
 
@@ -305,7 +334,7 @@ def main():
 
     # ---- nucleotide database ------------------------------------------------
     records, missing = [], []
-    for allele in ACQUIRED_ALLELES:
+    for allele in ACQUIRED_ALLELES + INTRINSIC_ALLELES:
         record = amr_cds.get(allele)
         if record is None:
             missing.append(allele)
@@ -317,6 +346,12 @@ def main():
         print(f"WARNING: not found in AMR_CDS.fa: {', '.join(missing)}", file=sys.stderr)
 
     records.extend(load_chromosomal(out_dir / 'chromosomal_reference_cds.fasta'))
+
+    # AMRFinderPlus ships its CDS lowercase while the chromosomal references are
+    # uppercase.  Nothing downstream depends on case, but normalising it keeps
+    # the file consistent and stops case from masking sequence comparisons.
+    for record in records:
+        record.seq = record.seq.upper()
 
     problems = 0
     for record in records:
@@ -350,12 +385,17 @@ def main():
     rows, dropped = build_point_mutations(amr_dir, proteins)
     mutations_file = out_dir / 'point_mutations.tsv'
     fieldnames = ['Gene', 'Organism', 'Reference_Protein', 'Position', 'Ref',
-                  'Variant', 'Kind', 'Label', 'Class', 'Subclass', 'Source']
+                  'Variant', 'Kind', 'Label', 'Class', 'Subclass', 'Drug_Scope',
+                  'Source']
     with open(mutations_file, 'w', newline='') as handle:
         writer = csv.DictWriter(handle, fieldnames=fieldnames, delimiter='\t')
         writer.writeheader()
         writer.writerows(rows)
-    print(f"Wrote {len(rows)} validated point mutations to {mutations_file}")
+    in_scope = sum(1 for row in rows
+                   if row['Drug_Scope'] in ('fosfomycin', 'ceftazidime-avibactam'))
+    print(f"Wrote {len(rows)} validated point mutations to {mutations_file} "
+          f"({in_scope} curated for fosfomycin or ceftazidime-avibactam, "
+          f"{len(rows) - in_scope} for other drugs, kept as context)")
     for gene, symbol, reason in dropped:
         print(f"  dropped {gene} {symbol}: {reason}", file=sys.stderr)
 

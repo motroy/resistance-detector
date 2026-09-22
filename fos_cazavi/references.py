@@ -60,9 +60,43 @@ FOSA_FAMILIES = ('fosA', 'fosB', 'fosC', 'fosL')
 # a position list.
 FOS_TRANSPORT_GENES = ('uhpT', 'uhpA', 'uhpB', 'uhpC', 'glpT', 'cyaA', 'ptsI', 'galU')
 
-# fosA in Klebsiella pneumoniae is intrinsic and present in susceptible
-# isolates, so it is never on its own evidence of acquired resistance.
-INTRINSIC_GENES = ('fosAKP',)
+# Chromosomal fosA enzymes that are a normal part of a species' genome: the
+# K. pneumoniae one (carried here both as fosAKP and as its AMRFinderPlus name
+# fosA6) and the P. aeruginosa one.  They are present in fosfomycin-susceptible
+# isolates, so they are reported but never scored as acquired resistance.
+INTRINSIC_GENES = ('fosAKP', 'fosA6', 'fosA_PA1129')
+
+# This tool reports on two drugs.  A curated mutation carries the scope it was
+# curated for, so a tigecycline or carbapenem mutation is never presented as a
+# fosfomycin or ceftazidime-avibactam finding.
+# Genera whose chromosome normally carries a fosA-family enzyme.  In these, a
+# lone fosA hit with no recognised intrinsic copy is ambiguous: it may be a
+# divergent chromosomal enzyme rather than an acquired one.
+INTRINSIC_FOSA_ORGANISMS = ('Klebsiella_pneumoniae', 'Pseudomonas_aeruginosa')
+
+FOS_SCOPE = 'fosfomycin'
+CAZAVI_SCOPE = 'ceftazidime-avibactam'
+AVIBACTAM_COMBINATION_SCOPE = 'avibactam-combination'
+IN_SCOPE_DRUGS = (FOS_SCOPE, CAZAVI_SCOPE, AVIBACTAM_COMBINATION_SCOPE)
+
+
+def mutation_scope(row):
+    """The drug scope a curated mutation row belongs to.
+
+    Falls back to classifying the Class/Subclass text directly, so a
+    user-supplied mutation table without a Drug_Scope column still works.
+    """
+    scope = (row.get('Drug_Scope') or '').strip()
+    if scope:
+        return scope
+    combined = f"{row.get('Class', '')}/{row.get('Subclass', '')}".upper()
+    if 'FOSFOMYCIN' in combined:
+        return FOS_SCOPE
+    if 'CEFTAZIDIME-AVIBACTAM' in combined:
+        return CAZAVI_SCOPE
+    if 'AVIBACTAM' in combined:
+        return AVIBACTAM_COMBINATION_SCOPE
+    return 'other'
 
 
 def gene_family(gene_name):

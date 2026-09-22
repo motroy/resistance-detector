@@ -18,9 +18,9 @@ from Bio.SeqRecord import SeqRecord
 
 from . import betalactamase
 from .references import (
-    ACQUIRED_PREFIXES, gene_family, is_acquired_gene, load_point_mutations,
-    mutation_lookup_key,
-    load_reference_proteins,
+    ACQUIRED_PREFIXES, IN_SCOPE_DRUGS, gene_family, is_acquired_gene,
+    load_point_mutations, load_reference_proteins, mutation_lookup_key,
+    mutation_scope,
 )
 from .utils import check_dependencies
 from .variants import call_variants, extract_gene_span, loss_of_function_label
@@ -221,6 +221,11 @@ class BlastDetector:
                 'changes': change_labels,
                 'reported_mutations': reported,
                 'curated_mutations': curated_rows,
+                'other_drug_mutations': [
+                    f"{row['Label']} ({row['Subclass'] or row['Class']})"
+                    for row in curated_rows
+                    if mutation_scope(row) not in IN_SCOPE_DRUGS
+                ],
                 'other_changes': unreported,
                 'loss_of_function': call['loss_of_function'],
                 'lof_description': loss_of_function_label(call, numbering),
@@ -277,10 +282,16 @@ class BlastDetector:
         reported, other, rows = [], [], []
         for change in source['changes']:
             entry = curated.get(mutation_lookup_key(change))
-            if entry:
+            if entry is None:
+                other.append(change['label'])
+                continue
+            rows.append(entry)
+            if mutation_scope(entry) in IN_SCOPE_DRUGS:
                 reported.append(entry['Label'])
-                rows.append(entry)
             else:
+                # Curated, but for a drug this tool does not report on (e.g.
+                # tigecycline, carbapenems).  Kept visible as context rather
+                # than presented as a fosfomycin/ceftazidime-avibactam finding.
                 other.append(change['label'])
         return reported, other, rows
 
@@ -293,7 +304,8 @@ class BlastDetector:
         with open(report_file, 'w') as handle:
             handle.write('\t'.join([
                 'Contig', 'Gene', 'Allele', 'Identity%', 'Coverage%', 'Complete',
-                'Reported_Mutations', 'All_Protein_Changes', 'Loss_Of_Function',
+                'Reported_Mutations', 'Other_Drug_Mutations',
+                'All_Protein_Changes', 'Loss_Of_Function',
                 'Method', 'Copy_Number',
             ]) + '\n')
 
@@ -306,6 +318,8 @@ class BlastDetector:
                     result['coverage'],
                     'yes' if result['complete'] else 'no (contig boundary)',
                     result['mutations'],
+                    ';'.join(result['other_drug_mutations'])
+                    if result['other_drug_mutations'] else '-',
                     ';'.join(result['changes']) if result['changes'] else '-',
                     result['lof_description'] or '-',
                     'BLAST',

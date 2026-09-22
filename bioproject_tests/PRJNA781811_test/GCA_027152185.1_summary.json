@@ -312,16 +312,15 @@
       ],
       "reported": true,
       "gamma_detail": {
-        "protein": "fosA5",
+        "protein": "fosA9",
         "contig": "JAJOCU010000004.1",
         "contig_start": 14317,
         "contig_end": 14737,
-        "identity": 97.86,
+        "identity": 98.57000000000001,
         "coverage": 100.0,
         "match_type": "Mutant",
         "mutations": [
-          "M29T",
-          "A86V",
+          "I57V",
           "A138D"
         ]
       },
@@ -331,52 +330,24 @@
       "gene": "fosA5",
       "family": "fosA",
       "mutation": "A86V",
-      "confidence": 100,
+      "confidence": 50,
       "methods": [
-        "blast",
-        "gamma"
+        "blast"
       ],
       "reported": true,
-      "gamma_detail": {
-        "protein": "fosA5",
-        "contig": "JAJOCU010000004.1",
-        "contig_start": 14317,
-        "contig_end": 14737,
-        "identity": 97.86,
-        "coverage": 100.0,
-        "match_type": "Mutant",
-        "mutations": [
-          "M29T",
-          "A86V",
-          "A138D"
-        ]
-      },
+      "gamma_detail": null,
       "contig": "JAJOCU010000004.1"
     },
     {
       "gene": "fosA5",
       "family": "fosA",
       "mutation": "M29T",
-      "confidence": 100,
+      "confidence": 50,
       "methods": [
-        "blast",
-        "gamma"
+        "blast"
       ],
       "reported": true,
-      "gamma_detail": {
-        "protein": "fosA5",
-        "contig": "JAJOCU010000004.1",
-        "contig_start": 14317,
-        "contig_end": 14737,
-        "identity": 97.86,
-        "coverage": 100.0,
-        "match_type": "Mutant",
-        "mutations": [
-          "M29T",
-          "A86V",
-          "A138D"
-        ]
-      },
+      "gamma_detail": null,
       "contig": "JAJOCU010000004.1"
     },
     {
@@ -710,16 +681,15 @@
       ]
     },
     {
-      "protein": "fosA5",
+      "protein": "fosA9",
       "contig": "JAJOCU010000004.1",
       "contig_start": 14317,
       "contig_end": 14737,
-      "identity": 97.86,
+      "identity": 98.57000000000001,
       "coverage": 100.0,
       "match_type": "Mutant",
       "mutations": [
-        "M29T",
-        "A86V",
+        "I57V",
         "A138D"
       ]
     },
@@ -751,9 +721,9 @@
   "amplicons": [],
   "predicted_phenotypes": {
     "fosfomycin": {
-      "phenotype": "Resistant",
+      "phenotype": "Indeterminate",
       "evidence": [
-        "Acquired fosfomycin-modifying enzyme fosA5 (96.67% identity, 100.00% coverage)"
+        "fosA-family enzyme fosA5 detected (96.67% identity), but no intrinsic chromosomal fosA was recognised in this Klebsiella pneumoniae genome. Every isolate of this species carries one, so this may be a divergent chromosomal enzyme rather than an acquired gene"
       ]
     },
     "ceftazidime_avibactam": {

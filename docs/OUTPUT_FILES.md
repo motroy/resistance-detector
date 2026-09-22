@@ -21,7 +21,8 @@
 | `Gene` | The reference gene the locus was called against |
 | `Allele` | The allele assigned from the observed protein changes (`blaKPC-31`, `novel blaKPC variant (...)`, or the gene name when no typing applies) |
 | `Complete` | `no (contig boundary)` means the gene runs off the end of a contig and could not be fully assessed |
-| `Reported_Mutations` | Changes this tool is willing to report as resistance mutations |
+| `Reported_Mutations` | Changes this tool reports as resistance mutations for fosfomycin or ceftazidime-avibactam |
+| `Other_Drug_Mutations` | Curated mutations found at this locus but described for a different drug (carbapenems, tigecycline, …), shown as context only |
 | `All_Protein_Changes` | Every difference from the reference protein, including neutral ones |
 | `Loss_Of_Function` | Premature stop, frameshift or truncation, with the residue numbers |
 
@@ -39,11 +40,13 @@ Each summary carries a call for both drugs, with the evidence that produced it.
 | `Indeterminate` | Something relevant was found but its effect is not established, or a target gene could not be assessed |
 | `Susceptible` | The known mechanisms were looked for and not found |
 
-**Fosfomycin** is Resistant for an acquired fosA-family enzyme (fosA3/4/5/7/10/11,
-fosB, fosC2, fosL1), or loss of function in `uhpT`, `uhpA`, `uhpB`, `uhpC`,
-`glpT`, `cyaA`, `ptsI` or `galU`, or a curated point mutation in those genes for
-the declared organism. The intrinsic `fosAKP` of *K. pneumoniae* is never scored
-as resistance.
+**Fosfomycin** is Resistant for an acquired fosA-family enzyme (the fosA family,
+fosB, fosC2, fosL1/L2), or loss of function in `uhpT`, `uhpA`, `uhpB`, `uhpC`,
+`glpT`, `cyaA`, `ptsI` or `galU`, or a point mutation in those genes curated
+*for fosfomycin* in the declared organism. The intrinsic chromosomal enzymes
+(`fosAKP` in *K. pneumoniae*, `fosA_PA1129` in *P. aeruginosa*) are never scored
+as resistance, and a lone fosA hit with no intrinsic copy recognised gives
+Indeterminate rather than Resistant — see [METHODS.md](METHODS.md#6-fosfomycin).
 
 **Ceftazidime-avibactam** is Resistant for a metallo-beta-lactamase (avibactam
 does not inhibit those), or for a blaKPC carrying a documented escape variant or

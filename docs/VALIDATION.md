@@ -11,7 +11,7 @@ with the current code and the current reference data (AMRFinderPlus
 | `PRJNA741867_test_results/` | 6 *K. pneumoniae* ST307 | Clinical ceftazidime-avibactam-selected KPC variants | **6/6 concordant**, exact allele assignment for all three resistant isolates |
 | `PRJNA595047_test/` | 4 *K. pneumoniae* | In vitro selection of KPC Omega-loop deletion mutants | **4/4 concordant** with the study's own strain naming |
 | `PRJNA1086695_test/` | 2 long-read assemblies | Assembly + detection | blaKPC-179 identified in one isolate |
-| `PRJNA781811_test/` | 18 *K. pneumoniae* / *K. variicola* | Bacteraemia isolate collection | Genotype-only comparison; 4 carry an acquired fosA enzyme |
+| `PRJNA781811_test/` | 18 *K. pneumoniae* / *K. variicola* | Bacteraemia isolate collection | Genotype-only comparison; 1 unambiguous acquired fosA, 3 ambiguous (Indeterminate) |
 
 ## PRJNA741867 — the clearest test
 
@@ -74,12 +74,28 @@ fos-cazavi fos-cazavi-all \
 Each folder's `RESULTS_SUMMARY.md` or `COMPARISON_TO_PAPER.md` has the full
 per-genome detail.
 
+## The fosfomycin side
+
+The fosfomycin half has no paired MIC data in any of these BioProjects, so it is
+validated by mechanism rather than against measured phenotypes:
+
+* Acquired enzyme detection was exercised on the 18-genome PRJNA781811 set,
+  where it separates one unambiguous acquired fosA3 from 14 intrinsic-only
+  isolates and three that cannot be resolved by sequence alone.
+* Loss-of-function detection (nonsense, frameshift, truncation in the uptake and
+  regulatory genes) and the curated fosfomycin mutations are covered by the
+  synthetic scenarios, which declare their expected result up front.
+* Two curated mutations sitting in fosfomycin genes but belonging to *other*
+  drugs — `cyaA_S352T` (fosmidomycin) and `galU_R101C` (cephalosporin) — have
+  explicit regression tests asserting they do **not** produce a fosfomycin call.
+
 ## How far this goes
 
 These are genotype-to-published-phenotype comparisons on a few dozen genomes,
-most of them *K. pneumoniae*, and mostly testing the ceftazidime-avibactam
-side. There is no paired MIC data here, no *E. coli* or *P. aeruginosa* set,
-and no fosfomycin-resistant clinical isolate with measured susceptibility. The
-synthetic scenarios in `create_test_genomes.py` cover the logic paths that the
-real genomes do not. Treat the tool accordingly, and see
-[METHODS.md](METHODS.md#9-known-limits).
+most of them *K. pneumoniae*. The ceftazidime-avibactam side is validated
+against reported phenotypes; the fosfomycin side is not, because no isolate here
+has a measured fosfomycin MIC. There is also no *E. coli* or *P. aeruginosa*
+validation set. The synthetic scenarios in `create_test_genomes.py` cover the
+logic paths the real genomes do not, but a synthetic genome only tests that the
+code does what it was designed to do — not that the design matches biology.
+Treat the tool accordingly, and see [METHODS.md](METHODS.md#9-known-limits).

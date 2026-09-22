@@ -648,9 +648,9 @@
   "amplicons": [],
   "predicted_phenotypes": {
     "fosfomycin": {
-      "phenotype": "Resistant",
+      "phenotype": "Indeterminate",
       "evidence": [
-        "Acquired fosfomycin-modifying enzyme fosA10 (99.29% identity, 100.00% coverage)"
+        "fosA-family enzyme fosA10 detected (99.29% identity), but no intrinsic chromosomal fosA was recognised in this Klebsiella pneumoniae genome. Every isolate of this species carries one, so this may be a divergent chromosomal enzyme rather than an acquired gene"
       ]
     },
     "ceftazidime_avibactam": {

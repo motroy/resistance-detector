@@ -208,28 +208,22 @@
       ]
     },
     {
-      "gene": "fosA5",
+      "gene": "fosA9",
       "copy_number": 1,
       "loci": [
         {
           "contig": "JAJOCY010000015.1",
           "start": 132100,
           "end": 132511,
-          "allele": "fosA5",
-          "identity": "93.93",
+          "allele": "fosA9",
+          "identity": "98.54",
           "coverage": "98.10",
           "complete": true,
           "changes": [
-            "M29T",
-            "V57I",
-            "A86V",
             "A138D",
             "E139Q"
           ],
           "reported_mutations": [
-            "M29T",
-            "V57I",
-            "A86V",
             "A138D",
             "E139Q"
           ],
@@ -750,165 +744,51 @@
       "contig": "JAJOCY010000016.1"
     },
     {
-      "gene": "fosA5",
+      "gene": "fosA9",
       "family": "fosA",
       "mutation": "A138D",
-      "confidence": 50,
+      "confidence": 100,
       "methods": [
-        "blast"
+        "blast",
+        "gamma"
       ],
       "reported": true,
-      "gamma_detail": null,
+      "gamma_detail": {
+        "protein": "fosA9",
+        "contig": "JAJOCY010000015.1",
+        "contig_start": 132091,
+        "contig_end": 132511,
+        "identity": 98.57000000000001,
+        "coverage": 100.0,
+        "match_type": "Mutant",
+        "mutations": [
+          "A138D",
+          "E139Q"
+        ]
+      },
       "contig": "JAJOCY010000015.1"
     },
     {
-      "gene": "fosA5",
-      "family": "fosA",
-      "mutation": "A86V",
-      "confidence": 50,
-      "methods": [
-        "blast"
-      ],
-      "reported": true,
-      "gamma_detail": null,
-      "contig": "JAJOCY010000015.1"
-    },
-    {
-      "gene": "fosA5",
+      "gene": "fosA9",
       "family": "fosA",
       "mutation": "E139Q",
-      "confidence": 50,
+      "confidence": 100,
       "methods": [
-        "blast"
+        "blast",
+        "gamma"
       ],
       "reported": true,
-      "gamma_detail": null,
-      "contig": "JAJOCY010000015.1"
-    },
-    {
-      "gene": "fosA5",
-      "family": "fosA",
-      "mutation": "M29T",
-      "confidence": 50,
-      "methods": [
-        "blast"
-      ],
-      "reported": true,
-      "gamma_detail": null,
-      "contig": "JAJOCY010000015.1"
-    },
-    {
-      "gene": "fosA5",
-      "family": "fosA",
-      "mutation": "V57I",
-      "confidence": 50,
-      "methods": [
-        "blast"
-      ],
-      "reported": true,
-      "gamma_detail": null,
-      "contig": "JAJOCY010000015.1"
-    },
-    {
-      "gene": "fosAKP",
-      "family": "fosAKP",
-      "mutation": "A86V",
-      "confidence": 50,
-      "methods": [
-        "gamma"
-      ],
-      "reported": false,
       "gamma_detail": {
-        "protein": "fosAKP",
+        "protein": "fosA9",
         "contig": "JAJOCY010000015.1",
         "contig_start": 132091,
         "contig_end": 132511,
-        "identity": 97.14,
+        "identity": 98.57000000000001,
         "coverage": 100.0,
         "match_type": "Mutant",
         "mutations": [
-          "V57I",
-          "A86V",
-          "I91V",
-          "Q130P"
-        ]
-      },
-      "contig": "JAJOCY010000015.1"
-    },
-    {
-      "gene": "fosAKP",
-      "family": "fosAKP",
-      "mutation": "I91V",
-      "confidence": 50,
-      "methods": [
-        "gamma"
-      ],
-      "reported": false,
-      "gamma_detail": {
-        "protein": "fosAKP",
-        "contig": "JAJOCY010000015.1",
-        "contig_start": 132091,
-        "contig_end": 132511,
-        "identity": 97.14,
-        "coverage": 100.0,
-        "match_type": "Mutant",
-        "mutations": [
-          "V57I",
-          "A86V",
-          "I91V",
-          "Q130P"
-        ]
-      },
-      "contig": "JAJOCY010000015.1"
-    },
-    {
-      "gene": "fosAKP",
-      "family": "fosAKP",
-      "mutation": "Q130P",
-      "confidence": 50,
-      "methods": [
-        "gamma"
-      ],
-      "reported": false,
-      "gamma_detail": {
-        "protein": "fosAKP",
-        "contig": "JAJOCY010000015.1",
-        "contig_start": 132091,
-        "contig_end": 132511,
-        "identity": 97.14,
-        "coverage": 100.0,
-        "match_type": "Mutant",
-        "mutations": [
-          "V57I",
-          "A86V",
-          "I91V",
-          "Q130P"
-        ]
-      },
-      "contig": "JAJOCY010000015.1"
-    },
-    {
-      "gene": "fosAKP",
-      "family": "fosAKP",
-      "mutation": "V57I",
-      "confidence": 50,
-      "methods": [
-        "gamma"
-      ],
-      "reported": false,
-      "gamma_detail": {
-        "protein": "fosAKP",
-        "contig": "JAJOCY010000015.1",
-        "contig_start": 132091,
-        "contig_end": 132511,
-        "identity": 97.14,
-        "coverage": 100.0,
-        "match_type": "Mutant",
-        "mutations": [
-          "V57I",
-          "A86V",
-          "I91V",
-          "Q130P"
+          "A138D",
+          "E139Q"
         ]
       },
       "contig": "JAJOCY010000015.1"
@@ -1383,18 +1263,16 @@
       ]
     },
     {
-      "protein": "fosAKP",
+      "protein": "fosA9",
       "contig": "JAJOCY010000015.1",
       "contig_start": 132091,
       "contig_end": 132511,
-      "identity": 97.14,
+      "identity": 98.57000000000001,
       "coverage": 100.0,
       "match_type": "Mutant",
       "mutations": [
-        "V57I",
-        "A86V",
-        "I91V",
-        "Q130P"
+        "A138D",
+        "E139Q"
       ]
     },
     {
@@ -1460,9 +1338,9 @@
   "amplicons": [],
   "predicted_phenotypes": {
     "fosfomycin": {
-      "phenotype": "Resistant",
+      "phenotype": "Indeterminate",
       "evidence": [
-        "Acquired fosfomycin-modifying enzyme fosA5 (93.93% identity, 98.10% coverage)"
+        "fosA-family enzyme fosA9 detected (98.54% identity), but no intrinsic chromosomal fosA was recognised in this Klebsiella pneumoniae genome. Every isolate of this species carries one, so this may be a divergent chromosomal enzyme rather than an acquired gene"
       ]
     },
     "ceftazidime_avibactam": {

@@ -178,9 +178,18 @@ def scenarios(references):
             'multi_mechanism',
             lambda: genome(blaKPC=ambler_substitute(kpc2, 179, 'Y'),
                            fosA3=references['fosA3'],
+                           fosAKP=references['fosAKP'],
                            blaCTX_M=references['blaCTX-M-15']),
             'Resistant', 'Resistant', 'Klebsiella_pneumoniae',
-            'Both drugs compromised in one isolate',
+            'Both drugs compromised in one isolate: acquired fosA3 alongside '
+            'the intrinsic chromosomal fosA, plus a KPC escape variant',
+        ),
+        (
+            'lone_fosa_no_intrinsic_copy',
+            lambda: genome(fosA3=references['fosA3']),
+            'Indeterminate', 'Susceptible', 'Klebsiella_pneumoniae',
+            'A single fosA hit with no intrinsic chromosomal copy recognised '
+            'cannot be told apart from a divergent chromosomal enzyme',
         ),
     ]
 

@@ -85,6 +85,26 @@ knockouts.
 | blaKPC | Every difference is listed; only changes the ceftazidime-avibactam assessor recognises are reported as *resistance* mutations. |
 | Chromosomal gene | Only positions curated for the **declared organism**, plus loss of function. |
 
+### Drug scope
+
+This tool reports on two drugs. AMRFinderPlus curates each point mutation for
+the drug it was described against, and most mutations in these genes were
+described for something else — carbapenems, tigecycline, macrolides. Each row in
+`point_mutations.tsv` therefore carries a `Drug_Scope`, and only
+`fosfomycin`, `ceftazidime-avibactam` and `avibactam-combination` rows can
+become a `Reported_Mutations` entry. Everything else appears in a separate
+`Other_Drug_Mutations` column: visible, but never presented as a FOS or CAZ/AVI
+finding.
+
+Of the 93 curated mutations bundled, 13 are in scope. Two that are *not* would
+otherwise be actively misleading, because they sit in fosfomycin genes:
+
+* `cyaA_S352T` is curated for **fosmidomycin** — a different drug with a
+  confusingly similar name.
+* `galU_R101C` is curated for **cephalosporin**.
+
+Scoring either as fosfomycin resistance would be a plain false positive.
+
 Chromosomal point mutations require `--organism`. Without it, ordinary
 between-species sequence differences would be indistinguishable from resistance
 mutations — this is precisely the failure mode that makes naive tools report,
@@ -153,10 +173,28 @@ mutation columns but are not scored into the ceftazidime-avibactam call.
 
 ## 6. Fosfomycin
 
-* An acquired fosfomycin-modifying enzyme (fosA3/4/5/7/10/11, fosB, fosC2,
-  fosL1) gives **Resistant**.
-* `fosAKP`, the intrinsic chromosomal fosA of *K. pneumoniae*, is present in
-  susceptible isolates and is **never** scored as resistance.
+* An acquired fosfomycin-modifying enzyme (the fosA family, plus fosB, fosC2,
+  fosL1/L2) gives **Resistant**.
+* `fosAKP` (the *K. pneumoniae* chromosomal enzyme, which AMRFinderPlus calls
+  FosA6) and `fosA_PA1129` (the *P. aeruginosa* one) are intrinsic, present in
+  susceptible isolates, and **never** scored as resistance.
+
+### Telling an acquired fosA from an intrinsic one
+
+Every *Klebsiella* and *P. aeruginosa* isolate carries a chromosomal fosA. That
+makes a lone fosA hit ambiguous: sequence identity alone cannot distinguish an
+acquired plasmid-borne enzyme from a divergent copy of the species' own
+chromosomal gene. The rule is therefore:
+
+| Situation | Call |
+|---|---|
+| An intrinsic copy was recognised **and** a second, different fosA gene is present | the second one is acquired → **Resistant** |
+| A single fosA hit and **no** intrinsic copy recognised, in an organism that always has one | **Indeterminate**, with the ambiguity stated |
+| Any fosA hit in an organism with no intrinsic chromosomal fosA (e.g. *E. coli*) | **Resistant** |
+
+Without `--organism` the tool cannot know whether an intrinsic copy is expected,
+and treats a fosA hit as acquired. This is the single most important reason to
+pass `--organism` when analysing *Klebsiella*.
 * Loss of function in an uptake or regulatory gene (`uhpT`, `uhpA`, `uhpB`,
   `uhpC`, `glpT`, `cyaA`, `ptsI`, `galU`) gives **Resistant**; if the affected
   gene runs off a contig boundary the call is **Indeterminate** instead,
