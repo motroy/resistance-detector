@@ -1,151 +1,81 @@
 # PRJNA781811 — FOS-CAZAVI Resistance Detection Results
 
-18 *Klebsiella pneumoniae* / *K. variicola* assemblies from BioProject PRJNA781811 (listed in
-`PRJNA781811.ncbi_datasets.tsv`; see
-[Arena et al. 2022, Front. Microbiol. 13:983294](https://doi.org/10.3389/fmicb.2022.983294), whose
-Data Availability statement deposits its sequenced hypermucoviscous *K. pneumoniae*/*K. variicola*
-bacteremia isolates under this BioProject) were downloaded with the NCBI `datasets` CLI and run
-through `fos-cazavi fos-cazavi-all` using the bundled reference database
-(`fos_cazavi/data/example_database.fasta` / `example_database_deduplicated.fasta` /
-`example_database_mutations.tsv`) and default primers/genes.
+18 *Klebsiella pneumoniae* / *K. variicola* assemblies from BioProject PRJNA781811
+(listed in `PRJNA781811.ncbi_datasets.tsv`; see
+[Arena et al. 2022, Front. Microbiol. 13:983294](https://doi.org/10.3389/fmicb.2022.983294)),
+run through the current pipeline.
 
 ## Command used
 
 ```bash
-datasets download genome accession <18 GCA accessions, space-separated> \
-    --include genome --filename PRJNA781811.ncbi_dataset.zip
-
-unzip PRJNA781811.ncbi_dataset.zip   # produces ncbi_dataset/data/<accession>/<accession>_*_genomic.fna
+datasets download genome accession <accession> --include genome
+unzip ncbi_dataset.zip
 
 fos-cazavi fos-cazavi-all \
     -a ncbi_dataset/data/<accession>/<accession>_*_genomic.fna \
     -o <accession> \
     -d fos_cazavi/data/example_database.fasta \
-    --genes fos_cazavi/data/example_database_deduplicated.fasta \
-    --mutations fos_cazavi/data/example_database_mutations.tsv
+    --organism Klebsiella_pneumoniae
 ```
 
-(Required external tools — BLAST+ 2.17.0, GAMMA, SeqKit, BLAT, plus GAMMA's `unidecode` Python
-dependency — were installed locally via `install_deps.sh` to run the pipeline; note the script's
-hardcoded BLAST+ download URL (`ncbi-blast-2.16.0+`) currently 404s because NCBI rotated `LATEST` to
-2.17.0 — 2.17.0 was substituted manually. None of these tools/binaries are part of this repo or the
-committed results.)
+Reference data: AMRFinderPlus 2026-08-07.1 (see `fos_cazavi/data/DATA_VERSION.txt`).
 
-## Genomes analyzed
+## Results
 
-| Accession | Organism | Strain/Isolate |
-|---|---|---|
-| GCA_027151845.1 | *K. pneumoniae* | 57HMV004 |
-| GCA_027152185.1 | *K. pneumoniae* | 41HMV001-R44 |
-| GCA_027151985.1 | *K. pneumoniae* | 57HMV001 |
-| GCA_027151795.1 | *K. pneumoniae* | 59HMV |
-| GCA_027152215.1 | *K. pneumoniae* | 49HMV003 |
-| GCA_027152405.1 | *K. pneumoniae* | 21HMV001 |
-| GCA_027151785.1 | *K. pneumoniae* | 57HMV003 |
-| GCA_027152065.1 | *K. pneumoniae* | 49HMV002 |
-| GCA_027151835.1 | *K. pneumoniae* | 29HMV004 |
-| GCA_027152205.1 | *K. pneumoniae* | HMV007LS |
-| GCA_027152245.1 | *K. pneumoniae* | 43HMV001 |
-| GCA_027152005.1 | *K. pneumoniae* | 46HMV001-A |
-| GCA_027152105.1 | *K. pneumoniae* | 46HMV001-C |
-| GCA_027151875.1 | *K. pneumoniae* | 29HMV007 |
-| GCA_027151995.1 | *K. pneumoniae* | 46HMV001-B |
-| GCA_027152225.1 | *K. pneumoniae* | 30HMV001 |
-| GCA_027152445.1 | *K. pneumoniae* | 17HMV002 |
-| GCA_027152495.1 | *K. variicola* | 03HMV002 |
+| Accession | Beta-lactamases | fosA-family | Predicted FOS | Predicted CAZ/AVI |
+|---|---|---|---|---|
+| GCA_027151785.1 | SHV-12 | fosAKP (intrinsic) | Susceptible | Susceptible |
+| GCA_027151795.1 | SHV-12 | fosAKP (intrinsic) | Susceptible | Susceptible |
+| GCA_027151835.1 | KPC-3, SHV-12 | fosAKP (intrinsic) | Susceptible | Susceptible |
+| GCA_027151845.1 | SHV-12 | **fosA3** + fosAKP | **Resistant** | Susceptible |
+| GCA_027151875.1 | KPC-3, CMY-2, CTX-M-15, SHV-12 | fosAKP (intrinsic) | Susceptible | Susceptible |
+| GCA_027151985.1 | SHV-12 | **fosA10** | **Resistant** | Susceptible |
+| GCA_027151995.1 | CTX-M-15, SHV-12 | fosAKP (intrinsic) | Susceptible | Susceptible |
+| GCA_027152005.1 | CTX-M-15, SHV-12 | fosAKP (intrinsic) | Susceptible | Susceptible |
+| GCA_027152065.1 | KPC-3, SHV-12 | fosAKP (intrinsic) | Susceptible | Susceptible |
+| GCA_027152105.1 | CTX-M-15, SHV-12 | fosAKP (intrinsic) | Susceptible | Susceptible |
+| GCA_027152185.1 | SHV-12 | **fosA5** | **Resistant** | Susceptible |
+| GCA_027152205.1 | SHV-12 | fosAKP (intrinsic) | Susceptible | Susceptible |
+| GCA_027152215.1 | SHV-12 | fosAKP (intrinsic) | Susceptible | Susceptible |
+| GCA_027152225.1 | KPC-2, CTX-M-15, SHV-12 | fosAKP (intrinsic) | Susceptible | Susceptible |
+| GCA_027152245.1 | CTX-M-15, SHV-12 | fosAKP (intrinsic) | Susceptible | Susceptible |
+| GCA_027152405.1 | SHV-12 | fosAKP (intrinsic) | Susceptible | Susceptible |
+| GCA_027152445.1 | KPC-3, SHV-12 | fosAKP (intrinsic) | Susceptible | Susceptible |
+| GCA_027152495.1 | SHV-12 | **fosA5** | **Resistant** | Susceptible |
 
-## Predicted phenotype summary
+4 of 18 carry an acquired fosA-family enzyme (fosA3, fosA5 ×2, fosA10) and are
+predicted fosfomycin-resistant. The other 14 carry only the intrinsic
+chromosomal `fosAKP`, which is present in fosfomycin-susceptible *K.
+pneumoniae* and is not scored as acquired resistance.
 
-All 18 isolates were predicted **Susceptible** to ceftazidime-avibactam (no blaKPC Omega-loop/X-loop
-resistance marker detected in any genome — wild-type or absent blaKPC). Three isolates were predicted
-**Resistant** to fosfomycin via an acquired plasmid-borne `fosA` variant; the remaining 15 carry only the
-chromosomal, non-resistance-conferring `fosAKP`:
+All 18 are predicted ceftazidime-avibactam-susceptible. Four carry blaKPC
+(KPC-2 or KPC-3) with no Omega-loop, 237–243 or insertion-loop change, so
+avibactam is expected to inhibit the enzyme; none carries a
+metallo-beta-lactamase.
 
-| Accession | FOS phenotype | Acquired fosA gene | Identity |
-|---|---|---|---|
-| GCA_027151845.1 | **Resistant** | fosA3 | 100.00% |
-| GCA_027152185.1 | **Resistant** | fosA5 | 96.67% |
-| GCA_027152215.1 | **Resistant** | fosA5 | 96.19% |
-| (other 15 genomes) | Susceptible | — (chromosomal fosAKP only) | — |
+## Changes from the earlier run of this BioProject
 
-Full per-genome predicted phenotype, gene, and mutation calls are in `PRJNA781811_summary_table.tsv`
-and the per-accession `*_summary.txt`/`*_summary.json` files.
+These results differ from the ones previously committed here, because the
+detection method changed:
 
-## Other resistance genes detected
+* **GCA_027152215.1** was previously reported as carrying `fosA5` at 96.19%
+  identity and called fosfomycin-resistant. The same locus now matches the
+  intrinsic `fosAKP` reference better (96.19% to fosAKP, chosen by bitscore
+  across all fosA references rather than from a truncated hit list), and the
+  isolate is called susceptible. The earlier call was a false positive
+  produced by assigning an intrinsic gene to an acquired allele.
+* **GCA_027151985.1** is now reported as `fosA10` (99.29%), an allele that was
+  not in the earlier reference set.
+* blaKPC alleles are now named from the observed protein changes against
+  KPC-2, rather than from whichever KPC reference happened to win the BLAST
+  hit.
 
-Beyond the FOS-specific markers, the chromosomal background genes (acrB, envZ, ompK35, ompK36, ftsI,
-blaSHV-12) were detected with their expected baseline mutation sets in all 18 genomes (consistent with
-the chromosomal-background findings in the PRJNA595047/PRJNA741867 datasets in this repo). Five isolates
-additionally carry an acquired carbapenemase:
+See [../../docs/METHODS.md](../../docs/METHODS.md) for how allele assignment
+and the phenotype rules work.
 
-| Accession | Carbapenemase | Identity |
-|---|---|---|
-| GCA_027151835.1 | blaKPC-3 | 100.00% |
-| GCA_027151875.1 | blaKPC-3, blaCMY-178 | 100.00%, 98.87% |
-| GCA_027152065.1 | blaKPC-3 | 100.00% |
-| GCA_027152225.1 | blaKPC-2 | 100.00% |
-| GCA_027152445.1 | blaKPC-3 | 100.00% |
+## Limits
 
-No mutations were detected in any of the blaKPC alleles found here (all `Match_Type=Native` in GAMMA),
-so the CAZ/AVI-susceptible phenotype call is consistent: wild-type blaKPC remains avibactam-inhibitable.
-
-## Comparison with the source paper (Arena et al. 2022)
-
-The paper enrolled 19 confirmed hypermucoviscous (HMV, "string test"-positive) bloodstream isolates
-from a 2016–17 nationwide Italian surveillance (43 laboratories, 1,502 *K. pneumoniae* bacteremia
-episodes screened): 18 *K. pneumoniae* + 1 *K. variicola*. The genomes were typed with Kleborate/
-PathogenWatch and phenotyped by broth microdilution (cephalosporins, CAZ/AVI, colistin, fosfomycin,
-etc.) plus *Galleria mellonella*/murine virulence models. Only 18 of the 19 assemblies are present in
-`PRJNA781811.ncbi_datasets.tsv` (the 18 analyzed here) — one isolate from the paper's cohort does not
-appear to have a corresponding public assembly accession in this BioProject.
-
-**Acquired carbapenemases — count matches.** The paper reports 5/19 isolates (across the two major
-ST307 and ST512 clones) carrying an acquired blaKPC carbapenemase: 2 isolates with blaKPC-3/blaKPC-2
-among the six ST307 strains, and blaKPC-3 in all three ST512 strains. `fos-cazavi` independently
-detected blaKPC in exactly 5/18 genomes here (4× blaKPC-3, 1× blaKPC-2, one genome also carrying
-blaCMY-178) — consistent in count and allele mix with the paper's own genotyping.
-
-**Ceftazidime-avibactam — a genuine discrepancy.** The paper found all 19 isolates phenotypically
-resistant to plain ceftazidime, but only **one** isolate (an ST512 strain, "GMR140") was phenotypically
-resistant to ceftazidime-avibactam (94.7% susceptible overall, MIC90 2/4 µg/mL). `fos-cazavi` predicted
-**all 18** genomes here Susceptible to CAZ/AVI, because every detected blaKPC allele was GAMMA
-`Match_Type=Native` (no Omega-loop/X-loop mutation) and `fos_cazavi/phenotype.py`'s
-`predict_cazavi_phenotype()` bases the CAZ/AVI call solely on blaKPC Omega-loop/X-loop markers. This
-means the tool likely missed the one genuinely CAZ/AVI-resistant ST512 isolate. The pipeline *does*
-separately detect porin (ompK35/ompK36) and efflux (acrB) mutations in every genome here (see "Other
-resistance genes detected" below), but those calls aren't wired into the CAZ/AVI phenotype prediction
-— and in this dataset they wouldn't have discriminated the resistant isolate anyway, since the same
-ompK36 G213I / ompK35 D135G,D181R / acrB G617A,F626A,A628T baseline mutation set is present across
-essentially all 18 genomes regardless of blaKPC status (consistent with the chromosomal-background
-findings already noted in the PRJNA595047/PRJNA741867 datasets). The likelier explanation for the
-paper's one CAZ/AVI-resistant isolate is a mechanism this pipeline doesn't model at all, e.g. blaKPC
-gene copy-number amplification — a known but harder-to-detect-from-assemblies driver of CAZ/AVI
-resistance in blaKPC-producing *K. pneumoniae*.
-
-**Fosfomycin — partial agreement, similar genotype/phenotype gap to the original study.** The paper
-phenotypically found 47.4% (9/19) of isolates fosfomycin-resistant, but explicitly identified an
-acquired `fosA3` gene in only **one** of them (the ST11 isolate). The other resistant isolates (all
-three ST512 strains, plus single ST29/ST35/new-ST37 isolates) had no acquired fosfomycin-resistance
-gene detected by the paper's own Kleborate-based pipeline either — i.e., the source study itself
-reports a similar genotype-phenotype gap for fosfomycin, most likely from un-screened chromosomal
-mutations or efflux-mediated resistance. `fos-cazavi` here detected acquired `fosA` in 3/18 genomes
-(1× fosA3 at 100% identity — consistent with the paper's ST11 fosA3 call; 2× fosA5 at ~96% identity,
-not narratively reported in the paper's main text but plausibly present in its supplementary Kleborate
-output). Both studies therefore likely under-call true fosfomycin resistance when relying only on
-acquired-gene detection.
-
-## Files in this folder
-
-- `PRJNA781811.ncbi_dataset.zip` — original NCBI `datasets` download (unzip to get
-  `ncbi_dataset/data/<accession>/<accession>_*_genomic.fna` assemblies plus
-  `data_summary.tsv`/`assembly_data_report.jsonl` metadata; not kept unzipped here to avoid duplicating
-  ~100 MB of genome data already in the zip)
-- `<accession>_*` — fos-cazavi outputs per genome: `_summary.txt` (human-readable report),
-  `_summary.json`/`_summary.tsv` (machine-readable summary), `_results.tsv`/`_all_results.tsv` (BLAST
-  gene detection), `_unified_mutations.tsv` (cross-method mutation confidence, where present),
-  `_protein_mutations.tsv` (GAMMA mutation calls), `_genes.fasta` (extracted gene sequences),
-  `_blast.txt` (raw BLAST output), `_gamma.gamma`/`_gamma.psl` (raw GAMMA output),
-  `_amplicons.tsv`/`_seqkit_primers.tsv` (SeqKit amplicon detection, where amplicons were found),
-  `_analysis.log` (tool versions/parameters log)
-- `PRJNA781811_summary_table.tsv` — one-row-per-genome rollup of predicted phenotypes and detected
-  genes/mutations across all 18 assemblies
+No phenotypic AST results are available for these isolates in the referenced
+study's public data, so this is a genotype-only comparison: it shows the
+pipeline's gene and allele assignments on real assemblies, not its accuracy
+against measured MICs.

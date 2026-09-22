@@ -1,16 +1,66 @@
-Sample	Type	Gene_Protein	Method	Result_Details	Identity_Confidence	Contig	Start	End	Copy_Number	Notes
-SRR28296940_myloasm_assembly.fasta	Acquired Gene	ompK36	BLAST	Coverage: 102.45%	92.22%	u57	216041	217165	1	Mutations: G213I
-SRR28296940_myloasm_assembly.fasta	Acquired Gene	blaKPC-2	BLAST	Coverage: 100.00%	100.00%	u93	6026	6907	1	Mutations: -
-SRR28296940_myloasm_assembly.fasta	Acquired Gene	envZ	BLAST	Coverage: 100.00%	99.93%	u1	48666	50021	1	Mutations: G244S/D,T324Q
-SRR28296940_myloasm_assembly.fasta	Acquired Gene	acrB	BLAST	Coverage: 100.00%	99.84%	u12	171239	174385	1	Mutations: G617A,F626A,A628T/V
-SRR28296940_myloasm_assembly.fasta	Acquired Gene	ompK35	BLAST	Coverage: 100.00%	99.35%	u46	46602	47680	1	Mutations: D135G,D181R
-SRR28296940_myloasm_assembly.fasta	Acquired Gene	ftsI	BLAST	Coverage: 100.00%	99.32%	u79	186809	188575	1	Mutations: A333P,Y350L,S357Q
-SRR28296940_myloasm_assembly.fasta	Acquired Gene	fosAKP	BLAST	Coverage: 100.00%	98.81%	u60	14061	14480	1	Mutations: I91V
-SRR28296940_myloasm_assembly.fasta	Mutation	fosakp	gamma	I91V	50%	u60	14060	14480	1	Dual-method consensus
-SRR28296940_myloasm_assembly.fasta	Gene Alignment	envZ	GAMMA	Wildtype / No mutations detected	99.78%	u1	48665	50021	1	Coverage: 100.00%
-SRR28296940_myloasm_assembly.fasta	Gene Alignment	acrB	GAMMA	Wildtype / No mutations detected	99.90%	u12	171238	174385	1	Coverage: 100.00%
-SRR28296940_myloasm_assembly.fasta	Gene Alignment	ompK35	GAMMA	Wildtype / No mutations detected	10.56%	u46	46601	47680	1	Coverage: 99.91%
-SRR28296940_myloasm_assembly.fasta	Gene Alignment	ompK36	GAMMA	Wildtype / No mutations detected	47.01%	u57	216040	217165	1	Coverage: 101.90%
-SRR28296940_myloasm_assembly.fasta	Gene Alignment	ftsI	GAMMA	Wildtype / No mutations detected	99.66%	u79	186808	188575	1	Coverage: 100.00%
-SRR28296940_myloasm_assembly.fasta	Gene Alignment	blaKPC-2	GAMMA	Wildtype / No mutations detected	100.00%	u93	6025	6907	1	Coverage: 100.00%
-SRR28296940_myloasm_assembly.fasta	Amplicon	blaKPC_ver	SeqKit/Bed	Length: 882bp	-	u93	6025	6907	-	Genes/Mutations in region: blaKPC-2: (wildtype)
+Sample	Type	Gene	Allele	Method	Result_Details	Identity_Confidence	Contig	Start	End	Copy_Number	Notes
+SRR28296940.fasta	Chromosomal gene	acrB	acrB	BLAST	Coverage: 100.00%	99.84%	u12	171239	174385	1	protein changes: R716L
+SRR28296940.fasta	Chromosomal gene	ftsI	ftsI	BLAST	Coverage: 100.00%	99.32%	u79	186809	188575	1	protein changes: V375A;A433V
+SRR28296940.fasta	Chromosomal gene	envZ	envZ	BLAST	Coverage: 100.00%	99.93%	u1	48666	50021	1	protein changes: I258M
+SRR28296940.fasta	Chromosomal gene	ompK35	ompK35	BLAST	Coverage: 100.00%	99.35%	u46	46602	47680	1	protein changes: N29T;G30A;N31T;K32N;L33_V44del;T47S;N48_K226del;A227M;A229K;A231S;T232A;A234_Q288del;K290S;K292P;D293P;L294M;Q295A;S296_Y339del;K341P;G344T;V345I;A346P;T347P;D348M;D349P;Q350V;A351S;V353_F359del; premature stop at residue 63 (62/359 aa)
+SRR28296940.fasta	Acquired gene	blaKPC-2	blaKPC-2	BLAST	Coverage: 100.00%	100.00%	u93	6026	6907	1	no protein changes vs reference
+SRR28296940.fasta	Chromosomal gene	ompK36	ompK36	BLAST	Coverage: 100.00%	92.22%	u57	216041	217165	1	protein changes: insGD@133;A183T;L184del;T192G;Y201F;N221H;L225N;S230del;K231R;A233D;L234K;insF@268;A269S;S271N;insGESDSI@271;L272S;L307I;I315L;D344E;S346D;H349R;N350R
+SRR28296940.fasta	Chromosomal gene	fosAKP	fosAKP	BLAST	Coverage: 100.00%	98.81%	u60	14061	14480	1	protein changes: I91V;Q130P;D138E
+SRR28296940.fasta	Protein change	acrB	-	blast+gamma	R716L	100%	u12	-	-	-	sequence difference, not a curated resistance mutation
+SRR28296940.fasta	Protein change	envZ	-	blast+gamma	I258M	100%	u1	-	-	-	sequence difference, not a curated resistance mutation
+SRR28296940.fasta	Protein change	fosAKP	-	blast+gamma	D138E	100%	u60	-	-	-	sequence difference, not a curated resistance mutation
+SRR28296940.fasta	Protein change	fosAKP	-	blast+gamma	I91V	100%	u60	-	-	-	sequence difference, not a curated resistance mutation
+SRR28296940.fasta	Protein change	fosAKP	-	blast+gamma	Q130P	100%	u60	-	-	-	sequence difference, not a curated resistance mutation
+SRR28296940.fasta	Protein change	ftsI	-	blast+gamma	A433V	100%	u79	-	-	-	sequence difference, not a curated resistance mutation
+SRR28296940.fasta	Protein change	ftsI	-	blast+gamma	V375A	100%	u79	-	-	-	sequence difference, not a curated resistance mutation
+SRR28296940.fasta	Protein change	ompK35	-	blast	A227M	50%	u46	-	-	-	sequence difference, not a curated resistance mutation
+SRR28296940.fasta	Protein change	ompK35	-	blast	A229K	50%	u46	-	-	-	sequence difference, not a curated resistance mutation
+SRR28296940.fasta	Protein change	ompK35	-	blast	A231S	50%	u46	-	-	-	sequence difference, not a curated resistance mutation
+SRR28296940.fasta	Protein change	ompK35	-	blast	A234_Q288del	50%	u46	-	-	-	sequence difference, not a curated resistance mutation
+SRR28296940.fasta	Protein change	ompK35	-	blast	A346P	50%	u46	-	-	-	sequence difference, not a curated resistance mutation
+SRR28296940.fasta	Protein change	ompK35	-	blast	A351S	50%	u46	-	-	-	sequence difference, not a curated resistance mutation
+SRR28296940.fasta	Protein change	ompK35	-	blast	D293P	50%	u46	-	-	-	sequence difference, not a curated resistance mutation
+SRR28296940.fasta	Protein change	ompK35	-	blast	D348M	50%	u46	-	-	-	sequence difference, not a curated resistance mutation
+SRR28296940.fasta	Protein change	ompK35	-	blast	D349P	50%	u46	-	-	-	sequence difference, not a curated resistance mutation
+SRR28296940.fasta	Protein change	ompK35	-	blast	G30A	50%	u46	-	-	-	sequence difference, not a curated resistance mutation
+SRR28296940.fasta	Protein change	ompK35	-	blast	G344T	50%	u46	-	-	-	sequence difference, not a curated resistance mutation
+SRR28296940.fasta	Protein change	ompK35	-	blast	K290S	50%	u46	-	-	-	sequence difference, not a curated resistance mutation
+SRR28296940.fasta	Protein change	ompK35	-	blast	K292P	50%	u46	-	-	-	sequence difference, not a curated resistance mutation
+SRR28296940.fasta	Protein change	ompK35	-	blast	K32N	50%	u46	-	-	-	sequence difference, not a curated resistance mutation
+SRR28296940.fasta	Protein change	ompK35	-	blast	K341P	50%	u46	-	-	-	sequence difference, not a curated resistance mutation
+SRR28296940.fasta	Protein change	ompK35	-	blast	L294M	50%	u46	-	-	-	sequence difference, not a curated resistance mutation
+SRR28296940.fasta	Protein change	ompK35	-	blast	L33_V44del	50%	u46	-	-	-	sequence difference, not a curated resistance mutation
+SRR28296940.fasta	Protein change	ompK35	-	blast	N29T	50%	u46	-	-	-	sequence difference, not a curated resistance mutation
+SRR28296940.fasta	Protein change	ompK35	-	blast	N31T	50%	u46	-	-	-	sequence difference, not a curated resistance mutation
+SRR28296940.fasta	Protein change	ompK35	-	blast	N48_K226del	50%	u46	-	-	-	sequence difference, not a curated resistance mutation
+SRR28296940.fasta	Protein change	ompK35	-	blast	Q295A	50%	u46	-	-	-	sequence difference, not a curated resistance mutation
+SRR28296940.fasta	Protein change	ompK35	-	blast	Q350V	50%	u46	-	-	-	sequence difference, not a curated resistance mutation
+SRR28296940.fasta	Protein change	ompK35	-	blast	S296_Y339del	50%	u46	-	-	-	sequence difference, not a curated resistance mutation
+SRR28296940.fasta	Protein change	ompK35	-	blast	T232A	50%	u46	-	-	-	sequence difference, not a curated resistance mutation
+SRR28296940.fasta	Protein change	ompK35	-	blast	T347P	50%	u46	-	-	-	sequence difference, not a curated resistance mutation
+SRR28296940.fasta	Protein change	ompK35	-	blast	T47S	50%	u46	-	-	-	sequence difference, not a curated resistance mutation
+SRR28296940.fasta	Protein change	ompK35	-	blast	V345I	50%	u46	-	-	-	sequence difference, not a curated resistance mutation
+SRR28296940.fasta	Protein change	ompK35	-	blast	V353_F359del	50%	u46	-	-	-	sequence difference, not a curated resistance mutation
+SRR28296940.fasta	Protein change	ompK36	-	blast	A183T	50%	u57	-	-	-	sequence difference, not a curated resistance mutation
+SRR28296940.fasta	Protein change	ompK36	-	blast	A233D	50%	u57	-	-	-	sequence difference, not a curated resistance mutation
+SRR28296940.fasta	Protein change	ompK36	-	blast	A269S	50%	u57	-	-	-	sequence difference, not a curated resistance mutation
+SRR28296940.fasta	Protein change	ompK36	-	blast	D344E	50%	u57	-	-	-	sequence difference, not a curated resistance mutation
+SRR28296940.fasta	Protein change	ompK36	-	blast	H349R	50%	u57	-	-	-	sequence difference, not a curated resistance mutation
+SRR28296940.fasta	Protein change	ompK36	-	blast	I315L	50%	u57	-	-	-	sequence difference, not a curated resistance mutation
+SRR28296940.fasta	Protein change	ompK36	-	blast	K231R	50%	u57	-	-	-	sequence difference, not a curated resistance mutation
+SRR28296940.fasta	Protein change	ompK36	-	blast	L184del	50%	u57	-	-	-	sequence difference, not a curated resistance mutation
+SRR28296940.fasta	Protein change	ompK36	-	blast	L225N	50%	u57	-	-	-	sequence difference, not a curated resistance mutation
+SRR28296940.fasta	Protein change	ompK36	-	blast	L234K	50%	u57	-	-	-	sequence difference, not a curated resistance mutation
+SRR28296940.fasta	Protein change	ompK36	-	blast	L272S	50%	u57	-	-	-	sequence difference, not a curated resistance mutation
+SRR28296940.fasta	Protein change	ompK36	-	blast	L307I	50%	u57	-	-	-	sequence difference, not a curated resistance mutation
+SRR28296940.fasta	Protein change	ompK36	-	blast	N221H	50%	u57	-	-	-	sequence difference, not a curated resistance mutation
+SRR28296940.fasta	Protein change	ompK36	-	blast	N350R	50%	u57	-	-	-	sequence difference, not a curated resistance mutation
+SRR28296940.fasta	Protein change	ompK36	-	blast	S230del	50%	u57	-	-	-	sequence difference, not a curated resistance mutation
+SRR28296940.fasta	Protein change	ompK36	-	blast	S271N	50%	u57	-	-	-	sequence difference, not a curated resistance mutation
+SRR28296940.fasta	Protein change	ompK36	-	blast	S346D	50%	u57	-	-	-	sequence difference, not a curated resistance mutation
+SRR28296940.fasta	Protein change	ompK36	-	blast	T192G	50%	u57	-	-	-	sequence difference, not a curated resistance mutation
+SRR28296940.fasta	Protein change	ompK36	-	blast	Y201F	50%	u57	-	-	-	sequence difference, not a curated resistance mutation
+SRR28296940.fasta	Protein change	ompK36	-	blast	insF@268	50%	u57	-	-	-	sequence difference, not a curated resistance mutation
+SRR28296940.fasta	Protein change	ompK36	-	blast	insGD@133	50%	u57	-	-	-	sequence difference, not a curated resistance mutation
+SRR28296940.fasta	Protein change	ompK36	-	blast	insGESDSI@271	50%	u57	-	-	-	sequence difference, not a curated resistance mutation
+SRR28296940.fasta	Amplicon	blaKPC_ver	-	SeqKit/amplicon	Length: 882bp	-	u93	6025	6907	-	Genes in region: blaKPC-2: no changes

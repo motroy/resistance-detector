@@ -1,80 +1,111 @@
 # FOS-CAZAVI Resistance Detector
 
-A CLI tool for detecting fosfomycin (FOS) and ceftazidime-avibactam (CAZAVI) resistance genes and mutations from bacterial genome assemblies.
+A CLI tool for detecting ceftazidime-avibactam (CAZ/AVI) and fosfomycin (FOS)
+resistance genes and mutations in bacterial genome assemblies.
 
-## Features
+## What it does
 
-- **Modular CLI**: Separate commands for database creation, acquired gene detection, and mutation analysis.
-- **Gene Detection**: Identifies resistance genes (fosA variants, blaKPC, blaOXA-48, etc.) using BLAST+.
-- **Mutation Detection**: Detects known resistance mutations (D179Y, V240G, T243M, etc.) using GAMMA (protein-level gene alignment via translated nucleotide CDS) and SeqKit amplicon analysis.
-- **Indel-aware mutation calling**: Both the BLAST and SeqKit mutation-detection paths walk a real gapped alignment rather than doing a fixed-position lookup, so insertions/deletions relative to the reference gene are reported as e.g. `L166del` instead of producing fabricated, frame-shifted point-substitution calls.
-- **Amplicon Detection**: Uses seqkit amplicon to find PCR products from primer pairs and checks them for resistance mutations.
-- **Copy-Number Reporting**: Annotates every detected gene with the number of distinct genomic loci it was found at.
-- **Predicted Phenotypes**: Derives a conclusive, genotype-based Susceptible/Resistant call for both fosfomycin and ceftazidime-avibactam, with supporting evidence. See [docs/OUTPUT_FILES.md](docs/OUTPUT_FILES.md#predicted-phenotypes).
-- **Multiple Output Formats**: Human-readable summary plus machine-parsable TSV/JSON.
-- **Logging**: Comprehensive logging of commands, parameters, and tool versions.
+- **Types blaKPC alleles.** The observed protein changes are compared with every
+  blaKPC allele defined by NCBI, so a hit is reported as `blaKPC-31`,
+  `blaKPC-66`, or as a novel variant with its changes listed — not just as
+  "blaKPC present".
+- **Calls variants properly.** The gene span is recovered from the contig,
+  translated, and aligned to the reference protein. Substitutions, in-frame
+  indels, insertions, premature stops and frameshifts are each reported as what
+  they are, in standardised **Ambler numbering** for class A beta-lactamases.
+- **Predicts phenotypes with stated evidence** — `Resistant`,
+  `Indeterminate` or `Susceptible`, each with the specific finding behind it.
+  Hotspot changes that are not documented give `Indeterminate` rather than a
+  guess in either direction.
+- **Detects metallo-beta-lactamases** (NDM, VIM, IMP, SPM, GIM, SIM), which
+  avibactam does not inhibit, and which therefore make CAZ/AVI inactive
+  regardless of any KPC present.
+- **Distinguishes acquired from intrinsic.** The intrinsic `fosAKP` of *K.
+  pneumoniae* is never scored as acquired fosfomycin resistance.
+- **Cross-checks with a second caller.** GAMMA independently reports codon
+  changes; agreement between the two is recorded per change.
+- **Says when it cannot tell.** Genes running off a contig boundary are flagged
+  rather than silently called.
 
-## Documentation
-
-- [Installation](docs/INSTALLATION.md)
-- [Usage / CLI Reference](docs/USAGE.md)
-- [Output Files Reference](docs/OUTPUT_FILES.md)
-- [Testing](docs/TESTING.md)
-- [Validation Against Real, Published Genomes](docs/VALIDATION.md)
-
-## Repository Structure
-
-```
-resistance-detector/
-├── fos_cazavi/              # Python package (installed via pip)
-│   ├── __init__.py
-│   ├── cli.py               # CLI entry point
-│   ├── db.py                # Database creation module
-│   ├── acquired.py          # BLAST-based detection module
-│   ├── mutations.py         # GAMMA/Amplicon detection module
-│   ├── phenotype.py         # Genotype-to-phenotype prediction (FOS, CAZ/AVI)
-│   ├── utils.py             # Shared utilities
-│   └── data/                # Bundled reference data
-│       ├── example_database.fasta              # Raw nucleotide CDS sequences
-│       ├── example_database_deduplicated.fasta # GAMMA-ready database (GAMMA_DB_Maker output)
-│       ├── example_database_mutations.tsv      # Mutation definitions TSV
-│       └── primers.tsv                         # Primer sequences for amplicon detection
-├── fos-cazavi               # Executable script (for repo use without install)
-├── pyproject.toml           # PyPI package configuration
-├── GAMMA_DB_Maker.py        # GAMMA database preparation tool
-├── create_test_genomes.py   # Test genome generator
-├── batch_analysis.sh        # Batch processing script
-├── Snakefile                # Snakemake workflow
-├── config.yaml              # Snakemake configuration
-├── environment.yaml         # Conda environment
-├── scripts/
-│   ├── download_assembly.py      # Download assemblies from NCBI
-│   └── simulate_esbl_genomes.py  # Download real ESBL genomes and simulate resistance
-├── tests/                   # Unit test suite (305 tests)
-├── docs/                    # Documentation (installation, usage, outputs, testing, validation)
-├── example_results/         # Example outputs
-├── bioproject_tests/        # Real-genome validation against published bioprojects
-│   ├── PRJNA595047_test/        # 4 K. pneumoniae assemblies (NCBI),
-│   │                            #   incl. comparison against a published in vitro selection study
-│   ├── PRJNA741867_test_results/ # 6 K. pneumoniae ST307 assemblies (NCBI),
-│   │                            #   incl. comparison against a published clinical CAZ/AVI-resistance study
-│   └── PRJNA1086695_test/       # 2 myloasm-assembled isolates
-├── LICENSE
-└── README.md
-```
-
-## Quick Start
+## Quick start
 
 ```bash
 pip install fos-cazavi
 
 fos-cazavi fos-cazavi-all \
     -a your_assembly.fasta \
-    -d resistance_db.fasta \
-    -o results
+    -o results \
+    --organism Klebsiella_pneumoniae
 ```
 
-See [docs/INSTALLATION.md](docs/INSTALLATION.md) and [docs/USAGE.md](docs/USAGE.md) for full setup and CLI details.
+The reference data is bundled; `-d` is optional. `--organism` is required for
+curated chromosomal point mutations, which are only meaningful against a
+species-matched reference — see [docs/USAGE.md](docs/USAGE.md).
+
+Example output:
+
+```
+PREDICTED PHENOTYPES (genotype-based):
+  Fosfomycin (FOS): Resistant
+    - Acquired fosfomycin-modifying enzyme fosA3 (100.00% identity, 100.00% coverage)
+  Ceftazidime-Avibactam (CAZ/AVI): Resistant
+    - blaKPC-33 on contig_blaKPC: blaKPC-33 is curated by NCBI as "inhibitor-resistant
+      extended-spectrum class A beta-lactamase KPC-33" (subclass CEPHALOSPORIN)
+    - blaKPC-33 on contig_blaKPC: D179Y: documented ceftazidime-avibactam resistance substitution
+  Note: Genotype-based prediction only; not a substitute for phenotypic AST.
+```
+
+## Validation
+
+On six *K. pneumoniae* ST307 assemblies from a published study of
+ceftazidime-avibactam resistance emerging on therapy, the tool reproduced all
+six reported phenotypes and assigned the exact blaKPC allele (KPC-46, KPC-66,
+KPC-92) in each resistant isolate. Four further BioProjects are included. See
+[docs/VALIDATION.md](docs/VALIDATION.md), and
+[docs/METHODS.md](docs/METHODS.md#9-known-limits) for what the method cannot do.
+
+## Documentation
+
+- [Methods — how every call is made, and its limits](docs/METHODS.md)
+- [Installation](docs/INSTALLATION.md)
+- [Usage / CLI reference](docs/USAGE.md)
+- [Output files](docs/OUTPUT_FILES.md)
+- [Testing](docs/TESTING.md)
+- [Validation against published genomes](docs/VALIDATION.md)
+
+## Repository layout
+
+```
+resistance-detector/
+├── fos_cazavi/
+│   ├── cli.py            # CLI entry point and report writing
+│   ├── acquired.py       # BLAST detection and per-locus variant calling
+│   ├── variants.py       # Protein-level variant caller, Ambler numbering
+│   ├── betalactamase.py  # blaKPC allele typing, CAZ/AVI marker rules
+│   ├── phenotype.py      # Genotype-to-phenotype prediction
+│   ├── references.py     # Loading and re-validating the reference data
+│   ├── mutations.py      # GAMMA cross-check, seqkit amplicon mapping
+│   ├── build_data.py     # Rebuilds all reference data from AMRFinderPlus
+│   ├── db.py             # `create-db`, a thin wrapper over build_data
+│   ├── utils.py          # Logging, dependency checks, primer loading
+│   └── data/             # Bundled reference data (see METHODS.md)
+├── create_test_genomes.py  # Synthetic genomes + their expected results
+├── tests/                  # Unit and end-to-end tests
+├── docs/
+├── bioproject_tests/       # Real-genome validation runs
+└── example_results/
+```
+
+## Requirements
+
+Python ≥3.8, Biopython, and BLAST+ (`blastn`, `makeblastdb`). `GAMMA.py` (with
+`blat`) and `seqkit` are optional; without them the cross-check and amplicon
+mapping are skipped.
+
+## Caveat
+
+These are genotypic predictions. They are not a substitute for phenotypic
+antimicrobial susceptibility testing.
 
 ## License
 

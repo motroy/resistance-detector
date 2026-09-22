@@ -1,0 +1,15 @@
+Genome	Organism	Expected_Fosfomycin	Expected_Ceftazidime_Avibactam	Rationale
+susceptible_kpc2.fasta	Klebsiella_pneumoniae	Susceptible	Susceptible	Wild-type KPC-2 is inhibited by avibactam; intrinsic fosAKP is not acquired resistance
+kpc3_background_only.fasta	Klebsiella_pneumoniae	Susceptible	Susceptible	H274Y defines KPC-3 and is not an avibactam escape mutation
+kpc33_d179y.fasta	Klebsiella_pneumoniae	Susceptible	Resistant	D179Y is the most frequently reported ceftazidime-avibactam resistance substitution
+kpc31_d179y_on_kpc3.fasta	Klebsiella_pneumoniae	Susceptible	Resistant	KPC-31 = KPC-3 + D179Y
+kpc66_omega_loop_deletion.fasta	Klebsiella_pneumoniae	Susceptible	Resistant	In-frame Omega-loop deletion (KPC-66)
+kpc_v240g.fasta	Klebsiella_pneumoniae	Susceptible	Resistant	V240G in the active-site region
+kpc_novel_omega_loop_change.fasta	Klebsiella_pneumoniae	Susceptible	Indeterminate	Undocumented change in a hotspot must not be asserted either way
+metallo_betalactamase_ndm1.fasta	Klebsiella_pneumoniae	Susceptible	Resistant	Avibactam does not inhibit metallo-beta-lactamases
+oxa48_only.fasta	Klebsiella_pneumoniae	Susceptible	Susceptible	OXA-48 is inhibited by avibactam
+acquired_fosa3.fasta	Escherichia	Resistant	Susceptible	Acquired fosA3 inactivates fosfomycin
+uhpt_nonsense.fasta	Escherichia	Resistant	Susceptible	Premature stop in uhpT abolishes fosfomycin uptake
+glpt_frameshift.fasta	Escherichia	Resistant	Susceptible	Single-base insertion breaks the glpT reading frame
+wildtype_transporters.fasta	Escherichia	Susceptible	Susceptible	Intact uptake genes and no acquired enzyme
+multi_mechanism.fasta	Klebsiella_pneumoniae	Resistant	Resistant	Both drugs compromised in one isolate

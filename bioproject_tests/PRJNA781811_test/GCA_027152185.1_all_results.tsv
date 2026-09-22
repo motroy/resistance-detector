@@ -1,15 +1,38 @@
-Sample	Type	Gene_Protein	Method	Result_Details	Identity_Confidence	Contig	Start	End	Copy_Number	Notes
-GCA_027152185.1_ASM2715218v1_genomic.fna	Acquired Gene	ompK36	BLAST	Coverage: 101.99%	93.43%	JAJOCU010000013.1	105535	106647	1	Mutations: G213I
-GCA_027152185.1_ASM2715218v1_genomic.fna	Acquired Gene	acrB	BLAST	Coverage: 100.00%	99.75%	JAJOCU010000007.1	60389	63535	1	Mutations: G617A,F626A,A628T/V
-GCA_027152185.1_ASM2715218v1_genomic.fna	Acquired Gene	blaSHV-12	BLAST	Coverage: 100.00%	99.53%	JAJOCU010000044.1	2643	3503	1	Mutations: G238A,E240G
-GCA_027152185.1_ASM2715218v1_genomic.fna	Acquired Gene	ftsI	BLAST	Coverage: 100.00%	99.49%	JAJOCU010000004.1	230831	232597	1	Mutations: A333P,Y350L,S357Q
-GCA_027152185.1_ASM2715218v1_genomic.fna	Acquired Gene	ompK35	BLAST	Coverage: 100.00%	99.35%	JAJOCU010000008.1	36931	38010	1	Mutations: D135G,D181R
-GCA_027152185.1_ASM2715218v1_genomic.fna	Acquired Gene	envZ	BLAST	Coverage: 100.00%	99.34%	JAJOCU010000003.1	48605	49960	1	Mutations: G244S/D,T324Q
-GCA_027152185.1_ASM2715218v1_genomic.fna	Acquired Gene	fosA5	BLAST	Coverage: 100.00%	96.67%	JAJOCU010000004.1	14318	14737	1	Mutations: K90A,H119L
-GCA_027152185.1_ASM2715218v1_genomic.fna	Gene Alignment	ompK36	GAMMA	Wildtype / No mutations detected	76.36%	JAJOCU010000013.1	105534	106647	1	Coverage: 100.80%
-GCA_027152185.1_ASM2715218v1_genomic.fna	Gene Alignment	envZ	GAMMA	Wildtype / No mutations detected	99.56%	JAJOCU010000003.1	48604	49960	1	Coverage: 100.00%
-GCA_027152185.1_ASM2715218v1_genomic.fna	Gene Alignment	blaSHV-12	GAMMA	Wildtype / No mutations detected	99.30%	JAJOCU010000044.1	2642	3503	1	Coverage: 100.00%
-GCA_027152185.1_ASM2715218v1_genomic.fna	Gene Alignment	ftsI	GAMMA	Wildtype / No mutations detected	99.83%	JAJOCU010000004.1	230830	232597	1	Coverage: 100.00%
-GCA_027152185.1_ASM2715218v1_genomic.fna	Gene Alignment	fosA5	GAMMA	Wildtype / No mutations detected	97.86%	JAJOCU010000004.1	14317	14737	1	Coverage: 100.00%
-GCA_027152185.1_ASM2715218v1_genomic.fna	Gene Alignment	acrB	GAMMA	Wildtype / No mutations detected	99.90%	JAJOCU010000007.1	60388	63535	1	Coverage: 100.00%
-GCA_027152185.1_ASM2715218v1_genomic.fna	Gene Alignment	ompK35	GAMMA	Wildtype / No mutations detected	100.00%	JAJOCU010000008.1	36930	38010	1	Coverage: 100.00%
+Sample	Type	Gene	Allele	Method	Result_Details	Identity_Confidence	Contig	Start	End	Copy_Number	Notes
+GCA_027152185.1.fna	Chromosomal gene	acrB	acrB	BLAST	Coverage: 100.00%	99.75%	JAJOCU010000007.1	60389	63535	1	protein changes: S1036T
+GCA_027152185.1.fna	Chromosomal gene	ftsI	ftsI	BLAST	Coverage: 100.00%	99.49%	JAJOCU010000004.1	230831	232597	1	protein changes: V375A
+GCA_027152185.1.fna	Chromosomal gene	envZ	envZ	BLAST	Coverage: 100.00%	99.34%	JAJOCU010000003.1	48605	49960	1	protein changes: I15T;I258M
+GCA_027152185.1.fna	Chromosomal gene	ompK35	ompK35	BLAST	Coverage: 100.00%	99.35%	JAJOCU010000008.1	36931	38010	1	no protein changes vs reference
+GCA_027152185.1.fna	Chromosomal gene	ompK36	ompK36	BLAST	Coverage: 100.00%	93.43%	JAJOCU010000013.1	105535	106647	1	protein changes: L184_P186del;T192G;A193W;L194S;Y201F;Y210W;N221H;L225T;G226D;D227E;K231V;L232P;N276D;D306N;E308Q;insNNFTGV@308;G309N;D344E;S346D;H349R;N350K
+GCA_027152185.1.fna	Acquired gene	blaSHV-12	blaSHV-12	BLAST	Coverage: 100.00%	99.53%	JAJOCU010000044.1	2643	3503	1	protein changes: Q31L;K236E
+GCA_027152185.1.fna	Acquired gene	fosA5	fosA5	BLAST	Coverage: 100.00%	96.67%	JAJOCU010000004.1	14318	14737	1	protein changes: M29T;A86V;A138D
+GCA_027152185.1.fna	Protein change	acrB	-	blast+gamma	S1036T	100%	JAJOCU010000007.1	-	-	-	sequence difference, not a curated resistance mutation
+GCA_027152185.1.fna	Protein change	blaSHV-12	-	blast+gamma	K236E	100%	JAJOCU010000044.1	-	-	-	reported as resistance mutation
+GCA_027152185.1.fna	Protein change	blaSHV-12	-	blast+gamma	Q31L	100%	JAJOCU010000044.1	-	-	-	reported as resistance mutation
+GCA_027152185.1.fna	Protein change	envZ	-	blast+gamma	I15T	100%	JAJOCU010000003.1	-	-	-	sequence difference, not a curated resistance mutation
+GCA_027152185.1.fna	Protein change	envZ	-	blast+gamma	I258M	100%	JAJOCU010000003.1	-	-	-	sequence difference, not a curated resistance mutation
+GCA_027152185.1.fna	Protein change	fosA5	-	blast+gamma	A138D	100%	JAJOCU010000004.1	-	-	-	reported as resistance mutation
+GCA_027152185.1.fna	Protein change	fosA5	-	blast+gamma	A86V	100%	JAJOCU010000004.1	-	-	-	reported as resistance mutation
+GCA_027152185.1.fna	Protein change	fosA5	-	blast+gamma	M29T	100%	JAJOCU010000004.1	-	-	-	reported as resistance mutation
+GCA_027152185.1.fna	Protein change	ftsI	-	blast+gamma	V375A	100%	JAJOCU010000004.1	-	-	-	sequence difference, not a curated resistance mutation
+GCA_027152185.1.fna	Protein change	ompK36	-	blast	A193W	50%	JAJOCU010000013.1	-	-	-	sequence difference, not a curated resistance mutation
+GCA_027152185.1.fna	Protein change	ompK36	-	blast	D227E	50%	JAJOCU010000013.1	-	-	-	sequence difference, not a curated resistance mutation
+GCA_027152185.1.fna	Protein change	ompK36	-	blast	D306N	50%	JAJOCU010000013.1	-	-	-	sequence difference, not a curated resistance mutation
+GCA_027152185.1.fna	Protein change	ompK36	-	blast	D344E	50%	JAJOCU010000013.1	-	-	-	sequence difference, not a curated resistance mutation
+GCA_027152185.1.fna	Protein change	ompK36	-	blast	E308Q	50%	JAJOCU010000013.1	-	-	-	sequence difference, not a curated resistance mutation
+GCA_027152185.1.fna	Protein change	ompK36	-	blast	G226D	50%	JAJOCU010000013.1	-	-	-	sequence difference, not a curated resistance mutation
+GCA_027152185.1.fna	Protein change	ompK36	-	blast	G309N	50%	JAJOCU010000013.1	-	-	-	sequence difference, not a curated resistance mutation
+GCA_027152185.1.fna	Protein change	ompK36	-	blast	H349R	50%	JAJOCU010000013.1	-	-	-	sequence difference, not a curated resistance mutation
+GCA_027152185.1.fna	Protein change	ompK36	-	blast	K231V	50%	JAJOCU010000013.1	-	-	-	sequence difference, not a curated resistance mutation
+GCA_027152185.1.fna	Protein change	ompK36	-	blast	L184_P186del	50%	JAJOCU010000013.1	-	-	-	sequence difference, not a curated resistance mutation
+GCA_027152185.1.fna	Protein change	ompK36	-	blast	L194S	50%	JAJOCU010000013.1	-	-	-	sequence difference, not a curated resistance mutation
+GCA_027152185.1.fna	Protein change	ompK36	-	blast	L225T	50%	JAJOCU010000013.1	-	-	-	sequence difference, not a curated resistance mutation
+GCA_027152185.1.fna	Protein change	ompK36	-	blast	L232P	50%	JAJOCU010000013.1	-	-	-	sequence difference, not a curated resistance mutation
+GCA_027152185.1.fna	Protein change	ompK36	-	blast	N221H	50%	JAJOCU010000013.1	-	-	-	sequence difference, not a curated resistance mutation
+GCA_027152185.1.fna	Protein change	ompK36	-	blast	N276D	50%	JAJOCU010000013.1	-	-	-	sequence difference, not a curated resistance mutation
+GCA_027152185.1.fna	Protein change	ompK36	-	blast	N350K	50%	JAJOCU010000013.1	-	-	-	sequence difference, not a curated resistance mutation
+GCA_027152185.1.fna	Protein change	ompK36	-	blast	S346D	50%	JAJOCU010000013.1	-	-	-	sequence difference, not a curated resistance mutation
+GCA_027152185.1.fna	Protein change	ompK36	-	blast	T192G	50%	JAJOCU010000013.1	-	-	-	sequence difference, not a curated resistance mutation
+GCA_027152185.1.fna	Protein change	ompK36	-	blast	Y201F	50%	JAJOCU010000013.1	-	-	-	sequence difference, not a curated resistance mutation
+GCA_027152185.1.fna	Protein change	ompK36	-	blast	Y210W	50%	JAJOCU010000013.1	-	-	-	sequence difference, not a curated resistance mutation
+GCA_027152185.1.fna	Protein change	ompK36	-	blast	insNNFTGV@308	50%	JAJOCU010000013.1	-	-	-	sequence difference, not a curated resistance mutation

@@ -1,82 +1,99 @@
 # Usage
 
-## Quick Start
+## Quick start
 
-### 1. Create Reference Database
-
-Download sequences from NCBI (AMRfinderPlus) and build the database. The `create-db` command fetches nucleotide CDS sequences and then runs GAMMA_DB_Maker to prepare a properly formatted GAMMA database:
-
-```bash
-fos-cazavi create-db -e your.email@example.com -o . -p resistance_db
-```
-
-This produces `resistance_db.fasta` (raw nucleotide CDS) and `resistance_db_deduplicated.fasta` (GAMMA-ready database) in the specified directory. Use `resistance_db_deduplicated.fasta` with `--genes`.
-
-### 2. Run Full Analysis
-
-Detect acquired genes, mutations, and amplicons (bundled genes and primers are used by default):
+The reference data ships with the package, so a run needs only an assembly:
 
 ```bash
 fos-cazavi fos-cazavi-all \
     -a your_assembly.fasta \
-    -d resistance_db.fasta \
-    -o results
+    -o results \
+    --organism Klebsiella_pneumoniae
 ```
 
-## Main Command: `fos-cazavi`
+## `--organism` matters
 
-The tool is divided into subcommands:
+Chromosomal point mutations are only meaningful against a species-matched
+reference: without it, ordinary between-species sequence differences are
+indistinguishable from resistance mutations. So `--organism` is required for
+those calls, and the tool says so on stderr when it is missing.
 
-### `create-db`
-Creates the reference database and prepares it for GAMMA with GAMMA_DB_Maker.
+Supported values (AMRFinderPlus taxgroup names):
 
-```bash
-fos-cazavi create-db -e <email> -o <output_dir> [-p <prefix>]
-```
+* `Escherichia`
+* `Klebsiella_pneumoniae`
+* `Pseudomonas_aeruginosa`
 
-### `fos-cazavi-acquired`
-Detects acquired resistance genes using BLAST.
+Without `--organism` the tool still reports, in full:
 
-```bash
-fos-cazavi fos-cazavi-acquired \
-    -a <assembly> \
-    -d <database> \
-    -o <output_prefix> \
-    [--min_id 90] [--min_cov 80]
-```
+* acquired resistance genes and their alleles,
+* blaKPC typing and the ceftazidime-avibactam call,
+* loss of function in chromosomal genes (premature stops, frameshifts,
+  truncations), which is species independent.
 
-### `fos-cazavi-mutations`
-Detects mutations using GAMMA (protein-level alignment of nucleotide CDS) and SeqKit (amplicon detection).
-`--genes` and `--primers` default to the bundled reference files.
-
-```bash
-fos-cazavi fos-cazavi-mutations \
-    -a <assembly> \
-    -o <output_prefix> \
-    [--genes <genes.fasta>] \
-    [--primers <primers.tsv>]
-```
+## Subcommands
 
 ### `fos-cazavi-all`
-Runs the complete pipeline (acquired + mutations).
-`--genes` and `--primers` default to the bundled reference files.
+
+The full pipeline: gene detection and variant calling, the GAMMA cross-check,
+amplicon mapping, and all summary outputs.
 
 ```bash
 fos-cazavi fos-cazavi-all \
     -a <assembly> \
-    -d <database> \
     -o <output_prefix> \
-    [--genes <genes.fasta>] \
-    [--primers <primers.tsv>]
+    [--organism <organism>] \
+    [-d <database>] [--genes <fasta>] [--primers <tsv>] \
+    [--min_id 90] [--min_cov 80]
 ```
 
-See [OUTPUT_FILES.md](OUTPUT_FILES.md) for a description of the files each command produces.
+### `fos-cazavi-acquired`
 
-## Snakemake Workflow
-
-The repository includes a Snakemake workflow for batch processing.
+Gene detection and variant calling only (BLAST). No GAMMA, no amplicons.
 
 ```bash
-# Edit config.yaml with your samples
-snakemake --cores 4
+fos-cazavi fos-cazavi-acquired -a <assembly> -o <prefix> [--organism <organism>]
 ```
+
+### `fos-cazavi-mutations`
+
+The GAMMA and `seqkit` analyses on their own, without the BLAST caller.
+
+```bash
+fos-cazavi fos-cazavi-mutations -a <assembly> -o <prefix> [--genes <fasta>] [--primers <tsv>]
+```
+
+### `create-db`
+
+Rebuilds the reference data from the current AMRFinderPlus release:
+
+```bash
+fos-cazavi create-db -e your.email@example.com -o <output_dir>
+```
+
+This runs `python3 -m fos_cazavi.build_data`, which downloads the AMRFinderPlus
+files, rebuilds the sequence database, the reference proteins, the validated
+point-mutation table and the blaKPC allele table, and reports anything it had
+to drop. (`-e/--email` is kept for backwards compatibility and is not used.)
+
+## Options
+
+| Option | Default | Meaning |
+|---|---|---|
+| `-a, --assembly` | required | Input assembly (FASTA) |
+| `-o, --output` | required | Output prefix |
+| `--organism` | none | Sample organism; enables curated chromosomal point mutations |
+| `-d, --database` | bundled | Nucleotide reference database |
+| `--genes` | bundled | Nucleotide CDS database for GAMMA |
+| `--primers` | bundled | Primer definitions for amplicon mapping |
+| `--mutations` | bundled | Point-mutation definitions |
+| `--min_id` | 90 | Minimum percent identity |
+| `--min_cov` | 80 | Minimum percent coverage of the reference gene |
+
+## Required external tools
+
+`blastn` and `makeblastdb` are required. `GAMMA.py` (with `blat`) and `seqkit`
+are optional: without them the cross-check and amplicon mapping are skipped and
+the run continues, with a warning.
+
+See [METHODS.md](METHODS.md) for how the calls are made and what they mean.

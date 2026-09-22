@@ -1,0 +1,296 @@
+Allele	Changes_Ambler	NCBI_subclass	NCBI_product_name	Inhibitor_resistant
+blaKPC-2		CARBAPENEM	carbapenem-hydrolyzing class A beta-lactamase KPC-2	no
+blaKPC-3	H274Y	CARBAPENEM	carbapenem-hydrolyzing class A beta-lactamase KPC-3	no
+blaKPC-4	P104R;V240G	CARBAPENEM	carbapenem-hydrolyzing class A beta-lactamase KPC-4	no
+blaKPC-5	P104R	CARBAPENEM	carbapenem-hydrolyzing class A beta-lactamase KPC-5	no
+blaKPC-6	V240G	CARBAPENEM	carbapenem-hydrolyzing class A beta-lactamase KPC-6	no
+blaKPC-7	M49I;H274Y	CARBAPENEM	carbapenem-hydrolyzing class A beta-lactamase KPC-7	no
+blaKPC-8	V240G;H274Y	CARBAPENEM	inhibitor-resistant carbapenem-hydrolyzing class A beta-lactamase KPC-8	yes
+blaKPC-10	P104R;H274Y	CARBAPENEM	carbapenem-hydrolyzing class A beta-lactamase KPC-10	no
+blaKPC-11	P104L	CARBAPENEM	carbapenem-hydrolyzing class A beta-lactamase KPC-11	no
+blaKPC-12	L169M	CEPHALOSPORIN	extended-spectrum class A beta-lactamase KPC-12	no
+blaKPC-13	D92G;H274Y	CARBAPENEM	carbapenem-hydrolyzing class A beta-lactamase KPC-13	no
+blaKPC-14	G242_T243del	CEPHALOSPORIN	inhibitor-resistant extended-spectrum class A beta-lactamase KPC-14	yes
+blaKPC-15	P104R;A120L;G147K;V240G;H274Y	CARBAPENEM	inhibitor-resistant extended-spectrum class A beta-lactamase KPC-15	yes
+blaKPC-16	P202S;F207L	CARBAPENEM	carbapenem-hydrolyzing class A beta-lactamase KPC-16	no
+blaKPC-17	F207L	CARBAPENEM	carbapenem-hydrolyzing class A beta-lactamase KPC-17	no
+blaKPC-18	V8I	CARBAPENEM	carbapenem-hydrolyzing class A beta-lactamase KPC-18	no
+blaKPC-19	H274Y;N293T	CARBAPENEM	carbapenem-hydrolyzing class A beta-lactamase KPC-19	no
+blaKPC-20	V29I	CARBAPENEM	carbapenem-hydrolyzing class A beta-lactamase KPC-20	no
+blaKPC-21	W105R	CARBAPENEM/CEFTIBUTEN-AVIBACTAM	carbapenem-hydrolyzing class A beta-lactamase KPC-21	no
+blaKPC-22	W105G;F207L	CARBAPENEM	carbapenem-hydrolyzing class A beta-lactamase KPC-22	no
+blaKPC-23	V240A;H274Y	CARBAPENEM	carbapenem-hydrolyzing class A beta-lactamase KPC-23	no
+blaKPC-24	R6P	CARBAPENEM	carbapenem-hydrolyzing class A beta-lactamase KPC-24	no
+blaKPC-25	insEL@165	CEPHALOSPORIN	inhibitor-resistant extended-spectrum class A beta-lactamase KPC-25	yes
+blaKPC-26	A18S	CARBAPENEM	carbapenem-hydrolyzing class A beta-lactamase KPC-26	no
+blaKPC-27	W105R;H274Y	CARBAPENEM/CEFTIBUTEN-AVIBACTAM	carbapenem-hydrolyzing class A beta-lactamase KPC-27	no
+blaKPC-28	G242_T243del;H274Y	CEPHALOSPORIN	inhibitor-resistant extended-spectrum class A beta-lactamase KPC-28	yes
+blaKPC-29	insKDD@269;H274Y	CARBAPENEM	inhibitor-resistant carbapenem-hydrolyzing class A beta-lactamase KPC-29	yes
+blaKPC-30	R6H	CARBAPENEM	inhibitor-resistant carbapenem-hydrolyzing class A beta-lactamase KPC-30	yes
+blaKPC-31	D179Y;H274Y	CEFIDEROCOL/CEPHALOSPORIN	inhibitor-resistant extended-spectrum class A beta-lactamase KPC-31	yes
+blaKPC-32	D179Y;T243M;H274Y	CEPHALOSPORIN	inhibitor-resistant extended-spectrum class A beta-lactamase KPC-32	yes
+blaKPC-33	D179Y	CEPHALOSPORIN	inhibitor-resistant extended-spectrum class A beta-lactamase KPC-33	yes
+blaKPC-34	insKDDKHSEA@269	CARBAPENEM	carbapenem-hydrolyzing class A beta-lactamase KPC-34	no
+blaKPC-35	L169P	CEFIDEROCOL/CEPHALOSPORIN	inhibitor-resistant extended-spectrum class A beta-lactamase KPC-35	yes
+blaKPC-36	D163E;H274Y	CARBAPENEM	carbapenem-hydrolyzing class A beta-lactamase KPC-36	no
+blaKPC-37	W165R;F207L	CARBAPENEM	carbapenem-hydrolyzing class A beta-lactamase KPC-37	no
+blaKPC-38	H274Y;V292A	CARBAPENEM	carbapenem-hydrolyzing class A beta-lactamase KPC-38	no
+blaKPC-39	A172T;H274Y	CEPHALOSPORIN	inhibitor-resistant extended-spectrum class A beta-lactamase KPC-39	yes
+blaKPC-40	insEL@165;T243S;H274Y	CARBAPENEM	inhibitor-resistant carbapenem-hydrolyzing class A beta-lactamase KPC-40	yes
+blaKPC-41	insPNK@267;H274Y	CEPHALOSPORIN	inhibitor-resistant extended-spectrum class A beta-lactamase KPC-41	yes
+blaKPC-42	T254A	CARBAPENEM	carbapenem-hydrolyzing class A beta-lactamase KPC-42	no
+blaKPC-43	Q191R	CARBAPENEM	carbapenem-hydrolyzing class A beta-lactamase KPC-43	no
+blaKPC-44	insAVYTRAPNKDDKHSE@261	CARBAPENEM	inhibitor-resistant carbapenem-hydrolyzing class A beta-lactamase KPC-44	yes
+blaKPC-45	T93K	CARBAPENEM	carbapenem-hydrolyzing class A beta-lactamase KPC-45	no
+blaKPC-46	L169P;H274Y	CEPHALOSPORIN	inhibitor-resistant extended-spectrum class A beta-lactamase KPC-46	yes
+blaKPC-47	A172T;T243A;H274Y	CEPHALOSPORIN	inhibitor-resistant extended-spectrum class A beta-lactamase KPC-47	yes
+blaKPC-48	L169P;A172T;H274Y	CEPHALOSPORIN	inhibitor-resistant extended-spectrum class A beta-lactamase KPC-48	yes
+blaKPC-49	R164S;H274Y	CEPHALOSPORIN	inhibitor-resistant extended-spectrum class A beta-lactamase KPC-49	yes
+blaKPC-50	H274Y;insEAV@275	CEPHALOSPORIN	inhibitor-resistant extended-spectrum class A beta-lactamase KPC-50	yes
+blaKPC-51	D179N;Y241H;H274N	CEPHALOSPORIN	inhibitor-resistant extended-spectrum class A beta-lactamase KPC-51	yes
+blaKPC-52	D179Y;insV@262	CEPHALOSPORIN	inhibitor-resistant extended-spectrum class A beta-lactamase KPC-52	yes
+blaKPC-53	insEL@165;H274Y	CEPHALOSPORIN	inhibitor-resistant extended-spectrum class A beta-lactamase KPC-53	yes
+blaKPC-54	A62S	CARBAPENEM	carbapenem-hydrolyzing class A beta-lactamase KPC-54	no
+blaKPC-55	Y264N	CARBAPENEM	carbapenem-hydrolyzing class A beta-lactamase KPC-55	no
+blaKPC-56	H274Y;G294W	CARBAPENEM	carbapenem-hydrolyzing class A beta-lactamase KPC-56	no
+blaKPC-57	D179V	CEPHALOSPORIN	inhibitor-resistant extended-spectrum class A beta-lactamase KPC-57	yes
+blaKPC-58	insRAPNKDDN@265	CARBAPENEM	inhibitor-resistant class A beta-lactamase KPC-58	yes
+blaKPC-59	G89D	CARBAPENEM	carbapenem-hydrolyzing class A beta-lactamase KPC-59	no
+blaKPC-60	A120T	CARBAPENEM	carbapenem-hydrolyzing class A beta-lactamase KPC-60	no
+blaKPC-61	S171P;H274Y	CEPHALOSPORIN	inhibitor-resistant extended-spectrum class A beta-lactamase KPC-61	yes
+blaKPC-62	L169Q;H274Y	CEFIDEROCOL/CEPHALOSPORIN	inhibitor-resistant extended-spectrum class A beta-lactamase KPC-62	yes
+blaKPC-63	Y241S;H274Y	CEPHALOSPORIN	inhibitor-resistant extended-spectrum class A beta-lactamase KPC-63	yes
+blaKPC-64	insS@180;T243A;Y264H;H274Y	CEPHALOSPORIN	inhibitor-resistant extended-spectrum class A beta-lactamase KPC-64	yes
+blaKPC-65	insTY@179;H274Y	CEPHALOSPORIN	inhibitor-resistant extended-spectrum class A beta-lactamase KPC-65	yes
+blaKPC-66	E166_L167del;H274Y	CEPHALOSPORIN	inhibitor-resistant extended-spectrum class A beta-lactamase KPC-66	yes
+blaKPC-67	insKDDKDD@269;H274Y	CARBAPENEM	inhibitor-resistant carbapenem-hydrolyzing class A beta-lactamase KPC-67	yes
+blaKPC-68	insSS@180;H274Y	CEPHALOSPORIN	inhibitor-resistant extended-spectrum class A beta-lactamase KPC-68	yes
+blaKPC-69	insGL@165;H274Y	CEPHALOSPORIN	inhibitor-resistant extended-spectrum class A beta-lactamase KPC-69	yes
+blaKPC-70	D179Y;T265A;H274Y	CEPHALOSPORIN	inhibitor-resistant extended-spectrum class A beta-lactamase KPC-70	yes
+blaKPC-71	insS@180	CEPHALOSPORIN	inhibitor-resistant extended-spectrum class A beta-lactamase KPC-71	yes
+blaKPC-72	A172D	CEPHALOSPORIN	inhibitor-resistant extended-spectrum class A beta-lactamase KPC-72	yes
+blaKPC-73	E166_L167del;insKDDKHS@269	CEPHALOSPORIN	inhibitor-resistant extended-spectrum class A beta-lactamase KPC-73	yes
+blaKPC-74	G239_V240del	CEPHALOSPORIN	inhibitor-resistant extended-spectrum class A beta-lactamase KPC-74	yes
+blaKPC-75	L13F	CARBAPENEM	carbapenem-hydrolyzing class A beta-lactamase KPC-75	no
+blaKPC-76	D179Y;insVYTRAPN@262	CEPHALOSPORIN	inhibitor-resistant extended-spectrum class A beta-lactamase KPC-76	yes
+blaKPC-77	R164P	CARBAPENEM	carbapenem-hydrolyzing class A beta-lactamase KPC-77	no
+blaKPC-78	D179A	CARBAPENEM	inhibitor-resistant carbapenem-hydrolyzing class A beta-lactamase KPC-78	yes
+blaKPC-79	insVYTRAPN@262	CEPHALOSPORIN	inhibitor-resistant extended-spectrum class A beta-lactamase KPC-79	yes
+blaKPC-80	insPNK@267	CARBAPENEM	carbapenem-hydrolyzing class A beta-lactamase KPC-80	no
+blaKPC-81	I173del	CARBAPENEM	carbapenem-hydrolyzing class A beta-lactamase KPC-81	no
+blaKPC-82	insSD@274	CEPHALOSPORIN	inhibitor-resistant extended-spectrum class A beta-lactamase KPC-82	yes
+blaKPC-83	A34T	CARBAPENEM	carbapenem-hydrolyzing class A beta-lactamase KPC-83	no
+blaKPC-84	T243P	CARBAPENEM	inhibitor-resistant carbapenem-hydrolyzing class A beta-lactamase KPC-84	yes
+blaKPC-85	A172V;H274Y	CARBAPENEM	carbapenem-hydrolyzing class A beta-lactamase KPC-85	no
+blaKPC-86	D179G	CEPHALOSPORIN	inhibitor-resistant extended-spectrum class A beta-lactamase KPC-86	yes
+blaKPC-87	G242del;T243A	CARBAPENEM	inhibitor-resistant carbapenem-hydrolyzing class A beta-lactamase KPC-87	yes
+blaKPC-88	D176Y	CEPHALOSPORIN	inhibitor-resistant extended-spectrum class A beta-lactamase KPC-88	yes
+blaKPC-89	T243M;H274Y	CARBAPENEM	carbapenem-hydrolyzing class A beta-lactamase KPC-89	no
+blaKPC-90	insTY@179	CEPHALOSPORIN	inhibitor-resistant extended-spectrum class A beta-lactamase KPC-90	yes
+blaKPC-91	V103L;H274Y	CARBAPENEM	carbapenem-hydrolyzing class A beta-lactamase KPC-91	no
+blaKPC-92	E168D;L169_N170del;H274Y	CEPHALOSPORIN	inhibitor-resistant extended-spectrum class A beta-lactamase KPC-92	yes
+blaKPC-93	insRAPNN@265	CEPHALOSPORIN	inhibitor-resistant extended-spectrum class A beta-lactamase KPC-93	yes
+blaKPC-94	L169del;N170H;H274Y	CEPHALOSPORIN	inhibitor-resistant extended-spectrum class A beta-lactamase KPC-94	yes
+blaKPC-95	A172T;D179Y;H274Y	CEPHALOSPORIN	inhibitor-resistant extended-spectrum class A beta-lactamase KPC-95	yes
+blaKPC-96	Y241N	CARBAPENEM	carbapenem-hydrolyzing class A beta-lactamase KPC-96	no
+blaKPC-97	insSEAVN@274	CARBAPENEM	class A beta-lactamase KPC-97	no
+blaKPC-98	R164H;H274Y	CARBAPENEM	carbapenem-hydrolyzing class A beta-lactamase KPC-98	no
+blaKPC-99	R164S	CARBAPENEM	inhibitor-resistant carbapenem-hydrolyzing class A beta-lactamase KPC-99	yes
+blaKPC-100	T243M	CARBAPENEM	inhibitor-resistant carbapenem-hydrolyzing class A beta-lactamase KPC-100	yes
+blaKPC-101	insKH@272	CARBAPENEM	inhibitor-resistant carbapenem-hydrolyzing class A beta-lactamase KPC-101	yes
+blaKPC-102	D179Y;Y241D	CARBAPENEM	carbapenem-hydrolyzing class A beta-lactamase KPC-102	no
+blaKPC-103	insKDDKHSEAVIAA@269	CARBAPENEM	class A beta-lactamase KPC-103	no
+blaKPC-104	insTY@179;insDDKHSE@270	CARBAPENEM	class A beta-lactamase KPC-104	no
+blaKPC-105	L169Q;insAVYTRAPNKDDKHSE@261	CARBAPENEM	class A beta-lactamase KPC-105	no
+blaKPC-106	insTY@179;insSEAV@274	CARBAPENEM	inhibitor-resistant class A beta-lactamase KPC-106	yes
+blaKPC-107	insSSPRAVTESLQKLTLGSALAAPQRQQFV@180	CARBAPENEM	class A beta-lactamase KPC-107	no
+blaKPC-108	insTSSPRAVTEN@179;insAVYTRAPNKDDKHSE@261	CARBAPENEM	class A beta-lactamase KPC-108	no
+blaKPC-109	insNKDDKY@268;H274Y	CARBAPENEM	inhibitor-resistant carbapenem-hydrolyzing class A beta-lactamase KPC-109	yes
+blaKPC-110	G42R;D179Y;H274Y	CEPHALOSPORIN	inhibitor-resistant class A beta-lactamase KPC-110	yes
+blaKPC-111	P174L;D179Y;H274Y	CEPHALOSPORIN	inhibitor-resistant class A beta-lactamase KPC-111	yes
+blaKPC-112	E166_L167del;G242_T243del	CEPHALOSPORIN	inhibitor-resistant extended-spectrum class A beta-lactamase KPC-112	yes
+blaKPC-113	insG@266	CARBAPENEM	inhibitor-resistant carbapenem-hydrolyzing class A beta-lactamase KPC-113	yes
+blaKPC-114	insSS@180	CARBAPENEM	inhibitor-resistant carbapenem-hydrolyzing class A beta-lactamase KPC-114	yes
+blaKPC-115	L169_N170del;S171P;H274Y	CEPHALOSPORIN	inhibitor-resistant class A beta-lactamase KPC-115	yes
+blaKPC-116	S171F	CARBAPENEM	carbapenem-hydrolyzing class A beta-lactamase KPC-116	no
+blaKPC-117	insRCP@2;L3I;Y4F;insF@6	CARBAPENEM	inhibitor-resistant carbapenem-hydrolyzing class A beta-lactamase KPC-117	yes
+blaKPC-118	V103L;W165R;H274Y	CARBAPENEM	carbapenem-hydrolyzing class A beta-lactamase KPC-118	no
+blaKPC-119	Q38H	CARBAPENEM	carbapenem-hydrolyzing class A beta-lactamase KPC-119	no
+blaKPC-120	P104R;D179Y	CARBAPENEM	carbapenem-hydrolyzing class A beta-lactamase KPC-120	no
+blaKPC-121	insS@180;H274Y	CEPHALOSPORIN	inhibitor-resistant extended-spectrum class A beta-lactamase KPC-121	yes
+blaKPC-122	V8I;H274Y	CARBAPENEM	carbapenem-hydrolyzing class A beta-lactamase KPC-122	no
+blaKPC-123	insTY@179;insDDKHSEA@270	CEPHALOSPORIN	inhibitor-resistant extended-spectrum class A beta-lactamase KPC-123	yes
+blaKPC-124	E166_L167del;D179Y;H274Y	CARBAPENEM	inhibitor-resistant carbapenem-hydrolyzing class A beta-lactamase KPC-124	yes
+blaKPC-125	D179A;H274Y	CARBAPENEM	inhibitor-resistant carbapenem-hydrolyzing class A beta-lactamase KPC-125	yes
+blaKPC-126	A172V	CARBAPENEM	carbapenem-hydrolyzing class A beta-lactamase KPC-126	no
+blaKPC-127	insEL@165;A172T	CARBAPENEM	carbapenem-hydrolyzing class A beta-lactamase KPC-127	no
+blaKPC-128	D179Y;T243M	CARBAPENEM	carbapenem-hydrolyzing class A beta-lactamase KPC-128	no
+blaKPC-129	N170H;insVYTRAPNK@262	CARBAPENEM	class A beta-lactamase KPC-129	no
+blaKPC-130	D179G;H274Y	CARBAPENEM	class A beta-lactamase KPC-130	no
+blaKPC-131	T216A	CARBAPENEM	carbapenem-hydrolyzing class A beta-lactamase KPC-131	no
+blaKPC-132	insRAPNKDDKS@265;H274Y	CARBAPENEM	inhibitor-resistant class A beta-lactamase KPC-132	yes
+blaKPC-133	D179G;insAVYTRAPNKDDKHSE@261	CARBAPENEM	carbapenem-hydrolyzing class A beta-lactamase KPC-133	no
+blaKPC-134	D179A;insRAPNKDDN@265	CARBAPENEM	inhibitor-resistant carbapenem-hydrolyzing class A beta-lactamase KPC-134	yes
+blaKPC-135	E166_L167del;insAVYTRAPNKDDKHSE@261	CARBAPENEM	inhibitor-resistant class A beta-lactamase KPC-135	yes
+blaKPC-136	P174L	CARBAPENEM	carbapenem-hydrolyzing class A beta-lactamase KPC-136	no
+blaKPC-137	P174L;G175D	CARBAPENEM	inhibitor-resistant class A beta-lactamase KPC-137	yes
+blaKPC-138	L169P;T243A;insSEAVN@274	CEPHALOSPORIN	inhibitor-resistant extended-spectrum class A beta-lactamase KPC-138	yes
+blaKPC-139	D179Y;insKDDKHS@269	CARBAPENEM	inhibitor-resistant carbapenem-hydrolyzing class A beta-lactamase KPC-139	yes
+blaKPC-140	D179N;insAVYTRAPNKDDKHSE@261	CARBAPENEM	inhibitor-resistant carbapenem-hydrolyzing class A beta-lactamase KPC-140	yes
+blaKPC-141	D179Y;insG@238	CARBAPENEM	inhibitor-resistant carbapenem-hydrolyzing class A beta-lactamase KPC-141	yes
+blaKPC-142	insS@180;insKHSEAV@272	CARBAPENEM	inhibitor-resistant carbapenem-hydrolyzing class A beta-lactamase KPC-142	yes
+blaKPC-143	D179Y;T187S	CARBAPENEM	inhibitor-resistant carbapenem-hydrolyzing class A beta-lactamase KPC-143	yes
+blaKPC-144	A172T	CARBAPENEM	inhibitor-resistant carbapenem-hydrolyzing class A beta-lactamase KPC-144	yes
+blaKPC-145	D179Y;T265A	CEPHALOSPORIN	inhibitor-resistant extended-spectrum class A beta-lactamase KPC-145	yes
+blaKPC-146	L3M	CARBAPENEM	carbapenem-hydrolyzing class A beta-lactamase KPC-146	no
+blaKPC-147	L9M	CARBAPENEM	carbapenem-hydrolyzing class A beta-lactamase KPC-147	no
+blaKPC-148	insAVYTRAPNKDDKYSE@261;H274Y	CARBAPENEM	class A beta-lactamase KPC-148	no
+blaKPC-149	N214S;H274Y	CARBAPENEM	carbapenem-hydrolyzing class A beta-lactamase KPC-149	no
+blaKPC-150	L167_L169del;N170H;H274Y	CARBAPENEM	inhibitor-resistant class A beta-lactamase KPC-150	yes
+blaKPC-151	Y241_G242del;T243S	CEPHALOSPORIN	inhibitor-resistant extended-spectrum class A beta-lactamase KPC-151	yes
+blaKPC-152	insEL@165;insYTRAPNKDDK@263;H274Y	CEPHALOSPORIN	inhibitor-resistant extended-spectrum class A beta-lactamase KPC-152	yes
+blaKPC-153	insEL@165;H274Y;E276D	CEPHALOSPORIN	inhibitor-resistant extended-spectrum class A beta-lactamase KPC-153	yes
+blaKPC-154	insRAPNKDDKYS@265;H274Y	CEPHALOSPORIN	inhibitor-resistant extended-spectrum class A beta-lactamase KPC-154	yes
+blaKPC-155	L169P;G242del;T243A	CEPHALOSPORIN	inhibitor-resistant class A beta-lactamase KPC-155	yes
+blaKPC-156	G291D	CARBAPENEM	carbapenem-hydrolyzing class A beta-lactamase KPC-156	no
+blaKPC-157	N132S	CARBAPENEM	carbapenem-hydrolyzing class A beta-lactamase KPC-157	no
+blaKPC-158	A244V	CARBAPENEM	inhibitor-resistant carbapenem-hydrolyzing class A beta-lactamase KPC-158	yes
+blaKPC-159	D179E;G242_T243del	CEPHALOSPORIN	inhibitor-resistant extended-spectrum class A beta-lactamase KPC-159	yes
+blaKPC-160	E166_L167del	CARBAPENEM/CEFIDEROCOL	inhibitor-resistant carbapenem-hydrolyzing class A beta-lactamase KPC-160	yes
+blaKPC-161	insDDKHSEAVIAA@270	CARBAPENEM	carbapenem-hydrolyzing class A beta-lactamase KPC-161	no
+blaKPC-162	insTRAPNKD@264	CARBAPENEM	carbapenem-hydrolyzing class A beta-lactamase KPC-162	no
+blaKPC-163	insKDDKHS@269	CARBAPENEM	carbapenem-hydrolyzing class A beta-lactamase KPC-163	no
+blaKPC-164	insEAV@275	CARBAPENEM	carbapenem-hydrolyzing class A beta-lactamase KPC-164	no
+blaKPC-165	N170D	CARBAPENEM	carbapenem-hydrolyzing class A beta-lactamase KPC-165	no
+blaKPC-166	L169del;N170H	CARBAPENEM	carbapenem-hydrolyzing class A beta-lactamase KPC-166	no
+blaKPC-167	D179Y;insDDKYSE@270;H274Y	CEPHALOSPORIN	inhibitor-resistant extended-spectrum class A beta-lactamase KPC-167	yes
+blaKPC-168	D176N	CARBAPENEM	inhibitor-resistant carbapenem-hydrolyzing class A beta-lactamase KPC-168	yes
+blaKPC-169	D176_R178del	CEPHALOSPORIN	inhibitor-resistant extended-spectrum class A beta-lactamase KPC-169	yes
+blaKPC-170	D179N	CEPHALOSPORIN	inhibitor-resistant extended-spectrum class A beta-lactamase KPC-170	yes
+blaKPC-171	insSEAVIAAD@274	CARBAPENEM	inhibitor-resistant carbapenem-hydrolyzing class A beta-lactamase KPC-171	yes
+blaKPC-172	D179E	CEPHALOSPORIN	inhibitor-resistant extended-spectrum class A beta-lactamase KPC-172	yes
+blaKPC-173	insLK@168	CEPHALOSPORIN	inhibitor-resistant extended-spectrum class A beta-lactamase KPC-173	yes
+blaKPC-174	Y241del	CARBAPENEM	inhibitor-resistant carbapenem-hydrolyzing class A beta-lactamase KPC-174	yes
+blaKPC-175	insT@179	CEPHALOSPORIN	inhibitor-resistant extended-spectrum class A beta-lactamase KPC-175	yes
+blaKPC-176	S171P	CARBAPENEM	inhibitor-resistant carbapenem-hydrolyzing class A beta-lactamase KPC-176	yes
+blaKPC-177	insTSSPRAVTESLQN@179	CARBAPENEM	inhibitor-resistant carbapenem-hydrolyzing class A beta-lactamase KPC-177	yes
+blaKPC-178	P174L;H274Y	CARBAPENEM	inhibitor-resistant carbapenem-hydrolyzing class A beta-lactamase KPC-178	yes
+blaKPC-179	A133T;insS@180	CEPHALOSPORIN	inhibitor-resistant extended-spectrum class A beta-lactamase KPC-179	yes
+blaKPC-180	R164H	CARBAPENEM	inhibitor-resistant carbapenem-hydrolyzing class A beta-lactamase KPC-180	yes
+blaKPC-181	E276D	CARBAPENEM	carbapenem-hydrolyzing class A beta-lactamase KPC-181	no
+blaKPC-182	L287I	CARBAPENEM	carbapenem-hydrolyzing class A beta-lactamase KPC-182	no
+blaKPC-183	insKDDKYS@269;H274Y	CARBAPENEM	carbapenem-hydrolyzing class A beta-lactamase KPC-183	no
+blaKPC-184	H274Y;E276D	CARBAPENEM	carbapenem-hydrolyzing class A beta-lactamase KPC-184	no
+blaKPC-185	D179G;G242del;T243A	CEPHALOSPORIN	inhibitor-resistant extended-spectrum class A beta-lactamase KPC-185	yes
+blaKPC-186	R178_D179del	CEPHALOSPORIN	inhibitor-resistant extended-spectrum class A beta-lactamase KPC-186	yes
+blaKPC-187	R164H;D179Y	CARBAPENEM	inhibitor-resistant class A beta-lactamase KPC-187	yes
+blaKPC-188	insS@180;insVYTRAPN@262	CARBAPENEM	inhibitor-resistant class A beta-lactamase KPC-188	yes
+blaKPC-189	A172T;D179Y	CEPHALOSPORIN	inhibitor-resistant extended-spectrum class A beta-lactamase KPC-189	yes
+blaKPC-190	D179Y;A244V	CARBAPENEM	inhibitor-resistant class A beta-lactamase KPC-190	yes
+blaKPC-191	R178del;D179P	CARBAPENEM	inhibitor-resistant class A beta-lactamase KPC-191	yes
+blaKPC-192	insVLAVYTRAPN@259	CARBAPENEM	inhibitor-resistant carbapenem-hydrolyzing class A beta-lactamase KPC-192	yes
+blaKPC-193	insNKA@268	CARBAPENEM	class A beta-lactamase KPC-193	no
+blaKPC-194	D179Y;P183L	CEPHALOSPORIN	inhibitor-resistant extended-spectrum class A beta-lactamase KPC-194	yes
+blaKPC-195	E288D	CARBAPENEM	carbapenem-hydrolyzing class A beta-lactamase KPC-195	no
+blaKPC-196	insEL@165;D179Y	CARBAPENEM	inhibitor-resistant carbapenem-hydrolyzing class A beta-lactamase KPC-196	yes
+blaKPC-197	E166_L167del;A177E;H274Y;insSD@274	CEPHALOSPORIN	inhibitor-resistant extended-spectrum class A beta-lactamase KPC-197	yes
+blaKPC-199	E168K;H274Y	CARBAPENEM	inhibitor-resistant class A beta-lactamase KPC-199	yes
+blaKPC-200	L169del;H274Y	CARBAPENEM	inhibitor-resistant class A beta-lactamase KPC-200	yes
+blaKPC-201	R161_D163del;H274Y	CEPHALOSPORIN	inhibitor-resistant extended-spectrum class A beta-lactamase KPC-201	yes
+blaKPC-202	insSEAVIAAAAN@274	CARBAPENEM	inhibitor-resistant carbapenem-hydrolyzing class A beta-lactamase KPC-202	yes
+blaKPC-203	E166_L167del;insLAVYTRAPM@260;H274Y	CEPHALOSPORIN	inhibitor-resistant extended-spectrum class A beta-lactamase KPC-203	yes
+blaKPC-204	insKDD@269	CARBAPENEM	inhibitor-resistant carbapenem-hydrolyzing class A beta-lactamase KPC-204	yes
+blaKPC-205	insRAPNN@265;H274Y	CARBAPENEM	inhibitor-resistant class A beta-lactamase KPC-205	yes
+blaKPC-206	insYS@180	CEPHALOSPORIN	inhibitor-resistant extended-spectrum class A beta-lactamase KPC-206	yes
+blaKPC-207	L169Q;insS@274	CEPHALOSPORIN	inhibitor-resistant extended-spectrum class A beta-lactamase KPC-207	yes
+blaKPC-208	L169Q;D179Y	CEPHALOSPORIN	inhibitor-resistant extended-spectrum class A beta-lactamase KPC-208	yes
+blaKPC-209	insTSSPRA@179	CEPHALOSPORIN	inhibitor-resistant extended-spectrum class A beta-lactamase KPC-209	yes
+blaKPC-210	insAVYTRAPNKDDKHSEAVYTRAPNKDDKHSE@261	CARBAPENEM	inhibitor-resistant carbapenem-hydrolyzing class A beta-lactamase KPC-210	yes
+blaKPC-211	D176_D179del	CARBAPENEM	carbapenem-hydrolyzing class A beta-lactamase KPC-211	no
+blaKPC-212	R164L	CARBAPENEM	carbapenem-hydrolyzing class A beta-lactamase KPC-212	no
+blaKPC-213	D163G	CARBAPENEM	inhibitor-resistant carbapenem-hydrolyzing class A beta-lactamase KPC-213	yes
+blaKPC-214	R178H	CARBAPENEM	inhibitor-resistant carbapenem-hydrolyzing class A beta-lactamase KPC-214	yes
+blaKPC-215	I173S	CARBAPENEM	inhibitor-resistant carbapenem-hydrolyzing class A beta-lactamase KPC-215	yes
+blaKPC-216	insK@169;H274Y	CARBAPENEM	inhibitor-resistant carbapenem-hydrolyzing class A beta-lactamase KPC-216	yes
+blaKPC-217	A172D;H274Y;E276D;N293T	CARBAPENEM	inhibitor-resistant class A beta-lactamase KPC-217	yes
+blaKPC-218	P174L;H274Y;E276D;N293T	CARBAPENEM	inhibitor-resistant class A beta-lactamase KPC-218	yes
+blaKPC-219	G42S;insTY@179	CEPHALOSPORIN	inhibitor-resistant extended-spectrum class A beta-lactamase KPC-219	yes
+blaKPC-220	L169R;insVYTRAPNK@262	CEPHALOSPORIN	inhibitor-resistant extended-spectrum class A beta-lactamase KPC-220	yes
+blaKPC-221	A133T;insS@180;G242_T243del	CEPHALOSPORIN	inhibitor-resistant extended-spectrum class A beta-lactamase KPC-221	yes
+blaKPC-222	F40V;insTY@179	CEPHALOSPORIN	inhibitor-resistant extended-spectrum class A beta-lactamase KPC-222	yes
+blaKPC-223	V250F	CARBAPENEM	carbapenem-hydrolyzing class A beta-lactamase KPC-223	no
+blaKPC-224	L169Q	CARBAPENEM	carbapenem-hydrolyzing class A beta-lactamase KPC-224	no
+blaKPC-225	P174_R178del;D179H;H274Y	CARBAPENEM	inhibitor-resistant carbapenem-hydrolyzing class A beta-lactamase KPC-225	yes
+blaKPC-226	Y241_G242del	CEPHALOSPORIN	inhibitor-resistant extended-spectrum class A beta-lactamase KPC-226	yes
+blaKPC-227	D179Y;insKDD@269	CARBAPENEM	inhibitor-resistant carbapenem-hydrolyzing class A beta-lactamase KPC-227	yes
+blaKPC-228	E168_S171del	CEPHALOSPORIN	inhibitor-resistant extended-spectrum class A beta-lactamase KPC-228	yes
+blaKPC-229	insSEAV@274	CARBAPENEM	inhibitor-resistant carbapenem-hydrolyzing class A beta-lactamase KPC-229	yes
+blaKPC-230	R164S;insKDDKHS@269	CEPHALOSPORIN	inhibitor-resistant extended-spectrum class A beta-lactamase KPC-230	yes
+blaKPC-231	S171Y;H274Y	CARBAPENEM	carbapenem-hydrolyzing class A beta-lactamase KPC-231	no
+blaKPC-232	T93K;H274Y	CARBAPENEM	carbapenem-hydrolyzing class A beta-lactamase KPC-232	no
+blaKPC-233	insYTRAPI@263	CARBAPENEM	inhibitor-resistant carbapenem-hydrolyzing class A beta-lactamase KPC-233	yes
+blaKPC-234	D179G;Y241D	CARBAPENEM	inhibitor-resistant carbapenem-hydrolyzing class A beta-lactamase KPC-234	yes
+blaKPC-236	Q87R	CARBAPENEM	carbapenem-hydrolyzing class A beta-lactamase KPC-236	no
+blaKPC-237	S171del	CARBAPENEM	carbapenem-hydrolyzing class A beta-lactamase KPC-237	no
+blaKPC-238	E166_L167del;V240E;H274Y	CARBAPENEM	carbapenem-hydrolyzing class A beta-lactamase KPC-238	no
+blaKPC-239	V240del;Y241D;H274Y	CARBAPENEM	carbapenem-hydrolyzing class A beta-lactamase KPC-239	no
+blaKPC-240	L167_N170del;H274Y	CARBAPENEM	carbapenem-hydrolyzing class A beta-lactamase KPC-240	no
+blaKPC-241	E168_N170del	CARBAPENEM	carbapenem-hydrolyzing class A beta-lactamase KPC-241	no
+blaKPC-242	D179Y;insLAVYTRAPN@260	CARBAPENEM	carbapenem-hydrolyzing class A beta-lactamase KPC-242	no
+blaKPC-243	insRAPN@265	CARBAPENEM	carbapenem-hydrolyzing class A beta-lactamase KPC-243	no
+blaKPC-244	N214T	CARBAPENEM	carbapenem-hydrolyzing class A beta-lactamase KPC-244	no
+blaKPC-245	insYTRAPNKDD@263;H274Y;E276D	CARBAPENEM	carbapenem-hydrolyzing class A beta-lactamase KPC-245	no
+blaKPC-246	P104R;D179V	CARBAPENEM	carbapenem-hydrolyzing class A beta-lactamase KPC-246	no
+blaKPC-247	P104R;insYTRAPN@263	CARBAPENEM	carbapenem-hydrolyzing class A beta-lactamase KPC-247	no
+blaKPC-248	K73R;H274Y	CEPHALOSPORIN	inhibitor-resistant extended-spectrum class A beta-lactamase KPC-248	yes
+blaKPC-249	insTS@179	CARBAPENEM	inhibitor-resistant carbapenem-hydrolyzing class A beta-lactamase KPC-249	yes
+blaKPC-250	D179Y;insN@268	CARBAPENEM	class A beta-lactamase KPC-250	no
+blaKPC-251	insS@180;insAVYTRAPNKDDKYSE@261;H274Y	CARBAPENEM	carbapenem-hydrolyzing class A beta-lactamase KPC-251	no
+blaKPC-252	insANDYAA@243	CARBAPENEM	inhibitor-resistant carbapenem-hydrolyzing class A beta-lactamase KPC-252	yes
+blaKPC-255	D179Y;P268H	CEPHALOSPORIN	inhibitor-resistant extended-spectrum class A beta-lactamase KPC-255	yes
+blaKPC-256	D179Y;insAVYTRAPNKDDKHSE@261	CARBAPENEM	carbapenem-hydrolyzing class A beta-lactamase KPC-256	no
+blaKPC-257	E166_L167del;insVYTRAPNK@262	CARBAPENEM	carbapenem-hydrolyzing class A beta-lactamase KPC-257	no
+blaKPC-258	L162_P174del;G175H;D176G	CEPHALOSPORIN	inhibitor-resistant extended-spectrum class A beta-lactamase KPC-258	yes
+blaKPC-259	insTRAPN@264	CEPHALOSPORIN	inhibitor-resistant extended-spectrum class A beta-lactamase KPC-259	yes
+blaKPC-260	E166_L167del;H274Y;insSD@274	CARBAPENEM	inhibitor-resistant carbapenem-hydrolyzing class A beta-lactamase KPC-260	yes
+blaKPC-261	D179Y;insAPNKDE@266	CARBAPENEM	inhibitor-resistant class A beta-lactamase KPC-261	yes
+blaKPC-262	P268S	CARBAPENEM	carbapenem-hydrolyzing class A beta-lactamase KPC-262	no
+blaKPC-263	insG@238	CARBAPENEM	carbapenem-hydrolyzing class A beta-lactamase KPC-263	no
+blaKPC-264	S109P	CEPHALOSPORIN	inhibitor-resistant extended-spectrum class A beta-lactamase KPC-264	yes
+blaKPC-265	insTRAPNKDDKHSEAVI@264	CARBAPENEM	inhibitor-resistant carbapenem-hydrolyzing class A beta-lactamase KPC-265	yes
+blaKPC-266	insEAVIAA@275	CARBAPENEM	inhibitor-resistant carbapenem-hydrolyzing class A beta-lactamase KPC-266	yes
+blaKPC-267	D179N;insYSE@273;H274Y	CEPHALOSPORIN	inhibitor-resistant class A beta-lactamase KPC-267	yes
+blaKPC-268	D179Y;G242_T243del	CEPHALOSPORIN	inhibitor-resistant class A beta-lactamase KPC-268	yes
+blaKPC-269	D179H;G242_T243del	CEPHALOSPORIN	inhibitor-resistant extended-spectrum class A beta-lactamase KPC-269	yes
+blaKPC-270	insTRAPNKDDKYSEAVIAAAA@264;H274Y	CARBAPENEM	inhibitor-resistant carbapenem-hydrolyzing class A beta-lactamase KPC-270	yes
+blaKPC-271	D179Y;insKDDKH@269	CARBAPENEM	inhibitor-resistant carbapenem-hydrolyzing class A beta-lactamase KPC-271	yes
+blaKPC-272	insEL@165;H274Y;insSEAVN@274	CEPHALOSPORIN	inhibitor-resistant extended-spectrum class A beta-lactamase KPC-272	yes
+blaKPC-273	insGD@174	CARBAPENEM	inhibitor-resistant class A beta-lactamase KPC-273	yes
+blaKPC-274	D179H	CARBAPENEM	inhibitor-resistant class A beta-lactamase KPC-274	yes
+blaKPC-275	D179Y;T243P	CARBAPENEM	inhibitor-resistant class A beta-lactamase KPC-275	yes
+blaKPC-276	T243A;H274Y	CARBAPENEM	inhibitor-resistant carbapenem-hydrolyzing class A beta-lactamase KPC-276	yes
+blaKPC-277	insN@179	CARBAPENEM	inhibitor-resistant carbapenem-hydrolyzing class A beta-lactamase KPC-277	yes
+blaKPC-278	insRAPNKD@265	CARBAPENEM	inhibitor-resistant carbapenem-hydrolyzing class A beta-lactamase KPC-278	yes
+blaKPC-279	E166_L167del;G242del;T243A	CARBAPENEM	inhibitor-resistant class A beta-lactamase KPC-279	yes
+blaKPC-280	V240del;Y241D	CARBAPENEM	inhibitor-resistant class A beta-lactamase KPC-280	yes
+blaKPC-281	A257S	CARBAPENEM	carbapenem-hydrolyzing class A beta-lactamase KPC-281	no
+blaKPC-282	insTRAPNK@264	CARBAPENEM	inhibitor-resistant carbapenem-hydrolyzing class A beta-lactamase KPC-282	yes
+blaKPC-283	D179Y;insHSEAVIAAAE@273	CARBAPENEM	inhibitor-resistant class A beta-lactamase KPC-283	yes
+blaKPC-284	insS@180;insAVYTRAPNKDDKHSE@261	CARBAPENEM	inhibitor-resistant class A beta-lactamase KPC-284	yes
+blaKPC-285	N170_D179del	CARBAPENEM	class A beta-lactamase KPC-285	no
+blaKPC-286	H274Y;A277V	CARBAPENEM	carbapenem-hydrolyzing class A beta-lactamase KPC-286	no
+blaKPC-287	L169Q;G242_T243del	CEPHALOSPORIN	inhibitor-resistant extended-spectrum class A beta-lactamase KPC-287	yes
+blaKPC-288	insTF@179	CARBAPENEM	inhibitor-resistant class A beta-lactamase KPC-288	yes
+blaKPC-289	G239D;V240_Y241del	CEPHALOSPORIN	inhibitor-resistant extended-spectrum class A beta-lactamase KPC-289	yes
+blaKPC-290	G42A;D179Y	CEPHALOSPORIN	inhibitor-resistant extended-spectrum class A beta-lactamase KPC-290	yes
+blaKPC-291	D179Y;G239_V240del	CARBAPENEM	class A beta-lactamase KPC-291	no
+blaKPC-292	E168N;H274Y	CARBAPENEM	inhibitor-resistant carbapenem-hydrolyzing class A beta-lactamase KPC-292	yes
+blaKPC-293	D179A;H274Y;E276D	CARBAPENEM	inhibitor-resistant carbapenem-hydrolyzing class A beta-lactamase KPC-293	yes
+blaKPC-294	P94R;S130T	CARBAPENEM	inhibitor-resistant carbapenem-hydrolyzing class A beta-lactamase KPC-294	yes
+blaKPC-295	insEL@165;T243A;H274Y	CEPHALOSPORIN	inhibitor-resistant extended-spectrum class A beta-lactamase KPC-295	yes
+blaKPC-296	insAIPGDARDT@171;insPNK@267;H274Y	CEPHALOSPORIN	inhibitor-resistant extended-spectrum class A beta-lactamase KPC-296	yes
+blaKPC-297	insLK@168;G242_T243del	CARBAPENEM	inhibitor-resistant class A beta-lactamase KPC-297	yes
+blaKPC-298	insAPNK@266	CARBAPENEM	inhibitor-resistant class A beta-lactamase KPC-298	yes
+blaKPC-299	R164P;insAVYTRAPNKDDKHSE@261	CARBAPENEM	inhibitor-resistant class A beta-lactamase KPC-299	yes
+blaKPC-300	P268T;H274R	CARBAPENEM	carbapenem-hydrolyzing class A beta-lactamase KPC-300	no
+blaKPC-301	L162_E166del;H274Y	CARBAPENEM	inhibitor-resistant class A beta-lactamase KPC-301	yes

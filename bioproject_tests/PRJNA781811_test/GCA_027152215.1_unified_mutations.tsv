@@ -1,2 +1,19 @@
-Gene	Mutation	Confidence(%)	Methods	GAMMA_Contig	GAMMA_Identity(%)	GAMMA_Coverage(%)	SeqKit_PairID
-fosakp	I91V	50	gamma	JAJOCS010000004.1	97.86	100.00	-
+Gene	Mutation	Confidence(%)	Methods	Contig	Reported_As_Resistance_Mutation
+blaSHV-12	K236E	100	blast+gamma	JAJOCS010000013.1	yes
+blaSHV-12	S235G	100	blast+gamma	JAJOCS010000013.1	yes
+envZ	I15T	100	blast+gamma	JAJOCS010000003.1	no
+envZ	I258M	100	blast+gamma	JAJOCS010000003.1	no
+fosAKP	A86V	100	blast+gamma	JAJOCS010000004.1	no
+fosAKP	I91V	100	blast+gamma	JAJOCS010000004.1	no
+fosAKP	Q130P	100	blast+gamma	JAJOCS010000004.1	no
+ftsI	V375A	100	blast+gamma	JAJOCS010000004.1	no
+ompK36	D306N	50	blast	JAJOCS010000002.1	no
+ompK36	D344E	50	blast	JAJOCS010000002.1	no
+ompK36	E308Q	50	blast	JAJOCS010000002.1	no
+ompK36	G309N	50	blast	JAJOCS010000002.1	no
+ompK36	H349R	50	blast	JAJOCS010000002.1	no
+ompK36	N276D	50	blast	JAJOCS010000002.1	no
+ompK36	N350K	50	blast	JAJOCS010000002.1	no
+ompK36	S346D	50	blast	JAJOCS010000002.1	no
+ompK36	V178P	50	blast	JAJOCS010000002.1	no
+ompK36	insNNFTGV@308	50	blast	JAJOCS010000002.1	no

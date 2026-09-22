@@ -1,5 +1,11 @@
-Gene	Mutation	Confidence(%)	Methods	GAMMA_Contig	GAMMA_Identity(%)	GAMMA_Coverage(%)	SeqKit_PairID
-blakpc	E167del	50	seqkit	-	-	-	blaKPC_ver
-blakpc	L166del	50	seqkit	-	-	-	blaKPC_ver
-blakpc	L168del	50	seqkit	-	-	-	blaKPC_ver
-fosakp	I91V	50	gamma	JBCEBK010000001.1	97.86	100.00	-
+Gene	Mutation	Confidence(%)	Methods	Contig	Reported_As_Resistance_Mutation
+blaKPC-2	W165_E168del	50	blast	JBCEBK010000044.1	yes
+blaSHV-12	K236E	100	blast+gamma	JBCEBK010000010.1	yes
+blaSHV-12	S235G	100	blast+gamma	JBCEBK010000010.1	yes
+envZ	I15T	100	blast+gamma	JBCEBK010000007.1	no
+envZ	I258M	100	blast+gamma	JBCEBK010000007.1	no
+fosAKP	D138E	100	blast+gamma	JBCEBK010000001.1	no
+fosAKP	I91V	100	blast+gamma	JBCEBK010000001.1	no
+fosAKP	Q130P	100	blast+gamma	JBCEBK010000001.1	no
+ftsI	V375A	100	blast+gamma	JBCEBK010000001.1	no
+ompK36	M1_L32del	50	blast	JBCEBK010000033.1	no

@@ -1,69 +1,85 @@
-# Validation Against Real, Published Genomes
+# Validation against real, published genomes
 
-Beyond the synthetic unit-test suite, the pipeline has been run end-to-end (BLAST+GAMMA+SeqKit, all external tools) against real NCBI assemblies tied to published studies, with results — including the genotype-derived FOS/CAZ-AVI phenotype predictions (see [OUTPUT_FILES.md](OUTPUT_FILES.md#predicted-phenotypes)) — cross-checked against each paper's reported findings:
+The pipeline was run end-to-end (BLAST + GAMMA + seqkit) on real NCBI
+assemblies from published studies, and the calls compared with what those
+studies reported. Every result folder under `bioproject_tests/` was regenerated
+with the current code and the current reference data (AMRFinderPlus
+2026-08-07.1).
 
-| Folder | Genomes | Paper compared against |
-|---|---|---|
-| `bioproject_tests/PRJNA595047_test/` | 4 *K. pneumoniae* assemblies | Pariona et al. 2024 (doi:10.1128/spectrum.01173-24) — *in vitro* meropenem-selected blaKPC reversion/Ω-loop deletion mutants |
-| `bioproject_tests/PRJNA741867_test_results/` | 6 *K. pneumoniae* ST307 assemblies | Hernández-García et al. 2022 (JCM 60:e02245-21) — clinical ceftazidime-avibactam-selected blaKPC-46/-66/-92 X-loop variants |
-| `bioproject_tests/PRJNA1086695_test/` | 2 myloasm-assembled isolates | — (assembly + detection validation only) |
-
-For PRJNA741867, the genotype-predicted CAZ/AVI phenotype matches the paper's reported susceptibility for all 6 isolates: KPC-3 (native, no tracked mutation) isolates A-1/B-1/C-1 predict Susceptible, while the KPC-46/-66/-92 X-loop variant isolates A-2/B-2/C-2 predict Resistant. For PRJNA595047, the `novelKPC-MUT1/2` Ω-loop deletion isolates predict Resistant while the wildtype `KPC2-MUT1/2` isolates predict Susceptible.
-
-These real-genome runs caught and validated the fix for an indel-misrepresentation bug: the BLAST and SeqKit mutation callers used to do a fixed-position lookup into the translated query with no sequence alignment, so any real insertion/deletion relative to the reference gene shifted every downstream "known mutation position" and produced fabricated point-substitution calls. See `bioproject_tests/PRJNA595047_test/RESULTS_SUMMARY.md` and `bioproject_tests/PRJNA741867_test_results/COMPARISON_TO_PAPER.md` for the full writeups, including before/after comparisons.
-
-## Testing with Real Genomes
-
-### Recommended Public Assemblies
-
-The following NCBI assemblies are well-characterized and can be used to validate the full pipeline end-to-end (requires BLAST+, GAMMA, seqkit):
-
-| Accession | Organism | Resistance Genes | Use |
+| Folder | Genomes | Study | Outcome |
 |---|---|---|---|
-| GCA_000281535.1 | *K. pneumoniae* KPNIH1 | blaKPC-3 | CAZAVI positive control |
-| GCF_000016305.1 | *K. pneumoniae* MGH 78578 | none | Negative control |
-| GCF_000005845.2 | *E. coli* K-12 MG1655 | murA, uhpT, glpT (chromosomal) | Chromosomal FOS targets |
+| `PRJNA741867_test_results/` | 6 *K. pneumoniae* ST307 | Clinical ceftazidime-avibactam-selected KPC variants | **6/6 concordant**, exact allele assignment for all three resistant isolates |
+| `PRJNA595047_test/` | 4 *K. pneumoniae* | In vitro selection of KPC Omega-loop deletion mutants | **4/4 concordant** with the study's own strain naming |
+| `PRJNA1086695_test/` | 2 long-read assemblies | Assembly + detection | blaKPC-179 identified in one isolate |
+| `PRJNA781811_test/` | 18 *K. pneumoniae* / *K. variicola* | Bacteraemia isolate collection | Genotype-only comparison; 4 carry an acquired fosA enzyme |
 
-GCA_000281535.1 (*K. pneumoniae* KPNIH1) is from the 2011 NIH clinical outbreak and is confirmed to carry blaKPC-3. It is widely used as a reference for KPC carbapenemase studies.
+## PRJNA741867 — the clearest test
 
-### Downloading an Assembly
+Three patients, each with a susceptible baseline isolate and a
+ceftazidime-avibactam-resistant isolate that emerged on therapy.
 
-Use the provided script to download any NCBI assembly:
+| Sample | Paper | Called allele | Changes (Ambler) | Predicted |
+|---|---|---|---|---|
+| A-1 | Susceptible | blaKPC-3 | H274Y | Susceptible ✅ |
+| A-2 | Resistant | blaKPC-46 | L169P; H274Y | Resistant ✅ |
+| B-1 | Susceptible | blaKPC-3 | H274Y | Susceptible ✅ |
+| B-2 | Resistant | blaKPC-66 | E166_L167del; H274Y | Resistant ✅ |
+| C-1 | Susceptible | blaKPC-3 | H274Y | Susceptible ✅ |
+| C-2 | Resistant | blaKPC-92 | E168D; L169_N170del; H274Y | Resistant ✅ |
+
+The discriminating detail: all six carry `H274Y`, which is simply what makes a
+KPC a KPC-3. It is reported among the protein changes but is not treated as a
+resistance marker, which is why the three baselines come out susceptible.
+
+## What the current version changed
+
+Re-running the previously committed BioProject results with the corrected
+pipeline changed several calls. Each change is a correction:
+
+* **A false-positive fosfomycin call removed.** In PRJNA781811,
+  GCA_027152215.1 was previously reported as carrying acquired `fosA5` at
+  96.19% identity and called resistant. The locus in fact matches the intrinsic
+  chromosomal `fosAKP` better; allele assignment now ranks every reference by
+  bitscore instead of choosing from a truncated hit list, and the isolate is
+  called susceptible.
+* **A false-negative ceftazidime-avibactam call fixed.** In PRJNA1086695,
+  SRR28296939 carries an insertion immediately after Omega-loop residue D179,
+  which matches NCBI allele KPC-179 — curated as an inhibitor-resistant
+  extended-spectrum enzyme. The earlier version could not represent insertions
+  and reported a wild-type blaKPC with a susceptible call.
+* **Novel variants are now called on mechanism.** In PRJNA595047, the two
+  strains the study itself names `novelKPC-MUT1/2` carry Omega-loop deletions
+  that match no named allele. They are now reported as novel blaKPC variants
+  with their changes listed, and called resistant because an in-frame
+  Omega-loop deletion is a documented avibactam-escape mechanism.
+* **Spurious chromosomal "mutations" gone.** Calls such as `G213I` in ompK36 or
+  `A333P` in ftsI were *K. pneumoniae*-versus-*E. coli* sequence differences
+  scored against a mismatched reference. Chromosomal point mutations are now
+  numbered against an organism-matched reference protein and only reported for
+  curated positions.
+
+## Reproducing this
 
 ```bash
-python scripts/download_assembly.py GCA_000281535.1
-# Saves to GCA_000281535.1.fasta
-```
+datasets download genome accession <accession> --include genome
+unzip ncbi_dataset.zip
 
-### Running the Full Pipeline on a Real Genome
-
-```bash
-# 1. Download a KPC-carrying K. pneumoniae assembly
-python scripts/download_assembly.py GCA_000281535.1
-
-# 2. Create and prepare the GAMMA database (fetches real sequences from NCBI,
-#    then runs GAMMA_DB_Maker to validate reading frames and deduplicate)
-fos-cazavi create-db -e your.email@example.com -o resistance_db
-makeblastdb -in resistance_db.fasta -dbtype nucl -out resistance_db
-
-# 3. Run full analysis (bundled genes and primers used by default)
 fos-cazavi fos-cazavi-all \
-    -a GCA_000281535.1.fasta \
-    -d resistance_db \
-    -o kpnih1_results
-
-# 4. View summary
-cat kpnih1_results_summary.txt
+    -a ncbi_dataset/data/<accession>/<accession>_*_genomic.fna \
+    -o <accession> \
+    -d fos_cazavi/data/example_database.fasta \
+    --organism Klebsiella_pneumoniae
 ```
 
-Expected output for KPNIH1 will include blaKPC-3 at ≥99% identity with CAZAVI resistance mutations reported.
+Each folder's `RESULTS_SUMMARY.md` or `COMPARISON_TO_PAPER.md` has the full
+per-genome detail.
 
-### Generating Synthetic Test Genomes
+## How far this goes
 
-If you do not have a real assembly, generate synthetic test genomes that embed all resistance scenarios:
-
-```bash
-python create_test_genomes.py  # produces test_genomes/ directory
-```
-
-This produces FASTA files in `test_genomes/` covering negative controls, single-gene plasmidic/chromosomal scenarios, and a multi-resistance genome (fosA3 + blaKPC-3 + blaOXA-48).
+These are genotype-to-published-phenotype comparisons on a few dozen genomes,
+most of them *K. pneumoniae*, and mostly testing the ceftazidime-avibactam
+side. There is no paired MIC data here, no *E. coli* or *P. aeruginosa* set,
+and no fosfomycin-resistant clinical isolate with measured susceptibility. The
+synthetic scenarios in `create_test_genomes.py` cover the logic paths that the
+real genomes do not. Treat the tool accordingly, and see
+[METHODS.md](METHODS.md#9-known-limits).

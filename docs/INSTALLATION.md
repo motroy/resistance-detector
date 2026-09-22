@@ -5,7 +5,6 @@
 - **NCBI BLAST+**
 - **GAMMA** (Gene Allele Mutation Microbial Assessment)
 - **BLAT** (required by GAMMA for its protein-level alignment search)
-- **GAMMA_DB_Maker** (for preparing nucleotide databases for GAMMA)
 - **SeqKit** (>=2.8 — older builds, including the seqkit packaged by Ubuntu/Debian's `apt` as of 2.3.x, have a coordinate bug in `seqkit amplicon --bed` that can report the wrong genomic location for a reverse-strand amplicon match, silently dropping real mutation calls that depend on amplicon coordinates)
 - **Python 3** with **Biopython**
 
@@ -15,7 +14,7 @@
 pip install fos-cazavi
 ```
 
-This installs the `fos-cazavi` command and bundles the reference data files (`example_database_deduplicated.fasta`, `primers.tsv`). System tools (BLAST+, GAMMA, seqkit) must still be installed separately.
+This installs the `fos-cazavi` command and the bundled reference data (see [METHODS.md](METHODS.md#1-reference-data)). BLAST+ is required; GAMMA (with BLAT) and seqkit are optional and must be installed separately.
 
 ## Option 2: Conda
 
@@ -34,7 +33,7 @@ pixi install
 ## Option 4: Manual Installation
 
 ```bash
-# Install system dependencies (BLAST+, BLAT, GAMMA, SeqKit, GAMMA_DB_Maker)
+# Install system dependencies (BLAST+, BLAT, GAMMA, SeqKit)
 # into ./bin (or pass a different directory as the first argument)
 bash install_deps.sh ./bin
 export PATH="$PWD/bin:$PATH"

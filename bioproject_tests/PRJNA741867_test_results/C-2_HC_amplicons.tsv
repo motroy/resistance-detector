@@ -1,2 +1,2 @@
-Pair_ID	Contig	Start	End	Length	Mutations_Found	Method
-blaKPC_ver	JAHUYV010000037.1	7390	8266	876	blaKPC-3: E167del,L168del,N169del	Seqkit/Amplicon
+Pair_ID	Contig	Start	End	Length	Genes_In_Region	Method
+blaKPC_ver	JAHUYV010000037.1	7390	8266	876	blaKPC-92: E168D;L169_N170del;H274Y	SeqKit/amplicon
