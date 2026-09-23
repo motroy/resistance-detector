@@ -283,7 +283,13 @@ inferred from amplicon presence.
   changes outside coding sequences are not examined. Porin and PBP3 changes are
   scored only as contributory evidence (section 5), never as a Resistant call,
   so an isolate whose resistance is driven purely by such a mechanism will read
-  `Indeterminate` rather than `Resistant`.
+  `Indeterminate` rather than `Resistant`. A concrete real-world instance: in
+  PRJNA781811, three isolates share an identical detectable genotype
+  (`blaKPC-3` H274Y, an ESBL-variant `blaSHV`, the same `ompK36` insertion,
+  the same `ompK35` truncation) and are measured ceftazidime-avibactam
+  susceptible, susceptible, and resistant respectively — genotype cannot
+  distinguish them. See
+  [`bioproject_tests/PRJNA781811_test/RESULTS_SUMMARY.md`](../bioproject_tests/PRJNA781811_test/RESULTS_SUMMARY.md).
 * **Chromosomal point mutations for other species.** Only the three organisms
   above have curated positions. Other species get acquired-gene and KPC results
   only.
@@ -304,16 +310,21 @@ inferred from amplicon presence.
   species' sequences, since a database entry's ID has to be unique. All 9 now
   match real *K. pneumoniae* assemblies at 98.6–100% identity, confirmed
   against isolates spanning Resistant, Intermediate and Susceptible.
-  Re-running the two validation rounds found two real, GAMMA-confirmed
-  premature stops in `uhpB` (isolates KP_R_02, KP_R_05 — both lab-confirmed
-  Resistant) that were previously invisible, moving sensitivity from `0/11`
-  to `2/11` in round 1; round 2 (18 isolates) still found none. Read plainly:
-  the detection gap is closed, and closing it recovered some, but not most, of
-  the missing sensitivity — most fosfomycin resistance in this data set is not
-  explained by a coding-sequence change in these genes at all, consistent with
-  the literature on promoter/IS-element-driven `uhpT` regulation, which no
-  CDS-level tool can see. See
+  Re-running the two ESKAPE-GOLD validation rounds found two real,
+  GAMMA-confirmed premature stops in `uhpB` (isolates KP_R_02, KP_R_05 — both
+  lab-confirmed Resistant) that were previously invisible, moving sensitivity
+  from `0/11` to `2/11` in round 1; round 2 (18 isolates) still found none. A
+  third independent real-MIC set, PRJNA781811, added a `uhpB` and a `glpT`
+  premature stop (3/9 sensitivity there). Read plainly: the detection gap is
+  closed, and closing it recovered some, but not most, of the missing
+  sensitivity across all three samples (5/38 combined) — most fosfomycin
+  resistance in this data is not explained by a coding-sequence change in
+  these genes at all, consistent with the literature on
+  promoter/IS-element-driven `uhpT` regulation, which no CDS-level tool can
+  see. See
   [`bioproject_tests/ESKAPE_fos_GOLD_Kpneumoniae/RESULTS_SUMMARY.md`](../bioproject_tests/ESKAPE_fos_GOLD_Kpneumoniae/RESULTS_SUMMARY.md)
+  and
+  [`bioproject_tests/PRJNA781811_test/RESULTS_SUMMARY.md`](../bioproject_tests/PRJNA781811_test/RESULTS_SUMMARY.md)
   for the full before/after account.
 * **P. aeruginosa ceftazidime-avibactam.** PDC/AmpC derepression, PDC variants
   and OprD loss are not assessed, so any call not driven by a
