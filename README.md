@@ -87,10 +87,14 @@ calls — and that work caught two real bugs along the way: a hit-selection
 error that mis-named some genomes' own chromosomal gene as an ambiguous
 acquired one, and an outright wrong assumption (that *P. aeruginosa* is
 unconditionally fosfomycin-resistant), both now fixed. Fosfomycin sensitivity
-in resistant/intermediate *K. pneumoniae* is 0/29 across two independent
-samples, which replicates rather than removes a real, documented
-reference-database gap (see [docs/METHODS.md](docs/METHODS.md#9-known-limits)).
-On six *K. pneumoniae* ST307 assemblies from a study of CAZ/AVI resistance
+in resistant/intermediate *K. pneumoniae* started at 0/29 across two
+independent samples, tracing to a reference-database gap that made 9
+fosfomycin transport genes undetectable in this species — also now fixed (a
+K. pneumoniae-specific reference added for each), recovering 2 real,
+GAMMA-confirmed resistant calls (2/29); see
+[docs/METHODS.md](docs/METHODS.md#9-known-limits) for why 2/29, not more, is
+the expected result. On six *K. pneumoniae* ST307 assemblies from a study of
+CAZ/AVI resistance
 emerging on therapy, it reproduced all six reported phenotypes and assigned
 the exact blaKPC allele (KPC-46, KPC-66, KPC-92) in each resistant isolate.
 Every genome drawn from the two gold-standard source CSVs, with its measured

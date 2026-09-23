@@ -18,8 +18,8 @@ from Bio.SeqRecord import SeqRecord
 
 from . import betalactamase
 from .references import (
-    ACQUIRED_PREFIXES, INTRINSIC_GENES, IN_SCOPE_DRUGS, gene_family,
-    is_acquired_gene, load_point_mutations, load_reference_proteins,
+    ACQUIRED_PREFIXES, INTRINSIC_GENES, IN_SCOPE_DRUGS, canonical_gene_name,
+    gene_family, is_acquired_gene, load_point_mutations, load_reference_proteins,
     mutation_lookup_key, mutation_scope,
 )
 from .utils import check_dependencies
@@ -253,10 +253,15 @@ class BlastDetector:
         print("Analyzing hits and calling variants...")
 
         for hit in hits:
-            gene = hit['gene']
+            # The BLAST subject ID (raw_gene) is what the reference CDS is
+            # actually stored under - for a gene with more than one
+            # organism-specific reference (see GENE_ALIASES) that is not the
+            # same as the canonical name every other check uses.
+            raw_gene = hit['gene']
+            gene = canonical_gene_name(raw_gene)
             family = gene_family(gene)
             contig = self.contigs.get(hit['query_id'], '')
-            reference_cds = self.reference_cds.get(gene, '')
+            reference_cds = self.reference_cds.get(raw_gene, '')
             if not contig or not reference_cds:
                 continue
 

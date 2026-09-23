@@ -112,6 +112,17 @@ CHROMOSOMAL_GENES = [
     # route to carbapenem and ceftazidime-avibactam resistance without any
     # carbapenemase being present.
     'ompC', 'ompF',
+    # K. pneumoniae-specific references for the fosfomycin transport/regulatory
+    # genes above. The E. coli-sourced entries are only 84-89% identical to the
+    # K. pneumoniae ortholog (confirmed against real isolates in
+    # bioproject_tests/ESKAPE_fos_GOLD_Kpneumoniae/), below the 90% default
+    # detection threshold, so those genes were never actually being checked for
+    # this species. These are separate database entries (not a replacement)
+    # because gene_family()/GENE_ALIASES in references.py maps them back to the
+    # same canonical name the E. coli entry uses - see the module docstring
+    # there for why a single shared name can't hold two different sequences.
+    'murA_Kpn', 'uhpT_Kpn', 'glpT_Kpn', 'uhpA_Kpn', 'uhpB_Kpn', 'uhpC_Kpn',
+    'cyaA_Kpn', 'ptsI_Kpn', 'galU_Kpn',
 ]
 
 # Point-mutation reference proteins, taken from AMRFinderPlus.  The positions in

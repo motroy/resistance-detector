@@ -1,7 +1,16 @@
 Gene	Contig	Start	Stop	Match_Type	Description	Codon_Changes	BP_Changes	Transversions	Codon_Percent	BP_Percent	Percent_Length	Match_Length	Target_Length	Strand
+ptsI_Kpn	RHUD01000011.1	8358	10086	Native	No coding mutations	0	5	1	1	0.9971	1	1728	1728	+
 blaCTX-M-15	RHUD01000139.1	0	487	Contig Edge	0 SNPs in 390-876,	130	389	0	0.5548	0.5559	0.5559	487	876	+
+murA_Kpn	RHUD01000013.1	70449	71709	Native	No coding mutations	0	7	4	1	0.9944	1	1260	1260	+
 ompK36	RHUD01000015.1	135177	136275	Indel	9 bp Deletion at 549,3 bp Insertion at 924,71 coding mutations	76	65	27	0.7935	0.9411	0.9946	1098	1104	+
+glpT_Kpn	RHUD01000015.1	110148	111495	Native	No coding mutations	0	7	1	1	0.9948	1	1347	1347	+
+uhpT_Kpn	RHUD01000019.1	9758	11150	Native	No coding mutations	0	8	1	1	0.9943	1	1392	1392	-
+uhpC_Kpn	RHUD01000019.1	11295	12624	Native	No coding mutations	0	6	0	1	0.9955	1	1329	1329	-
+uhpB_Kpn	RHUD01000019.1	12635	14117	Indel	6 bp Insertion at 1272,	2	12	3	0.9959	0.9919	1.004	1482	1476	-
+uhpA_Kpn	RHUD01000019.1	14134	14728	Native	No coding mutations	0	4	1	1	0.9933	1	594	594	-
+galU_Kpn	RHUD01000001.1	147364	148267	Native	No coding mutations	0	1	0	1	0.9989	1	903	903	+
 envZ	RHUD01000020.1	48607	49963	Mutant	I15T,I258M,	2	8	3	0.9956	0.9941	1	1356	1356	-
+cyaA_Kpn	RHUD01000023.1	40353	42906	Native	No coding mutations	0	13	1	1	0.9949	1	2553	2553	-
 ftsI	RHUD01000002.1	215217	216984	Mutant	V375A,	1	4	0	0.9983	0.9977	1	1767	1767	+
 fosAKP	RHUD01000002.1	14212	14632	Mutant	I91V,Q130P,	2	11	2	0.9857	0.9738	1	420	420	+
 ompK35	RHUD01000030.1	36929	38009	Native	No coding mutations	0	5	0	1	0.9954	1	1080	1080	-

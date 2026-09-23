@@ -1,8 +1,17 @@
 Gene	Contig	Start	End	Identity	Coverage	Match_Type	Changes	Method
 envZ	u1	48665	50021	99.78	100.00	Mutant	I258M	GAMMA
 acrB	u12	171238	174385	99.90	100.00	Mutant	R716L	GAMMA
+murA_Kpn	u23	95237	96497	100.00	100.00	Native	No coding mutations	GAMMA
+uhpT_Kpn	u33	26442	27834	100.00	100.00	Native	No coding mutations	GAMMA
+uhpC_Kpn	u33	24968	26297	100.00	100.00	Native	No coding mutations	GAMMA
+uhpB_Kpn	u33	23475	24957	99.59	100.40	Indel	6bpinsertion@codon424	GAMMA
+uhpA_Kpn	u33	22864	23458	100.00	100.00	Native	No coding mutations	GAMMA
+cyaA_Kpn	u38	43736	46289	100.00	100.00	Native	No coding mutations	GAMMA
 ompK35	u46	46601	47680	10.56	99.91	Indel Truncation	1bpdeletion@codon29;truncation at codon 63 (of 360 codons);322 coding mutations	GAMMA
 ompK36	u57	216040	217165	47.01	101.90	Indel	6bpinsertion@codon136;3bpdeletion@codon182;3bpdeletion@codon225;21bpinsertion@codon266;185 coding mutations	GAMMA
+glpT_Kpn	u57	198413	199760	100.00	100.00	Native	No coding mutations	GAMMA
+ptsI_Kpn	u57	78058	79786	100.00	100.00	Native	No coding mutations	GAMMA
 fosAKP	u60	14060	14480	97.86	100.00	Mutant	I91V;Q130P;D138E	GAMMA
 ftsI	u79	186808	188575	99.66	100.00	Mutant	V375A;A433V	GAMMA
 blaKPC-2	u93	6025	6907	100.00	100.00	Native	No coding mutations	GAMMA
+galU_Kpn	u112	147018	147921	100.00	100.00	Native	No coding mutations	GAMMA

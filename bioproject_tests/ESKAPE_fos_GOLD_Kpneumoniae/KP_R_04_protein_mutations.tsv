@@ -1,9 +1,18 @@
 Gene	Contig	Start	End	Identity	Coverage	Match_Type	Changes	Method
 blaSHV-12	FBSV01000003.1	145252	146113	100.00	100.00	Native	No coding mutations	GAMMA
+galU_Kpn	FBSV01000007.1	360718	361621	100.00	100.00	Native	No coding mutations	GAMMA
+murA_Kpn	FBSV01000011.1	224769	226029	100.00	100.00	Native	No coding mutations	GAMMA
 acrB	FBSV01000014.1	62422	65569	100.00	100.00	Native	No coding mutations	GAMMA
 envZ	FBSV01000018.1	153768	155124	99.56	100.00	Mutant	I15T;I258M	GAMMA
 ftsI	FBSV01000021.1	48600	50367	99.83	100.00	Mutant	V375A	GAMMA
 fosAKP	FBSV01000021.1	255858	256278	97.86	100.00	Mutant	I91V;Q130P;D138E	GAMMA
+cyaA_Kpn	FBSV01000028.1	26325	28878	100.00	100.00	Native	No coding mutations	GAMMA
+uhpT_Kpn	FBSV01000030.1	57223	58615	100.00	100.00	Native	No coding mutations	GAMMA
+uhpC_Kpn	FBSV01000030.1	58760	60089	100.00	100.00	Native	No coding mutations	GAMMA
+uhpB_Kpn	FBSV01000030.1	60100	61582	99.59	100.40	Indel	6bpinsertion@codon424	GAMMA
+uhpA_Kpn	FBSV01000030.1	61599	62193	100.00	100.00	Native	No coding mutations	GAMMA
 ompK36	FBSV01000032.1	213478	214582	99.73	100.00	Truncation	truncation at codon 125 (of 368 codons);1 coding mutations	GAMMA
+glpT_Kpn	FBSV01000032.1	195852	197199	100.00	100.00	Native	No coding mutations	GAMMA
+ptsI_Kpn	FBSV01000032.1	75498	77226	100.00	100.00	Native	No coding mutations	GAMMA
 ompK35	FBSV01000034.1	209320	210401	13.33	100.10	Indel Truncation	1bpinsertion@codon41;truncation at codon 89 (of 360 codons);312 coding mutations	GAMMA
 blaKPC-2	FBSV01000042.1	10737	11619	100.00	100.00	Native	No coding mutations	GAMMA

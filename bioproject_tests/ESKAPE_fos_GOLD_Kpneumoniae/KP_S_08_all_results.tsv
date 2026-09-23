@@ -1,12 +1,21 @@
 Sample	Type	Gene	Allele	Method	Result_Details	Identity_Confidence	Contig	Start	End	Copy_Number	Notes
 KP_S_08.fna	Chromosomal gene	acrB	acrB	BLAST	Coverage: 100.00%	99.94%	CACSDO010000002.1	252690	255836	1	no protein changes vs reference
+KP_S_08.fna	Chromosomal gene	cyaA	cyaA	BLAST	Coverage: 100.00%	99.77%	CACSDO010000019.1	40317	42869	1	no protein changes vs reference
 KP_S_08.fna	Chromosomal gene	ftsI	ftsI	BLAST	Coverage: 100.00%	99.77%	CACSDO010000010.1	144217	145983	1	protein changes: V375A
+KP_S_08.fna	Chromosomal gene	ptsI	ptsI	BLAST	Coverage: 100.00%	99.88%	CACSDO010000011.1	169106	170833	1	no protein changes vs reference
+KP_S_08.fna	Chromosomal gene	uhpB	uhpB	BLAST	Coverage: 100.00%	98.92%	CACSDO010000017.1	12679	14160	1	protein changes: L65F;insAS@421
+KP_S_08.fna	Chromosomal gene	uhpT	uhpT	BLAST	Coverage: 100.00%	99.42%	CACSDO010000017.1	9802	11193	1	no protein changes vs reference
+KP_S_08.fna	Chromosomal gene	glpT	glpT	BLAST	Coverage: 100.00%	99.56%	CACSDO010000004.1	212735	214081	1	no protein changes vs reference
 KP_S_08.fna	Chromosomal gene	envZ	envZ	BLAST	Coverage: 100.00%	99.04%	CACSDO010000005.1	48656	50011	1	protein changes: I15T;I258M
+KP_S_08.fna	Chromosomal gene	uhpC	uhpC	BLAST	Coverage: 100.00%	99.40%	CACSDO010000017.1	11339	12667	1	no protein changes vs reference
+KP_S_08.fna	Chromosomal gene	murA	murA	BLAST	Coverage: 100.00%	99.60%	CACSDO010000007.1	235984	237243	1	no protein changes vs reference
 KP_S_08.fna	Chromosomal gene	ompK35	ompK35	BLAST	Coverage: 100.00%	99.26%	CACSDO010000008.1	41400	42478	1	protein changes: W230_K290del;K292R;D293P;S296_K321del;N324T;V325_G344del;V345L;A346T;D348S;D349M;Q350R;A351P;A352S;V353C;G354T;I355P;V356R;Y357L;Q358T;F359T; premature stop at residue 253 (252/359 aa)
+KP_S_08.fna	Chromosomal gene	galU	galU	BLAST	Coverage: 100.00%	99.78%	CACSDO010000001.1	336822	337724	1	protein changes: R9T
 KP_S_08.fna	Acquired gene	blaKPC-2	blaKPC-3	BLAST	Coverage: 100.00%	99.89%	CACSDO010000029.1	5860	6741	1	protein changes: H274Y
 KP_S_08.fna	Acquired gene	blaCTX-M-15	blaCTX-M-15	BLAST	Coverage: 100.00%	100.00%	CACSDO010000037.1	2579	3454	1	no protein changes vs reference
 KP_S_08.fna	Chromosomal gene	ompK36	ompK36	BLAST	Coverage: 100.00%	92.62%	CACSDO010000004.1	195336	196454	1	protein changes: A183T;L184del;T192G;Y201F;N221H;L225N;S230del;K231R;A233D;L234K;insF@268;A269S;S271N;insGESDSI@271;L272S;L307I;I315L;D344E;S346D;H349R;N350R
 KP_S_08.fna	Acquired gene	blaSHV-12	blaSHV-like	BLAST	Coverage: 100.00%	98.95%	CACSDO010000006.1	206253	207113	1	protein changes: Y3F;Q31L;S235G;K236E
+KP_S_08.fna	Chromosomal gene	uhpA	uhpA	BLAST	Coverage: 100.00%	99.33%	CACSDO010000017.1	14178	14771	1	no protein changes vs reference
 KP_S_08.fna	Chromosomal gene	fosAKP	fosAKP	BLAST	Coverage: 100.00%	99.76%	CACSDO010000012.1	137405	137824	1	protein changes: Q130P
 KP_S_08.fna	Protein change	blaKPC-2	-	blast+gamma	H274Y	100%	CACSDO010000029.1	-	-	-	reported as resistance mutation
 KP_S_08.fna	Protein change	blaSHV-12	-	blast+gamma	K236E	100%	CACSDO010000006.1	-	-	-	reported as resistance mutation
@@ -17,6 +26,7 @@ KP_S_08.fna	Protein change	envZ	-	blast+gamma	I15T	100%	CACSDO010000005.1	-	-	-	
 KP_S_08.fna	Protein change	envZ	-	blast+gamma	I258M	100%	CACSDO010000005.1	-	-	-	sequence difference, not a curated resistance mutation
 KP_S_08.fna	Protein change	fosAKP	-	blast+gamma	Q130P	100%	CACSDO010000012.1	-	-	-	sequence difference, not a curated resistance mutation
 KP_S_08.fna	Protein change	ftsI	-	blast+gamma	V375A	100%	CACSDO010000010.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_S_08.fna	Protein change	galU	-	blast+gamma	R9T	100%	CACSDO010000001.1	-	-	-	sequence difference, not a curated resistance mutation
 KP_S_08.fna	Protein change	ompK35	-	blast	A346T	50%	CACSDO010000008.1	-	-	-	sequence difference, not a curated resistance mutation
 KP_S_08.fna	Protein change	ompK35	-	blast	A351P	50%	CACSDO010000008.1	-	-	-	sequence difference, not a curated resistance mutation
 KP_S_08.fna	Protein change	ompK35	-	blast	A352S	50%	CACSDO010000008.1	-	-	-	sequence difference, not a curated resistance mutation
@@ -58,4 +68,6 @@ KP_S_08.fna	Protein change	ompK36	-	blast	T192G	50%	CACSDO010000004.1	-	-	-	sequ
 KP_S_08.fna	Protein change	ompK36	-	blast	Y201F	50%	CACSDO010000004.1	-	-	-	sequence difference, not a curated resistance mutation
 KP_S_08.fna	Protein change	ompK36	-	blast	insF@268	50%	CACSDO010000004.1	-	-	-	sequence difference, not a curated resistance mutation
 KP_S_08.fna	Protein change	ompK36	-	blast	insGESDSI@271	50%	CACSDO010000004.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_S_08.fna	Protein change	uhpB	-	blast+gamma	L65F	100%	CACSDO010000017.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_S_08.fna	Protein change	uhpB	-	blast	insAS@421	50%	CACSDO010000017.1	-	-	-	sequence difference, not a curated resistance mutation
 KP_S_08.fna	Amplicon	blaKPC_ver	-	SeqKit/amplicon	Length: 882bp	-	CACSDO010000029.1	5859	6741	-	Genes in region: blaKPC-3: H274Y

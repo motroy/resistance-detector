@@ -15,7 +15,7 @@ PREDICTED PHENOTYPES (genotype-based):
     - Metallo-beta-lactamase blaNDM-5 detected (100.00% identity) - avibactam does not inhibit metallo-enzymes, so ceftazidime-avibactam is not active
   Note: Genotype-based prediction only; not a substitute for phenotypic antimicrobial susceptibility testing (AST).
 
-Total genes detected: 9
+Total genes detected: 18
 Method: BLAST+ with codon-aware variant calling
 
 ACQUIRED RESISTANCE GENES:
@@ -29,13 +29,22 @@ ACQUIRED RESISTANCE GENES:
 CHROMOSOMAL TARGET GENES:
 --------------------------------------------------
   acrB (copy number 1): 99.84% identity, 100.00% coverage
+  cyaA (copy number 1): 99.84% identity, 100.00% coverage
   ftsI (copy number 1): 99.49% identity, 100.00% coverage
+  ptsI (copy number 1): 99.65% identity, 100.00% coverage
+  uhpB (copy number 1): 99.06% identity, 100.00% coverage
+  uhpT (copy number 1): 99.57% identity, 100.00% coverage
+  glpT (copy number 1): 99.63% identity, 100.00% coverage
   envZ (copy number 1): 98.97% identity, 100.00% coverage
+  uhpC (copy number 1): 99.40% identity, 100.00% coverage
+  murA (copy number 1): 99.60% identity, 100.00% coverage
   ompK36 (copy number 1): 98.92% identity, 100.00% coverage
+  galU (copy number 1): 99.78% identity, 100.00% coverage
+  uhpA (copy number 1): 99.50% identity, 100.00% coverage
   fosAKP (copy number 1): 97.34% identity, 98.33% coverage
 
 PROTEIN CHANGES (BLAST caller cross-checked with GAMMA):
-  8 of 18 changes were reported by both callers
+  10 of 21 changes were reported by both callers
 ----------------------------------------------------------------------
 
   Gene: blaSHV-12
@@ -69,4 +78,9 @@ PROTEIN CHANGES (BLAST caller cross-checked with GAMMA):
     H349R                confidence 100%  [blast+gamma]  (not a curated resistance mutation)
     V178P                confidence 100%  [blast+gamma]  (not a curated resistance mutation)
     insDT@134            confidence  50%  [blast]  (not a curated resistance mutation)
+
+  Gene: uhpB
+    L65F                 confidence 100%  [blast+gamma]  (not a curated resistance mutation)
+    W15G                 confidence 100%  [blast+gamma]  (not a curated resistance mutation)
+    insAS@421            confidence  50%  [blast]  (not a curated resistance mutation)
 

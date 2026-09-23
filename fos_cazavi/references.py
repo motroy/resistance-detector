@@ -67,6 +67,40 @@ FOSA_FAMILIES = ('fosA', 'fosB', 'fosC', 'fosL')
 # a position list.
 FOS_TRANSPORT_GENES = ('uhpT', 'uhpA', 'uhpB', 'uhpC', 'glpT', 'cyaA', 'ptsI', 'galU')
 
+# Some chromosomal genes need more than one nucleotide reference: a single
+# strain's sequence for murA/uhpT/uhpA/uhpB/uhpC/glpT/cyaA/ptsI/galU is only
+# 84-89% identical to the K. pneumoniae ortholog (see
+# bioproject_tests/ESKAPE_fos_GOLD_Kpneumoniae/RESULTS_SUMMARY.md), below the
+# 90% default detection threshold - so those genes were never actually being
+# located in a K. pneumoniae assembly. A BLAST nucleotide database needs a
+# unique sequence ID per entry, so the K. pneumoniae-specific reference is
+# stored under its own name (``<gene>_Kpn``) rather than replacing the
+# original. This maps that name back to the gene it is a reference *for*, so
+# every downstream check - FOS_TRANSPORT_GENES membership, curated-mutation
+# lookup, loss-of-function reporting, the Gene column - sees one name
+# regardless of which reference actually matched.
+GENE_ALIASES = {
+    'murA_Kpn': 'murA',
+    'uhpT_Kpn': 'uhpT',
+    'uhpA_Kpn': 'uhpA',
+    'uhpB_Kpn': 'uhpB',
+    'uhpC_Kpn': 'uhpC',
+    'glpT_Kpn': 'glpT',
+    'cyaA_Kpn': 'cyaA',
+    'ptsI_Kpn': 'ptsI',
+    'galU_Kpn': 'galU',
+}
+
+
+def canonical_gene_name(gene_name):
+    """Map an organism-specific reference name back to its canonical gene name.
+
+    A no-op for every gene name that isn't in GENE_ALIASES, which is every
+    acquired-gene allele and every chromosomal gene that only has one
+    reference.
+    """
+    return GENE_ALIASES.get(gene_name, gene_name)
+
 # Chromosomal fosA enzymes that are a normal part of a species' genome: the
 # K. pneumoniae one (carried here both as fosAKP and as its AMRFinderPlus name
 # fosA6) and the P. aeruginosa one.  They are present in fosfomycin-susceptible
@@ -132,8 +166,14 @@ def mutation_scope(row):
 
 
 def gene_family(gene_name):
-    """Base family of a reference gene name, e.g. blaKPC-2 -> blaKPC."""
-    base = gene_name.split('|')[0]
+    """Base family of a reference gene name, e.g. blaKPC-2 -> blaKPC.
+
+    Canonicalises organism-specific reference names first (see GENE_ALIASES),
+    so grouping by family lines up two different callers that named the same
+    locus after two different references - e.g. GAMMA aligning against
+    ``uhpT_Kpn`` while the BLAST caller reports the canonical ``uhpT``.
+    """
+    base = canonical_gene_name(gene_name.split('|')[0])
     if '-' in base and base.startswith('bla'):
         # blaCTX-M-15 -> blaCTX-M ; blaKPC-2 -> blaKPC
         parts = base.split('-')

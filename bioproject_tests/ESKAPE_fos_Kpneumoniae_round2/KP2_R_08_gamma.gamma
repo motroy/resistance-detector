@@ -1,9 +1,18 @@
 Gene	Contig	Start	Stop	Match_Type	Description	Codon_Changes	BP_Changes	Transversions	Codon_Percent	BP_Percent	Percent_Length	Match_Length	Target_Length	Strand
+murA_Kpn	NZ_LXMW01000001.1	86568	87828	Native	No coding mutations	0	0	0	1	1	1	1260	1260	+
+galU_Kpn	NZ_LXMW01000002.1	60075	60978	Native	No coding mutations	0	2	0	1	0.9978	1	903	903	+
+ptsI_Kpn	NZ_LXMW01000003.1	136319	138047	Native	No coding mutations	0	0	0	1	1	1	1728	1728	+
+glpT_Kpn	NZ_LXMW01000003.1	16346	17693	Native	No coding mutations	0	0	0	1	1	1	1347	1347	-
 ompK35	NZ_LXMW01000004.1	130214	131295	Indel Truncation	1 bp Insertion at 123,truncation at codon 89 (of 360 codons),312 coding mutations	312	7	0	0.1333	0.9935	1.001	1081	1080	-
 acrB	NZ_LXMW01000006.1	234096	237243	Native	No coding mutations	0	4	1	1	0.9987	1	3147	3147	-
 ftsI	NZ_LXMW01000007.1	219987	221754	Mutant	V375A,	1	11	1	0.9983	0.9938	1	1767	1767	+
 fosAKP	NZ_LXMW01000007.1	14076	14496	Mutant	I91V,Q130P,D138E,	3	5	3	0.9786	0.9881	1	420	420	+
+uhpT_Kpn	NZ_LXMW01000008.1	157472	158864	Native	No coding mutations	0	0	0	1	1	1	1392	1392	-
+uhpC_Kpn	NZ_LXMW01000008.1	159009	160338	Native	No coding mutations	0	0	0	1	1	1	1329	1329	-
+uhpB_Kpn	NZ_LXMW01000008.1	160349	161831	Indel	6 bp Insertion at 1272,	2	6	0	0.9959	0.9959	1.004	1482	1476	-
+uhpA_Kpn	NZ_LXMW01000008.1	161848	162442	Native	No coding mutations	0	0	0	1	1	1	594	594	-
 envZ	NZ_LXMW01000010.1	153894	155250	Mutant	I15T,I258M,	2	2	1	0.9956	0.9985	1	1356	1356	+
 ompK36	NZ_LXMW01000011.1	197833	198937	Native	No coding mutations	0	1	0	1	0.9991	1	1104	1104	-
+cyaA_Kpn	NZ_LXMW01000023.1	26431	28984	Native	No coding mutations	0	0	0	1	1	1	2553	2553	+
 blaKPC-2	NZ_LXMW01000027.1	8908	9790	Native	No coding mutations	0	0	0	1	1	1	882	882	-
 blaSHV-12	NZ_LXMW01000092.1	23	722	Contig Edge	0 SNPs in 1-699,	54	162	0	0.8118	0.8118	0.8118	699	861	+

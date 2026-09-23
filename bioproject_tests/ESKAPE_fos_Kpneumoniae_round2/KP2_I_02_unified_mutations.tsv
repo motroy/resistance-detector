@@ -17,3 +17,5 @@ ompK35	truncation at codon 286 (of 319 codons)	50	gamma	RHUF01000016.1	no
 ompK36	H349R	100	blast+gamma	RHUF01000001.1	no
 ompK36	V178P	100	blast+gamma	RHUF01000001.1	no
 ompK36	insDT@134	50	blast	RHUF01000001.1	no
+uhpB	L65F	100	blast+gamma	RHUF01000024.1	no
+uhpB	insAS@421	50	blast	RHUF01000024.1	no

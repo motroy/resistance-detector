@@ -1,12 +1,21 @@
 Sample	Type	Gene	Allele	Method	Result_Details	Identity_Confidence	Contig	Start	End	Copy_Number	Notes
 KP_S_10.fna	Chromosomal gene	acrB	acrB	BLAST	Coverage: 100.00%	99.84%	RHTJ01000006.1	87045	90191	1	no protein changes vs reference
+KP_S_10.fna	Chromosomal gene	cyaA	cyaA	BLAST	Coverage: 100.00%	99.84%	RHTJ01000021.1	40465	43017	1	no protein changes vs reference
 KP_S_10.fna	Chromosomal gene	ftsI	ftsI	BLAST	Coverage: 100.00%	99.49%	RHTJ01000010.1	68757	70523	1	protein changes: V375A
+KP_S_10.fna	Chromosomal gene	ptsI	ptsI	BLAST	Coverage: 100.00%	99.65%	RHTJ01000009.1	8560	10287	1	no protein changes vs reference
+KP_S_10.fna	Chromosomal gene	uhpB	uhpB	BLAST	Coverage: 100.00%	99.06%	RHTJ01000025.1	61759	63240	1	protein changes: L44V;L65F;insAS@421
+KP_S_10.fna	Chromosomal gene	uhpT	uhpT	BLAST	Coverage: 100.00%	99.57%	RHTJ01000025.1	64726	66117	1	no protein changes vs reference
+KP_S_10.fna	Chromosomal gene	glpT	glpT	BLAST	Coverage: 100.00%	99.63%	RHTJ01000001.1	162399	163745	1	no protein changes vs reference
 KP_S_10.fna	Chromosomal gene	envZ	envZ	BLAST	Coverage: 100.00%	98.97%	RHTJ01000002.1	48608	49963	1	protein changes: I15T;I258M;A443T
+KP_S_10.fna	Chromosomal gene	uhpC	uhpC	BLAST	Coverage: 100.00%	99.40%	RHTJ01000025.1	63252	64580	1	no protein changes vs reference
+KP_S_10.fna	Chromosomal gene	murA	murA	BLAST	Coverage: 100.00%	99.60%	RHTJ01000019.1	62009	63268	1	no protein changes vs reference
 KP_S_10.fna	Chromosomal gene	ompK36	ompK36	BLAST	Coverage: 100.00%	98.92%	RHTJ01000001.1	180026	181135	1	protein changes: insDT@134;V178P;H349R
+KP_S_10.fna	Chromosomal gene	galU	galU	BLAST	Coverage: 100.00%	99.78%	RHTJ01000003.1	250463	251365	1	no protein changes vs reference
 KP_S_10.fna	Acquired gene	blaCTX-M-15	blaCTX-M-15	BLAST	Coverage: 100.00%	100.00%	RHTJ01000036.1	39129	40004	1	no protein changes vs reference
 KP_S_10.fna	Acquired gene	blaSHV-12	blaSHV-like	BLAST	Coverage: 100.00%	99.42%	RHTJ01000004.1	27937	28797	1	protein changes: S235G;K236E
 KP_S_10.fna	Acquired gene	blaNDM-5	blaNDM-5	BLAST	Coverage: 100.00%	100.00%	RHTJ01000051.1	5725	6537	1	no protein changes vs reference
 KP_S_10.fna	Acquired gene	blaOXA-181	blaOXA-181	BLAST	Coverage: 100.00%	100.00%	RHTJ01000006.1	242012	242809	1	no protein changes vs reference
+KP_S_10.fna	Chromosomal gene	uhpA	uhpA	BLAST	Coverage: 100.00%	99.50%	RHTJ01000025.1	61148	61741	1	no protein changes vs reference
 KP_S_10.fna	Chromosomal gene	fosAKP	fosAKP	BLAST	Coverage: 98.33%	97.34%	RHTJ01000013.1	14209	14621	1	protein changes: Q130P;insE@137;Q139E
 KP_S_10.fna	Protein change	blaSHV-12	-	blast+gamma	K236E	100%	RHTJ01000004.1	-	-	-	reported as resistance mutation
 KP_S_10.fna	Protein change	blaSHV-12	-	blast+gamma	S235G	100%	RHTJ01000004.1	-	-	-	reported as resistance mutation
@@ -26,3 +35,6 @@ KP_S_10.fna	Protein change	ompK35	-	gamma	truncation at codon 286 (of 319 codons
 KP_S_10.fna	Protein change	ompK36	-	blast+gamma	H349R	100%	RHTJ01000001.1	-	-	-	sequence difference, not a curated resistance mutation
 KP_S_10.fna	Protein change	ompK36	-	blast+gamma	V178P	100%	RHTJ01000001.1	-	-	-	sequence difference, not a curated resistance mutation
 KP_S_10.fna	Protein change	ompK36	-	blast	insDT@134	50%	RHTJ01000001.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_S_10.fna	Protein change	uhpB	-	blast+gamma	L44V	100%	RHTJ01000025.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_S_10.fna	Protein change	uhpB	-	blast+gamma	L65F	100%	RHTJ01000025.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_S_10.fna	Protein change	uhpB	-	blast	insAS@421	50%	RHTJ01000025.1	-	-	-	sequence difference, not a curated resistance mutation

@@ -1,8 +1,17 @@
 Gene	Contig	Start	End	Identity	Coverage	Match_Type	Changes	Method
+murA_Kpn	NZ_LUVR01000003.1	292930	294190	100.00	100.00	Native	No coding mutations	GAMMA
 ftsI	NZ_LUVR01000004.1	145777	147544	99.83	100.00	Mutant	V375A	GAMMA
 fosAKP	NZ_LUVR01000004.1	353035	353455	97.86	100.00	Mutant	I91V;Q130P;D138E	GAMMA
 ompK35	NZ_LUVR01000005.1	193627	194706	10.56	99.91	Indel Truncation	1bpdeletion@codon29;truncation at codon 63 (of 360 codons);322 coding mutations	GAMMA
+ptsI_Kpn	NZ_LUVR01000006.1	187304	189032	100.00	100.00	Native	No coding mutations	GAMMA
 ompK36	NZ_LUVR01000006.1	49925	51050	47.01	101.90	Indel	6bpinsertion@codon136;3bpdeletion@codon182;3bpdeletion@codon225;21bpinsertion@codon266;185 coding mutations	GAMMA
+glpT_Kpn	NZ_LUVR01000006.1	67330	68677	100.00	100.00	Native	No coding mutations	GAMMA
 envZ	NZ_KV391936.1	88477	89833	99.78	100.00	Mutant	I258M	GAMMA
+galU_Kpn	NZ_LUVR01000011.1	147000	147903	100.00	100.00	Native	No coding mutations	GAMMA
 acrB	NZ_LUVR01000012.1	1729	4876	99.90	100.00	Mutant	R716L	GAMMA
+cyaA_Kpn	NZ_LUVR01000024.1	43872	46425	100.00	100.00	Native	No coding mutations	GAMMA
+uhpT_Kpn	NZ_LUVR01000034.1	9951	11343	100.00	100.00	Native	No coding mutations	GAMMA
+uhpC_Kpn	NZ_LUVR01000034.1	11488	12817	100.00	100.00	Native	No coding mutations	GAMMA
+uhpB_Kpn	NZ_LUVR01000034.1	12828	14310	99.59	100.40	Indel	6bpinsertion@codon424	GAMMA
+uhpA_Kpn	NZ_LUVR01000034.1	14327	14921	100.00	100.00	Native	No coding mutations	GAMMA
 blaKPC-2	NZ_LUVR01000044.1	7694	8576	100.00	100.00	Native	No coding mutations	GAMMA

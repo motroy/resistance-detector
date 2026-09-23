@@ -1,11 +1,20 @@
 Sample	Type	Gene	Allele	Method	Result_Details	Identity_Confidence	Contig	Start	End	Copy_Number	Notes
 GCA_027152445.1.fna	Chromosomal gene	acrB	acrB	BLAST	Coverage: 100.00%	99.87%	JAJOCZ010000008.1	171141	174287	1	no protein changes vs reference
+GCA_027152445.1.fna	Chromosomal gene	cyaA	cyaA	BLAST	Coverage: 100.00%	100.00%	JAJOCZ010000028.1	26382	28934	1	no protein changes vs reference
 GCA_027152445.1.fna	Chromosomal gene	ftsI	ftsI	BLAST	Coverage: 100.00%	99.38%	JAJOCZ010000006.1	48649	50415	1	protein changes: V192G;V375A
+GCA_027152445.1.fna	Chromosomal gene	ptsI	ptsI	BLAST	Coverage: 100.00%	99.94%	JAJOCZ010000016.1	102365	104092	1	no protein changes vs reference
+GCA_027152445.1.fna	Chromosomal gene	uhpB	uhpB	BLAST	Coverage: 100.00%	99.59%	JAJOCZ010000017.1	12811	14292	1	protein changes: insAS@421
+GCA_027152445.1.fna	Chromosomal gene	uhpT	uhpT	BLAST	Coverage: 100.00%	100.00%	JAJOCZ010000017.1	9934	11325	1	no protein changes vs reference
 GCA_027152445.1.fna	Chromosomal gene	envZ	envZ	BLAST	Coverage: 100.00%	99.85%	JAJOCZ010000032.1	48632	49987	1	protein changes: I15T;I258M
+GCA_027152445.1.fna	Chromosomal gene	glpT	glpT	BLAST	Coverage: 100.00%	99.93%	JAJOCZ010000002.1	194659	196005	1	protein changes: Y393_A448del; premature stop at residue 393 (392/448 aa)
+GCA_027152445.1.fna	Chromosomal gene	uhpC	uhpC	BLAST	Coverage: 100.00%	100.00%	JAJOCZ010000017.1	11471	12799	1	no protein changes vs reference
+GCA_027152445.1.fna	Chromosomal gene	murA	murA	BLAST	Coverage: 100.00%	100.00%	JAJOCZ010000003.1	220169	221428	1	no protein changes vs reference
 GCA_027152445.1.fna	Chromosomal gene	ompK36	ompK36	BLAST	Coverage: 100.00%	99.37%	JAJOCZ010000002.1	177274	178383	1	protein changes: insGD@133
 GCA_027152445.1.fna	Chromosomal gene	ompK35	ompK35	BLAST	Coverage: 100.00%	99.35%	JAJOCZ010000005.1	36930	38010	1	protein changes: E42R;H43_Y58del;I61L;G62D;L63_Y76del;G77H;E80R;Y81H;N82Q;M83Q;D84_G114del;N116R;G118_N139del;Y140H;T141L;D142C;N143P;M145R;T146P;G147E;T149_Y155del;F160_S212del;N213Q;V216A;Q218R;K219_G279del;S283_A352del;V356Q;Y357H;insGRV@357;F359C; premature stop at residue 89 (88/359 aa)
+GCA_027152445.1.fna	Chromosomal gene	galU	galU	BLAST	Coverage: 100.00%	99.78%	JAJOCZ010000001.1	60025	60927	1	no protein changes vs reference
 GCA_027152445.1.fna	Acquired gene	blaKPC-2	blaKPC-3	BLAST	Coverage: 100.00%	99.89%	JAJOCZ010000033.1	8836	9717	1	protein changes: H274Y
 GCA_027152445.1.fna	Acquired gene	blaSHV-12	blaSHV-like	BLAST	Coverage: 100.00%	99.42%	JAJOCZ010000073.1	24	884	1	protein changes: S235G;K236E
+GCA_027152445.1.fna	Chromosomal gene	uhpA	uhpA	BLAST	Coverage: 100.00%	100.00%	JAJOCZ010000017.1	14310	14903	1	no protein changes vs reference
 GCA_027152445.1.fna	Chromosomal gene	fosAKP	fosAKP	BLAST	Coverage: 100.00%	98.81%	JAJOCZ010000042.1	18873	19292	1	protein changes: I91V;Q130P;D138E
 GCA_027152445.1.fna	Protein change	blaKPC-2	-	blast+gamma	H274Y	100%	JAJOCZ010000033.1	-	-	-	reported as resistance mutation
 GCA_027152445.1.fna	Protein change	blaSHV-12	-	blast+gamma	K236E	100%	JAJOCZ010000073.1	-	-	-	reported as resistance mutation
@@ -17,6 +26,7 @@ GCA_027152445.1.fna	Protein change	fosAKP	-	blast+gamma	I91V	100%	JAJOCZ01000004
 GCA_027152445.1.fna	Protein change	fosAKP	-	blast+gamma	Q130P	100%	JAJOCZ010000042.1	-	-	-	sequence difference, not a curated resistance mutation
 GCA_027152445.1.fna	Protein change	ftsI	-	blast+gamma	V192G	100%	JAJOCZ010000006.1	-	-	-	sequence difference, not a curated resistance mutation
 GCA_027152445.1.fna	Protein change	ftsI	-	blast+gamma	V375A	100%	JAJOCZ010000006.1	-	-	-	sequence difference, not a curated resistance mutation
+GCA_027152445.1.fna	Protein change	glpT	-	blast	Y393_A448del	50%	JAJOCZ010000002.1	-	-	-	sequence difference, not a curated resistance mutation
 GCA_027152445.1.fna	Protein change	ompK35	-	blast	D142C	50%	JAJOCZ010000005.1	-	-	-	sequence difference, not a curated resistance mutation
 GCA_027152445.1.fna	Protein change	ompK35	-	blast	D84_G114del	50%	JAJOCZ010000005.1	-	-	-	sequence difference, not a curated resistance mutation
 GCA_027152445.1.fna	Protein change	ompK35	-	blast	E42R	50%	JAJOCZ010000005.1	-	-	-	sequence difference, not a curated resistance mutation
@@ -49,4 +59,5 @@ GCA_027152445.1.fna	Protein change	ompK35	-	blast	Y357H	50%	JAJOCZ010000005.1	-	
 GCA_027152445.1.fna	Protein change	ompK35	-	blast	Y81H	50%	JAJOCZ010000005.1	-	-	-	sequence difference, not a curated resistance mutation
 GCA_027152445.1.fna	Protein change	ompK35	-	blast	insGRV@357	50%	JAJOCZ010000005.1	-	-	-	sequence difference, not a curated resistance mutation
 GCA_027152445.1.fna	Protein change	ompK36	-	blast	insGD@133	50%	JAJOCZ010000002.1	-	-	-	sequence difference, not a curated resistance mutation
+GCA_027152445.1.fna	Protein change	uhpB	-	blast	insAS@421	50%	JAJOCZ010000017.1	-	-	-	sequence difference, not a curated resistance mutation
 GCA_027152445.1.fna	Amplicon	blaKPC_ver	-	SeqKit/amplicon	Length: 882bp	-	JAJOCZ010000033.1	8835	9717	-	Genes in region: blaKPC-3: H274Y

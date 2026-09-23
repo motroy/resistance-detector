@@ -1,9 +1,18 @@
 Gene	Contig	Start	Stop	Match_Type	Description	Codon_Changes	BP_Changes	Transversions	Codon_Percent	BP_Percent	Percent_Length	Match_Length	Target_Length	Strand
+galU_Kpn	FBRG01000002.1	105196	106099	Native	No coding mutations	0	2	0	1	0.9978	1	903	903	-
 ompK36	FBRG01000003.1	341320	342424	Native	No coding mutations	0	1	0	1	0.9991	1	1104	1104	+
+glpT_Kpn	FBRG01000003.1	323694	325041	Native	No coding mutations	0	0	0	1	1	1	1347	1347	+
+ptsI_Kpn	FBRG01000003.1	203340	205068	Native	No coding mutations	0	0	0	1	1	1	1728	1728	-
 envZ	FBRG01000004.1	48583	49939	Mutant	I15T,A193T,I258M,	3	3	1	0.9934	0.9978	1	1356	1356	-
+murA_Kpn	FBRG01000021.1	86141	87401	Native	No coding mutations	0	0	0	1	1	1	1260	1260	+
 ompK35	FBRG01000023.1	209496	210577	Indel Truncation	1 bp Insertion at 123,truncation at codon 89 (of 360 codons),312 coding mutations	312	7	0	0.1333	0.9935	1.001	1081	1080	+
 blaSHV-12	FBRG01000026.1	23	884	Native	No coding mutations	0	0	0	1	1	1	861	861	+
 ftsI	FBRG01000039.1	48600	50367	Mutant	V375A,	1	10	1	0.9983	0.9943	1	1767	1767	-
 fosAKP	FBRG01000039.1	255858	256278	Mutant	I91V,Q130P,D138E,	3	5	3	0.9786	0.9881	1	420	420	-
 acrB	FBRG01000045.1	44008	47155	Native	No coding mutations	0	4	1	1	0.9987	1	3147	3147	+
+cyaA_Kpn	FBRG01000049.1	26320	28873	Native	No coding mutations	0	0	0	1	1	1	2553	2553	+
+uhpT_Kpn	FBRG01000052.1	89295	90687	Native	No coding mutations	0	0	0	1	1	1	1392	1392	+
+uhpC_Kpn	FBRG01000052.1	87821	89150	Native	No coding mutations	0	0	0	1	1	1	1329	1329	+
+uhpB_Kpn	FBRG01000052.1	86328	87810	Indel	6 bp Insertion at 1272,	2	6	0	0.9959	0.9959	1.004	1482	1476	+
+uhpA_Kpn	FBRG01000052.1	85717	86311	Native	No coding mutations	0	0	0	1	1	1	594	594	+
 blaKPC-2	FBRG01000063.1	8699	9581	Native	No coding mutations	0	0	0	1	1	1	882	882	-

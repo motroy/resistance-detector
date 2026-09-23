@@ -23,7 +23,7 @@ import sys
 from collections import defaultdict
 from pathlib import Path
 
-from .references import gene_family
+from .references import canonical_gene_name, gene_family
 from .utils import load_primers
 from .variants import sequential_to_ambler
 
@@ -257,7 +257,7 @@ class MutationDetector:
             for gamma in gamma_results:
                 for change in gamma['mutations']:
                     unified.append({
-                        'gene': gamma['protein'],
+                        'gene': canonical_gene_name(gamma['protein']),
                         'family': family,
                         'mutation': change,
                         'confidence': 50,

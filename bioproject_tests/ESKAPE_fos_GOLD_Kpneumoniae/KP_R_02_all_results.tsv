@@ -1,12 +1,21 @@
 Sample	Type	Gene	Allele	Method	Result_Details	Identity_Confidence	Contig	Start	End	Copy_Number	Notes
 KP_R_02.fna	Chromosomal gene	acrB	acrB	BLAST	Coverage: 100.00%	99.75%	CACSDQ010000011.1	48194	51340	1	no protein changes vs reference
+KP_R_02.fna	Chromosomal gene	cyaA	cyaA	BLAST	Coverage: 100.00%	99.49%	CACSDQ010000015.1	43617	46169	1	no protein changes vs reference
 KP_R_02.fna	Chromosomal gene	ftsI	ftsI	BLAST	Coverage: 100.00%	99.89%	CACSDQ010000006.1	145172	146938	1	protein changes: V375A
+KP_R_02.fna	Chromosomal gene	ptsI	ptsI	BLAST	Coverage: 100.00%	99.88%	CACSDQ010000010.1	62111	63838	1	no protein changes vs reference
+KP_R_02.fna	Chromosomal gene	uhpB	uhpB	BLAST	Coverage: 100.00%	99.12%	CACSDQ010000013.1	12747	14229	1	protein changes: A327_A397del;L399A;S400G;E401Q;N402R;V405A;T406_Q432del;D433P;L436_G460del;M461S;R462A;E463D;V465del;L468V;G469A;T471S;T473R;I474L;S475G;C476_Y490del; premature stop at residue 353 (352/491 aa)
+KP_R_02.fna	Chromosomal gene	uhpT	uhpT	BLAST	Coverage: 100.00%	99.35%	CACSDQ010000013.1	9870	11261	1	no protein changes vs reference
 KP_R_02.fna	Chromosomal gene	envZ	envZ	BLAST	Coverage: 100.00%	99.48%	CACSDQ010000005.1	48685	50040	1	protein changes: I15T;I258M
+KP_R_02.fna	Chromosomal gene	glpT	glpT	BLAST	Coverage: 100.00%	99.56%	CACSDQ010000003.1	92780	94126	1	no protein changes vs reference
+KP_R_02.fna	Chromosomal gene	uhpC	uhpC	BLAST	Coverage: 100.00%	99.40%	CACSDQ010000013.1	11407	12735	1	no protein changes vs reference
+KP_R_02.fna	Chromosomal gene	murA	murA	BLAST	Coverage: 100.00%	99.44%	CACSDQ010000008.1	222112	223371	1	no protein changes vs reference
 KP_R_02.fna	Chromosomal gene	ompK35	ompK35	BLAST	Coverage: 100.00%	99.63%	CACSDQ010000002.1	168124	169203	1	no protein changes vs reference
 KP_R_02.fna	Chromosomal gene	ompK36	ompK36	BLAST	Coverage: 100.00%	94.09%	CACSDQ010000003.1	110407	111510	1	protein changes: insDT@134;L184_P186del;T192G;A193W;L194S;Y201F;Y210W;N221H;L225T;G226D;D227E;K231V;L232P;T258S;insR@308;D344E;S346D;H349R;N350K
+KP_R_02.fna	Chromosomal gene	galU	galU	BLAST	Coverage: 100.00%	99.89%	CACSDQ010000001.1	853226	854128	1	no protein changes vs reference
 KP_R_02.fna	Acquired gene	blaKPC-2	blaKPC-3	BLAST	Coverage: 100.00%	99.89%	CACSDQ010000024.1	5857	6738	1	protein changes: H274Y
 KP_R_02.fna	Acquired gene	blaCTX-M-15	blaCTX-M-15	BLAST	Coverage: 100.00%	100.00%	CACSDQ010000037.1	1737	2612	1	no protein changes vs reference
 KP_R_02.fna	Acquired gene	blaSHV-12	blaSHV-like	BLAST	Coverage: 100.00%	99.53%	CACSDQ010000001.1	228209	229069	1	protein changes: Q31L;S235G;K236E
+KP_R_02.fna	Chromosomal gene	uhpA	uhpA	BLAST	Coverage: 100.00%	100.00%	CACSDQ010000013.1	14247	14840	1	no protein changes vs reference
 KP_R_02.fna	Chromosomal gene	fosAKP	fosAKP	BLAST	Coverage: 98.57%	94.93%	CACSDQ010000006.1	355857	356270	1	protein changes: L25Q;S79R;A86V;I91V;Q130P;insD@137;Q139E
 KP_R_02.fna	Protein change	blaKPC-2	-	blast+gamma	H274Y	100%	CACSDQ010000024.1	-	-	-	reported as resistance mutation
 KP_R_02.fna	Protein change	blaSHV-12	-	blast+gamma	K236E	100%	CACSDQ010000001.1	-	-	-	reported as resistance mutation
@@ -47,4 +56,24 @@ KP_R_02.fna	Protein change	ompK36	-	blast	Y201F	50%	CACSDQ010000003.1	-	-	-	sequ
 KP_R_02.fna	Protein change	ompK36	-	blast	Y210W	50%	CACSDQ010000003.1	-	-	-	sequence difference, not a curated resistance mutation
 KP_R_02.fna	Protein change	ompK36	-	blast	insDT@134	50%	CACSDQ010000003.1	-	-	-	sequence difference, not a curated resistance mutation
 KP_R_02.fna	Protein change	ompK36	-	blast	insR@308	50%	CACSDQ010000003.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_R_02.fna	Protein change	uhpB	-	blast	A327_A397del	50%	CACSDQ010000013.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_R_02.fna	Protein change	uhpB	-	blast	C476_Y490del	50%	CACSDQ010000013.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_R_02.fna	Protein change	uhpB	-	blast	D433P	50%	CACSDQ010000013.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_R_02.fna	Protein change	uhpB	-	blast	E401Q	50%	CACSDQ010000013.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_R_02.fna	Protein change	uhpB	-	blast	E463D	50%	CACSDQ010000013.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_R_02.fna	Protein change	uhpB	-	blast	G469A	50%	CACSDQ010000013.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_R_02.fna	Protein change	uhpB	-	blast	I474L	50%	CACSDQ010000013.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_R_02.fna	Protein change	uhpB	-	blast	L399A	50%	CACSDQ010000013.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_R_02.fna	Protein change	uhpB	-	blast	L436_G460del	50%	CACSDQ010000013.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_R_02.fna	Protein change	uhpB	-	blast	L468V	50%	CACSDQ010000013.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_R_02.fna	Protein change	uhpB	-	blast	M461S	50%	CACSDQ010000013.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_R_02.fna	Protein change	uhpB	-	blast	N402R	50%	CACSDQ010000013.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_R_02.fna	Protein change	uhpB	-	blast	R462A	50%	CACSDQ010000013.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_R_02.fna	Protein change	uhpB	-	blast	S400G	50%	CACSDQ010000013.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_R_02.fna	Protein change	uhpB	-	blast	S475G	50%	CACSDQ010000013.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_R_02.fna	Protein change	uhpB	-	blast	T406_Q432del	50%	CACSDQ010000013.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_R_02.fna	Protein change	uhpB	-	blast	T471S	50%	CACSDQ010000013.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_R_02.fna	Protein change	uhpB	-	blast	T473R	50%	CACSDQ010000013.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_R_02.fna	Protein change	uhpB	-	blast	V405A	50%	CACSDQ010000013.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_R_02.fna	Protein change	uhpB	-	blast	V465del	50%	CACSDQ010000013.1	-	-	-	sequence difference, not a curated resistance mutation
 KP_R_02.fna	Amplicon	blaKPC_ver	-	SeqKit/amplicon	Length: 882bp	-	CACSDQ010000024.1	5856	6738	-	Genes in region: blaKPC-3: H274Y

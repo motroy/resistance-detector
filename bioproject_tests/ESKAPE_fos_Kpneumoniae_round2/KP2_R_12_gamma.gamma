@@ -1,9 +1,18 @@
 Gene	Contig	Start	Stop	Match_Type	Description	Codon_Changes	BP_Changes	Transversions	Codon_Percent	BP_Percent	Percent_Length	Match_Length	Target_Length	Strand
+murA_Kpn	RCGJ01000010.1	70431	71691	Native	No coding mutations	0	4	3	1	0.9968	1	1260	1260	+
 blaSHV-12	RCGJ01000017.1	27921	28782	Mutant	S234G,K235E,	2	6	0	0.9930	0.9930	1	861	861	-
 acrB	RCGJ01000018.1	154621	157768	Native	No coding mutations	0	4	1	1	0.9987	1	3147	3147	-
+ptsI_Kpn	RCGJ01000021.1	32690	34418	Native	No coding mutations	0	3	1	1	0.9983	1	1728	1728	+
+uhpT_Kpn	RCGJ01000024.1	11491	12883	Native	No coding mutations	0	5	0	1	0.9964	1	1392	1392	-
+uhpC_Kpn	RCGJ01000024.1	13028	14357	Native	No coding mutations	0	8	1	1	0.9940	1	1329	1329	-
+uhpB_Kpn	RCGJ01000024.1	14368	15850	Indel	6 bp Insertion at 1272,L65S,D383G,	4	15	3	0.9919	0.9898	1.004	1482	1476	-
+uhpA_Kpn	RCGJ01000024.1	15867	16461	Native	No coding mutations	0	7	1	1	0.9882	1	594	594	-
+cyaA_Kpn	RCGJ01000026.1	43623	46176	Native	No coding mutations	0	10	0	1	0.9961	1	2553	2553	+
 ompK35	RCGJ01000028.1	91239	92319	Native	No coding mutations	0	4	1	1	0.9963	1	1080	1080	+
+galU_Kpn	RCGJ01000030.1	140962	141865	Native	No coding mutations	0	3	1	1	0.9967	1	903	903	-
 fosA9	RCGJ01000041.1	80538	80958	Mutant	I57V,A138D,	2	17	3	0.9857	0.9595	1	420	420	-
 blaCTX-M-15	RCGJ01000057.1	10986	11862	Mutant	G242D,	1	1	0	0.9966	0.9989	1	876	876	-
 envZ	RCGJ01000006.1	70859	72215	Mutant	I15T,I258M,	2	8	2	0.9956	0.9941	1	1356	1356	+
 ompK36	RCGJ01000007.1	23333	24452	Indel	3 bp Deletion at 546,3 bp Deletion at 673,21 bp Insertion at 798,144 coding mutations	152	112	44	0.5870	0.8986	1.014	1119	1104	-
+glpT_Kpn	RCGJ01000007.1	40732	42079	Native	No coding mutations	0	6	2	1	0.9955	1	1347	1347	-
 ftsI	RCGJ01000009.1	144064	145831	Mutant	V375A,	1	9	1	0.9983	0.9949	1	1767	1767	-

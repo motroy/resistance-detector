@@ -9,13 +9,13 @@ with the current code and the current reference data (AMRFinderPlus
 | Folder | Genomes | Study | Outcome |
 |---|---|---|---|
 | `CREC_fosA3_China/` | 10 *E. coli* | fosA3 in carbapenem-resistant *E. coli* (Zhang *et al.* 2025) | **Measured MICs for both drugs**: fosfomycin 10/10, CAZ/AVI 9/10 resistant + 1 indeterminate, 0 wrong |
-| `ESKAPE_fos_GOLD_Kpneumoniae/` | 21 *K. pneumoniae* | Gold-standard ESKAPE fosfomycin AST set | **Measured MICs**: specificity 10/10, sensitivity 0/11 — found and fixed a real detection bug, and a real unfixed reference-database gap |
+| `ESKAPE_fos_GOLD_Kpneumoniae/` | 21 *K. pneumoniae* | Gold-standard ESKAPE fosfomycin AST set | **Measured MICs**: specificity 10/10, sensitivity 2/11 — found and fixed a hit-selection bug and a reference-database gap (9 transport genes were undetectable in this species; now fixed) |
 | `ESKAPE_fos_GOLD_Paeruginosa/` | 15 *P. aeruginosa* | Gold-standard ESKAPE fosfomycin AST set | **Measured MICs**; falsified the tool's prior "always Resistant" rule on 10/15 isolates and drove the fix |
-| `ESKAPE_fos_Kpneumoniae_round2/` | 24 *K. pneumoniae* | Same source, disjoint accessions | **Measured MICs**: specificity 6/6, sensitivity 0/18 — replicates round 1's finding on an independent sample (combined: 0/29) |
+| `ESKAPE_fos_Kpneumoniae_round2/` | 24 *K. pneumoniae* | Same source, disjoint accessions | **Measured MICs**: specificity 6/6, sensitivity 0/18 even with the fix applied — replicates that the remaining gap is not a detection problem (combined with round 1: 2/29) |
 | `PRJNA741867_test_results/` | 6 *K. pneumoniae* ST307 | Clinical ceftazidime-avibactam-selected KPC variants | **6/6 concordant**, exact allele assignment for all three resistant isolates |
 | `PRJNA595047_test/` | 4 *K. pneumoniae* | In vitro selection of KPC Omega-loop deletion mutants | **4/4 concordant** with the study's own strain naming |
 | `PRJNA1086695_test/` | 2 long-read assemblies | Assembly + detection | blaKPC-179 identified in one isolate |
-| `PRJNA781811_test/` | 18 *K. pneumoniae* / *K. variicola* | Bacteraemia isolate collection | Genotype-only comparison; 1 unambiguous acquired fosA, 1 genuinely ambiguous (*K. variicola*, Indeterminate) |
+| `PRJNA781811_test/` | 18 *K. pneumoniae* / *K. variicola* | Bacteraemia isolate collection | Genotype-only comparison; 1 unambiguous acquired fosA, 1 genuinely ambiguous (*K. variicola*, Indeterminate), 2 new transport-gene LOF calls from the reference-data fix |
 | `Paeruginosa_ML_subset/` | 12 *P. aeruginosa* | ML AMR-prediction dataset (Noman *et al.*) | Scope/robustness test on a new species; gene-level concordance, not phenotype |
 
 ## CREC fosA3 — the first set with measured MICs
@@ -142,23 +142,30 @@ was previously this tool's biggest untested gap:
 * **CREC (*E. coli*), 10 resistant isolates:** 10/10 correct (all carry
   `fosA3`).
 * **ESKAPE-GOLD (*K. pneumoniae*), 21 isolates, 10 susceptible:**
-  **specificity 10/10** — no false Resistant call anywhere. **Sensitivity
-  0/11** on the resistant/intermediate isolates, which is a real and
-  significant finding, not noise: it traces to (a) a genuine detection bug
+  **specificity 10/10** — no false Resistant call anywhere. Sensitivity on the
+  resistant/intermediate isolates started at 0/11, which was a real and
+  significant finding, not noise: it traced to (a) a genuine detection bug
   that this run found and fixed (four genomes had their single, native `fosA`
-  copy mis-named as an ambiguous acquired allele — see
-  [`ESKAPE_fos_GOLD_Kpneumoniae/RESULTS_SUMMARY.md`](../bioproject_tests/ESKAPE_fos_GOLD_Kpneumoniae/RESULTS_SUMMARY.md))
-  and (b) a genuine, still-open gap — the fosfomycin transport genes this tool
-  checks are *E. coli*-only references, and *K. pneumoniae*'s own orthologs
-  sit below the detection threshold, so those genes are not actually being
-  checked for this species at all (see
-  [METHODS.md](METHODS.md#9-known-limits)).
+  copy mis-named as an ambiguous acquired allele) and (b) a genuine
+  reference-database gap — the fosfomycin transport genes this tool checks
+  were *E. coli*-only references, so *K. pneumoniae*'s own orthologs sat below
+  the detection threshold and those genes were not actually being checked for
+  this species at all. Both are now fixed: a K. pneumoniae-specific reference
+  for each of the 9 transport/regulatory genes was added
+  (`fos_cazavi/references.py::GENE_ALIASES`), and re-running this set found
+  two real, GAMMA-confirmed premature stops in `uhpB` (isolates KP_R_02,
+  KP_R_05) — sensitivity is now **2/11**. See
+  [`ESKAPE_fos_GOLD_Kpneumoniae/RESULTS_SUMMARY.md`](../bioproject_tests/ESKAPE_fos_GOLD_Kpneumoniae/RESULTS_SUMMARY.md).
 * **ESKAPE-GOLD (*K. pneumoniae*) round 2, 24 more isolates, disjoint
   accessions, 6 susceptible:** a replication run, weighted toward
   resistant/intermediate isolates specifically to test whether 0/11 was
-  sampling noise. It wasn't: **specificity 6/6, sensitivity 0/18**, combining
-  to **0/29** non-susceptible isolates called correctly across both rounds.
-  No new detection bug — the intrinsic-naming fix held on all 24 genomes. See
+  sampling noise. It wasn't at the time: **specificity 6/6**, and with the
+  transport-gene fix now applied, sensitivity is still **0/18** — this
+  round's 18 non-susceptible isolates carry no coding-sequence change in any
+  of these 9 genes, consistent with the literature that much fosfomycin
+  resistance in Enterobacterales is promoter/IS-element-driven rather than a
+  coding change a CDS-level tool can see. Combined sensitivity across both
+  rounds: **2/29**. See
   [`ESKAPE_fos_Kpneumoniae_round2/RESULTS_SUMMARY.md`](../bioproject_tests/ESKAPE_fos_Kpneumoniae_round2/RESULTS_SUMMARY.md).
 * **ESKAPE-GOLD (*P. aeruginosa*), 15 isolates, 10 susceptible, 1 resistant:**
   this run is what caught and fixed an outright wrong assumption — the tool
@@ -168,7 +175,11 @@ was previously this tool's biggest untested gap:
   [`ESKAPE_fos_GOLD_Paeruginosa/RESULTS_SUMMARY.md`](../bioproject_tests/ESKAPE_fos_GOLD_Paeruginosa/RESULTS_SUMMARY.md).
 * Acquired enzyme detection was also exercised on the 18-genome PRJNA781811
   set, where it separates one unambiguous acquired fosA3 from 14
-  intrinsic-only isolates and three that cannot be resolved by sequence alone.
+  intrinsic-only susceptible isolates, one that cannot be resolved by sequence
+  alone (*K. variicola*, Indeterminate), and two new transport-gene
+  loss-of-function calls (`uhpB`, `glpT`) surfaced by the reference-data fix
+  below — genotype-only findings with no measured phenotype to check them
+  against.
 * Two curated mutations sitting in fosfomycin genes but belonging to *other*
   drugs — `cyaA_S352T` (fosmidomycin) and `galU_R101C` (cephalosporin) — have
   explicit regression tests asserting they do **not** produce a fosfomycin call.
@@ -184,13 +195,15 @@ susceptible isolates (16 *K. pneumoniae*, 10 *P. aeruginosa*) produce zero
 false Resistant calls — 16/16 correctly `Susceptible` for *K. pneumoniae*,
 10/10 honestly `Indeterminate` (never `Resistant`) for *P. aeruginosa*, where
 no clinical breakpoint exists to be susceptible *against*.
-**Sensitivity for fosfomycin in *K. pneumoniae* is now a replicated, not just
-single-sample, finding**: 0/29 resistant/intermediate isolates called
-correctly across two independent, non-overlapping draws (0/11, then 0/18).
-This rules out sampling noise as the explanation — the known reference-database
-gap (fosfomycin transport genes are *E. coli*-only references) is the
-confounder, and re-running this measurement after that gap is closed remains
-the single highest-value next validation step; see
+**Sensitivity for fosfomycin in *K. pneumoniae* is now a replicated
+measurement with the reference-database gap closed**: 2/29
+resistant/intermediate isolates called correctly across two independent,
+non-overlapping draws (2/11, then 0/18), up from 0/29 before the fix. The
+replication across two rounds says the remaining gap is not sampling noise
+either: most fosfomycin resistance in this data set is not explained by a
+coding-sequence change in the 9 transport/regulatory genes this tool checks,
+consistent with the literature on promoter/IS-element-driven `uhpT`
+regulation, which is outside what a CDS-level tool can see. See
 [METHODS.md](METHODS.md#9-known-limits). Ceftazidime-avibactam
 susceptible-isolate testing (as opposed to fosfomycin) is still untested
 against real MICs — the CREC and gold sets above are fosfomycin-only datasets.
