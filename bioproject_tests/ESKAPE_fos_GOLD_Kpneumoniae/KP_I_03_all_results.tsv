@@ -1,0 +1,40 @@
+Sample	Type	Gene	Allele	Method	Result_Details	Identity_Confidence	Contig	Start	End	Copy_Number	Notes
+KP_I_03.fna	Chromosomal gene	acrB	acrB	BLAST	Coverage: 100.00%	99.84%	RHUB01000008.1	160687	163833	1	no protein changes vs reference
+KP_I_03.fna	Chromosomal gene	ftsI	ftsI	BLAST	Coverage: 100.00%	99.38%	RHUB01000005.1	144323	146089	1	protein changes: V375A
+KP_I_03.fna	Chromosomal gene	envZ	envZ	BLAST	Coverage: 100.00%	99.56%	RHUB01000006.1	288021	289376	1	protein changes: I15T;I258M
+KP_I_03.fna	Chromosomal gene	ompK35	ompK35	BLAST	Coverage: 100.00%	98.43%	RHUB01000010.1	36990	38058	1	protein changes: Y108_F359del; premature stop at residue 108 (107/359 aa)
+KP_I_03.fna	Acquired gene	blaCTX-M-15	blaCTX-M-15	BLAST	Coverage: 99.43%	100.00%	RHUB01000076.1	212	1082	1	premature stop at residue 1 (0/291 aa); gene incomplete (contig boundary)
+KP_I_03.fna	Chromosomal gene	ompK36	ompK36	BLAST	Coverage: 100.00%	92.13%	RHUB01000003.1	127754	128878	1	protein changes: insDT@134;A183T;L184del;T192G;Y201F;N221H;L225N;S230del;K231R;A233D;L234K;insF@268;A269S;S271N;insGESDSI@271;L272S;L307I;I315L;D344E;S346D;H349R;N350R
+KP_I_03.fna	Acquired gene	blaOXA-232	blaOXA-232	BLAST	Coverage: 100.00%	100.00%	RHUB01000045.1	5086	5883	1	no protein changes vs reference
+KP_I_03.fna	Chromosomal gene	fosAKP	fosAKP	BLAST	Coverage: 100.00%	95.24%	RHUB01000005.1	339270	339689	1	protein changes: A86V;I91V;Q130P
+KP_I_03.fna	Protein change	blaSHV-12	-	gamma	2 SNPs in 1-632	50%	RHUB01000084.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_I_03.fna	Protein change	blaSHV-12	-	gamma	Q31L	50%	RHUB01000084.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_I_03.fna	Protein change	envZ	-	blast+gamma	I15T	100%	RHUB01000006.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_I_03.fna	Protein change	envZ	-	blast+gamma	I258M	100%	RHUB01000006.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_I_03.fna	Protein change	fosAKP	-	blast+gamma	A86V	100%	RHUB01000005.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_I_03.fna	Protein change	fosAKP	-	blast+gamma	I91V	100%	RHUB01000005.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_I_03.fna	Protein change	fosAKP	-	blast+gamma	Q130P	100%	RHUB01000005.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_I_03.fna	Protein change	ftsI	-	blast+gamma	V375A	100%	RHUB01000005.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_I_03.fna	Protein change	ompK35	-	blast	Y108_F359del	50%	RHUB01000010.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_I_03.fna	Protein change	ompK36	-	blast	A183T	50%	RHUB01000003.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_I_03.fna	Protein change	ompK36	-	blast	A233D	50%	RHUB01000003.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_I_03.fna	Protein change	ompK36	-	blast	A269S	50%	RHUB01000003.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_I_03.fna	Protein change	ompK36	-	blast	D344E	50%	RHUB01000003.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_I_03.fna	Protein change	ompK36	-	blast	H349R	50%	RHUB01000003.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_I_03.fna	Protein change	ompK36	-	blast	I315L	50%	RHUB01000003.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_I_03.fna	Protein change	ompK36	-	blast	K231R	50%	RHUB01000003.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_I_03.fna	Protein change	ompK36	-	blast	L184del	50%	RHUB01000003.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_I_03.fna	Protein change	ompK36	-	blast	L225N	50%	RHUB01000003.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_I_03.fna	Protein change	ompK36	-	blast	L234K	50%	RHUB01000003.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_I_03.fna	Protein change	ompK36	-	blast	L272S	50%	RHUB01000003.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_I_03.fna	Protein change	ompK36	-	blast	L307I	50%	RHUB01000003.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_I_03.fna	Protein change	ompK36	-	blast	N221H	50%	RHUB01000003.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_I_03.fna	Protein change	ompK36	-	blast	N350R	50%	RHUB01000003.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_I_03.fna	Protein change	ompK36	-	blast	S230del	50%	RHUB01000003.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_I_03.fna	Protein change	ompK36	-	blast	S271N	50%	RHUB01000003.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_I_03.fna	Protein change	ompK36	-	blast	S346D	50%	RHUB01000003.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_I_03.fna	Protein change	ompK36	-	blast	T192G	50%	RHUB01000003.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_I_03.fna	Protein change	ompK36	-	blast	Y201F	50%	RHUB01000003.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_I_03.fna	Protein change	ompK36	-	blast	insDT@134	50%	RHUB01000003.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_I_03.fna	Protein change	ompK36	-	blast	insF@268	50%	RHUB01000003.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_I_03.fna	Protein change	ompK36	-	blast	insGESDSI@271	50%	RHUB01000003.1	-	-	-	sequence difference, not a curated resistance mutation

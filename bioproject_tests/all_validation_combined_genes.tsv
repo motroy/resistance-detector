@@ -268,7 +268,7 @@ GCA_027151875.1.fna	Klebsiella_pneumoniae	ompK36	ompK36	1	JAJOCI010000006.1	1485
 GCA_027151985.1.fna	Klebsiella_pneumoniae	acrB	acrB	1	JAJOCM010000001.1	228728	231874	99.87	100.00	yes	-	-
 GCA_027151985.1.fna	Klebsiella_pneumoniae	blaSHV-12	blaSHV-like	1	JAJOCM010000010.1	219151	220011	99.19	100.00	yes	V72A;S235G;K236E	-
 GCA_027151985.1.fna	Klebsiella_pneumoniae	envZ	envZ	1	JAJOCM010000005.1	48632	49987	99.48	100.00	yes	-	-
-GCA_027151985.1.fna	Klebsiella_pneumoniae	fosA10	fosA-like	1	JAJOCM010000006.1	14014	14433	99.29	100.00	yes	A138D	-
+GCA_027151985.1.fna	Klebsiella_pneumoniae	fosAKP	fosAKP	1	JAJOCM010000006.1	14014	14433	99.05	100.00	yes	-	-
 GCA_027151985.1.fna	Klebsiella_pneumoniae	ftsI	ftsI	1	JAJOCM010000006.1	222071	223837	99.83	100.00	yes	-	-
 GCA_027151985.1.fna	Klebsiella_pneumoniae	ompK35	ompK35	1	JAJOCM010000011.1	36931	38010	99.81	100.00	yes	-	-
 GCA_027151985.1.fna	Klebsiella_pneumoniae	ompK36	ompK36	1	JAJOCM010000008.1	197442	198539	95.41	100.00	yes	-	-
@@ -307,7 +307,7 @@ GCA_027152105.1.fna	Klebsiella_pneumoniae	ompK36	ompK36	1	JAJOCO010000006.1	1485
 GCA_027152185.1.fna	Klebsiella_pneumoniae	acrB	acrB	1	JAJOCU010000007.1	60389	63535	99.75	100.00	yes	-	-
 GCA_027152185.1.fna	Klebsiella_pneumoniae	blaSHV-12	blaSHV-like	1	JAJOCU010000044.1	2643	3503	99.53	100.00	yes	Q31L;K236E	-
 GCA_027152185.1.fna	Klebsiella_pneumoniae	envZ	envZ	1	JAJOCU010000003.1	48605	49960	99.34	100.00	yes	-	-
-GCA_027152185.1.fna	Klebsiella_pneumoniae	fosA5	fosA-like	1	JAJOCU010000004.1	14318	14737	96.67	100.00	yes	M29T;A86V;A138D	-
+GCA_027152185.1.fna	Klebsiella_pneumoniae	fosAKP	fosAKP	1	JAJOCU010000004.1	14318	14737	96.19	100.00	yes	-	-
 GCA_027152185.1.fna	Klebsiella_pneumoniae	ftsI	ftsI	1	JAJOCU010000004.1	230831	232597	99.49	100.00	yes	-	-
 GCA_027152185.1.fna	Klebsiella_pneumoniae	ompK35	ompK35	1	JAJOCU010000008.1	36931	38010	99.35	100.00	yes	-	-
 GCA_027152185.1.fna	Klebsiella_pneumoniae	ompK36	ompK36	1	JAJOCU010000013.1	105535	106647	93.43	100.00	yes	-	-
@@ -400,6 +400,179 @@ GCA_038433305.1.fna	Klebsiella_pneumoniae	fosAKP	fosAKP	1	JBCEBH010000025.1	1391
 GCA_038433305.1.fna	Klebsiella_pneumoniae	ftsI	ftsI	1	JBCEBH010000011.1	111829	113595	99.43	100.00	yes	-	-
 GCA_038433305.1.fna	Klebsiella_pneumoniae	ompK35	ompK35	1	JBCEBH010000004.1	258287	259366	99.44	100.00	yes	-	-
 GCA_038433305.1.fna	Klebsiella_pneumoniae	ompK36	ompK36	1	JBCEBH010000038.1	49353	50363	99.90	91.58	no	-	premature stop at residue 337 (336/367 aa)
+KP_I_01.fna	Klebsiella_pneumoniae	acrB	acrB	1	RHTT01000001.1	176392	179538	99.87	100.00	yes	-	-
+KP_I_01.fna	Klebsiella_pneumoniae	blaCTX-M-15	blaCTX-M-15	1	RHTT01000081.1	695	1570	100.00	100.00	yes	-	-
+KP_I_01.fna	Klebsiella_pneumoniae	blaNDM-1	blaNDM-1	1	RHTT01000055.1	1587	2399	100.00	100.00	yes	-	-
+KP_I_01.fna	Klebsiella_pneumoniae	blaOXA-232	blaOXA-232	1	RHTT01000062.1	3217	4014	100.00	100.00	yes	-	-
+KP_I_01.fna	Klebsiella_pneumoniae	blaSHV-12	blaSHV-like	1	RHTT01000019.1	79167	80027	98.95	100.00	yes	Y3F;Q31L;S235G;K236E	-
+KP_I_01.fna	Klebsiella_pneumoniae	envZ	envZ	1	RHTT01000006.1	193834	195189	99.48	100.00	yes	-	-
+KP_I_01.fna	Klebsiella_pneumoniae	fosAKP	fosAKP	1	RHTT01000003.1	15474	15893	99.52	100.00	yes	-	-
+KP_I_01.fna	Klebsiella_pneumoniae	ftsI	ftsI	1	RHTT01000003.1	203815	205581	99.66	100.00	yes	-	-
+KP_I_01.fna	Klebsiella_pneumoniae	ompK35	ompK35	1	RHTT01000002.1	231947	233026	99.44	100.00	yes	-	premature stop at residue 73 (72/359 aa)
+KP_I_01.fna	Klebsiella_pneumoniae	ompK36	ompK36	1	RHTT01000005.1	127772	128875	94.81	100.00	yes	-	-
+KP_I_02.fna	Klebsiella_pneumoniae	acrB	acrB	1	RHUC01000009.1	160687	163833	99.84	100.00	yes	-	-
+KP_I_02.fna	Klebsiella_pneumoniae	blaCTX-M-15	blaCTX-M-15	1	RHUC01000076.1	212	1082	100.00	99.43	no	-	premature stop at residue 1 (0/291 aa)
+KP_I_02.fna	Klebsiella_pneumoniae	blaOXA-232	blaOXA-232	1	RHUC01000044.1	5086	5883	100.00	100.00	yes	-	-
+KP_I_02.fna	Klebsiella_pneumoniae	blaSHV-12	blaSHV-12	1	RHUC01000050.1	74	934	100.00	100.00	yes	-	-
+KP_I_02.fna	Klebsiella_pneumoniae	envZ	envZ	1	RHUC01000006.1	288021	289376	99.56	100.00	yes	-	-
+KP_I_02.fna	Klebsiella_pneumoniae	fosAKP	fosAKP	1	RHUC01000005.1	339388	339807	95.24	100.00	yes	-	-
+KP_I_02.fna	Klebsiella_pneumoniae	ftsI	ftsI	1	RHUC01000005.1	144323	146089	99.38	100.00	yes	-	-
+KP_I_02.fna	Klebsiella_pneumoniae	ompK35	ompK35	1	RHUC01000011.1	185323	186391	98.43	100.00	yes	-	premature stop at residue 108 (107/359 aa)
+KP_I_02.fna	Klebsiella_pneumoniae	ompK36	ompK36	1	RHUC01000004.1	127520	128644	92.13	100.00	yes	-	-
+KP_I_03.fna	Klebsiella_pneumoniae	acrB	acrB	1	RHUB01000008.1	160687	163833	99.84	100.00	yes	-	-
+KP_I_03.fna	Klebsiella_pneumoniae	blaCTX-M-15	blaCTX-M-15	1	RHUB01000076.1	212	1082	100.00	99.43	no	-	premature stop at residue 1 (0/291 aa)
+KP_I_03.fna	Klebsiella_pneumoniae	blaOXA-232	blaOXA-232	1	RHUB01000045.1	5086	5883	100.00	100.00	yes	-	-
+KP_I_03.fna	Klebsiella_pneumoniae	envZ	envZ	1	RHUB01000006.1	288021	289376	99.56	100.00	yes	-	-
+KP_I_03.fna	Klebsiella_pneumoniae	fosAKP	fosAKP	1	RHUB01000005.1	339270	339689	95.24	100.00	yes	-	-
+KP_I_03.fna	Klebsiella_pneumoniae	ftsI	ftsI	1	RHUB01000005.1	144323	146089	99.38	100.00	yes	-	-
+KP_I_03.fna	Klebsiella_pneumoniae	ompK35	ompK35	1	RHUB01000010.1	36990	38058	98.43	100.00	yes	-	premature stop at residue 108 (107/359 aa)
+KP_I_03.fna	Klebsiella_pneumoniae	ompK36	ompK36	1	RHUB01000003.1	127754	128878	92.13	100.00	yes	-	-
+KP_R_01.fna	Klebsiella_pneumoniae	acrB	acrB	1	RCGL01000020.1	160470	163616	99.71	100.00	yes	-	-
+KP_R_01.fna	Klebsiella_pneumoniae	blaCTX-M-15	blaCTX-M-like	1	RCGL01000054.1	10977	11852	99.89	100.00	yes	G243D	-
+KP_R_01.fna	Klebsiella_pneumoniae	blaSHV-12	blaSHV-like	1	RCGL01000024.1	28009	28869	99.42	100.00	yes	Q31L;A184T;S235G;K236E	-
+KP_R_01.fna	Klebsiella_pneumoniae	envZ	envZ	1	RCGL01000004.1	48661	50016	99.41	100.00	yes	-	-
+KP_R_01.fna	Klebsiella_pneumoniae	fosAKP	fosAKP	1	RCGL01000029.1	336000	336419	98.81	100.00	yes	-	-
+KP_R_01.fna	Klebsiella_pneumoniae	ftsI	ftsI	1	RCGL01000029.1	144053	145819	99.55	100.00	yes	-	-
+KP_R_01.fna	Klebsiella_pneumoniae	ompK35	ompK35	1	RCGL01000023.1	36978	38057	99.63	100.00	yes	-	-
+KP_R_01.fna	Klebsiella_pneumoniae	ompK36	ompK36	1	RCGL01000007.1	300227	301333	98.64	100.00	yes	-	-
+KP_R_02.fna	Klebsiella_pneumoniae	acrB	acrB	1	CACSDQ010000011.1	48194	51340	99.75	100.00	yes	-	-
+KP_R_02.fna	Klebsiella_pneumoniae	blaCTX-M-15	blaCTX-M-15	1	CACSDQ010000037.1	1737	2612	100.00	100.00	yes	-	-
+KP_R_02.fna	Klebsiella_pneumoniae	blaKPC-2	blaKPC-3	1	CACSDQ010000024.1	5857	6738	99.89	100.00	yes	-	-
+KP_R_02.fna	Klebsiella_pneumoniae	blaSHV-12	blaSHV-like	1	CACSDQ010000001.1	228209	229069	99.53	100.00	yes	Q31L;S235G;K236E	-
+KP_R_02.fna	Klebsiella_pneumoniae	envZ	envZ	1	CACSDQ010000005.1	48685	50040	99.48	100.00	yes	-	-
+KP_R_02.fna	Klebsiella_pneumoniae	fosAKP	fosAKP	1	CACSDQ010000006.1	355857	356270	94.93	98.57	yes	-	-
+KP_R_02.fna	Klebsiella_pneumoniae	ftsI	ftsI	1	CACSDQ010000006.1	145172	146938	99.89	100.00	yes	-	-
+KP_R_02.fna	Klebsiella_pneumoniae	ompK35	ompK35	1	CACSDQ010000002.1	168124	169203	99.63	100.00	yes	-	-
+KP_R_02.fna	Klebsiella_pneumoniae	ompK36	ompK36	1	CACSDQ010000003.1	110407	111510	94.09	100.00	yes	-	-
+KP_R_03.fna	Klebsiella_pneumoniae	acrB	acrB	1	CACSCZ010000006.1	87550	90696	99.87	100.00	yes	-	-
+KP_R_03.fna	Klebsiella_pneumoniae	blaKPC-2	blaKPC-3	1	CACSCZ010000031.1	8907	9788	99.89	100.00	yes	-	-
+KP_R_03.fna	Klebsiella_pneumoniae	blaSHV-12	blaSHV-like	1	CACSCZ010000056.1	202	1062	99.42	100.00	yes	S235G;K236E	-
+KP_R_03.fna	Klebsiella_pneumoniae	envZ	envZ	1	CACSCZ010000009.1	153909	155264	99.85	100.00	yes	-	-
+KP_R_03.fna	Klebsiella_pneumoniae	fosAKP	fosAKP	1	CACSCZ010000007.1	12505	12924	98.81	100.00	yes	-	-
+KP_R_03.fna	Klebsiella_pneumoniae	ftsI	ftsI	1	CACSCZ010000007.1	218416	220182	99.43	100.00	yes	-	-
+KP_R_03.fna	Klebsiella_pneumoniae	ompK35	ompK35	1	CACSCZ010000004.1	130225	131305	99.35	100.00	yes	-	premature stop at residue 89 (88/359 aa)
+KP_R_03.fna	Klebsiella_pneumoniae	ompK36	ompK36	1	CACSCZ010000002.1	202540	203649	99.37	100.00	yes	-	-
+KP_R_04.fna	Klebsiella_pneumoniae	acrB	acrB	1	FBSV01000014.1	62423	65569	99.87	100.00	yes	-	-
+KP_R_04.fna	Klebsiella_pneumoniae	blaKPC-2	blaKPC-2	1	FBSV01000042.1	10738	11619	100.00	100.00	yes	-	-
+KP_R_04.fna	Klebsiella_pneumoniae	blaSHV-12	blaSHV-12	1	FBSV01000003.1	145253	146113	100.00	100.00	yes	-	-
+KP_R_04.fna	Klebsiella_pneumoniae	envZ	envZ	1	FBSV01000018.1	153769	155124	99.85	100.00	yes	-	-
+KP_R_04.fna	Klebsiella_pneumoniae	fosAKP	fosAKP	1	FBSV01000021.1	255859	256278	98.81	100.00	yes	-	-
+KP_R_04.fna	Klebsiella_pneumoniae	ftsI	ftsI	1	FBSV01000021.1	48601	50367	99.43	100.00	yes	-	-
+KP_R_04.fna	Klebsiella_pneumoniae	ompK35	ompK35	1	FBSV01000034.1	209321	210401	99.35	100.00	yes	-	premature stop at residue 89 (88/359 aa)
+KP_R_04.fna	Klebsiella_pneumoniae	ompK36	ompK36	1	FBSV01000032.1	213479	214582	99.82	100.00	yes	-	premature stop at residue 125 (124/367 aa)
+KP_R_05.fna	Klebsiella_pneumoniae	acrB	acrB	1	CACSBN010000006.1	87410	90556	99.87	100.00	yes	-	-
+KP_R_05.fna	Klebsiella_pneumoniae	blaKPC-2	blaKPC-3	1	CACSBN010000035.1	10834	11715	99.89	100.00	yes	-	-
+KP_R_05.fna	Klebsiella_pneumoniae	blaSHV-12	blaSHV-like	1	CACSBN010000063.1	24	884	99.42	100.00	yes	S235G;K236E	-
+KP_R_05.fna	Klebsiella_pneumoniae	envZ	envZ	1	CACSBN010000011.1	153900	155255	99.85	100.00	yes	-	-
+KP_R_05.fna	Klebsiella_pneumoniae	fosAKP	fosAKP	1	CACSBN010000009.1	255954	256373	98.81	100.00	yes	-	-
+KP_R_05.fna	Klebsiella_pneumoniae	ftsI	ftsI	1	CACSBN010000009.1	48697	50463	99.43	100.00	yes	-	-
+KP_R_05.fna	Klebsiella_pneumoniae	ompK35	ompK35	1	CACSBN010000004.1	130225	131305	99.35	100.00	yes	-	premature stop at residue 89 (88/359 aa)
+KP_R_05.fna	Klebsiella_pneumoniae	ompK36	ompK36	1	CACSBN010000001.1	202534	203643	99.37	100.00	yes	-	-
+KP_R_06.fna	Klebsiella_pneumoniae	acrB	acrB	1	NZ_LXNB01000002.1	234426	237572	99.87	100.00	yes	-	-
+KP_R_06.fna	Klebsiella_pneumoniae	blaKPC-2	blaKPC-2	1	NZ_LXNB01000034.1	27618	28499	100.00	100.00	yes	-	-
+KP_R_06.fna	Klebsiella_pneumoniae	blaSHV-12	blaSHV-like	1	NZ_LXNB01000133.1	24	722	99.86	81.18	no	S235_A252del;E254_R288del	truncated product (233/286 aa)
+KP_R_06.fna	Klebsiella_pneumoniae	envZ	envZ	1	NZ_LXNB01000011.1	153895	155250	99.85	100.00	yes	-	-
+KP_R_06.fna	Klebsiella_pneumoniae	fosAKP	fosAKP	1	NZ_LXNB01000006.1	14077	14496	98.81	100.00	yes	-	-
+KP_R_06.fna	Klebsiella_pneumoniae	ftsI	ftsI	1	NZ_LXNB01000006.1	219988	221754	99.43	100.00	yes	-	-
+KP_R_06.fna	Klebsiella_pneumoniae	ompK35	ompK35	1	NZ_LXNB01000003.1	130215	131295	99.35	100.00	yes	-	premature stop at residue 89 (88/359 aa)
+KP_R_06.fna	Klebsiella_pneumoniae	ompK36	ompK36	1	NZ_LXNB01000008.1	197834	198943	99.37	100.00	yes	-	-
+KP_R_07.fna	Klebsiella_pneumoniae	acrB	acrB	1	FBRB01000025.1	234162	237314	99.68	100.00	yes	-	-
+KP_R_07.fna	Klebsiella_pneumoniae	blaKPC-2	blaKPC-2	1	FBRB01000045.1	8700	9581	100.00	100.00	yes	-	-
+KP_R_07.fna	Klebsiella_pneumoniae	blaSHV-12	blaSHV-12	1	FBRB01000038.1	24	884	100.00	100.00	yes	-	-
+KP_R_07.fna	Klebsiella_pneumoniae	envZ	envZ	1	FBRB01000005.1	48584	49939	99.78	100.00	yes	-	-
+KP_R_07.fna	Klebsiella_pneumoniae	fosAKP	fosAKP	1	FBRB01000004.1	255856	256275	98.81	100.00	yes	-	-
+KP_R_07.fna	Klebsiella_pneumoniae	ftsI	ftsI	1	FBRB01000004.1	48598	50364	99.43	100.00	yes	-	-
+KP_R_07.fna	Klebsiella_pneumoniae	ompK35	ompK35	1	FBRB01000016.1	130113	131193	99.35	100.00	yes	-	premature stop at residue 89 (88/359 aa)
+KP_R_08.fna	Klebsiella_pneumoniae	acrB	acrB	1	FBSU01000007.1	234096	237242	99.87	100.00	yes	-	-
+KP_R_08.fna	Klebsiella_pneumoniae	blaKPC-2	blaKPC-2	1	FBSU01000040.1	10738	11619	100.00	100.00	yes	-	-
+KP_R_08.fna	Klebsiella_pneumoniae	blaSHV-12	blaSHV-12	1	FBSU01000047.1	3049	3909	100.00	100.00	yes	-	-
+KP_R_08.fna	Klebsiella_pneumoniae	envZ	envZ	1	FBSU01000030.1	153788	155143	99.85	100.00	yes	-	-
+KP_R_08.fna	Klebsiella_pneumoniae	fosAKP	fosAKP	1	FBSU01000002.1	255859	256278	98.81	100.00	yes	-	-
+KP_R_08.fna	Klebsiella_pneumoniae	ftsI	ftsI	1	FBSU01000002.1	48601	50367	99.43	100.00	yes	-	-
+KP_R_08.fna	Klebsiella_pneumoniae	ompK35	ompK35	1	FBSU01000003.1	36882	37962	99.35	100.00	yes	-	premature stop at residue 89 (88/359 aa)
+KP_R_08.fna	Klebsiella_pneumoniae	ompK36	ompK36	1	FBSU01000025.1	108213	109316	99.91	100.00	yes	-	-
+KP_S_01.fna	Klebsiella_pneumoniae	acrB	acrB	1	CACSFW010000002.1	451859	455005	99.78	100.00	yes	-	-
+KP_S_01.fna	Klebsiella_pneumoniae	blaKPC-2	blaKPC-3	1	CACSFW010000024.1	3966	4847	99.89	100.00	yes	-	-
+KP_S_01.fna	Klebsiella_pneumoniae	blaSHV-12	blaSHV-like	1	CACSFW010000006.1	115135	115995	99.07	100.00	yes	Q31L;S235G;K236E	-
+KP_S_01.fna	Klebsiella_pneumoniae	envZ	envZ	1	CACSFW010000004.1	48649	50004	99.56	100.00	yes	-	-
+KP_S_01.fna	Klebsiella_pneumoniae	fosAKP	fosAKP	1	CACSFW010000005.1	14081	14500	95.71	100.00	yes	-	-
+KP_S_01.fna	Klebsiella_pneumoniae	ftsI	ftsI	1	CACSFW010000005.1	204471	206237	99.49	100.00	yes	-	-
+KP_S_01.fna	Klebsiella_pneumoniae	ompK35	ompK35	1	CACSFW010000008.1	170977	172055	99.35	100.00	yes	-	premature stop at residue 63 (62/359 aa)
+KP_S_01.fna	Klebsiella_pneumoniae	ompK36	ompK36	1	CACSFW010000003.1	368031	369128	95.32	100.00	yes	-	-
+KP_S_02.fna	Klebsiella_pneumoniae	acrB	acrB	1	CACSEC010000005.1	88665	91811	99.62	100.00	yes	-	-
+KP_S_02.fna	Klebsiella_pneumoniae	blaCTX-M-15	blaCTX-M-15	1	CACSEC010000035.1	2579	3454	100.00	100.00	yes	-	-
+KP_S_02.fna	Klebsiella_pneumoniae	blaKPC-2	blaKPC-3	1	CACSEC010000027.1	5857	6738	99.89	100.00	yes	-	-
+KP_S_02.fna	Klebsiella_pneumoniae	blaSHV-12	blaSHV-like	1	CACSEC010000015.1	120718	121578	98.95	100.00	yes	Y3F;Q31L;S235G;K236E	-
+KP_S_02.fna	Klebsiella_pneumoniae	envZ	envZ	1	CACSEC010000003.1	422767	424122	99.48	100.00	yes	-	-
+KP_S_02.fna	Klebsiella_pneumoniae	fosAKP	fosAKP	1	CACSEC010000004.1	15778	16197	99.76	100.00	yes	-	-
+KP_S_02.fna	Klebsiella_pneumoniae	ftsI	ftsI	1	CACSEC010000004.1	216549	218315	99.55	100.00	yes	-	-
+KP_S_02.fna	Klebsiella_pneumoniae	ompK35	ompK35	1	CACSEC010000002.1	185025	186104	99.44	100.00	yes	-	-
+KP_S_02.fna	Klebsiella_pneumoniae	ompK36	ompK36	1	CACSEC010000001.1	300943	302046	100.00	100.00	yes	-	-
+KP_S_03.fna	Klebsiella_pneumoniae	acrB	acrB	1	CACSFJ010000005.1	234442	237588	99.87	100.00	yes	-	-
+KP_S_03.fna	Klebsiella_pneumoniae	blaKPC-2	blaKPC-3	1	CACSFJ010000028.1	22436	23317	99.89	100.00	yes	-	-
+KP_S_03.fna	Klebsiella_pneumoniae	blaSHV-12	blaSHV-like	1	CACSFJ010000061.1	24	884	99.42	100.00	yes	S235G;K236E	-
+KP_S_03.fna	Klebsiella_pneumoniae	envZ	envZ	1	CACSFJ010000011.1	153900	155255	99.85	100.00	yes	-	-
+KP_S_03.fna	Klebsiella_pneumoniae	fosAKP	fosAKP	1	CACSFJ010000008.1	14247	14666	98.81	100.00	yes	-	-
+KP_S_03.fna	Klebsiella_pneumoniae	ftsI	ftsI	1	CACSFJ010000008.1	220158	221924	99.43	100.00	yes	-	-
+KP_S_03.fna	Klebsiella_pneumoniae	ompK35	ompK35	1	CACSFJ010000003.1	122264	123344	99.35	100.00	yes	-	premature stop at residue 89 (88/359 aa)
+KP_S_03.fna	Klebsiella_pneumoniae	ompK36	ompK36	1	CACSFJ010000001.1	202535	203644	99.37	100.00	yes	-	-
+KP_S_04.fna	Klebsiella_pneumoniae	acrB	acrB	1	NZ_LUVR01000012.1	1730	4876	99.84	100.00	yes	-	-
+KP_S_04.fna	Klebsiella_pneumoniae	blaKPC-2	blaKPC-2	1	NZ_LUVR01000044.1	7695	8576	100.00	100.00	yes	-	-
+KP_S_04.fna	Klebsiella_pneumoniae	envZ	envZ	1	NZ_KV391936.1	88478	89833	99.93	100.00	yes	-	-
+KP_S_04.fna	Klebsiella_pneumoniae	fosAKP	fosAKP	1	NZ_LUVR01000004.1	353036	353455	98.81	100.00	yes	-	-
+KP_S_04.fna	Klebsiella_pneumoniae	ftsI	ftsI	1	NZ_LUVR01000004.1	145778	147544	99.38	100.00	yes	-	-
+KP_S_04.fna	Klebsiella_pneumoniae	ompK35	ompK35	1	NZ_LUVR01000005.1	193628	194706	99.35	100.00	yes	-	premature stop at residue 63 (62/359 aa)
+KP_S_04.fna	Klebsiella_pneumoniae	ompK36	ompK36	1	NZ_LUVR01000006.1	49926	51050	92.22	100.00	yes	-	-
+KP_S_05.fna	Klebsiella_pneumoniae	acrB	acrB	1	FBSI01000021.1	44009	47155	99.87	100.00	yes	-	-
+KP_S_05.fna	Klebsiella_pneumoniae	blaKPC-2	blaKPC-2	1	FBSI01000013.1	8700	9581	100.00	100.00	yes	-	-
+KP_S_05.fna	Klebsiella_pneumoniae	blaSHV-12	blaSHV-like	1	FBSI01000017.1	7090	7950	99.42	100.00	yes	S235G;K236E	-
+KP_S_05.fna	Klebsiella_pneumoniae	envZ	envZ	1	FBSI01000032.1	153788	155143	99.85	100.00	yes	-	-
+KP_S_05.fna	Klebsiella_pneumoniae	fosAKP	fosAKP	1	FBSI01000057.1	50021	50440	98.81	100.00	yes	-	-
+KP_S_05.fna	Klebsiella_pneumoniae	ftsI	ftsI	1	FBSI01000031.1	155523	157289	99.43	100.00	yes	-	-
+KP_S_05.fna	Klebsiella_pneumoniae	ompK35	ompK35	1	FBSI01000006.1	209532	210612	99.35	100.00	yes	-	premature stop at residue 89 (88/359 aa)
+KP_S_05.fna	Klebsiella_pneumoniae	ompK36	ompK36	1	FBSI01000014.1	108219	109322	99.91	100.00	yes	-	-
+KP_S_06.fna	Klebsiella_pneumoniae	acrB	acrB	1	RHUD01000009.1	44255	47401	99.68	100.00	yes	-	-
+KP_S_06.fna	Klebsiella_pneumoniae	blaNDM-7	blaNDM-7	1	RHUD01000063.1	1457	2269	100.00	100.00	yes	-	-
+KP_S_06.fna	Klebsiella_pneumoniae	blaSHV-12	blaSHV-12	1	RHUD01000084.1	24	884	100.00	100.00	yes	-	-
+KP_S_06.fna	Klebsiella_pneumoniae	envZ	envZ	1	RHUD01000020.1	48608	49963	99.41	100.00	yes	-	-
+KP_S_06.fna	Klebsiella_pneumoniae	fosAKP	fosAKP	1	RHUD01000002.1	14213	14632	97.38	100.00	yes	-	-
+KP_S_06.fna	Klebsiella_pneumoniae	ftsI	ftsI	1	RHUD01000002.1	215218	216984	99.77	100.00	yes	-	-
+KP_S_06.fna	Klebsiella_pneumoniae	ompK35	ompK35	1	RHUD01000030.1	36930	38009	99.54	100.00	yes	-	-
+KP_S_06.fna	Klebsiella_pneumoniae	ompK36	ompK36	1	RHUD01000015.1	135178	136275	95.32	100.00	yes	-	-
+KP_S_07.fna	Klebsiella_pneumoniae	acrB	acrB	1	CACSEJ010000005.1	234457	237603	99.87	100.00	yes	-	-
+KP_S_07.fna	Klebsiella_pneumoniae	blaKPC-2	blaKPC-3	1	CACSEJ010000023.1	8941	9822	99.89	100.00	yes	-	-
+KP_S_07.fna	Klebsiella_pneumoniae	blaSHV-12	blaSHV-like	1	CACSEJ010000014.1	7214	8074	99.42	100.00	yes	S235G;K236E	-
+KP_S_07.fna	Klebsiella_pneumoniae	envZ	envZ	1	CACSEJ010000011.1	153916	155271	99.85	100.00	yes	-	-
+KP_S_07.fna	Klebsiella_pneumoniae	fosAKP	fosAKP	1	CACSEJ010000006.1	14247	14666	98.81	100.00	yes	-	-
+KP_S_07.fna	Klebsiella_pneumoniae	ftsI	ftsI	1	CACSEJ010000006.1	220158	221924	99.43	100.00	yes	-	-
+KP_S_07.fna	Klebsiella_pneumoniae	ompK35	ompK35	1	CACSEJ010000003.1	130224	131304	99.35	100.00	yes	-	premature stop at residue 89 (88/359 aa)
+KP_S_07.fna	Klebsiella_pneumoniae	ompK36	ompK36	1	CACSEJ010000001.1	154624	155733	99.37	100.00	yes	-	-
+KP_S_08.fna	Klebsiella_pneumoniae	acrB	acrB	1	CACSDO010000002.1	252690	255836	99.94	100.00	yes	-	-
+KP_S_08.fna	Klebsiella_pneumoniae	blaCTX-M-15	blaCTX-M-15	1	CACSDO010000037.1	2579	3454	100.00	100.00	yes	-	-
+KP_S_08.fna	Klebsiella_pneumoniae	blaKPC-2	blaKPC-3	1	CACSDO010000029.1	5860	6741	99.89	100.00	yes	-	-
+KP_S_08.fna	Klebsiella_pneumoniae	blaSHV-12	blaSHV-like	1	CACSDO010000006.1	206253	207113	98.95	100.00	yes	Y3F;Q31L;S235G;K236E	-
+KP_S_08.fna	Klebsiella_pneumoniae	envZ	envZ	1	CACSDO010000005.1	48656	50011	99.04	100.00	yes	-	-
+KP_S_08.fna	Klebsiella_pneumoniae	fosAKP	fosAKP	1	CACSDO010000012.1	137405	137824	99.76	100.00	yes	-	-
+KP_S_08.fna	Klebsiella_pneumoniae	ftsI	ftsI	1	CACSDO010000010.1	144217	145983	99.77	100.00	yes	-	-
+KP_S_08.fna	Klebsiella_pneumoniae	ompK35	ompK35	1	CACSDO010000008.1	41400	42478	99.26	100.00	yes	-	premature stop at residue 253 (252/359 aa)
+KP_S_08.fna	Klebsiella_pneumoniae	ompK36	ompK36	1	CACSDO010000004.1	195336	196454	92.62	100.00	yes	-	-
+KP_S_09.fna	Klebsiella_pneumoniae	acrB	acrB	1	FBRS01000021.1	62423	65569	99.87	100.00	yes	-	-
+KP_S_09.fna	Klebsiella_pneumoniae	blaKPC-2	blaKPC-2	1	FBRS01000072.1	10738	11619	100.00	100.00	yes	-	-
+KP_S_09.fna	Klebsiella_pneumoniae	blaSHV-12	blaSHV-12	1	FBRS01000024.1	7090	7950	100.00	100.00	yes	-	-
+KP_S_09.fna	Klebsiella_pneumoniae	envZ	envZ	1	FBRS01000040.1	153769	155124	99.85	100.00	yes	-	-
+KP_S_09.fna	Klebsiella_pneumoniae	fosAKP	fosAKP	1	FBRS01000001.1	255859	256278	98.81	100.00	yes	-	-
+KP_S_09.fna	Klebsiella_pneumoniae	ftsI	ftsI	1	FBRS01000001.1	48601	50367	99.43	100.00	yes	-	-
+KP_S_09.fna	Klebsiella_pneumoniae	ompK35	ompK35	1	FBRS01000016.1	130114	131194	99.35	100.00	yes	-	premature stop at residue 89 (88/359 aa)
+KP_S_09.fna	Klebsiella_pneumoniae	ompK36	ompK36	1	FBRS01000012.1	161653	162756	99.91	100.00	yes	-	-
+KP_S_10.fna	Klebsiella_pneumoniae	acrB	acrB	1	RHTJ01000006.1	87045	90191	99.84	100.00	yes	-	-
+KP_S_10.fna	Klebsiella_pneumoniae	blaCTX-M-15	blaCTX-M-15	1	RHTJ01000036.1	39129	40004	100.00	100.00	yes	-	-
+KP_S_10.fna	Klebsiella_pneumoniae	blaNDM-5	blaNDM-5	1	RHTJ01000051.1	5725	6537	100.00	100.00	yes	-	-
+KP_S_10.fna	Klebsiella_pneumoniae	blaOXA-181	blaOXA-181	1	RHTJ01000006.1	242012	242809	100.00	100.00	yes	-	-
+KP_S_10.fna	Klebsiella_pneumoniae	blaSHV-12	blaSHV-like	1	RHTJ01000004.1	27937	28797	99.42	100.00	yes	S235G;K236E	-
+KP_S_10.fna	Klebsiella_pneumoniae	envZ	envZ	1	RHTJ01000002.1	48608	49963	98.97	100.00	yes	-	-
+KP_S_10.fna	Klebsiella_pneumoniae	fosAKP	fosAKP	1	RHTJ01000013.1	14209	14621	97.34	98.33	yes	-	-
+KP_S_10.fna	Klebsiella_pneumoniae	ftsI	ftsI	1	RHTJ01000010.1	68757	70523	99.49	100.00	yes	-	-
+KP_S_10.fna	Klebsiella_pneumoniae	ompK36	ompK36	1	RHTJ01000001.1	180026	181135	98.92	100.00	yes	-	-
 P23.fna	Pseudomonas_aeruginosa	blaKPC-2	blaKPC-2	1	CP065418.1	3841	4722	100.00	100.00	yes	-	-
 P23.fna	Pseudomonas_aeruginosa	blaPDC-1	blaPDC-like	1	CP065417.1	971498	972691	99.58	100.00	yes	T105A;L176R	-
 P23.fna	Pseudomonas_aeruginosa	fosA_PA1129	fosA_PA1129	1	CP065417.1	4615443	4615850	99.02	100.00	yes	-	-
@@ -412,6 +585,69 @@ PA99.fna	Pseudomonas_aeruginosa	blaPDC-1	blaPDC-like	1	CP042967.1	4045720	404691
 PA99.fna	Pseudomonas_aeruginosa	fosA_PA1129	fosA_PA1129	1	CP042967.1	832339	832746	99.75	100.00	yes	-	-
 PA99.fna	Pseudomonas_aeruginosa	mexR	mexR	1	CP042967.1	3561931	3562374	99.78	100.00	yes	-	-
 PA99.fna	Pseudomonas_aeruginosa	nalD	nalD	1	CP042967.1	4711323	4711961	99.69	100.00	yes	-	-
+PA_I_01.fna	Pseudomonas_aeruginosa	blaGES-67	blaGES-like	1	RHSI01000067.1	140	1003	99.88	100.00	yes	D34E	-
+PA_I_01.fna	Pseudomonas_aeruginosa	blaPDC-1	blaPDC-like	1	RHSI01000022.1	13725	14918	99.25	100.00	yes	G27D;A97V;T105A;V205L;G391A	-
+PA_I_01.fna	Pseudomonas_aeruginosa	fosA_PA1129	fosA_PA1129	1	RHSI01000012.1	159292	159699	99.02	100.00	yes	-	-
+PA_I_01.fna	Pseudomonas_aeruginosa	mexR	mexR	1	RHSI01000005.1	238805	239248	98.87	100.00	yes	-	-
+PA_I_01.fna	Pseudomonas_aeruginosa	nalD	nalD	1	RHSI01000002.1	87939	88577	99.37	100.00	yes	-	-
+PA_I_02.fna	Pseudomonas_aeruginosa	blaPDC-1	blaPDC-like	1	RHSZ01000025.1	28418	29611	99.75	100.00	yes	L176R	-
+PA_I_02.fna	Pseudomonas_aeruginosa	fosA_PA1129	fosA_PA1129	1	RHSZ01000010.1	26460	26867	99.02	100.00	yes	-	-
+PA_I_02.fna	Pseudomonas_aeruginosa	mexR	mexR	1	RHSZ01000002.1	269265	269708	98.87	100.00	yes	-	-
+PA_I_02.fna	Pseudomonas_aeruginosa	nalD	nalD	1	RHSZ01000003.1	62514	63152	99.84	100.00	yes	-	-
+PA_I_03.fna	Pseudomonas_aeruginosa	blaPDC-1	blaPDC-like	1	RHSY01000025.1	28418	29611	99.75	100.00	yes	L176R	-
+PA_I_03.fna	Pseudomonas_aeruginosa	fosA_PA1129	fosA_PA1129	1	RHSY01000013.1	26460	26867	99.02	100.00	yes	-	-
+PA_I_03.fna	Pseudomonas_aeruginosa	mexR	mexR	1	RHSY01000002.1	269265	269708	98.87	100.00	yes	-	-
+PA_I_03.fna	Pseudomonas_aeruginosa	nalD	nalD	1	RHSY01000003.1	4158	4796	99.84	100.00	yes	-	-
+PA_I_04.fna	Pseudomonas_aeruginosa	blaPDC-1	blaPDC-like	1	RHSL01000016.1	28415	29608	99.50	100.00	yes	R79Q;T105A	-
+PA_I_04.fna	Pseudomonas_aeruginosa	fosA_PA1129	fosA_PA1129	1	RHSL01000001.1	499397	499804	99.02	100.00	yes	-	-
+PA_I_04.fna	Pseudomonas_aeruginosa	mexR	mexR	1	RHSL01000007.1	240810	241253	100.00	100.00	yes	-	-
+PA_I_04.fna	Pseudomonas_aeruginosa	nalD	nalD	1	RHSL01000005.1	404066	404704	100.00	100.00	yes	-	-
+PA_R_01.fna	Pseudomonas_aeruginosa	blaPDC-1	blaPDC-like	1	RHSS01000017.1	28418	29611	99.50	100.00	yes	R79Q;T105A	-
+PA_R_01.fna	Pseudomonas_aeruginosa	fosA_PA1129	fosA_PA1129	1	RHSS01000001.1	415740	416147	99.02	100.00	yes	-	-
+PA_R_01.fna	Pseudomonas_aeruginosa	mexR	mexR	1	RHSS01000006.1	240810	241253	100.00	100.00	yes	-	-
+PA_R_01.fna	Pseudomonas_aeruginosa	nalD	nalD	1	RHSS01000005.1	403777	404415	100.00	100.00	yes	-	-
+PA_S_01.fna	Pseudomonas_aeruginosa	blaGES-70	blaGES-like	1	RHTB01000149.1	140	1003	99.88	100.00	yes	R162P	-
+PA_S_01.fna	Pseudomonas_aeruginosa	blaPDC-1	blaPDC-like	1	RHTB01000087.1	13725	14918	99.16	100.00	yes	G27D;A97V;T105A;V205L;T346S;G391A	-
+PA_S_01.fna	Pseudomonas_aeruginosa	fosA_PA1129	fosA_PA1129	1	RHTB01000006.1	159699	160106	99.02	100.00	yes	-	-
+PA_S_01.fna	Pseudomonas_aeruginosa	mexR	mexR	1	RHTB01000071.1	11799	12242	98.87	100.00	yes	-	-
+PA_S_01.fna	Pseudomonas_aeruginosa	nalD	nalD	1	RHTB01000003.1	87939	88577	99.37	100.00	yes	-	-
+PA_S_02.fna	Pseudomonas_aeruginosa	blaPDC-1	blaPDC-like	1	RHSK01000017.1	28418	29611	99.25	100.00	yes	T21A;T105A;V205L	-
+PA_S_02.fna	Pseudomonas_aeruginosa	fosA_PA1129	fosA_PA1129	1	RHSK01000002.1	419853	420260	98.53	100.00	yes	-	-
+PA_S_02.fna	Pseudomonas_aeruginosa	mexR	mexR	1	RHSK01000008.1	96441	96884	100.00	100.00	yes	-	-
+PA_S_02.fna	Pseudomonas_aeruginosa	nalD	nalD	1	RHSK01000015.1	3351	3989	100.00	100.00	yes	-	-
+PA_S_03.fna	Pseudomonas_aeruginosa	blaPDC-1	blaPDC-like	1	RHSN01000016.1	90081	91274	99.50	100.00	yes	R79Q;T105A	-
+PA_S_03.fna	Pseudomonas_aeruginosa	fosA_PA1129	fosA_PA1129	1	RHSN01000001.1	415737	416144	99.02	100.00	yes	-	-
+PA_S_03.fna	Pseudomonas_aeruginosa	mexR	mexR	1	RHSN01000006.1	240810	241253	100.00	100.00	yes	-	-
+PA_S_03.fna	Pseudomonas_aeruginosa	nalD	nalD	1	RHSN01000005.1	403965	404603	100.00	100.00	yes	-	-
+PA_S_04.fna	Pseudomonas_aeruginosa	blaPDC-1	blaPDC-like	1	RHSD01000015.1	119153	120346	99.25	100.00	yes	T21A;T105A;V205L	-
+PA_S_04.fna	Pseudomonas_aeruginosa	fosA_PA1129	fosA_PA1129	1	RHSD01000002.1	421960	422367	98.53	100.00	yes	-	-
+PA_S_04.fna	Pseudomonas_aeruginosa	mexR	mexR	1	RHSD01000010.1	96528	96971	100.00	100.00	yes	-	-
+PA_S_04.fna	Pseudomonas_aeruginosa	nalD	nalD	1	RHSD01000018.1	3643	4281	100.00	100.00	yes	-	-
+PA_S_05.fna	Pseudomonas_aeruginosa	blaPDC-1	blaPDC-like	1	RHSC01000014.1	90436	91629	99.25	100.00	yes	T21A;T105A;V205L	-
+PA_S_05.fna	Pseudomonas_aeruginosa	fosA_PA1129	fosA_PA1129	1	RHSC01000005.1	223064	223471	98.53	100.00	yes	-	-
+PA_S_05.fna	Pseudomonas_aeruginosa	mexR	mexR	1	RHSC01000009.1	96528	96971	100.00	100.00	yes	-	-
+PA_S_05.fna	Pseudomonas_aeruginosa	nalD	nalD	1	RHSC01000019.1	3351	3989	100.00	100.00	yes	-	-
+PA_S_06.fna	Pseudomonas_aeruginosa	blaPDC-1	blaPDC-like	1	RHST01000018.1	28483	29676	99.25	100.00	yes	T21A;T105A;V205L	-
+PA_S_06.fna	Pseudomonas_aeruginosa	fosA_PA1129	fosA_PA1129	1	RHST01000002.1	421136	421543	98.53	100.00	yes	-	-
+PA_S_06.fna	Pseudomonas_aeruginosa	mexR	mexR	1	RHST01000008.1	96441	96884	100.00	100.00	yes	-	-
+PA_S_06.fna	Pseudomonas_aeruginosa	nalD	nalD	1	RHST01000016.1	127887	128525	100.00	100.00	yes	-	-
+PA_S_07.fna	Pseudomonas_aeruginosa	blaPDC-1	blaPDC-like	1	RHSA01000022.1	32786	33979	99.16	100.00	yes	T21A;L60R;T105A;V205L	-
+PA_S_07.fna	Pseudomonas_aeruginosa	fosA_PA1129	fosA_PA1129	1	RHSA01000003.1	247801	248208	98.53	100.00	yes	-	-
+PA_S_07.fna	Pseudomonas_aeruginosa	mexR	mexR	1	RHSA01000011.1	106117	106560	100.00	100.00	yes	-	-
+PA_S_07.fna	Pseudomonas_aeruginosa	nalD	nalD	1	RHSA01000002.1	92927	93565	100.00	100.00	yes	-	-
+PA_S_08.fna	Pseudomonas_aeruginosa	blaPDC-1	blaPDC-like	1	RHSM01000016.1	90081	91274	99.50	100.00	yes	R79Q;T105A	-
+PA_S_08.fna	Pseudomonas_aeruginosa	fosA_PA1129	fosA_PA1129	1	RHSM01000001.1	415740	416147	99.02	100.00	yes	-	-
+PA_S_08.fna	Pseudomonas_aeruginosa	mexR	mexR	1	RHSM01000007.1	240810	241253	100.00	100.00	yes	-	-
+PA_S_08.fna	Pseudomonas_aeruginosa	nalD	nalD	1	RHSM01000006.1	403965	404603	100.00	100.00	yes	-	-
+PA_S_09.fna	Pseudomonas_aeruginosa	blaCTX-M-15	blaCTX-M-like	1	RHTA01000064.1	1990	2865	99.89	100.00	yes	G243D	-
+PA_S_09.fna	Pseudomonas_aeruginosa	blaPDC-1	blaPDC-like	1	RHTA01000011.1	88609	89802	99.16	100.00	yes	G27D;A97V;T105A;D113A;V205L;G391A	-
+PA_S_09.fna	Pseudomonas_aeruginosa	fosA_PA1129	fosA_PA1129	1	RHTA01000012.1	25420	25827	99.02	100.00	yes	-	-
+PA_S_09.fna	Pseudomonas_aeruginosa	mexR	mexR	1	RHTA01000003.1	230403	230846	98.87	100.00	yes	-	-
+PA_S_09.fna	Pseudomonas_aeruginosa	nalD	nalD	1	RHTA01000002.1	322518	323156	99.06	100.00	yes	-	-
+PA_S_10.fna	Pseudomonas_aeruginosa	blaPDC-1	blaPDC-like	1	RHSW01000017.1	60813	62006	99.25	100.00	yes	T21A;T105A;V205L	-
+PA_S_10.fna	Pseudomonas_aeruginosa	fosA_PA1129	fosA_PA1129	1	RHSW01000022.1	46449	46856	98.53	100.00	yes	-	-
+PA_S_10.fna	Pseudomonas_aeruginosa	mexR	mexR	1	RHSW01000036.1	17963	18406	100.00	100.00	yes	-	-
+PA_S_10.fna	Pseudomonas_aeruginosa	nalD	nalD	1	RHSW01000130.1	3351	3989	100.00	100.00	yes	-	-
 R31.fna	Pseudomonas_aeruginosa	blaKPC-2	blaKPC-2	1	CP061851.1	6250	7131	100.00	100.00	yes	-	-
 R31.fna	Pseudomonas_aeruginosa	blaPDC-1	blaPDC-like	1	CP061850.1	226329	227522	99.58	100.00	yes	T105A;L176R	-
 R31.fna	Pseudomonas_aeruginosa	fosA_PA1129	fosA_PA1129	1	CP061850.1	3885885	3886292	99.02	100.00	yes	-	-
@@ -427,13 +663,20 @@ SE5352.fna	Pseudomonas_aeruginosa	blaPDC-1	blaPDC-like	1	CP054843.1	940845	94203
 SE5352.fna	Pseudomonas_aeruginosa	fosA_PA1129	fosA_PA1129	1	CP054843.1	4667343	4667750	99.02	100.00	yes	-	-
 SE5352.fna	Pseudomonas_aeruginosa	mexR	mexR	1	CP054843.1	508044	508487	98.87	100.00	yes	-	-
 SE5352.fna	Pseudomonas_aeruginosa	nalD	nalD	1	CP054843.1	1577929	1578567	99.37	100.00	yes	-	-
-SRR28296939.fna	Klebsiella_pneumoniae	acrB	acrB	1	u1	171239	174385	99.84	100.00	yes	-	-
-SRR28296939.fna	Klebsiella_pneumoniae	blaKPC-2	blaKPC-179	1	u87	6026	6910	99.55	100.00	yes	-	-
-SRR28296939.fna	Klebsiella_pneumoniae	envZ	envZ	1	u110	48666	50021	99.93	100.00	yes	-	-
-SRR28296939.fna	Klebsiella_pneumoniae	fosAKP	fosAKP	1	u58	14021	14440	98.81	100.00	yes	-	-
-SRR28296939.fna	Klebsiella_pneumoniae	ftsI	ftsI	1	u77	186809	188575	99.32	100.00	yes	-	-
-SRR28296939.fna	Klebsiella_pneumoniae	ompK35	ompK35	1	u44	64642	65720	99.35	100.00	yes	-	premature stop at residue 63 (62/359 aa)
-SRR28296939.fna	Klebsiella_pneumoniae	ompK36	ompK36	1	u55	216041	217165	92.22	100.00	yes	-	-
+SRR28296939.fasta	Klebsiella_pneumoniae	acrB	acrB	1	u1	171239	174385	99.84	100.00	yes	-	-
+SRR28296939.fasta	Klebsiella_pneumoniae	blaKPC-2	blaKPC-179	1	u87	6026	6910	99.55	100.00	yes	-	-
+SRR28296939.fasta	Klebsiella_pneumoniae	envZ	envZ	1	u110	48666	50021	99.93	100.00	yes	-	-
+SRR28296939.fasta	Klebsiella_pneumoniae	fosAKP	fosAKP	1	u58	14021	14440	98.81	100.00	yes	-	-
+SRR28296939.fasta	Klebsiella_pneumoniae	ftsI	ftsI	1	u77	186809	188575	99.32	100.00	yes	-	-
+SRR28296939.fasta	Klebsiella_pneumoniae	ompK35	ompK35	1	u44	64642	65720	99.35	100.00	yes	-	premature stop at residue 63 (62/359 aa)
+SRR28296939.fasta	Klebsiella_pneumoniae	ompK36	ompK36	1	u55	216041	217165	92.22	100.00	yes	-	-
+SRR28296940.fna	Klebsiella_pneumoniae	acrB	acrB	1	u12	171239	174385	99.84	100.00	yes	-	-
+SRR28296940.fna	Klebsiella_pneumoniae	blaKPC-2	blaKPC-2	1	u93	6026	6907	100.00	100.00	yes	-	-
+SRR28296940.fna	Klebsiella_pneumoniae	envZ	envZ	1	u1	48666	50021	99.93	100.00	yes	-	-
+SRR28296940.fna	Klebsiella_pneumoniae	fosAKP	fosAKP	1	u60	14061	14480	98.81	100.00	yes	-	-
+SRR28296940.fna	Klebsiella_pneumoniae	ftsI	ftsI	1	u79	186809	188575	99.32	100.00	yes	-	-
+SRR28296940.fna	Klebsiella_pneumoniae	ompK35	ompK35	1	u46	46602	47680	99.35	100.00	yes	-	premature stop at residue 63 (62/359 aa)
+SRR28296940.fna	Klebsiella_pneumoniae	ompK36	ompK36	1	u57	216041	217165	92.22	100.00	yes	-	-
 ST773.fna	Pseudomonas_aeruginosa	blaNDM-1	blaNDM-1	1	CP041945.1	2436768	2437580	100.00	100.00	yes	-	-
 ST773.fna	Pseudomonas_aeruginosa	blaPDC-1	blaPDC-like	1	CP041945.1	934699	935892	99.08	100.00	yes	G27D;T105A;V205L;G391A	-
 ST773.fna	Pseudomonas_aeruginosa	fosA_PA1129	fosA_PA1129	1	CP041945.1	4640571	4640978	99.75	100.00	yes	-	-

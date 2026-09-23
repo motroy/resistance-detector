@@ -1,0 +1,6 @@
+Gene	Contig	Start	Stop	Match_Type	Description	Codon_Changes	BP_Changes	Transversions	Codon_Percent	BP_Percent	Percent_Length	Match_Length	Target_Length	Strand
+fosA_PA1129	RHSI01000012.1	159291	159699	Mutant	D135N,	1	4	0	0.9926	0.9902	1	408	408	+
+blaPDC-1	RHSI01000022.1	13724	14918	Mutant	G27D,A97V,T105A,V205L,G391A,	5	9	2	0.9874	0.9925	1	1194	1194	-
+nalD	RHSI01000002.1	87938	88577	Native	No coding mutations	0	4	0	1	0.9937	1	639	639	+
+mexR	RHSI01000005.1	238804	239248	Mutant	V126E,	1	5	1	0.9932	0.9887	1	444	444	+
+blaGES-5	RHSI01000067.1	139	1003	Native	No coding mutations	0	1	0	1	0.9988	1	864	864	+

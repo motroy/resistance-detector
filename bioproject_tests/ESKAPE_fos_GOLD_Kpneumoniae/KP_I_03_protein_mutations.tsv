@@ -1,0 +1,10 @@
+Gene	Contig	Start	End	Identity	Coverage	Match_Type	Changes	Method
+ompK35	RHUB01000010.1	36989	38058	33.89	98.98	Indel Truncation	11bpdeletion@codon108;truncation at codon 108 (of 360 codons);238 coding mutations	GAMMA
+ompK36	RHUB01000003.1	127753	128878	47.01	101.90	Indel	6bpinsertion@codon137;3bpdeletion@codon182;3bpdeletion@codon225;21bpinsertion@codon266;185 coding mutations	GAMMA
+blaOXA-232	RHUB01000045.1	5085	5883	100.00	100.00	Native	No coding mutations	GAMMA
+ftsI	RHUB01000005.1	144322	146089	99.83	100.00	Mutant	V375A	GAMMA
+fosAKP	RHUB01000005.1	339269	339689	97.86	100.00	Mutant	A86V;I91V;Q130P	GAMMA
+envZ	RHUB01000006.1	288020	289376	99.56	100.00	Mutant	I15T;I258M	GAMMA
+blaCTX-M-15	RHUB01000076.1	211	1082	99.32	99.43	Contig Edge	0 SNPs in 6-876	GAMMA
+blaSHV-12	RHUB01000084.1	23	655	72.82	73.40	Contig Edge	2 SNPs in 1-632;Q31L	GAMMA
+acrB	RHUB01000008.1	160686	163833	100.00	100.00	Native	No coding mutations	GAMMA

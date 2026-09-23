@@ -78,11 +78,17 @@ INTRINSIC_GENES = ('fosAKP', 'fosA6', 'fosA_PA1129')
 # divergent chromosomal enzyme rather than an acquired one.
 INTRINSIC_FOSA_ORGANISMS = ('Klebsiella_pneumoniae', 'Pseudomonas_aeruginosa')
 
-# Species that are intrinsically resistant to fosfomycin, so that a "no acquired
-# mechanism found" result must not be reported as susceptible.  P. aeruginosa
-# carries the chromosomal FosA (PA1129) and has no fosfomycin breakpoints in the
-# EUCAST/CLSI tables; fosfomycin is not an agent for it.
-INTRINSIC_FOS_RESISTANT_ORGANISMS = ('Pseudomonas_aeruginosa',)
+# Species for which no clinical S/I/R breakpoint for fosfomycin exists (EUCAST
+# publishes only an epidemiological cut-off - ECOFF - for Pseudomonas spp.,
+# explicitly not a clinical breakpoint, because of insufficient outcome data;
+# CLSI does not cover this species/route at all - see
+# EUCAST "Use of fosfomycin i.v. breakpoints", May 2024).  Real susceptibility
+# results for these species/drug pairs in AST datasets are therefore built on
+# non-standard or extrapolated breakpoints, not a validated clinical one, so
+# genotype cannot be used to assert Susceptible *or* Resistant here - only
+# "no established basis for a categorical call" - unless a concrete mechanism
+# (an acquired enzyme, a loss-of-function mutation) is actually found.
+FOS_UNDEFINED_BREAKPOINT_ORGANISMS = ('Pseudomonas_aeruginosa',)
 
 # Species whose dominant ceftazidime-avibactam resistance mechanism this tool
 # does not assess.  In P. aeruginosa that is the chromosomal AmpC (PDC/blaPAO):

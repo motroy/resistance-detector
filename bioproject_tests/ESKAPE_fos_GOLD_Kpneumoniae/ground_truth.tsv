@@ -1,0 +1,22 @@
+sample	organism	true_phenotype	assembly_accession	strain	measurement	measurement_unit	laboratory_typing_method	testing_standard	source	pmid	genome_status	geo_loc_name	strict_eskape
+KP_S_01	Klebsiella pneumoniae	Susceptible	GCA_902705165.1	Klebsiella pneumoniae strain Kpngiani7132549			Broth dilution	EUCAST	GOLD	33188415.0	WGS		True
+KP_S_02	Klebsiella pneumoniae	Susceptible	GCA_902704715.1	Klebsiella pneumoniae strain Kpngiani7132619			Broth dilution	EUCAST	GOLD	33188415.0	WGS		True
+KP_S_03	Klebsiella pneumoniae	Susceptible	GCA_902705115.1	Klebsiella pneumoniae strain Kpngiani7132547			Broth dilution	EUCAST	GOLD	33188415.0	WGS		True
+KP_S_04	Klebsiella pneumoniae	Susceptible	GCF_001613595.1	Klebsiella pneumoniae strain KP_136			Disk diffusion	CLSI	GOLD	31594927.0	WGS		True
+KP_S_05	Klebsiella pneumoniae	Susceptible	GCA_001511375.1	Klebsiella pneumoniae strain 143500540			Broth dilution	EUCAST	GOLD	26817488.0	WGS		True
+KP_S_06	Klebsiella pneumoniae	Susceptible	GCA_003936505.1	Klebsiella pneumoniae strain KP_089			Disk diffusion	CLSI	GOLD	31594927.0	WGS		True
+KP_S_07	Klebsiella pneumoniae	Susceptible	GCA_902704765.1	Klebsiella pneumoniae strain Kpngiani7132492			Broth dilution	EUCAST	GOLD	33188415.0	WGS		True
+KP_S_08	Klebsiella pneumoniae	Susceptible	GCA_902704505.1	Klebsiella pneumoniae strain Kpngiani7132637			Broth dilution	EUCAST	GOLD	33188415.0	WGS		True
+KP_S_09	Klebsiella pneumoniae	Susceptible	GCA_001511275.1	Klebsiella pneumoniae strain 143500528			Broth dilution	EUCAST	GOLD	26817488.0	WGS		True
+KP_S_10	Klebsiella pneumoniae	Susceptible	GCA_003936365.1	Klebsiella pneumoniae strain KP_317			Disk diffusion	CLSI	GOLD	31594927.0	WGS		True
+KP_R_01	Klebsiella pneumoniae	Resistant	GCA_003664915.1	Klebsiella pneumoniae strain SU7				EUCAST	GOLD	30809212.0	WGS		True
+KP_R_02	Klebsiella pneumoniae	Resistant	GCA_902704735.1	Klebsiella pneumoniae strain Kpngiani7132519			Broth dilution	EUCAST	GOLD	33188415.0	WGS		True
+KP_R_03	Klebsiella pneumoniae	Resistant	GCA_902704395.1	Klebsiella pneumoniae strain Kpngiani7132631			Broth dilution	EUCAST	GOLD	33188415.0	WGS		True
+KP_R_04	Klebsiella pneumoniae	Resistant	GCA_001511475.1	Klebsiella pneumoniae strain 143500555			Broth dilution	EUCAST	GOLD	26817488.0	WGS		True
+KP_R_05	Klebsiella pneumoniae	Resistant	GCA_902704145.1	Klebsiella pneumoniae strain Kpngiani7132596			Broth dilution	EUCAST	GOLD	33188415.0	WGS		True
+KP_R_06	Klebsiella pneumoniae	Resistant	GCF_001702045.1	Klebsiella pneumoniae strain 2_GR_12			Broth dilution	CLSI	GOLD	29431605.0	WGS		True
+KP_R_07	Klebsiella pneumoniae	Resistant	GCA_001511055.1	Klebsiella pneumoniae strain 143500500			Broth dilution	EUCAST	GOLD	26817488.0	WGS		True
+KP_R_08	Klebsiella pneumoniae	Resistant	GCA_001511215.1	Klebsiella pneumoniae strain 143500554			Broth dilution	EUCAST	GOLD	26817488.0	WGS		True
+KP_I_01	Klebsiella pneumoniae	Intermediate	GCA_003937135.1	Klebsiella pneumoniae strain KP_160			Disk diffusion	CLSI	GOLD	31594927.0	WGS		True
+KP_I_02	Klebsiella pneumoniae	Intermediate	GCA_003937205.1	Klebsiella pneumoniae strain KP_093			Disk diffusion	CLSI	GOLD	31594927.0	WGS		True
+KP_I_03	Klebsiella pneumoniae	Intermediate	GCA_003936475.1	Klebsiella pneumoniae strain KP_109			Disk diffusion	CLSI	GOLD	31594927.0	WGS		True

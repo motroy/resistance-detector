@@ -1,0 +1,10 @@
+Gene	Contig	Start	Stop	Match_Type	Description	Codon_Changes	BP_Changes	Transversions	Codon_Percent	BP_Percent	Percent_Length	Match_Length	Target_Length	Strand
+ompK35	RHUB01000010.1	36989	38058	Indel Truncation	11 bp Deletion at 324,truncation at codon 108 (of 360 codons),238 coding mutations	238	26	6	0.3389	0.9759	0.9898	1069	1080	-
+ompK36	RHUB01000003.1	127753	128878	Indel	6 bp Insertion at 409,3 bp Deletion at 546,3 bp Deletion at 673,21 bp Insertion at 798,185 coding mutations	195	110	37	0.4701	0.9004	1.019	1125	1104	+
+blaOXA-232	RHUB01000045.1	5085	5883	Native	No coding mutations	0	0	0	1	1	1	798	798	-
+ftsI	RHUB01000005.1	144322	146089	Mutant	V375A,	1	11	2	0.9983	0.9938	1	1767	1767	-
+fosAKP	RHUB01000005.1	339269	339689	Mutant	A86V,I91V,Q130P,	3	20	3	0.9786	0.9524	1	420	420	-
+envZ	RHUB01000006.1	288020	289376	Mutant	I15T,I258M,	2	6	2	0.9956	0.9956	1	1356	1356	+
+blaCTX-M-15	RHUB01000076.1	211	1082	Contig Edge	0 SNPs in 6-876,	2	5	0	0.9932	0.9943	0.9943	871	876	-
+blaSHV-12	RHUB01000084.1	23	655	Contig Edge	2 SNPs in 1-632,Q31L,	78	231	1	0.7282	0.7317	0.7340	632	861	+
+acrB	RHUB01000008.1	160686	163833	Native	No coding mutations	0	5	2	1	0.9984	1	3147	3147	-

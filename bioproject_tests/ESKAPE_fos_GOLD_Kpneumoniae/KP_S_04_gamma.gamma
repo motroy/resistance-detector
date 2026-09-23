@@ -1,0 +1,8 @@
+Gene	Contig	Start	Stop	Match_Type	Description	Codon_Changes	BP_Changes	Transversions	Codon_Percent	BP_Percent	Percent_Length	Match_Length	Target_Length	Strand
+ftsI	NZ_LUVR01000004.1	145777	147544	Mutant	V375A,	1	11	1	0.9983	0.9938	1	1767	1767	-
+fosAKP	NZ_LUVR01000004.1	353035	353455	Mutant	I91V,Q130P,D138E,	3	5	3	0.9786	0.9881	1	420	420	-
+ompK35	NZ_LUVR01000005.1	193627	194706	Indel Truncation	1 bp Deletion at 86,truncation at codon 63 (of 360 codons),322 coding mutations	322	7	0	0.1056	0.9935	0.9991	1079	1080	+
+ompK36	NZ_LUVR01000006.1	49925	51050	Indel	6 bp Insertion at 406,3 bp Deletion at 546,3 bp Deletion at 673,21 bp Insertion at 798,185 coding mutations	195	109	36	0.4701	0.9013	1.019	1125	1104	-
+envZ	NZ_KV391936.1	88477	89833	Mutant	I258M,	1	1	1	0.9978	0.9993	1	1356	1356	-
+acrB	NZ_LUVR01000012.1	1729	4876	Mutant	R716L,	1	5	2	0.9990	0.9984	1	3147	3147	+
+blaKPC-2	NZ_LUVR01000044.1	7694	8576	Native	No coding mutations	0	0	0	1	1	1	882	882	-

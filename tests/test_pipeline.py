@@ -380,19 +380,41 @@ class TestIntrinsicVersusAcquiredFosA:
 
 
 class TestPseudomonasAeruginosa:
-    """P. aeruginosa needs species-level handling: it is intrinsically
-    fosfomycin-resistant, and its dominant CAZ/AVI mechanism (PDC/AmpC) is not
-    assessed by this tool."""
+    """P. aeruginosa needs species-level handling: fosfomycin has no validated
+    clinical breakpoint for this species (EUCAST publishes only an ECOFF,
+    explicitly not a clinical breakpoint), and its dominant CAZ/AVI mechanism
+    (PDC/AmpC) is not assessed by this tool. A gold-standard validation set of
+    24 real MIC-tested P. aeruginosa isolates (19 lab-Susceptible, 4
+    Intermediate, 1 Resistant) confirmed the earlier "always Resistant" rule
+    was wrong: it contradicted the lab phenotype on every susceptible isolate."""
 
-    def test_fosfomycin_is_intrinsically_resistant(
+    def test_fosfomycin_with_no_mechanism_found_is_indeterminate(
             self, tmp_path, database, reference_cds):
+        # Wild-type: only the intrinsic chromosomal fosA is present, no
+        # acquired enzyme and no transport-gene LOF. With no validated
+        # breakpoint for this species, that is Indeterminate, not Resistant -
+        # asserting Resistant here contradicted 19/24 real lab-tested isolates.
         _, results = run(tmp_path, database,
                          {'contig1': embed(reference_cds['fosA_PA1129'])},
                          organism='Pseudomonas_aeruginosa')
         prediction = predict_phenotypes(
             results, organism='Pseudomonas_aeruginosa')['fosfomycin']
+        assert prediction['phenotype'] == 'Indeterminate'
+        assert any('breakpoint' in item for item in prediction['evidence'])
+
+    def test_fosfomycin_with_an_acquired_enzyme_is_still_resistant(
+            self, tmp_path, database, reference_cds):
+        # A genuine mechanism (an acquired enzyme beyond the intrinsic copy)
+        # is real evidence regardless of the breakpoint question, and must
+        # still produce a Resistant call.
+        _, results = run(tmp_path, database, {
+            'contig1': embed(reference_cds['fosA_PA1129']),
+            'contig2': embed(reference_cds['fosA3']),
+        }, organism='Pseudomonas_aeruginosa')
+        prediction = predict_phenotypes(
+            results, organism='Pseudomonas_aeruginosa')['fosfomycin']
         assert prediction['phenotype'] == 'Resistant'
-        assert any('intrinsically resistant' in item for item in prediction['evidence'])
+        assert any('fosA3' in item for item in prediction['evidence'])
 
     def test_cazavi_without_a_mechanism_is_indeterminate_not_susceptible(
             self, tmp_path, database, reference_cds):

@@ -1,0 +1,37 @@
+Sample	Type	Gene	Allele	Method	Result_Details	Identity_Confidence	Contig	Start	End	Copy_Number	Notes
+KP_I_01.fna	Chromosomal gene	acrB	acrB	BLAST	Coverage: 100.00%	99.87%	RHTT01000001.1	176392	179538	1	no protein changes vs reference
+KP_I_01.fna	Chromosomal gene	ftsI	ftsI	BLAST	Coverage: 100.00%	99.66%	RHTT01000003.1	203815	205581	1	protein changes: V192G;V375A
+KP_I_01.fna	Chromosomal gene	envZ	envZ	BLAST	Coverage: 100.00%	99.48%	RHTT01000006.1	193834	195189	1	protein changes: I15T;I258M
+KP_I_01.fna	Chromosomal gene	ompK35	ompK35	BLAST	Coverage: 100.00%	99.44%	RHTT01000002.1	231947	233026	1	protein changes: L73_F359del; premature stop at residue 73 (72/359 aa)
+KP_I_01.fna	Chromosomal gene	ompK36	ompK36	BLAST	Coverage: 100.00%	94.81%	RHTT01000005.1	127772	128875	1	protein changes: insGD@133;L184_P186del;T192G;A193W;L194S;Y201F;Y210W;N221H;L225T;G226D;D227E;K231V;L232P;T258S;insR@308;H349R
+KP_I_01.fna	Acquired gene	blaCTX-M-15	blaCTX-M-15	BLAST	Coverage: 100.00%	100.00%	RHTT01000081.1	695	1570	1	no protein changes vs reference
+KP_I_01.fna	Acquired gene	blaSHV-12	blaSHV-like	BLAST	Coverage: 100.00%	98.95%	RHTT01000019.1	79167	80027	1	protein changes: Y3F;Q31L;S235G;K236E
+KP_I_01.fna	Acquired gene	blaNDM-1	blaNDM-1	BLAST	Coverage: 100.00%	100.00%	RHTT01000055.1	1587	2399	1	no protein changes vs reference
+KP_I_01.fna	Acquired gene	blaOXA-232	blaOXA-232	BLAST	Coverage: 100.00%	100.00%	RHTT01000062.1	3217	4014	1	no protein changes vs reference
+KP_I_01.fna	Chromosomal gene	fosAKP	fosAKP	BLAST	Coverage: 100.00%	99.52%	RHTT01000003.1	15474	15893	1	protein changes: Q130P
+KP_I_01.fna	Protein change	blaSHV-12	-	blast+gamma	K236E	100%	RHTT01000019.1	-	-	-	reported as resistance mutation
+KP_I_01.fna	Protein change	blaSHV-12	-	blast+gamma	Q31L	100%	RHTT01000019.1	-	-	-	reported as resistance mutation
+KP_I_01.fna	Protein change	blaSHV-12	-	blast+gamma	S235G	100%	RHTT01000019.1	-	-	-	reported as resistance mutation
+KP_I_01.fna	Protein change	blaSHV-12	-	blast+gamma	Y3F	100%	RHTT01000019.1	-	-	-	reported as resistance mutation
+KP_I_01.fna	Protein change	envZ	-	blast+gamma	I15T	100%	RHTT01000006.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_I_01.fna	Protein change	envZ	-	blast+gamma	I258M	100%	RHTT01000006.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_I_01.fna	Protein change	fosAKP	-	blast+gamma	Q130P	100%	RHTT01000003.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_I_01.fna	Protein change	ftsI	-	blast+gamma	V192G	100%	RHTT01000003.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_I_01.fna	Protein change	ftsI	-	blast+gamma	V375A	100%	RHTT01000003.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_I_01.fna	Protein change	ompK35	-	blast	L73_F359del	50%	RHTT01000002.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_I_01.fna	Protein change	ompK36	-	blast	A193W	50%	RHTT01000005.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_I_01.fna	Protein change	ompK36	-	blast	D227E	50%	RHTT01000005.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_I_01.fna	Protein change	ompK36	-	blast	G226D	50%	RHTT01000005.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_I_01.fna	Protein change	ompK36	-	blast	H349R	50%	RHTT01000005.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_I_01.fna	Protein change	ompK36	-	blast	K231V	50%	RHTT01000005.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_I_01.fna	Protein change	ompK36	-	blast	L184_P186del	50%	RHTT01000005.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_I_01.fna	Protein change	ompK36	-	blast	L194S	50%	RHTT01000005.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_I_01.fna	Protein change	ompK36	-	blast	L225T	50%	RHTT01000005.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_I_01.fna	Protein change	ompK36	-	blast	L232P	50%	RHTT01000005.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_I_01.fna	Protein change	ompK36	-	blast	N221H	50%	RHTT01000005.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_I_01.fna	Protein change	ompK36	-	blast	T192G	50%	RHTT01000005.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_I_01.fna	Protein change	ompK36	-	blast	T258S	50%	RHTT01000005.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_I_01.fna	Protein change	ompK36	-	blast	Y201F	50%	RHTT01000005.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_I_01.fna	Protein change	ompK36	-	blast	Y210W	50%	RHTT01000005.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_I_01.fna	Protein change	ompK36	-	blast	insGD@133	50%	RHTT01000005.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_I_01.fna	Protein change	ompK36	-	blast	insR@308	50%	RHTT01000005.1	-	-	-	sequence difference, not a curated resistance mutation

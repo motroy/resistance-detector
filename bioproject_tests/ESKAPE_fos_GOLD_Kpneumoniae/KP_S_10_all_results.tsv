@@ -1,0 +1,28 @@
+Sample	Type	Gene	Allele	Method	Result_Details	Identity_Confidence	Contig	Start	End	Copy_Number	Notes
+KP_S_10.fna	Chromosomal gene	acrB	acrB	BLAST	Coverage: 100.00%	99.84%	RHTJ01000006.1	87045	90191	1	no protein changes vs reference
+KP_S_10.fna	Chromosomal gene	ftsI	ftsI	BLAST	Coverage: 100.00%	99.49%	RHTJ01000010.1	68757	70523	1	protein changes: V375A
+KP_S_10.fna	Chromosomal gene	envZ	envZ	BLAST	Coverage: 100.00%	98.97%	RHTJ01000002.1	48608	49963	1	protein changes: I15T;I258M;A443T
+KP_S_10.fna	Chromosomal gene	ompK36	ompK36	BLAST	Coverage: 100.00%	98.92%	RHTJ01000001.1	180026	181135	1	protein changes: insDT@134;V178P;H349R
+KP_S_10.fna	Acquired gene	blaCTX-M-15	blaCTX-M-15	BLAST	Coverage: 100.00%	100.00%	RHTJ01000036.1	39129	40004	1	no protein changes vs reference
+KP_S_10.fna	Acquired gene	blaSHV-12	blaSHV-like	BLAST	Coverage: 100.00%	99.42%	RHTJ01000004.1	27937	28797	1	protein changes: S235G;K236E
+KP_S_10.fna	Acquired gene	blaNDM-5	blaNDM-5	BLAST	Coverage: 100.00%	100.00%	RHTJ01000051.1	5725	6537	1	no protein changes vs reference
+KP_S_10.fna	Acquired gene	blaOXA-181	blaOXA-181	BLAST	Coverage: 100.00%	100.00%	RHTJ01000006.1	242012	242809	1	no protein changes vs reference
+KP_S_10.fna	Chromosomal gene	fosAKP	fosAKP	BLAST	Coverage: 98.33%	97.34%	RHTJ01000013.1	14209	14621	1	protein changes: Q130P;insE@137;Q139E
+KP_S_10.fna	Protein change	blaSHV-12	-	blast+gamma	K236E	100%	RHTJ01000004.1	-	-	-	reported as resistance mutation
+KP_S_10.fna	Protein change	blaSHV-12	-	blast+gamma	S235G	100%	RHTJ01000004.1	-	-	-	reported as resistance mutation
+KP_S_10.fna	Protein change	envZ	-	blast+gamma	A443T	100%	RHTJ01000002.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_S_10.fna	Protein change	envZ	-	blast+gamma	I15T	100%	RHTJ01000002.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_S_10.fna	Protein change	envZ	-	blast+gamma	I258M	100%	RHTJ01000002.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_S_10.fna	Protein change	fosA10	-	gamma	*140E	50%	RHTJ01000013.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_S_10.fna	Protein change	fosA10	-	gamma	A138E	50%	RHTJ01000013.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_S_10.fna	Protein change	fosA10	-	gamma	E139D	50%	RHTJ01000013.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_S_10.fna	Protein change	fosAKP	-	blast	Q130P	50%	RHTJ01000013.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_S_10.fna	Protein change	fosAKP	-	blast	Q139E	50%	RHTJ01000013.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_S_10.fna	Protein change	fosAKP	-	blast	insE@137	50%	RHTJ01000013.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_S_10.fna	Protein change	ftsI	-	blast+gamma	V375A	100%	RHTJ01000010.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_S_10.fna	Protein change	ompK35	-	gamma	41 coding mutations	50%	RHTJ01000012.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_S_10.fna	Protein change	ompK35	-	gamma	99 SNPs in 1-957	50%	RHTJ01000012.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_S_10.fna	Protein change	ompK35	-	gamma	truncation at codon 286 (of 319 codons)	50%	RHTJ01000012.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_S_10.fna	Protein change	ompK36	-	blast+gamma	H349R	100%	RHTJ01000001.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_S_10.fna	Protein change	ompK36	-	blast+gamma	V178P	100%	RHTJ01000001.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_S_10.fna	Protein change	ompK36	-	blast	insDT@134	50%	RHTJ01000001.1	-	-	-	sequence difference, not a curated resistance mutation

@@ -1,0 +1,8 @@
+Sample	Type	Gene	Allele	Method	Result_Details	Identity_Confidence	Contig	Start	End	Copy_Number	Notes
+PA_I_03.fna	Acquired gene	blaPDC-1	blaPDC-like	BLAST	Coverage: 100.00%	99.75%	RHSY01000025.1	28418	29611	1	protein changes: L176R
+PA_I_03.fna	Chromosomal gene	nalD	nalD	BLAST	Coverage: 100.00%	99.84%	RHSY01000003.1	4158	4796	1	protein changes: S8C
+PA_I_03.fna	Chromosomal gene	mexR	mexR	BLAST	Coverage: 100.00%	98.87%	RHSY01000002.1	269265	269708	1	protein changes: V126E
+PA_I_03.fna	Chromosomal gene	fosA_PA1129	fosA_PA1129	BLAST	Coverage: 100.00%	99.02%	RHSY01000013.1	26460	26867	1	no protein changes vs reference
+PA_I_03.fna	Protein change	blaPDC-1	-	blast+gamma	L176R	100%	RHSY01000025.1	-	-	-	reported as resistance mutation
+PA_I_03.fna	Protein change	mexR	-	blast+gamma	V126E	100%	RHSY01000002.1	-	-	-	sequence difference, not a curated resistance mutation
+PA_I_03.fna	Protein change	nalD	-	blast+gamma	S8C	100%	RHSY01000003.1	-	-	-	sequence difference, not a curated resistance mutation

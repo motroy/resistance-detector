@@ -1,0 +1,9 @@
+Gene	Mutation	Confidence(%)	Methods	Contig	Reported_As_Resistance_Mutation
+blaGES-67	D34E	50	blast	RHSI01000067.1	yes
+blaPDC-1	A97V	100	blast+gamma	RHSI01000022.1	yes
+blaPDC-1	G27D	100	blast+gamma	RHSI01000022.1	yes
+blaPDC-1	G391A	100	blast+gamma	RHSI01000022.1	yes
+blaPDC-1	T105A	100	blast+gamma	RHSI01000022.1	yes
+blaPDC-1	V205L	100	blast+gamma	RHSI01000022.1	yes
+fosA_PA1129	D135N	100	blast+gamma	RHSI01000012.1	no
+mexR	V126E	100	blast+gamma	RHSI01000005.1	no
