@@ -1,0 +1,20 @@
+Gene	Mutation	Confidence(%)	Methods	Contig	Reported_As_Resistance_Mutation
+blaSHV-12	K236E	100	blast+gamma	RHTF01000005.1	yes
+blaSHV-12	S182R	100	blast+gamma	RHTF01000005.1	yes
+blaSHV-12	S235G	100	blast+gamma	RHTF01000005.1	yes
+envZ	A443T	100	blast+gamma	RHTF01000015.1	no
+envZ	I15T	100	blast+gamma	RHTF01000015.1	no
+envZ	I258M	100	blast+gamma	RHTF01000015.1	no
+fosA10	*140E	50	gamma	RHTF01000014.1	no
+fosA10	A138E	50	gamma	RHTF01000014.1	no
+fosA10	E139D	50	gamma	RHTF01000014.1	no
+fosAKP	Q130P	50	blast	RHTF01000014.1	no
+fosAKP	Q139E	50	blast	RHTF01000014.1	no
+fosAKP	insE@137	50	blast	RHTF01000014.1	no
+ftsI	V375A	100	blast+gamma	RHTF01000013.1	no
+ompK35	41 coding mutations	50	gamma	RHTF01000012.1	no
+ompK35	99 SNPs in 1-957	50	gamma	RHTF01000012.1	no
+ompK35	truncation at codon 286 (of 319 codons)	50	gamma	RHTF01000012.1	no
+ompK36	H349R	100	blast+gamma	RHTF01000002.1	no
+ompK36	V178P	100	blast+gamma	RHTF01000002.1	no
+ompK36	insDT@134	50	blast	RHTF01000002.1	no

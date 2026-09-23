@@ -1,0 +1,10 @@
+Contig	Gene	Allele	Identity%	Coverage%	Complete	Reported_Mutations	Other_Drug_Mutations	All_Protein_Changes	Loss_Of_Function	Method	Copy_Number
+RHUI01000005.1	acrB	acrB	99.84	100.00	yes	-	-	-	-	BLAST	1
+RHUI01000002.1	ftsI	ftsI	99.38	100.00	yes	-	-	V375A	-	BLAST	1
+RHUI01000004.1	envZ	envZ	99.56	100.00	yes	-	-	I15T;I258M	-	BLAST	1
+RHUI01000001.1	ompK35	ompK35	98.43	100.00	yes	-	-	Y108_F359del	premature stop at residue 108 (107/359 aa)	BLAST	1
+RHUI01000094.1	blaCTX-M-15	blaCTX-M-15	100.00	99.43	no (contig boundary)	-	-	-	premature stop at residue 1 (0/291 aa)	BLAST	1
+RHUI01000007.1	ompK36	ompK36	92.13	100.00	yes	-	-	insDT@134;A183T;L184del;T192G;Y201F;N221H;L225N;S230del;K231R;A233D;L234K;insF@268;A269S;S271N;insGESDSI@271;L272S;L307I;I315L;D344E;S346D;H349R;N350R	-	BLAST	1
+RHUI01000001.1	blaSHV-12	blaSHV-like	99.07	100.00	yes	Q31L,S235G,K236E	-	Q31L;S235G;K236E	-	BLAST	1
+RHUI01000063.1	blaOXA-232	blaOXA-232	100.00	100.00	yes	-	-	-	-	BLAST	1
+RHUI01000002.1	fosAKP	fosAKP	95.24	100.00	yes	-	-	A86V;I91V;Q130P	-	BLAST	1

@@ -1,0 +1,42 @@
+Sample	Type	Gene	Allele	Method	Result_Details	Identity_Confidence	Contig	Start	End	Copy_Number	Notes
+KP2_R_09.fna	Chromosomal gene	acrB	acrB	BLAST	Coverage: 100.00%	99.87%	NZ_LXMY01000008.1	84444	87590	1	no protein changes vs reference
+KP2_R_09.fna	Chromosomal gene	ftsI	ftsI	BLAST	Coverage: 100.00%	99.38%	NZ_LXMY01000021.1	30326	32092	1	protein changes: V375A
+KP2_R_09.fna	Chromosomal gene	envZ	envZ	BLAST	Coverage: 100.00%	99.56%	NZ_LXMY01000006.1	246228	247583	1	protein changes: I15T;I258M
+KP2_R_09.fna	Acquired gene	blaCMY-2	blaCMY-like	BLAST	Coverage: 100.00%	99.91%	NZ_LXMY01000063.1	161	1306	1	protein changes: W221R
+KP2_R_09.fna	Chromosomal gene	ompK35	ompK35	BLAST	Coverage: 100.00%	99.44%	NZ_LXMY01000010.1	169962	171041	1	no protein changes vs reference
+KP2_R_09.fna	Acquired gene	blaCTX-M-15	blaCTX-M-15	BLAST	Coverage: 100.00%	100.00%	NZ_LXMY01000060.1	2822	3697	1	no protein changes vs reference
+KP2_R_09.fna	Chromosomal gene	ompK36	ompK36	BLAST	Coverage: 100.00%	92.80%	NZ_LXMY01000002.1	196934	198052	1	protein changes: A183T;L184del;T192G;Y201F;N221H;L225N;S230del;K231R;A233D;L234K;insF@268;A269S;S271N;insGESDSI@271;L272S;L307I;I315L;D344E;S346D;H349R;N350R
+KP2_R_09.fna	Acquired gene	blaSHV-12	blaSHV-like	BLAST	Coverage: 100.00%	99.53%	NZ_LXMY01000003.1	216936	217796	1	protein changes: Q31L;S235G;K236E
+KP2_R_09.fna	Acquired gene	blaVIM-19	blaVIM-19	BLAST	Coverage: 100.00%	100.00%	NZ_LXMY01000074.1	801	1601	1	no protein changes vs reference
+KP2_R_09.fna	Chromosomal gene	fosAKP	fosAKP	BLAST	Coverage: 100.00%	97.86%	NZ_LXMY01000012.1	152384	152803	1	protein changes: Q130P;Q139E
+KP2_R_09.fna	Protein change	blaCMY-2	-	blast+gamma	W221R	100%	NZ_LXMY01000063.1	-	-	-	reported as resistance mutation
+KP2_R_09.fna	Protein change	blaSHV-12	-	blast+gamma	K236E	100%	NZ_LXMY01000003.1	-	-	-	reported as resistance mutation
+KP2_R_09.fna	Protein change	blaSHV-12	-	blast+gamma	Q31L	100%	NZ_LXMY01000003.1	-	-	-	reported as resistance mutation
+KP2_R_09.fna	Protein change	blaSHV-12	-	blast+gamma	S235G	100%	NZ_LXMY01000003.1	-	-	-	reported as resistance mutation
+KP2_R_09.fna	Protein change	envZ	-	blast+gamma	I15T	100%	NZ_LXMY01000006.1	-	-	-	sequence difference, not a curated resistance mutation
+KP2_R_09.fna	Protein change	envZ	-	blast+gamma	I258M	100%	NZ_LXMY01000006.1	-	-	-	sequence difference, not a curated resistance mutation
+KP2_R_09.fna	Protein change	fosA10	-	gamma	A138D	50%	NZ_LXMY01000012.1	-	-	-	sequence difference, not a curated resistance mutation
+KP2_R_09.fna	Protein change	fosAKP	-	blast	Q130P	50%	NZ_LXMY01000012.1	-	-	-	sequence difference, not a curated resistance mutation
+KP2_R_09.fna	Protein change	fosAKP	-	blast	Q139E	50%	NZ_LXMY01000012.1	-	-	-	sequence difference, not a curated resistance mutation
+KP2_R_09.fna	Protein change	ftsI	-	blast+gamma	V375A	100%	NZ_LXMY01000021.1	-	-	-	sequence difference, not a curated resistance mutation
+KP2_R_09.fna	Protein change	ompK36	-	blast	A183T	50%	NZ_LXMY01000002.1	-	-	-	sequence difference, not a curated resistance mutation
+KP2_R_09.fna	Protein change	ompK36	-	blast	A233D	50%	NZ_LXMY01000002.1	-	-	-	sequence difference, not a curated resistance mutation
+KP2_R_09.fna	Protein change	ompK36	-	blast	A269S	50%	NZ_LXMY01000002.1	-	-	-	sequence difference, not a curated resistance mutation
+KP2_R_09.fna	Protein change	ompK36	-	blast	D344E	50%	NZ_LXMY01000002.1	-	-	-	sequence difference, not a curated resistance mutation
+KP2_R_09.fna	Protein change	ompK36	-	blast	H349R	50%	NZ_LXMY01000002.1	-	-	-	sequence difference, not a curated resistance mutation
+KP2_R_09.fna	Protein change	ompK36	-	blast	I315L	50%	NZ_LXMY01000002.1	-	-	-	sequence difference, not a curated resistance mutation
+KP2_R_09.fna	Protein change	ompK36	-	blast	K231R	50%	NZ_LXMY01000002.1	-	-	-	sequence difference, not a curated resistance mutation
+KP2_R_09.fna	Protein change	ompK36	-	blast	L184del	50%	NZ_LXMY01000002.1	-	-	-	sequence difference, not a curated resistance mutation
+KP2_R_09.fna	Protein change	ompK36	-	blast	L225N	50%	NZ_LXMY01000002.1	-	-	-	sequence difference, not a curated resistance mutation
+KP2_R_09.fna	Protein change	ompK36	-	blast	L234K	50%	NZ_LXMY01000002.1	-	-	-	sequence difference, not a curated resistance mutation
+KP2_R_09.fna	Protein change	ompK36	-	blast	L272S	50%	NZ_LXMY01000002.1	-	-	-	sequence difference, not a curated resistance mutation
+KP2_R_09.fna	Protein change	ompK36	-	blast	L307I	50%	NZ_LXMY01000002.1	-	-	-	sequence difference, not a curated resistance mutation
+KP2_R_09.fna	Protein change	ompK36	-	blast	N221H	50%	NZ_LXMY01000002.1	-	-	-	sequence difference, not a curated resistance mutation
+KP2_R_09.fna	Protein change	ompK36	-	blast	N350R	50%	NZ_LXMY01000002.1	-	-	-	sequence difference, not a curated resistance mutation
+KP2_R_09.fna	Protein change	ompK36	-	blast	S230del	50%	NZ_LXMY01000002.1	-	-	-	sequence difference, not a curated resistance mutation
+KP2_R_09.fna	Protein change	ompK36	-	blast	S271N	50%	NZ_LXMY01000002.1	-	-	-	sequence difference, not a curated resistance mutation
+KP2_R_09.fna	Protein change	ompK36	-	blast	S346D	50%	NZ_LXMY01000002.1	-	-	-	sequence difference, not a curated resistance mutation
+KP2_R_09.fna	Protein change	ompK36	-	blast	T192G	50%	NZ_LXMY01000002.1	-	-	-	sequence difference, not a curated resistance mutation
+KP2_R_09.fna	Protein change	ompK36	-	blast	Y201F	50%	NZ_LXMY01000002.1	-	-	-	sequence difference, not a curated resistance mutation
+KP2_R_09.fna	Protein change	ompK36	-	blast	insF@268	50%	NZ_LXMY01000002.1	-	-	-	sequence difference, not a curated resistance mutation
+KP2_R_09.fna	Protein change	ompK36	-	blast	insGESDSI@271	50%	NZ_LXMY01000002.1	-	-	-	sequence difference, not a curated resistance mutation

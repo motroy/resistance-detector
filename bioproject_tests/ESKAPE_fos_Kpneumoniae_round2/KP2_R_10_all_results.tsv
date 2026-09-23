@@ -1,0 +1,58 @@
+Sample	Type	Gene	Allele	Method	Result_Details	Identity_Confidence	Contig	Start	End	Copy_Number	Notes
+KP2_R_10.fna	Chromosomal gene	acrB	acrB	BLAST	Coverage: 100.00%	99.81%	CACSEH010000001.1	452211	455357	1	no protein changes vs reference
+KP2_R_10.fna	Chromosomal gene	ftsI	ftsI	BLAST	Coverage: 100.00%	99.49%	CACSEH010000008.1	203673	205439	1	protein changes: V375A
+KP2_R_10.fna	Chromosomal gene	envZ	envZ	BLAST	Coverage: 100.00%	99.56%	CACSEH010000007.1	48755	50110	1	protein changes: I15T;I258M
+KP2_R_10.fna	Chromosomal gene	ompK35	ompK35	BLAST	Coverage: 100.00%	99.35%	CACSEH010000002.1	420857	421935	1	protein changes: G62A;L63_F359del; premature stop at residue 63 (62/359 aa)
+KP2_R_10.fna	Chromosomal gene	ompK36	ompK36	BLAST	Coverage: 100.00%	95.32%	CACSEH010000003.1	340119	341216	1	protein changes: L184_P186del;T192G;A193W;L194S;Y201F;Y210W;N221H;L225T;G226D;D227E;K231V;L232P;T258S;insR@308;H349R
+KP2_R_10.fna	Acquired gene	blaVIM-1	blaVIM-1	BLAST	Coverage: 100.00%	100.00%	CACSEH010000028.1	3684	4484	1	no protein changes vs reference
+KP2_R_10.fna	Acquired gene	blaSHV-12	blaSHV-like	BLAST	Coverage: 89.31%	99.09%	CACSEH010000054.1	1	769	1	protein changes: M1K;Y3_R57del;A59_T178del;T179K;S182_V213del;A214V;L217R;I218R;R219H;S220_A229del;K231R;T232N;A234S;S235G;K236Q;G238_G247del;N249H;N250_K251del;E254D;I256L;V257A;V258_W286del;Q287R; premature stop at residue 29 (28/286 aa); gene incomplete (contig boundary)
+KP2_R_10.fna	Chromosomal gene	fosAKP	fosAKP	BLAST	Coverage: 100.00%	95.71%	CACSEH010000008.1	13283	13702	1	protein changes: A86V;I91V;Q130P;Q139E
+KP2_R_10.fna	Protein change	blaSHV-12	-	blast	A214V	50%	CACSEH010000054.1	-	-	-	reported as resistance mutation
+KP2_R_10.fna	Protein change	blaSHV-12	-	blast	A234S	50%	CACSEH010000054.1	-	-	-	reported as resistance mutation
+KP2_R_10.fna	Protein change	blaSHV-12	-	blast	A59_T178del	50%	CACSEH010000054.1	-	-	-	reported as resistance mutation
+KP2_R_10.fna	Protein change	blaSHV-12	-	blast	E254D	50%	CACSEH010000054.1	-	-	-	reported as resistance mutation
+KP2_R_10.fna	Protein change	blaSHV-12	-	blast	G238_G247del	50%	CACSEH010000054.1	-	-	-	reported as resistance mutation
+KP2_R_10.fna	Protein change	blaSHV-12	-	blast	I218R	50%	CACSEH010000054.1	-	-	-	reported as resistance mutation
+KP2_R_10.fna	Protein change	blaSHV-12	-	blast	I256L	50%	CACSEH010000054.1	-	-	-	reported as resistance mutation
+KP2_R_10.fna	Protein change	blaSHV-12	-	blast	K231R	50%	CACSEH010000054.1	-	-	-	reported as resistance mutation
+KP2_R_10.fna	Protein change	blaSHV-12	-	blast	K236Q	50%	CACSEH010000054.1	-	-	-	reported as resistance mutation
+KP2_R_10.fna	Protein change	blaSHV-12	-	blast	L217R	50%	CACSEH010000054.1	-	-	-	reported as resistance mutation
+KP2_R_10.fna	Protein change	blaSHV-12	-	blast	M1K	50%	CACSEH010000054.1	-	-	-	reported as resistance mutation
+KP2_R_10.fna	Protein change	blaSHV-12	-	blast	N249H	50%	CACSEH010000054.1	-	-	-	reported as resistance mutation
+KP2_R_10.fna	Protein change	blaSHV-12	-	blast	N250_K251del	50%	CACSEH010000054.1	-	-	-	reported as resistance mutation
+KP2_R_10.fna	Protein change	blaSHV-12	-	blast	Q287R	50%	CACSEH010000054.1	-	-	-	reported as resistance mutation
+KP2_R_10.fna	Protein change	blaSHV-12	-	blast	R219H	50%	CACSEH010000054.1	-	-	-	reported as resistance mutation
+KP2_R_10.fna	Protein change	blaSHV-12	-	blast	S182_V213del	50%	CACSEH010000054.1	-	-	-	reported as resistance mutation
+KP2_R_10.fna	Protein change	blaSHV-12	-	blast	S220_A229del	50%	CACSEH010000054.1	-	-	-	reported as resistance mutation
+KP2_R_10.fna	Protein change	blaSHV-12	-	blast+gamma	S235G	100%	CACSEH010000054.1	-	-	-	reported as resistance mutation
+KP2_R_10.fna	Protein change	blaSHV-12	-	blast	T179K	50%	CACSEH010000054.1	-	-	-	reported as resistance mutation
+KP2_R_10.fna	Protein change	blaSHV-12	-	blast	T232N	50%	CACSEH010000054.1	-	-	-	reported as resistance mutation
+KP2_R_10.fna	Protein change	blaSHV-12	-	blast	V257A	50%	CACSEH010000054.1	-	-	-	reported as resistance mutation
+KP2_R_10.fna	Protein change	blaSHV-12	-	blast	V258_W286del	50%	CACSEH010000054.1	-	-	-	reported as resistance mutation
+KP2_R_10.fna	Protein change	blaSHV-12	-	blast	Y3_R57del	50%	CACSEH010000054.1	-	-	-	reported as resistance mutation
+KP2_R_10.fna	Protein change	envZ	-	blast+gamma	I15T	100%	CACSEH010000007.1	-	-	-	sequence difference, not a curated resistance mutation
+KP2_R_10.fna	Protein change	envZ	-	blast+gamma	I258M	100%	CACSEH010000007.1	-	-	-	sequence difference, not a curated resistance mutation
+KP2_R_10.fna	Protein change	fosA9	-	gamma	A138D	50%	CACSEH010000008.1	-	-	-	sequence difference, not a curated resistance mutation
+KP2_R_10.fna	Protein change	fosA9	-	gamma	I57V	50%	CACSEH010000008.1	-	-	-	sequence difference, not a curated resistance mutation
+KP2_R_10.fna	Protein change	fosAKP	-	blast	A86V	50%	CACSEH010000008.1	-	-	-	sequence difference, not a curated resistance mutation
+KP2_R_10.fna	Protein change	fosAKP	-	blast	I91V	50%	CACSEH010000008.1	-	-	-	sequence difference, not a curated resistance mutation
+KP2_R_10.fna	Protein change	fosAKP	-	blast	Q130P	50%	CACSEH010000008.1	-	-	-	sequence difference, not a curated resistance mutation
+KP2_R_10.fna	Protein change	fosAKP	-	blast	Q139E	50%	CACSEH010000008.1	-	-	-	sequence difference, not a curated resistance mutation
+KP2_R_10.fna	Protein change	ftsI	-	blast+gamma	V375A	100%	CACSEH010000008.1	-	-	-	sequence difference, not a curated resistance mutation
+KP2_R_10.fna	Protein change	ompK35	-	blast	G62A	50%	CACSEH010000002.1	-	-	-	sequence difference, not a curated resistance mutation
+KP2_R_10.fna	Protein change	ompK35	-	blast	L63_F359del	50%	CACSEH010000002.1	-	-	-	sequence difference, not a curated resistance mutation
+KP2_R_10.fna	Protein change	ompK36	-	blast	A193W	50%	CACSEH010000003.1	-	-	-	sequence difference, not a curated resistance mutation
+KP2_R_10.fna	Protein change	ompK36	-	blast	D227E	50%	CACSEH010000003.1	-	-	-	sequence difference, not a curated resistance mutation
+KP2_R_10.fna	Protein change	ompK36	-	blast	G226D	50%	CACSEH010000003.1	-	-	-	sequence difference, not a curated resistance mutation
+KP2_R_10.fna	Protein change	ompK36	-	blast	H349R	50%	CACSEH010000003.1	-	-	-	sequence difference, not a curated resistance mutation
+KP2_R_10.fna	Protein change	ompK36	-	blast	K231V	50%	CACSEH010000003.1	-	-	-	sequence difference, not a curated resistance mutation
+KP2_R_10.fna	Protein change	ompK36	-	blast	L184_P186del	50%	CACSEH010000003.1	-	-	-	sequence difference, not a curated resistance mutation
+KP2_R_10.fna	Protein change	ompK36	-	blast	L194S	50%	CACSEH010000003.1	-	-	-	sequence difference, not a curated resistance mutation
+KP2_R_10.fna	Protein change	ompK36	-	blast	L225T	50%	CACSEH010000003.1	-	-	-	sequence difference, not a curated resistance mutation
+KP2_R_10.fna	Protein change	ompK36	-	blast	L232P	50%	CACSEH010000003.1	-	-	-	sequence difference, not a curated resistance mutation
+KP2_R_10.fna	Protein change	ompK36	-	blast	N221H	50%	CACSEH010000003.1	-	-	-	sequence difference, not a curated resistance mutation
+KP2_R_10.fna	Protein change	ompK36	-	blast	T192G	50%	CACSEH010000003.1	-	-	-	sequence difference, not a curated resistance mutation
+KP2_R_10.fna	Protein change	ompK36	-	blast	T258S	50%	CACSEH010000003.1	-	-	-	sequence difference, not a curated resistance mutation
+KP2_R_10.fna	Protein change	ompK36	-	blast	Y201F	50%	CACSEH010000003.1	-	-	-	sequence difference, not a curated resistance mutation
+KP2_R_10.fna	Protein change	ompK36	-	blast	Y210W	50%	CACSEH010000003.1	-	-	-	sequence difference, not a curated resistance mutation
+KP2_R_10.fna	Protein change	ompK36	-	blast	insR@308	50%	CACSEH010000003.1	-	-	-	sequence difference, not a curated resistance mutation

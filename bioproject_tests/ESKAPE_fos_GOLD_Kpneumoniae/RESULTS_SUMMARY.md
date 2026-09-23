@@ -101,6 +101,11 @@ than "partly unexplained," and given the reference-database gap above, this
 result cannot yet be read as "genuinely mechanism-negative." It should be
 re-run once *K. pneumoniae*-specific transport-gene references exist.
 
+**Update:** a second, independent 24-genome sample from the same source data
+(disjoint accessions, weighted toward resistant/intermediate isolates)
+replicated this exactly — 0/18, for a combined 0/29 across both rounds. See
+[`ESKAPE_fos_Kpneumoniae_round2/RESULTS_SUMMARY.md`](../ESKAPE_fos_Kpneumoniae_round2/RESULTS_SUMMARY.md).
+
 ## What this set changed
 
 * Fixed a real intrinsic/acquired fosA mis-naming bug (above), verified on 4

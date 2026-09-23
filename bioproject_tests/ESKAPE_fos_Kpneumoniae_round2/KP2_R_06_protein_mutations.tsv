@@ -1,0 +1,9 @@
+Gene	Contig	Start	End	Identity	Coverage	Match_Type	Changes	Method
+ftsI	FBSM01000005.1	48600	50367	99.83	100.00	Mutant	V375A	GAMMA
+fosAKP	FBSM01000005.1	255858	256278	97.86	100.00	Mutant	I91V;Q130P;D138E	GAMMA
+envZ	FBSM01000024.1	48583	49939	99.56	100.00	Mutant	I15T;I258M	GAMMA
+acrB	FBSM01000029.1	234195	237342	100.00	100.00	Native	No coding mutations	GAMMA
+ompK35	FBSM01000032.1	130113	131194	13.33	100.10	Indel Truncation	1bpinsertion@codon41;truncation at codon 89 (of 360 codons);312 coding mutations	GAMMA
+ompK36	FBSM01000045.1	108212	109316	100.00	100.00	Native	No coding mutations	GAMMA
+blaKPC-2	FBSM01000076.1	10737	11619	100.00	100.00	Native	No coding mutations	GAMMA
+blaSHV-12	FBSM01000087.1	23	884	100.00	100.00	Native	No coding mutations	GAMMA
