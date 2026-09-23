@@ -1,15 +1,29 @@
 Sample	Organism	Gene	Allele	Copy_Number	Contig	Start	End	Identity%	Coverage%	Complete	Reported_Mutations	Loss_Of_Function
-SRR28296939.fna	Klebsiella_pneumoniae	acrB	acrB	1	u1	171239	174385	99.84	100.00	yes	-	-
-SRR28296939.fna	Klebsiella_pneumoniae	acrB	acrB	1	u1	171239	174385	99.84	100.00	yes	-	-
-SRR28296939.fna	Klebsiella_pneumoniae	blaKPC-2	blaKPC-179	1	u87	6026	6910	99.55	100.00	yes	-	-
-SRR28296939.fna	Klebsiella_pneumoniae	blaKPC-2	blaKPC-179	1	u87	6026	6910	99.55	100.00	yes	-	-
-SRR28296939.fna	Klebsiella_pneumoniae	envZ	envZ	1	u110	48666	50021	99.93	100.00	yes	-	-
-SRR28296939.fna	Klebsiella_pneumoniae	envZ	envZ	1	u110	48666	50021	99.93	100.00	yes	-	-
-SRR28296939.fna	Klebsiella_pneumoniae	fosAKP	fosAKP	1	u58	14021	14440	98.81	100.00	yes	-	-
-SRR28296939.fna	Klebsiella_pneumoniae	fosAKP	fosAKP	1	u58	14021	14440	98.81	100.00	yes	-	-
-SRR28296939.fna	Klebsiella_pneumoniae	ftsI	ftsI	1	u77	186809	188575	99.32	100.00	yes	-	-
-SRR28296939.fna	Klebsiella_pneumoniae	ftsI	ftsI	1	u77	186809	188575	99.32	100.00	yes	-	-
-SRR28296939.fna	Klebsiella_pneumoniae	ompK35	ompK35	1	u44	64642	65720	99.35	100.00	yes	-	premature stop at residue 63 (62/359 aa)
-SRR28296939.fna	Klebsiella_pneumoniae	ompK35	ompK35	1	u44	64642	65720	99.35	100.00	yes	-	premature stop at residue 63 (62/359 aa)
-SRR28296939.fna	Klebsiella_pneumoniae	ompK36	ompK36	1	u55	216041	217165	92.22	100.00	yes	-	-
-SRR28296939.fna	Klebsiella_pneumoniae	ompK36	ompK36	1	u55	216041	217165	92.22	100.00	yes	-	-
+SRR28296939.fasta	Klebsiella_pneumoniae	acrB	acrB	1	u1	171239	174385	99.84	100.00	yes	-	-
+SRR28296939.fasta	Klebsiella_pneumoniae	acrB	acrB	1	u1	171239	174385	99.84	100.00	yes	-	-
+SRR28296939.fasta	Klebsiella_pneumoniae	blaKPC-2	blaKPC-179	1	u87	6026	6910	99.55	100.00	yes	-	-
+SRR28296939.fasta	Klebsiella_pneumoniae	blaKPC-2	blaKPC-179	1	u87	6026	6910	99.55	100.00	yes	-	-
+SRR28296939.fasta	Klebsiella_pneumoniae	envZ	envZ	1	u110	48666	50021	99.93	100.00	yes	-	-
+SRR28296939.fasta	Klebsiella_pneumoniae	envZ	envZ	1	u110	48666	50021	99.93	100.00	yes	-	-
+SRR28296939.fasta	Klebsiella_pneumoniae	fosAKP	fosAKP	1	u58	14021	14440	98.81	100.00	yes	-	-
+SRR28296939.fasta	Klebsiella_pneumoniae	fosAKP	fosAKP	1	u58	14021	14440	98.81	100.00	yes	-	-
+SRR28296939.fasta	Klebsiella_pneumoniae	ftsI	ftsI	1	u77	186809	188575	99.32	100.00	yes	-	-
+SRR28296939.fasta	Klebsiella_pneumoniae	ftsI	ftsI	1	u77	186809	188575	99.32	100.00	yes	-	-
+SRR28296939.fasta	Klebsiella_pneumoniae	ompK35	ompK35	1	u44	64642	65720	99.35	100.00	yes	-	premature stop at residue 63 (62/359 aa)
+SRR28296939.fasta	Klebsiella_pneumoniae	ompK35	ompK35	1	u44	64642	65720	99.35	100.00	yes	-	premature stop at residue 63 (62/359 aa)
+SRR28296939.fasta	Klebsiella_pneumoniae	ompK36	ompK36	1	u55	216041	217165	92.22	100.00	yes	-	-
+SRR28296939.fasta	Klebsiella_pneumoniae	ompK36	ompK36	1	u55	216041	217165	92.22	100.00	yes	-	-
+SRR28296940.fna	Klebsiella_pneumoniae	acrB	acrB	1	u12	171239	174385	99.84	100.00	yes	-	-
+SRR28296940.fna	Klebsiella_pneumoniae	acrB	acrB	1	u12	171239	174385	99.84	100.00	yes	-	-
+SRR28296940.fna	Klebsiella_pneumoniae	blaKPC-2	blaKPC-2	1	u93	6026	6907	100.00	100.00	yes	-	-
+SRR28296940.fna	Klebsiella_pneumoniae	blaKPC-2	blaKPC-2	1	u93	6026	6907	100.00	100.00	yes	-	-
+SRR28296940.fna	Klebsiella_pneumoniae	envZ	envZ	1	u1	48666	50021	99.93	100.00	yes	-	-
+SRR28296940.fna	Klebsiella_pneumoniae	envZ	envZ	1	u1	48666	50021	99.93	100.00	yes	-	-
+SRR28296940.fna	Klebsiella_pneumoniae	fosAKP	fosAKP	1	u60	14061	14480	98.81	100.00	yes	-	-
+SRR28296940.fna	Klebsiella_pneumoniae	fosAKP	fosAKP	1	u60	14061	14480	98.81	100.00	yes	-	-
+SRR28296940.fna	Klebsiella_pneumoniae	ftsI	ftsI	1	u79	186809	188575	99.32	100.00	yes	-	-
+SRR28296940.fna	Klebsiella_pneumoniae	ftsI	ftsI	1	u79	186809	188575	99.32	100.00	yes	-	-
+SRR28296940.fna	Klebsiella_pneumoniae	ompK35	ompK35	1	u46	46602	47680	99.35	100.00	yes	-	premature stop at residue 63 (62/359 aa)
+SRR28296940.fna	Klebsiella_pneumoniae	ompK35	ompK35	1	u46	46602	47680	99.35	100.00	yes	-	premature stop at residue 63 (62/359 aa)
+SRR28296940.fna	Klebsiella_pneumoniae	ompK36	ompK36	1	u57	216041	217165	92.22	100.00	yes	-	-
+SRR28296940.fna	Klebsiella_pneumoniae	ompK36	ompK36	1	u57	216041	217165	92.22	100.00	yes	-	-

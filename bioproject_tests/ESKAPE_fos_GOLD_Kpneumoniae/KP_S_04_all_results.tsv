@@ -1,0 +1,65 @@
+Sample	Type	Gene	Allele	Method	Result_Details	Identity_Confidence	Contig	Start	End	Copy_Number	Notes
+KP_S_04.fna	Chromosomal gene	acrB	acrB	BLAST	Coverage: 100.00%	99.84%	NZ_LUVR01000012.1	1730	4876	1	protein changes: R716L
+KP_S_04.fna	Chromosomal gene	ftsI	ftsI	BLAST	Coverage: 100.00%	99.38%	NZ_LUVR01000004.1	145778	147544	1	protein changes: V375A
+KP_S_04.fna	Chromosomal gene	envZ	envZ	BLAST	Coverage: 100.00%	99.93%	NZ_KV391936.1	88478	89833	1	protein changes: I258M
+KP_S_04.fna	Chromosomal gene	ompK35	ompK35	BLAST	Coverage: 100.00%	99.35%	NZ_LUVR01000005.1	193628	194706	1	protein changes: N29T;G30A;N31T;K32N;L33_V44del;T47S;N48_K226del;A227M;A229K;A231S;T232A;A234_Q288del;K290S;K292P;D293P;L294M;Q295A;S296_Y339del;K341P;G344T;V345I;A346P;T347P;D348M;D349P;Q350V;A351S;V353_F359del; premature stop at residue 63 (62/359 aa)
+KP_S_04.fna	Acquired gene	blaKPC-2	blaKPC-2	BLAST	Coverage: 100.00%	100.00%	NZ_LUVR01000044.1	7695	8576	1	no protein changes vs reference
+KP_S_04.fna	Chromosomal gene	ompK36	ompK36	BLAST	Coverage: 100.00%	92.22%	NZ_LUVR01000006.1	49926	51050	1	protein changes: insGD@133;A183T;L184del;T192G;Y201F;N221H;L225N;S230del;K231R;A233D;L234K;insF@268;A269S;S271N;insGESDSI@271;L272S;L307I;I315L;D344E;S346D;H349R;N350R
+KP_S_04.fna	Chromosomal gene	fosAKP	fosAKP	BLAST	Coverage: 100.00%	98.81%	NZ_LUVR01000004.1	353036	353455	1	protein changes: I91V;Q130P;D138E
+KP_S_04.fna	Protein change	acrB	-	blast+gamma	R716L	100%	NZ_LUVR01000012.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_S_04.fna	Protein change	envZ	-	blast+gamma	I258M	100%	NZ_KV391936.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_S_04.fna	Protein change	fosAKP	-	blast+gamma	D138E	100%	NZ_LUVR01000004.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_S_04.fna	Protein change	fosAKP	-	blast+gamma	I91V	100%	NZ_LUVR01000004.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_S_04.fna	Protein change	fosAKP	-	blast+gamma	Q130P	100%	NZ_LUVR01000004.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_S_04.fna	Protein change	ftsI	-	blast+gamma	V375A	100%	NZ_LUVR01000004.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_S_04.fna	Protein change	ompK35	-	blast	A227M	50%	NZ_LUVR01000005.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_S_04.fna	Protein change	ompK35	-	blast	A229K	50%	NZ_LUVR01000005.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_S_04.fna	Protein change	ompK35	-	blast	A231S	50%	NZ_LUVR01000005.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_S_04.fna	Protein change	ompK35	-	blast	A234_Q288del	50%	NZ_LUVR01000005.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_S_04.fna	Protein change	ompK35	-	blast	A346P	50%	NZ_LUVR01000005.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_S_04.fna	Protein change	ompK35	-	blast	A351S	50%	NZ_LUVR01000005.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_S_04.fna	Protein change	ompK35	-	blast	D293P	50%	NZ_LUVR01000005.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_S_04.fna	Protein change	ompK35	-	blast	D348M	50%	NZ_LUVR01000005.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_S_04.fna	Protein change	ompK35	-	blast	D349P	50%	NZ_LUVR01000005.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_S_04.fna	Protein change	ompK35	-	blast	G30A	50%	NZ_LUVR01000005.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_S_04.fna	Protein change	ompK35	-	blast	G344T	50%	NZ_LUVR01000005.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_S_04.fna	Protein change	ompK35	-	blast	K290S	50%	NZ_LUVR01000005.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_S_04.fna	Protein change	ompK35	-	blast	K292P	50%	NZ_LUVR01000005.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_S_04.fna	Protein change	ompK35	-	blast	K32N	50%	NZ_LUVR01000005.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_S_04.fna	Protein change	ompK35	-	blast	K341P	50%	NZ_LUVR01000005.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_S_04.fna	Protein change	ompK35	-	blast	L294M	50%	NZ_LUVR01000005.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_S_04.fna	Protein change	ompK35	-	blast	L33_V44del	50%	NZ_LUVR01000005.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_S_04.fna	Protein change	ompK35	-	blast	N29T	50%	NZ_LUVR01000005.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_S_04.fna	Protein change	ompK35	-	blast	N31T	50%	NZ_LUVR01000005.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_S_04.fna	Protein change	ompK35	-	blast	N48_K226del	50%	NZ_LUVR01000005.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_S_04.fna	Protein change	ompK35	-	blast	Q295A	50%	NZ_LUVR01000005.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_S_04.fna	Protein change	ompK35	-	blast	Q350V	50%	NZ_LUVR01000005.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_S_04.fna	Protein change	ompK35	-	blast	S296_Y339del	50%	NZ_LUVR01000005.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_S_04.fna	Protein change	ompK35	-	blast	T232A	50%	NZ_LUVR01000005.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_S_04.fna	Protein change	ompK35	-	blast	T347P	50%	NZ_LUVR01000005.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_S_04.fna	Protein change	ompK35	-	blast	T47S	50%	NZ_LUVR01000005.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_S_04.fna	Protein change	ompK35	-	blast	V345I	50%	NZ_LUVR01000005.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_S_04.fna	Protein change	ompK35	-	blast	V353_F359del	50%	NZ_LUVR01000005.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_S_04.fna	Protein change	ompK36	-	blast	A183T	50%	NZ_LUVR01000006.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_S_04.fna	Protein change	ompK36	-	blast	A233D	50%	NZ_LUVR01000006.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_S_04.fna	Protein change	ompK36	-	blast	A269S	50%	NZ_LUVR01000006.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_S_04.fna	Protein change	ompK36	-	blast	D344E	50%	NZ_LUVR01000006.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_S_04.fna	Protein change	ompK36	-	blast	H349R	50%	NZ_LUVR01000006.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_S_04.fna	Protein change	ompK36	-	blast	I315L	50%	NZ_LUVR01000006.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_S_04.fna	Protein change	ompK36	-	blast	K231R	50%	NZ_LUVR01000006.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_S_04.fna	Protein change	ompK36	-	blast	L184del	50%	NZ_LUVR01000006.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_S_04.fna	Protein change	ompK36	-	blast	L225N	50%	NZ_LUVR01000006.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_S_04.fna	Protein change	ompK36	-	blast	L234K	50%	NZ_LUVR01000006.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_S_04.fna	Protein change	ompK36	-	blast	L272S	50%	NZ_LUVR01000006.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_S_04.fna	Protein change	ompK36	-	blast	L307I	50%	NZ_LUVR01000006.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_S_04.fna	Protein change	ompK36	-	blast	N221H	50%	NZ_LUVR01000006.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_S_04.fna	Protein change	ompK36	-	blast	N350R	50%	NZ_LUVR01000006.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_S_04.fna	Protein change	ompK36	-	blast	S230del	50%	NZ_LUVR01000006.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_S_04.fna	Protein change	ompK36	-	blast	S271N	50%	NZ_LUVR01000006.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_S_04.fna	Protein change	ompK36	-	blast	S346D	50%	NZ_LUVR01000006.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_S_04.fna	Protein change	ompK36	-	blast	T192G	50%	NZ_LUVR01000006.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_S_04.fna	Protein change	ompK36	-	blast	Y201F	50%	NZ_LUVR01000006.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_S_04.fna	Protein change	ompK36	-	blast	insF@268	50%	NZ_LUVR01000006.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_S_04.fna	Protein change	ompK36	-	blast	insGD@133	50%	NZ_LUVR01000006.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_S_04.fna	Protein change	ompK36	-	blast	insGESDSI@271	50%	NZ_LUVR01000006.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_S_04.fna	Amplicon	blaKPC_ver	-	SeqKit/amplicon	Length: 882bp	-	NZ_LUVR01000044.1	7694	8576	-	Genes in region: blaKPC-2: no changes

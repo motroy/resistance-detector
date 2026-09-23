@@ -1,0 +1,15 @@
+Sample	Type	Gene	Allele	Method	Result_Details	Identity_Confidence	Contig	Start	End	Copy_Number	Notes
+PA_S_01.fna	Acquired gene	blaPDC-1	blaPDC-like	BLAST	Coverage: 100.00%	99.16%	RHTB01000087.1	13725	14918	1	protein changes: G27D;A97V;T105A;V205L;T346S;G391A
+PA_S_01.fna	Acquired gene	blaGES-70	blaGES-like	BLAST	Coverage: 100.00%	99.88%	RHTB01000149.1	140	1003	1	protein changes: R162P
+PA_S_01.fna	Chromosomal gene	nalD	nalD	BLAST	Coverage: 100.00%	99.37%	RHTB01000003.1	87939	88577	1	no protein changes vs reference
+PA_S_01.fna	Chromosomal gene	mexR	mexR	BLAST	Coverage: 100.00%	98.87%	RHTB01000071.1	11799	12242	1	protein changes: V126E
+PA_S_01.fna	Chromosomal gene	fosA_PA1129	fosA_PA1129	BLAST	Coverage: 100.00%	99.02%	RHTB01000006.1	159699	160106	1	protein changes: D135N
+PA_S_01.fna	Protein change	blaGES-70	-	blast	R162P	50%	RHTB01000149.1	-	-	-	reported as resistance mutation
+PA_S_01.fna	Protein change	blaPDC-1	-	blast+gamma	A97V	100%	RHTB01000087.1	-	-	-	reported as resistance mutation
+PA_S_01.fna	Protein change	blaPDC-1	-	blast+gamma	G27D	100%	RHTB01000087.1	-	-	-	reported as resistance mutation
+PA_S_01.fna	Protein change	blaPDC-1	-	blast+gamma	G391A	100%	RHTB01000087.1	-	-	-	reported as resistance mutation
+PA_S_01.fna	Protein change	blaPDC-1	-	blast+gamma	T105A	100%	RHTB01000087.1	-	-	-	reported as resistance mutation
+PA_S_01.fna	Protein change	blaPDC-1	-	blast+gamma	T346S	100%	RHTB01000087.1	-	-	-	reported as resistance mutation
+PA_S_01.fna	Protein change	blaPDC-1	-	blast+gamma	V205L	100%	RHTB01000087.1	-	-	-	reported as resistance mutation
+PA_S_01.fna	Protein change	fosA_PA1129	-	blast+gamma	D135N	100%	RHTB01000006.1	-	-	-	sequence difference, not a curated resistance mutation
+PA_S_01.fna	Protein change	mexR	-	blast+gamma	V126E	100%	RHTB01000071.1	-	-	-	sequence difference, not a curated resistance mutation

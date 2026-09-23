@@ -2,10 +2,18 @@
 
 ![Full validation run](validation-run.gif)
 
-`validation-run.gif` shows the complete validation — 52 assemblies across six
-published genome sets and three species — run through `fos-cazavi batch` and
-logged with [dochist](https://github.com/motroy/dochist-docs) so the session
-doubles as the provenance record.
+> **Stale.** This recording predates the two ESKAPE-fosfomycin GOLD sets (36
+> genomes, real MIC-tested *K. pneumoniae* and *P. aeruginosa*) and the fixes
+> they drove — the *P. aeruginosa* fosfomycin call shown here (`Resistant`)
+> is the since-corrected behaviour; it is `Indeterminate` now. See
+> [`docs/VALIDATION.md`](../docs/VALIDATION.md) for the current numbers.
+> Re-record with `scripts/record_demo.sh --record` to refresh it.
+
+`validation-run.gif` shows the validation as it stood at recording time — 52
+assemblies across six published genome sets and three species — run through
+`fos-cazavi batch` and logged with
+[dochist](https://github.com/motroy/dochist-docs) so the session doubles as
+the provenance record.
 
 The raw, replayable recording is [`validation-run.cast`](validation-run.cast):
 

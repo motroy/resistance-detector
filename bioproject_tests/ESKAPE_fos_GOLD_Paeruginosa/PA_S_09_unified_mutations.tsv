@@ -1,0 +1,11 @@
+Gene	Mutation	Confidence(%)	Methods	Contig	Reported_As_Resistance_Mutation
+blaCTX-M-15	G243D	100	blast+gamma	RHTA01000064.1	yes
+blaPDC-1	A97V	100	blast+gamma	RHTA01000011.1	yes
+blaPDC-1	D113A	100	blast+gamma	RHTA01000011.1	yes
+blaPDC-1	G27D	100	blast+gamma	RHTA01000011.1	yes
+blaPDC-1	G391A	100	blast+gamma	RHTA01000011.1	yes
+blaPDC-1	T105A	100	blast+gamma	RHTA01000011.1	yes
+blaPDC-1	V205L	100	blast+gamma	RHTA01000011.1	yes
+fosA_PA1129	D135N	100	blast+gamma	RHTA01000012.1	no
+mexR	V126E	100	blast+gamma	RHTA01000003.1	no
+nalD	A162E	100	blast+gamma	RHTA01000002.1	no

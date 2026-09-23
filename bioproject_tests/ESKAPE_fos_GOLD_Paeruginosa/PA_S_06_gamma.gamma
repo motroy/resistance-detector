@@ -1,0 +1,5 @@
+Gene	Contig	Start	Stop	Match_Type	Description	Codon_Changes	BP_Changes	Transversions	Codon_Percent	BP_Percent	Percent_Length	Match_Length	Target_Length	Strand
+nalD	RHST01000016.1	127886	128525	Native	No coding mutations	0	0	0	1	1	1	639	639	+
+blaPDC-1	RHST01000018.1	28482	29676	Mutant	T21A,T105A,V205L,	3	9	1	0.9925	0.9925	1	1194	1194	-
+fosA_PA1129	RHST01000002.1	421135	421543	Mutant	Y55C,A70D,	2	6	2	0.9853	0.9853	1	408	408	+
+mexR	RHST01000008.1	96440	96884	Native	No coding mutations	0	0	0	1	1	1	444	444	+

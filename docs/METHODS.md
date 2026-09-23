@@ -195,13 +195,35 @@ mutation columns but are not scored into the ceftazidime-avibactam call.
   FosA6) and `fosA_PA1129` (the *P. aeruginosa* one) are intrinsic, present in
   susceptible isolates, and **never** scored as resistance.
 
-### Species with intrinsic fosfomycin resistance
+### Species with no validated fosfomycin breakpoint
 
-*P. aeruginosa* is intrinsically resistant to fosfomycin (chromosomal FosA, and
-no fosfomycin breakpoints in the EUCAST/CLSI tables). For such species the call
-is **Resistant** on species grounds regardless of genotype, stated explicitly as
-intrinsic rather than acquired, so a "no acquired mechanism found" result is
-never rendered as susceptible.
+*P. aeruginosa* has no validated clinical S/I/R breakpoint for fosfomycin:
+EUCAST publishes only an epidemiological cut-off (ECOFF) for *Pseudomonas*
+spp., explicitly *not* a clinical breakpoint, citing insufficient outcome data;
+CLSI does not cover this species/route at all (see EUCAST, *Use of fosfomycin
+i.v. breakpoints*, May 2024). Any Susceptible/Resistant label seen for this
+pair in AST datasets is therefore built on a non-standard or extrapolated
+breakpoint, not a validated one.
+
+Earlier versions of this tool treated *P. aeruginosa* as intrinsically
+fosfomycin-resistant and asserted `Resistant` for every isolate regardless of
+genotype. A gold-standard validation set of 24 real, MIC-tested *P. aeruginosa*
+isolates (19 lab-Susceptible, 4 Intermediate, 1 Resistant; see
+[VALIDATION.md](VALIDATION.md)) showed that call contradicting the lab
+phenotype on every susceptible isolate — the chromosomal FosA does elevate the
+MIC, but not to a degree, or with enough outcome data, that any standards body
+is willing to call it resistant.
+
+The call is now:
+
+* With **no concrete mechanism found** (only the intrinsic chromosomal `fosA`,
+  no acquired enzyme, no transport-gene loss of function): **Indeterminate**,
+  with the missing-breakpoint reason stated. Neither Susceptible nor Resistant
+  is supportable from genotype alone here.
+* With a **concrete mechanism found** (an acquired fosA-family enzyme beyond
+  the intrinsic copy, or a loss-of-function mutation in a transport gene):
+  still **Resistant**. A real mechanism is real evidence regardless of whether
+  a standards body has drawn a clinical line for this species.
 
 ### Telling an acquired fosA from an intrinsic one
 
@@ -265,10 +287,33 @@ inferred from amplicon presence.
 * **Chromosomal point mutations for other species.** Only the three organisms
   above have curated positions. Other species get acquired-gene and KPC results
   only.
+* **Fosfomycin transport-gene detection is *E. coli*-only.** `murA`, `uhpT`,
+  `uhpA`, `uhpB`, `uhpC`, `glpT`, `cyaA`, `ptsI` and `galU` in the bundled
+  nucleotide database are all sourced from *E. coli* K-12. Direct BLAST search
+  confirms *K. pneumoniae*'s own orthologs are present and full-length in real
+  assemblies, but only 84–89% nucleotide identity to the *E. coli* reference —
+  below the 90% default detection threshold. The genes are not absent from a
+  *K. pneumoniae* genome; they are invisible to this detector. A validation run
+  against 21 real, MIC-tested *K. pneumoniae* isolates (11 fosfomycin-resistant
+  or -intermediate) found **zero** of these genes flagged for loss of function
+  or a curated mutation in any of them — consistent with this gap, not with a
+  clean genotype. See
+  [`bioproject_tests/ESKAPE_fos_GOLD_Kpneumoniae/RESULTS_SUMMARY.md`](../bioproject_tests/ESKAPE_fos_GOLD_Kpneumoniae/RESULTS_SUMMARY.md).
+  Fixing this needs species-specific chromosomal references for these 9 genes,
+  the same approach already used for `ompC`/`ompF` in *E. coli* and
+  `ftsI`/`ompK36`/`ompK35`/`envZ` in *K. pneumoniae* — not yet done.
 * **P. aeruginosa ceftazidime-avibactam.** PDC/AmpC derepression, PDC variants
   and OprD loss are not assessed, so any call not driven by a
   metallo-beta-lactamase is `Indeterminate`. The tool is not currently
   informative for CAZ/AVI in this species.
+* **P. aeruginosa fosfomycin has no validated clinical breakpoint** (EUCAST
+  publishes only an ECOFF; CLSI does not cover it). Absent a concrete
+  mechanism, the call is `Indeterminate`, not a guess in either direction —
+  see section 6. A validation run against 15 real, MIC-tested isolates (10
+  lab-Susceptible, 4 Intermediate, 1 Resistant) is why: an earlier version
+  asserted `Resistant` unconditionally and was contradicted by all 10
+  susceptible isolates. See
+  [`bioproject_tests/ESKAPE_fos_GOLD_Paeruginosa/RESULTS_SUMMARY.md`](../bioproject_tests/ESKAPE_fos_GOLD_Paeruginosa/RESULTS_SUMMARY.md).
 * **Acquired class D oxacillinases** other than the OXA-48-like group
   (e.g. OXA-2, OXA-4, OXA-21) are not in the database.
 * **Novel mechanisms.** Anything not in the reference data cannot be found.

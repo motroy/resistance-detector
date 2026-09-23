@@ -1,0 +1,22 @@
+Gene	Mutation	Confidence(%)	Methods	Contig	Reported_As_Resistance_Mutation
+blaCTX-M-15	0 SNPs in 390-876	50	gamma	RHUD01000139.1	no
+envZ	I15T	100	blast+gamma	RHUD01000020.1	no
+envZ	I258M	100	blast+gamma	RHUD01000020.1	no
+fosAKP	I91V	100	blast+gamma	RHUD01000002.1	no
+fosAKP	Q130P	100	blast+gamma	RHUD01000002.1	no
+ftsI	V375A	100	blast+gamma	RHUD01000002.1	no
+ompK36	A193W	50	blast	RHUD01000015.1	no
+ompK36	D227E	50	blast	RHUD01000015.1	no
+ompK36	G226D	50	blast	RHUD01000015.1	no
+ompK36	H349R	50	blast	RHUD01000015.1	no
+ompK36	K231V	50	blast	RHUD01000015.1	no
+ompK36	L184_P186del	50	blast	RHUD01000015.1	no
+ompK36	L194S	50	blast	RHUD01000015.1	no
+ompK36	L225T	50	blast	RHUD01000015.1	no
+ompK36	L232P	50	blast	RHUD01000015.1	no
+ompK36	N221H	50	blast	RHUD01000015.1	no
+ompK36	T192G	50	blast	RHUD01000015.1	no
+ompK36	T258S	50	blast	RHUD01000015.1	no
+ompK36	Y201F	50	blast	RHUD01000015.1	no
+ompK36	Y210W	50	blast	RHUD01000015.1	no
+ompK36	insR@308	50	blast	RHUD01000015.1	no

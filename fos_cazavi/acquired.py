@@ -18,9 +18,9 @@ from Bio.SeqRecord import SeqRecord
 
 from . import betalactamase
 from .references import (
-    ACQUIRED_PREFIXES, IN_SCOPE_DRUGS, gene_family, is_acquired_gene,
-    load_point_mutations, load_reference_proteins, mutation_lookup_key,
-    mutation_scope,
+    ACQUIRED_PREFIXES, INTRINSIC_GENES, IN_SCOPE_DRUGS, gene_family,
+    is_acquired_gene, load_point_mutations, load_reference_proteins,
+    mutation_lookup_key, mutation_scope,
 )
 from .utils import check_dependencies
 from .variants import call_variants, extract_gene_span, loss_of_function_label
@@ -101,7 +101,9 @@ class BlastDetector:
         with open(f"{self.output_prefix}_blast.txt", 'w') as handle:
             handle.write(completed.stdout)
 
-        return self.filter_redundant_hits(self.parse_blast_output(completed.stdout))
+        hits = self.parse_blast_output(completed.stdout)
+        kept = self.filter_redundant_hits(hits)
+        return self._prefer_intrinsic_naming(hits, kept)
 
     def parse_blast_output(self, blast_output):
         hits = []
@@ -169,6 +171,81 @@ class BlastDetector:
 
         print(f"Filtered to {len(kept)} hits after redundancy check")
         return kept
+
+    # Reference identity gap, in percentage points, within which a locus's
+    # winning acquired-family hit and a competing intrinsic-gene hit at the
+    # same span are treated as indistinguishable (see _prefer_intrinsic_naming).
+    _INTRINSIC_NAMING_TOLERANCE = 3.0
+
+    def _prefer_intrinsic_naming(self, all_hits, kept_hits):
+        """Correct a specific, verified mis-naming: a locus's single copy of a
+        species' intrinsic gene (fosAKP/fosA6/fosA_PA1129) can score a
+        marginally lower bitscore than a horizontally-acquired allele from the
+        same family (fosA5, fosA10, ...), because the intrinsic reference is
+        one strain's sequence and other lineages' native copy is sometimes, by
+        chance, a percentage point or two closer to a different catalogued
+        allele than to that one reference strain.
+
+        Plain best-bitscore selection then reports the genome's own
+        chromosomal gene as an ambiguous or acquired allele - which matters a
+        great deal here, because that naming is exactly what the phenotype
+        logic uses to tell an acquired enzyme from the intrinsic one. Confirmed
+        on real assemblies: four genomes in the ESKAPE-fosfomycin GOLD
+        validation set had their single fosA copy (Copy_Number 1, i.e. there is
+        nothing else it could be) named fosA5-like or fosA10-like this way,
+        each within 2 percentage points of the intrinsic fosAKP reference at
+        the identical query span.
+
+        For every kept hit that lost this way, if a competing intrinsic-gene
+        hit exists at (near enough) the same span and within
+        ``_INTRINSIC_NAMING_TOLERANCE`` percentage points of identity, that
+        intrinsic hit is substituted in place of the acquired one - restoring
+        both the correct name and the correct reference for translation and
+        variant calling. This never *invents* resistance calls; it only ever
+        prevents an ordinary chromosomal-allele match from masquerading as one.
+        """
+        intrinsic_hits = [hit for hit in all_hits if hit['gene'] in INTRINSIC_GENES]
+        if not intrinsic_hits:
+            return kept_hits
+
+        intrinsic_families = {gene_family(g) for g in INTRINSIC_GENES}
+
+        corrected = []
+        for hit in kept_hits:
+            # Only hits already named as *acquired* members of a family that
+            # has a curated intrinsic counterpart are in scope (currently:
+            # fosA). A hit already named as the intrinsic gene, or belonging
+            # to an unrelated family, passes through untouched.
+            if hit['gene'] in INTRINSIC_GENES or gene_family(hit['gene']) not in intrinsic_families:
+                corrected.append(hit)
+                continue
+
+            start, end = min(hit['qstart'], hit['qend']), max(hit['qstart'], hit['qend'])
+            best_intrinsic = None
+            for candidate in intrinsic_hits:
+                if candidate['query_id'] != hit['query_id']:
+                    continue
+                candidate_start = min(candidate['qstart'], candidate['qend'])
+                candidate_end = max(candidate['qstart'], candidate['qend'])
+                overlap = max(0, min(end, candidate_end) - max(start, candidate_start) + 1)
+                if overlap / (end - start + 1) * 100 <= 50:
+                    continue
+                if hit['identity'] - candidate['identity'] > self._INTRINSIC_NAMING_TOLERANCE:
+                    continue
+                if best_intrinsic is None or candidate['identity'] > best_intrinsic['identity']:
+                    best_intrinsic = candidate
+
+            if best_intrinsic is not None:
+                print(f"  {hit['query_id']}: {hit['gene']} ({hit['identity']:.2f}%) "
+                      f"renamed to intrinsic {best_intrinsic['gene']} "
+                      f"({best_intrinsic['identity']:.2f}%) - same locus, within "
+                      f"{self._INTRINSIC_NAMING_TOLERANCE} points, and this is the "
+                      f"genome's only copy at this locus")
+                corrected.append(best_intrinsic)
+            else:
+                corrected.append(hit)
+
+        return corrected
 
     # ------------------------------------------------------------- variant call
 
