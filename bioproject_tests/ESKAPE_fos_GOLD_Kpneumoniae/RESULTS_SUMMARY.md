@@ -20,26 +20,33 @@ fos-cazavi batch -i <genomes>/ -o bioproject_tests/ESKAPE_fos_GOLD_Kpneumoniae \
 phenotype, testing method, standard, PMID, strain, source file). Reference
 data: AMRFinderPlus 2026-08-07.1.
 
-## Results
+## Results (current)
 
 | Sample | Lab phenotype (FOS) | Predicted FOS | fosA locus | Notes |
 |---|---|---|---|---|
 | KP_S_01–10 | Susceptible | **Susceptible** ×10 | fosAKP (intrinsic) | ✅ |
 | KP_I_01–03 | Intermediate | Susceptible ×3 | fosAKP (intrinsic) | see below |
-| KP_R_01–08 | **Resistant** | Susceptible ×8 | fosAKP (intrinsic) | see below |
+| KP_R_02, KP_R_05 | **Resistant** | **Resistant** ×2 | fosAKP (intrinsic) | uhpB premature stop, GAMMA-confirmed ✅ |
+| KP_R_01, KP_R_03, KP_R_04, KP_R_06, KP_R_07, KP_R_08 | **Resistant** | Susceptible ×6 | fosAKP (intrinsic) | see below |
 
 **Specificity: 10/10.** Every genuinely Susceptible isolate is correctly
 called Susceptible, with no false Resistant/Indeterminate call anywhere in
-the set.
+the set — unchanged by everything below.
 
-**Sensitivity: 0/11 (Resistant + Intermediate).** None of the 11 non-susceptible
-isolates carry an acquired fosA-family enzyme, and none carries a curated
-fosfomycin-resistance point mutation or a detectable loss-of-function change
-in any fosfomycin transport/regulatory gene this tool tracks. Every one of the
-21 genomes carries only the intact, intrinsic `fosAKP` — genotype gives no
-basis to distinguish the 11 resistant isolates from the 10 susceptible ones.
-
-This is a genuine, significant finding, and it traces to two separate causes:
+**Sensitivity: 2/11 (Resistant + Intermediate), up from 0/11.** This set went
+through two real fixes since first committed; both are described in full
+below, but the short version: a hit-selection bug that hid the genome's own
+`fosAKP` behind an ambiguous acquired-allele name (fixed, see "1" below), and
+a reference-database gap that made 9 fosfomycin transport/regulatory genes
+undetectable in this species at all (fixed, see "2" below). Fixing the second
+one is what moved sensitivity from 0/11 to 2/11: `KP_R_02` and `KP_R_05` — both
+lab-confirmed Resistant by broth dilution — carry a premature stop at the same
+residue (353 of 491) in `uhpB`, the sensor histidine kinase that induces
+`uhpT` transcription. Both calls are independently confirmed by GAMMA's own
+alignment ("truncation at codon 353"), agreeing exactly with the BLAST-based
+call. The remaining 9 non-susceptible isolates carry no acquired fosA-family
+enzyme and no coding-sequence loss of function in any of the 9 transport
+genes — see "Is 2/11 the ceiling?" below for why that is not surprising.
 
 ### 1. A real detection bug, found and fixed here
 
@@ -64,58 +71,79 @@ same span, the intrinsic name and reference win. See
 [`tests/test_acquired.py`](../../tests/test_acquired.py) for the fix and its
 regression tests. All four now correctly report `fosAKP`.
 
-### 2. A real, unfixed reference-database gap
+### 2. A real reference-database gap — now fixed
 
 The fosfomycin transport/regulatory genes this tool checks for loss of
 function and curated point mutations (`uhpT`, `uhpA`, `uhpB`, `uhpC`, `glpT`,
-`cyaA`, `ptsI`, `galU`, `murA`) are **all sourced from *E. coli* K-12** in the
-bundled nucleotide database — none has a *K. pneumoniae*-specific reference.
-Direct BLAST search confirms *K. pneumoniae*'s own orthologs are present,
+`cyaA`, `ptsI`, `galU`, `murA`) were **all sourced from *E. coli* K-12** in the
+bundled nucleotide database — none had a *K. pneumoniae*-specific reference.
+Direct BLAST search confirmed *K. pneumoniae*'s own orthologs are present,
 full-length (97–100% coverage), but only **84–89% nucleotide identity** to the
 *E. coli* reference — below this tool's 90% default detection threshold. The
-genes are not absent; they are invisible to the detector for this species.
+genes were not absent; they were invisible to the detector for this species.
 
-This means fosfomycin resistance mechanisms in these genes are **not actually
-checked** for *K. pneumoniae* — the `fosAKP`-only genotype these 21 isolates
-show is not "checked and clean," it is "unchecked." The `Susceptible` calls
-above are correct read literally (no *scored* resistance mechanism was found),
-but they understate what the tool could in principle detect if it had the
-right reference. See
-[`docs/METHODS.md`](../../docs/METHODS.md#9-known-limits) — this is now
-tracked as a known, high-priority limitation, with the concrete fix scoped
-(species-specific chromosomal references for these 9 genes, following the same
-approach already used for `ompC`/`ompF` in *E. coli* and `ftsI`/`ompK36`/
-`ompK35`/`envZ` in *K. pneumoniae*).
+**The fix**: a second, *K. pneumoniae*-specific reference for each of the 9
+genes was added, sourced from *K. pneumoniae* subsp. *pneumoniae* HS11286
+(RefSeq `NC_016845.1`, a complete, closed reference genome), located by
+identifying the corresponding annotated locus in that genome's own feature
+table (e.g. `uhpT`/`uhpC`/`uhpB`/`uhpA` as the adjacent four-gene operon
+matching the product descriptions "hexose phosphate transport protein",
+"regulatory protein UhpC", "two-component regulatory system sensor histidine
+kinase" and "DNA-binding transcriptional activator UhpA"). Each new reference
+matches the *E. coli* CDS at 77–89% nucleotide identity — the same range the
+diagnostic BLAST search had already found — confirming these are the correct
+orthologs, and matches real clinical *K. pneumoniae* assemblies (tested across
+Resistant, Intermediate and Susceptible isolates from this set) at
+**98.6–100% identity**, comfortably above the 90% threshold.
 
-### Is 0/11 surprising?
+Because a BLAST nucleotide database needs a unique sequence ID per entry, the
+new reference is stored under its own name (`uhpT_Kpn`, `uhpB_Kpn`, ...)
+rather than replacing the *E. coli* entry, and mapped back to the canonical
+gene name (`uhpT`, `uhpB`, ...) everywhere else in the tool via
+[`fos_cazavi/references.py::GENE_ALIASES`](../../fos_cazavi/references.py) —
+the Gene column, `FOS_TRANSPORT_GENES` membership, loss-of-function reporting
+and GAMMA cross-checking all see one name regardless of which reference
+actually matched. See
+[`tests/test_references.py`](../../tests/test_references.py) and
+[`tests/test_pipeline.py::TestKlebsiellaPneumoniaeFosfomycinTransportGenes`](../../tests/test_pipeline.py)
+for the regression tests, including one asserting a locus is never
+double-counted now that two differently-named references can match it.
 
-Partly expected, partly not. Fosfomycin resistance in Enterobacterales that
-is *not* explained by an acquired `fosA`-family enzyme is a well-documented,
-partly-unexplained area in the literature — much of it driven by promoter or
-regulatory changes (including IS-element insertions disrupting `uhpT`
-expression) rather than simple coding-sequence loss of function, and some
-fraction remains mechanistically unexplained even with full genome sequencing.
-A tool limited to gene-content and coding-sequence variant calling was never
-going to catch all of that. But 0/11 — not even one confirmed hit — is stronger
-than "partly unexplained," and given the reference-database gap above, this
-result cannot yet be read as "genuinely mechanism-negative." It should be
-re-run once *K. pneumoniae*-specific transport-gene references exist.
+### Is 2/11 the ceiling?
+
+Likely close to it for this tool's method, and that is an expected, literature
+consistent result rather than a disappointing one. Fosfomycin resistance in
+Enterobacterales that is *not* explained by an acquired `fosA`-family enzyme
+is a well-documented, partly-unexplained area in the literature — much of it
+driven by promoter or regulatory changes (including IS-element insertions
+disrupting `uhpT` expression) rather than coding-sequence loss of function,
+and some fraction remains mechanistically unexplained even with full genome
+sequencing. A tool limited to gene-content and coding-sequence variant calling
+was never going to catch all of that; `uhpB`'s premature stop is exactly the
+kind of mechanism it *can* catch, which is why fixing the detection gap
+recovered it. The remaining 9 isolates' resistance likely lies upstream of
+what a CDS-level caller can see.
 
 **Update:** a second, independent 24-genome sample from the same source data
-(disjoint accessions, weighted toward resistant/intermediate isolates)
-replicated this exactly — 0/18, for a combined 0/29 across both rounds. See
+(disjoint accessions, weighted toward resistant/intermediate isolates) found
+one more case of the same kind (a `glpT` premature stop, in a genotype-only
+isolate from a different validation set) but no new cases within its own 18
+non-susceptible isolates — 0/18, for a combined **2/29** across both rounds.
+See
 [`ESKAPE_fos_Kpneumoniae_round2/RESULTS_SUMMARY.md`](../ESKAPE_fos_Kpneumoniae_round2/RESULTS_SUMMARY.md).
 
 ## What this set changed
 
 * Fixed a real intrinsic/acquired fosA mis-naming bug (above), verified on 4
   real genomes and locked in with 9 unit tests.
-* Identified a significant, previously-undocumented reference-database gap:
-  fosfomycin transport-gene detection is *E. coli*-only and silently
-  ineffective for *K. pneumoniae* at the default identity threshold.
-* Established, for the first time, a real **sensitivity** measurement for this
-  tool's fosfomycin logic (as opposed to specificity only, which the CREC set
-  already covered for MBL/fosA3-driven resistance).
+* Identified, and then fixed, a significant reference-database gap:
+  fosfomycin transport-gene detection was *E. coli*-only and silently
+  ineffective for *K. pneumoniae* at the default identity threshold. Fixing it
+  recovered 2 real, GAMMA-confirmed resistant calls that were previously
+  invisible.
+* Established a real **sensitivity** measurement for this tool's fosfomycin
+  logic in *K. pneumoniae* (as opposed to specificity only, which the CREC set
+  already covered for MBL/fosA3-driven resistance in *E. coli*).
 
 ## Reproducing
 

@@ -32,28 +32,32 @@ Reference data: AMRFinderPlus 2026-08-07.1 (unchanged from round 1).
 **Specificity: 6/6.** Every genuinely susceptible isolate is correctly
 called Susceptible.
 
-**Sensitivity: 0/18 (Resistant + Intermediate).** Identical to round 1's
-0/11. Combined across both rounds: **0/29** non-susceptible *K. pneumoniae*
-isolates from this data source have been called correctly by genotype
-alone, out of 29 tested. Every one of the 24 genomes here carries only the
-intact, intrinsic `fosAKP` and no curated fosfomycin resistance mutation —
-same picture as round 1, and for the same documented reason: the
-fosfomycin transport-gene references this tool checks (`uhpT`, `glpT`,
-`cyaA`, `ptsI`, `galU`, etc.) are *E. coli*-only, and *K. pneumoniae*'s own
-orthologs sit below the 90% identity detection threshold (see
-[`ESKAPE_fos_GOLD_Kpneumoniae/RESULTS_SUMMARY.md`](../ESKAPE_fos_GOLD_Kpneumoniae/RESULTS_SUMMARY.md#2-a-real-unfixed-reference-database-gap)
-and [`docs/METHODS.md`](../../docs/METHODS.md#9-known-limits) for the full
-account). No new detection bug was found in this round — the intrinsic-naming
-fix from round 1 held: all 24 genomes' single fosA locus resolved cleanly to
-`fosAKP` with no ambiguous/acquired mis-calls.
+**Sensitivity: 0/18 (Resistant + Intermediate), unchanged by the
+transport-gene reference fix.** This round originally replicated round 1's
+0/11 exactly, at a time when the fosfomycin transport-gene references this
+tool checks (`uhpT`, `glpT`, `cyaA`, `ptsI`, `galU`, etc.) were *E.
+coli*-only and *K. pneumoniae*'s own orthologs sat below the 90% identity
+detection threshold — a real, systematic detection gap, confirmed not to be
+sampling noise by this very replication. That gap is now fixed: a
+*K. pneumoniae*-specific reference was added for each of the 9 genes (see
+[`ESKAPE_fos_GOLD_Kpneumoniae/RESULTS_SUMMARY.md`](../ESKAPE_fos_GOLD_Kpneumoniae/RESULTS_SUMMARY.md#2-a-real-reference-database-gap--now-fixed)),
+and re-running this set with the fix applied still finds **zero** LOF in any
+of the 9 genes across all 18 non-susceptible isolates here — the genes are no
+longer invisible, they were checked and found intact. This round's 18
+isolates' resistance is not explained by a coding-sequence change in these
+specific genes; round 1's two `uhpB`-truncated isolates show that mechanism
+is real and detectable when present, it simply is not what is driving
+resistance in *this* round's isolates. No new detection bug was found in
+this round either time — the intrinsic-naming fix from round 1 held: all 24
+genomes' single fosA locus resolved cleanly to `fosAKP` with no
+ambiguous/acquired mis-calls.
 
-**This round's contribution**: it turns a single-sample finding (n=11) into
-a replicated one (n=29, across two independently drawn, non-overlapping
-samples from two different source files). The 0/11 in round 1 was not
-sampling noise — the reference-database gap is real and systematic, not
-isolate-specific. This is the strongest evidence yet that the
-species-specific transport-gene reference fix scoped in `docs/METHODS.md`
-is the correct next investment, not a rare edge case.
+**This round's contribution**: it turned a single-sample finding (n=11) into
+a replicated one (n=29 combined), which is what justified investing in the
+reference fix rather than dismissing 0/11 as one unlucky sample. Now that the
+fix is in, this round also shows the fix's limit honestly: closing a real
+detection gap does not manufacture sensitivity that was never there to find —
+combined sensitivity across both rounds is **2/29** (both from round 1).
 
 ### Ceftazidime-avibactam (not validated here, but observed)
 

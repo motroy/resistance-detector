@@ -1,0 +1,64 @@
+sample	validation_set	measured_FOS_phenotype	our_FOS_prediction	kleborate_Fcyn_acquired	our_acquired_fosA_gene	kleborate_acquired_fosA_gene	fos_gene_presence_concordant	kleborate_bla_families	our_bla_families	bla_families_missing_from_ours
+GCA_027151785.1	PRJNA781811_test	n/a (genotype-only)	Resistant	-	No	No	Yes	-	SHV	-
+GCA_027151795.1	PRJNA781811_test	n/a (genotype-only)	Susceptible	-	No	No	Yes	-	SHV	-
+GCA_027151835.1	PRJNA781811_test	n/a (genotype-only)	Susceptible	-	No	No	Yes	KPC	KPC;SHV	-
+GCA_027151845.1	PRJNA781811_test	n/a (genotype-only)	Resistant	fosA3	Yes	Yes	Yes	CTX-M	CTX-M;SHV	-
+GCA_027151875.1	PRJNA781811_test	n/a (genotype-only)	Susceptible	-	No	No	Yes	CTX-M;KPC	CMY;CTX-M;KPC;SHV	-
+GCA_027151985.1	PRJNA781811_test	n/a (genotype-only)	Susceptible	-	No	No	Yes	-	SHV	-
+GCA_027151995.1	PRJNA781811_test	n/a (genotype-only)	Susceptible	-	No	No	Yes	CTX-M	CTX-M;SHV	-
+GCA_027152005.1	PRJNA781811_test	n/a (genotype-only)	Susceptible	-	No	No	Yes	CTX-M	CTX-M;SHV	-
+GCA_027152065.1	PRJNA781811_test	n/a (genotype-only)	Susceptible	-	No	No	Yes	KPC	KPC;SHV	-
+GCA_027152105.1	PRJNA781811_test	n/a (genotype-only)	Susceptible	-	No	No	Yes	CTX-M	CTX-M;SHV	-
+GCA_027152185.1	PRJNA781811_test	n/a (genotype-only)	Susceptible	-	No	No	Yes	SHV	SHV	-
+GCA_027152205.1	PRJNA781811_test	n/a (genotype-only)	Susceptible	-	No	No	Yes	-	SHV	-
+GCA_027152215.1	PRJNA781811_test	n/a (genotype-only)	Susceptible	-	No	No	Yes	-	SHV	-
+GCA_027152225.1	PRJNA781811_test	n/a (genotype-only)	Susceptible	-	No	No	Yes	CTX-M;KPC	CTX-M;KPC;SHV	-
+GCA_027152245.1	PRJNA781811_test	n/a (genotype-only)	Susceptible	-	No	No	Yes	CTX-M	CTX-M;SHV	-
+GCA_027152405.1	PRJNA781811_test	n/a (genotype-only)	Susceptible	-	No	No	Yes	-	SHV	-
+GCA_027152445.1	PRJNA781811_test	n/a (genotype-only)	Resistant	-	No	No	Yes	KPC	KPC;SHV	-
+GCA_027152495.1	PRJNA781811_test	n/a (genotype-only)	Indeterminate	-	Yes	No	No	-	SHV	-
+KP2_I_01	ESKAPE_fos_Kpneumoniae_round2	Intermediate	Susceptible	-	No	No	Yes	CTX-M;OXA	CTX-M;OXA;SHV	-
+KP2_I_02	ESKAPE_fos_Kpneumoniae_round2	Intermediate	Susceptible	-	No	No	Yes	CTX-M;NDM;OXA	CTX-M;NDM;OXA;SHV	-
+KP2_I_03	ESKAPE_fos_Kpneumoniae_round2	Intermediate	Susceptible	-	No	No	Yes	OXA	CTX-M;OXA;SHV	-
+KP2_I_04	ESKAPE_fos_Kpneumoniae_round2	Intermediate	Susceptible	-	No	No	Yes	CTX-M;NDM;OXA	CTX-M;NDM;OXA;SHV	-
+KP2_I_05	ESKAPE_fos_Kpneumoniae_round2	Intermediate	Susceptible	-	No	No	Yes	CTX-M;NDM;OXA	CTX-M;NDM;OXA;SHV	-
+KP2_I_06	ESKAPE_fos_Kpneumoniae_round2	Intermediate	Susceptible	-	No	No	Yes	CTX-M;NDM;OXA	CTX-M;NDM;OXA;SHV	-
+KP2_R_01	ESKAPE_fos_Kpneumoniae_round2	Resistant	Susceptible	-	No	No	Yes	KPC;SHV	KPC;SHV	-
+KP2_R_02	ESKAPE_fos_Kpneumoniae_round2	Resistant	Susceptible	-	No	No	Yes	KPC	KPC;SHV	-
+KP2_R_03	ESKAPE_fos_Kpneumoniae_round2	Resistant	Susceptible	-	No	No	Yes	KPC;OXA	KPC;SHV	OXA
+KP2_R_04	ESKAPE_fos_Kpneumoniae_round2	Resistant	Susceptible	-	No	No	Yes	KPC;VEB	KPC;SHV;VEB	-
+KP2_R_05	ESKAPE_fos_Kpneumoniae_round2	Resistant	Susceptible	-	No	No	Yes	KPC	KPC;SHV	-
+KP2_R_06	ESKAPE_fos_Kpneumoniae_round2	Resistant	Susceptible	-	No	No	Yes	KPC;SHV	KPC;SHV	-
+KP2_R_07	ESKAPE_fos_Kpneumoniae_round2	Resistant	Susceptible	-	No	No	Yes	KPC	KPC;SHV	-
+KP2_R_08	ESKAPE_fos_Kpneumoniae_round2	Resistant	Susceptible	-	No	No	Yes	KPC	KPC;SHV	-
+KP2_R_09	ESKAPE_fos_Kpneumoniae_round2	Resistant	Susceptible	-	No	No	Yes	CTX-M;VIM	CMY;CTX-M;SHV;VIM	-
+KP2_R_10	ESKAPE_fos_Kpneumoniae_round2	Resistant	Susceptible	-	No	No	Yes	VIM	SHV;VIM	-
+KP2_R_11	ESKAPE_fos_Kpneumoniae_round2	Resistant	Susceptible	-	No	No	Yes	KPC	KPC;SHV	-
+KP2_R_12	ESKAPE_fos_Kpneumoniae_round2	Resistant	Susceptible	-	No	No	Yes	CTX-M	CTX-M;SHV	-
+KP2_S_01	ESKAPE_fos_Kpneumoniae_round2	Susceptible	Susceptible	-	No	No	Yes	KPC	KPC;SHV	-
+KP2_S_02	ESKAPE_fos_Kpneumoniae_round2	Susceptible	Susceptible	-	No	No	Yes	CTX-M;KPC	CTX-M;KPC;SHV	-
+KP2_S_03	ESKAPE_fos_Kpneumoniae_round2	Susceptible	Susceptible	-	No	No	Yes	KPC	KPC;SHV	-
+KP2_S_04	ESKAPE_fos_Kpneumoniae_round2	Susceptible	Susceptible	-	No	No	Yes	KPC	KPC;SHV	-
+KP2_S_05	ESKAPE_fos_Kpneumoniae_round2	Susceptible	Susceptible	-	No	No	Yes	KPC	KPC;SHV	-
+KP2_S_06	ESKAPE_fos_Kpneumoniae_round2	Susceptible	Susceptible	-	No	No	Yes	CTX-M;KPC	CTX-M;KPC;SHV	-
+KP_I_01	ESKAPE_fos_GOLD_Kpneumoniae	Intermediate	Susceptible	-	No	No	Yes	CTX-M;NDM;OXA	CTX-M;NDM;OXA;SHV	-
+KP_I_02	ESKAPE_fos_GOLD_Kpneumoniae	Intermediate	Susceptible	-	No	No	Yes	OXA;SHV	CTX-M;OXA;SHV	-
+KP_I_03	ESKAPE_fos_GOLD_Kpneumoniae	Intermediate	Susceptible	-	No	No	Yes	OXA	CTX-M;OXA	-
+KP_R_01	ESKAPE_fos_GOLD_Kpneumoniae	Resistant	Susceptible	-	No	No	Yes	CTX-M	CTX-M;SHV	-
+KP_R_02	ESKAPE_fos_GOLD_Kpneumoniae	Resistant	Resistant	-	No	No	Yes	CTX-M;KPC	CTX-M;KPC;SHV	-
+KP_R_03	ESKAPE_fos_GOLD_Kpneumoniae	Resistant	Susceptible	-	No	No	Yes	KPC	KPC;SHV	-
+KP_R_04	ESKAPE_fos_GOLD_Kpneumoniae	Resistant	Susceptible	-	No	No	Yes	KPC;SHV	KPC;SHV	-
+KP_R_05	ESKAPE_fos_GOLD_Kpneumoniae	Resistant	Resistant	-	No	No	Yes	KPC	KPC;SHV	-
+KP_R_06	ESKAPE_fos_GOLD_Kpneumoniae	Resistant	Susceptible	-	No	No	Yes	KPC;VEB	KPC;SHV;VEB	-
+KP_R_07	ESKAPE_fos_GOLD_Kpneumoniae	Resistant	Susceptible	-	No	No	Yes	KPC;SHV	KPC;SHV	-
+KP_R_08	ESKAPE_fos_GOLD_Kpneumoniae	Resistant	Susceptible	-	No	No	Yes	KPC;SHV	KPC;SHV	-
+KP_S_01	ESKAPE_fos_GOLD_Kpneumoniae	Susceptible	Susceptible	-	No	No	Yes	KPC	KPC;SHV	-
+KP_S_02	ESKAPE_fos_GOLD_Kpneumoniae	Susceptible	Susceptible	-	No	No	Yes	CTX-M;KPC	CTX-M;KPC;SHV	-
+KP_S_03	ESKAPE_fos_GOLD_Kpneumoniae	Susceptible	Susceptible	-	No	No	Yes	KPC	KPC;SHV	-
+KP_S_04	ESKAPE_fos_GOLD_Kpneumoniae	Susceptible	Susceptible	-	No	No	Yes	KPC	KPC	-
+KP_S_05	ESKAPE_fos_GOLD_Kpneumoniae	Susceptible	Susceptible	-	No	No	Yes	KPC	KPC;SHV	-
+KP_S_06	ESKAPE_fos_GOLD_Kpneumoniae	Susceptible	Susceptible	-	No	No	Yes	NDM;SHV	NDM;SHV	-
+KP_S_07	ESKAPE_fos_GOLD_Kpneumoniae	Susceptible	Susceptible	-	No	No	Yes	KPC	KPC;SHV	-
+KP_S_08	ESKAPE_fos_GOLD_Kpneumoniae	Susceptible	Susceptible	-	No	No	Yes	CTX-M;KPC	CTX-M;KPC;SHV	-
+KP_S_09	ESKAPE_fos_GOLD_Kpneumoniae	Susceptible	Susceptible	-	No	No	Yes	KPC;SHV	KPC;SHV	-
+KP_S_10	ESKAPE_fos_GOLD_Kpneumoniae	Susceptible	Susceptible	-	No	No	Yes	CTX-M;NDM;OXA	CTX-M;NDM;OXA;SHV	-

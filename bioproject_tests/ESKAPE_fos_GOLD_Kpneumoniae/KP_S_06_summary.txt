@@ -15,7 +15,7 @@ PREDICTED PHENOTYPES (genotype-based):
     - Metallo-beta-lactamase blaNDM-7 detected (100.00% identity) - avibactam does not inhibit metallo-enzymes, so ceftazidime-avibactam is not active
   Note: Genotype-based prediction only; not a substitute for phenotypic antimicrobial susceptibility testing (AST).
 
-Total genes detected: 8
+Total genes detected: 17
 Method: BLAST+ with codon-aware variant calling
 
 ACQUIRED RESISTANCE GENES:
@@ -26,17 +26,26 @@ ACQUIRED RESISTANCE GENES:
 CHROMOSOMAL TARGET GENES:
 --------------------------------------------------
   acrB (copy number 1): 99.68% identity, 100.00% coverage
+  cyaA (copy number 1): 99.49% identity, 100.00% coverage
   ftsI (copy number 1): 99.77% identity, 100.00% coverage
+  ptsI (copy number 1): 99.71% identity, 100.00% coverage
+  uhpB (copy number 1): 99.19% identity, 100.00% coverage
+  uhpT (copy number 1): 99.42% identity, 100.00% coverage
   envZ (copy number 1): 99.41% identity, 100.00% coverage
+  glpT (copy number 1): 99.48% identity, 100.00% coverage
+  uhpC (copy number 1): 99.55% identity, 100.00% coverage
+  murA (copy number 1): 99.44% identity, 100.00% coverage
   ompK35 (copy number 1): 99.54% identity, 100.00% coverage
   ompK36 (copy number 1): 95.32% identity, 100.00% coverage
+  galU (copy number 1): 99.89% identity, 100.00% coverage
+  uhpA (copy number 1): 99.33% identity, 100.00% coverage
   fosAKP (copy number 1): 97.38% identity, 100.00% coverage
 
 PROTEIN CHANGES (BLAST caller cross-checked with GAMMA):
-  5 of 21 changes were reported by both callers
+  5 of 22 changes were reported by both callers
 ----------------------------------------------------------------------
 
-  Gene: blaCTX-M-15
+  Gene: blaCTX-M-101
     0 SNPs in 390-876    confidence  50%  [gamma]  (not a curated resistance mutation)
 
   Gene: envZ
@@ -66,4 +75,7 @@ PROTEIN CHANGES (BLAST caller cross-checked with GAMMA):
     Y201F                confidence  50%  [blast]  (not a curated resistance mutation)
     Y210W                confidence  50%  [blast]  (not a curated resistance mutation)
     insR@308             confidence  50%  [blast]  (not a curated resistance mutation)
+
+  Gene: uhpB
+    insAS@421            confidence  50%  [blast]  (not a curated resistance mutation)
 

@@ -1,12 +1,21 @@
 Sample	Type	Gene	Allele	Method	Result_Details	Identity_Confidence	Contig	Start	End	Copy_Number	Notes
 GCA_038433285.1.fna	Chromosomal gene	acrB	acrB	BLAST	Coverage: 100.00%	99.87%	JBCEBI010000006.1	159973	163119	1	no protein changes vs reference
+GCA_038433285.1.fna	Chromosomal gene	cyaA	cyaA	BLAST	Coverage: 100.00%	100.00%	JBCEBI010000025.1	40264	42816	1	no protein changes vs reference
 GCA_038433285.1.fna	Chromosomal gene	ftsI	ftsI	BLAST	Coverage: 100.00%	99.43%	JBCEBI010000008.1	135076	136842	1	protein changes: V375A
+GCA_038433285.1.fna	Chromosomal gene	ptsI	ptsI	BLAST	Coverage: 100.00%	100.00%	JBCEBI010000010.1	162371	164098	1	no protein changes vs reference
+GCA_038433285.1.fna	Chromosomal gene	uhpB	uhpB	BLAST	Coverage: 100.00%	99.59%	JBCEBI010000021.1	14234	15715	1	protein changes: insAS@421
+GCA_038433285.1.fna	Chromosomal gene	uhpT	uhpT	BLAST	Coverage: 100.00%	100.00%	JBCEBI010000021.1	11357	12748	1	no protein changes vs reference
 GCA_038433285.1.fna	Chromosomal gene	envZ	envZ	BLAST	Coverage: 100.00%	99.85%	JBCEBI010000032.1	48555	49910	1	protein changes: I15T;I258M
+GCA_038433285.1.fna	Chromosomal gene	glpT	glpT	BLAST	Coverage: 100.00%	100.00%	JBCEBI010000015.1	16377	17723	1	no protein changes vs reference
+GCA_038433285.1.fna	Chromosomal gene	uhpC	uhpC	BLAST	Coverage: 100.00%	100.00%	JBCEBI010000021.1	12894	14222	1	no protein changes vs reference
+GCA_038433285.1.fna	Chromosomal gene	murA	murA	BLAST	Coverage: 100.00%	100.00%	JBCEBI010000002.1	86027	87286	1	no protein changes vs reference
 GCA_038433285.1.fna	Chromosomal gene	ompK35	ompK35	BLAST	Coverage: 100.00%	99.44%	JBCEBI010000004.1	258287	259366	1	no protein changes vs reference
 GCA_038433285.1.fna	Chromosomal gene	ompK36	ompK36	BLAST	Coverage: 91.58%	99.90%	JBCEBI010000038.1	1	1011	1	protein changes: M1_K31del; premature stop at residue 337 (336/367 aa); gene incomplete (contig boundary)
+GCA_038433285.1.fna	Chromosomal gene	galU	galU	BLAST	Coverage: 100.00%	100.00%	JBCEBI010000007.1	184866	185768	1	no protein changes vs reference
 GCA_038433285.1.fna	Acquired gene	blaKPC-2	blaKPC-2	BLAST	Coverage: 100.00%	100.00%	JBCEBI010000007.1	22663	23544	1	no protein changes vs reference
 GCA_038433285.1.fna	Acquired gene	blaCTX-M-15	blaCTX-M-15	BLAST	Coverage: 100.00%	100.00%	JBCEBI010000075.1	49	924	1	no protein changes vs reference
 GCA_038433285.1.fna	Acquired gene	blaSHV-12	blaSHV-like	BLAST	Coverage: 100.00%	99.42%	JBCEBI010000012.1	26892	27752	1	protein changes: S235G;K236E
+GCA_038433285.1.fna	Chromosomal gene	uhpA	uhpA	BLAST	Coverage: 100.00%	100.00%	JBCEBI010000021.1	15733	16326	1	no protein changes vs reference
 GCA_038433285.1.fna	Chromosomal gene	fosAKP	fosAKP	BLAST	Coverage: 100.00%	98.81%	JBCEBI010000026.1	13910	14329	1	protein changes: I91V;Q130P;D138E
 GCA_038433285.1.fna	Protein change	blaSHV-12	-	blast+gamma	K236E	100%	JBCEBI010000012.1	-	-	-	reported as resistance mutation
 GCA_038433285.1.fna	Protein change	blaSHV-12	-	blast+gamma	S235G	100%	JBCEBI010000012.1	-	-	-	reported as resistance mutation
@@ -17,4 +26,5 @@ GCA_038433285.1.fna	Protein change	fosAKP	-	blast+gamma	I91V	100%	JBCEBI01000002
 GCA_038433285.1.fna	Protein change	fosAKP	-	blast+gamma	Q130P	100%	JBCEBI010000026.1	-	-	-	sequence difference, not a curated resistance mutation
 GCA_038433285.1.fna	Protein change	ftsI	-	blast+gamma	V375A	100%	JBCEBI010000008.1	-	-	-	sequence difference, not a curated resistance mutation
 GCA_038433285.1.fna	Protein change	ompK36	-	blast	M1_K31del	50%	JBCEBI010000038.1	-	-	-	sequence difference, not a curated resistance mutation
+GCA_038433285.1.fna	Protein change	uhpB	-	blast	insAS@421	50%	JBCEBI010000021.1	-	-	-	sequence difference, not a curated resistance mutation
 GCA_038433285.1.fna	Amplicon	blaKPC_ver	-	SeqKit/amplicon	Length: 882bp	-	JBCEBI010000007.1	22662	23544	-	Genes in region: blaKPC-2: no changes

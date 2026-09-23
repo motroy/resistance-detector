@@ -1,12 +1,21 @@
 Sample	Type	Gene	Allele	Method	Result_Details	Identity_Confidence	Contig	Start	End	Copy_Number	Notes
 KP2_I_04.fna	Chromosomal gene	acrB	acrB	BLAST	Coverage: 100.00%	99.84%	RHTG01000004.1	151588	154734	1	no protein changes vs reference
+KP2_I_04.fna	Chromosomal gene	cyaA	cyaA	BLAST	Coverage: 100.00%	99.84%	RHTG01000026.1	33375	35927	1	no protein changes vs reference
 KP2_I_04.fna	Chromosomal gene	ftsI	ftsI	BLAST	Coverage: 100.00%	99.49%	RHTG01000013.1	68757	70523	1	protein changes: V375A
+KP2_I_04.fna	Chromosomal gene	ptsI	ptsI	BLAST	Coverage: 100.00%	99.65%	RHTG01000007.1	8560	10287	1	no protein changes vs reference
+KP2_I_04.fna	Chromosomal gene	uhpB	uhpB	BLAST	Coverage: 100.00%	99.06%	RHTG01000027.1	61759	63240	1	protein changes: W15G;L65F;insAS@421
+KP2_I_04.fna	Chromosomal gene	uhpT	uhpT	BLAST	Coverage: 100.00%	99.57%	RHTG01000027.1	64726	66117	1	no protein changes vs reference
+KP2_I_04.fna	Chromosomal gene	glpT	glpT	BLAST	Coverage: 100.00%	99.63%	RHTG01000002.1	162454	163800	1	no protein changes vs reference
 KP2_I_04.fna	Chromosomal gene	envZ	envZ	BLAST	Coverage: 100.00%	98.97%	RHTG01000031.1	9798	11153	1	protein changes: I15T;I258M;A443T
+KP2_I_04.fna	Chromosomal gene	uhpC	uhpC	BLAST	Coverage: 100.00%	99.40%	RHTG01000027.1	63252	64580	1	no protein changes vs reference
+KP2_I_04.fna	Chromosomal gene	murA	murA	BLAST	Coverage: 100.00%	99.60%	RHTG01000022.1	62009	63268	1	no protein changes vs reference
 KP2_I_04.fna	Chromosomal gene	ompK36	ompK36	BLAST	Coverage: 100.00%	98.92%	RHTG01000002.1	180081	181190	1	protein changes: insDT@134;V178P;H349R
+KP2_I_04.fna	Chromosomal gene	galU	galU	BLAST	Coverage: 100.00%	99.78%	RHTG01000001.1	373619	374521	1	no protein changes vs reference
 KP2_I_04.fna	Acquired gene	blaCTX-M-15	blaCTX-M-15	BLAST	Coverage: 100.00%	100.00%	RHTG01000038.1	39129	40004	1	no protein changes vs reference
 KP2_I_04.fna	Acquired gene	blaSHV-12	blaSHV-like	BLAST	Coverage: 100.00%	99.42%	RHTG01000009.1	180326	181186	1	protein changes: S235G;K236E
 KP2_I_04.fna	Acquired gene	blaNDM-5	blaNDM-5	BLAST	Coverage: 100.00%	100.00%	RHTG01000056.1	5725	6537	1	no protein changes vs reference
 KP2_I_04.fna	Acquired gene	blaOXA-181	blaOXA-181	BLAST	Coverage: 100.00%	100.00%	RHTG01000003.1	281041	281838	1	no protein changes vs reference
+KP2_I_04.fna	Chromosomal gene	uhpA	uhpA	BLAST	Coverage: 100.00%	99.50%	RHTG01000027.1	61148	61741	1	no protein changes vs reference
 KP2_I_04.fna	Chromosomal gene	fosAKP	fosAKP	BLAST	Coverage: 98.33%	97.34%	RHTG01000040.1	22500	22912	1	protein changes: Q130P;insE@137;Q139E
 KP2_I_04.fna	Protein change	blaSHV-12	-	blast+gamma	K236E	100%	RHTG01000009.1	-	-	-	reported as resistance mutation
 KP2_I_04.fna	Protein change	blaSHV-12	-	blast+gamma	S235G	100%	RHTG01000009.1	-	-	-	reported as resistance mutation
@@ -26,3 +35,6 @@ KP2_I_04.fna	Protein change	ompK35	-	gamma	truncation at codon 286 (of 319 codon
 KP2_I_04.fna	Protein change	ompK36	-	blast+gamma	H349R	100%	RHTG01000002.1	-	-	-	sequence difference, not a curated resistance mutation
 KP2_I_04.fna	Protein change	ompK36	-	blast+gamma	V178P	100%	RHTG01000002.1	-	-	-	sequence difference, not a curated resistance mutation
 KP2_I_04.fna	Protein change	ompK36	-	blast	insDT@134	50%	RHTG01000002.1	-	-	-	sequence difference, not a curated resistance mutation
+KP2_I_04.fna	Protein change	uhpB	-	blast+gamma	L65F	100%	RHTG01000027.1	-	-	-	sequence difference, not a curated resistance mutation
+KP2_I_04.fna	Protein change	uhpB	-	blast+gamma	W15G	100%	RHTG01000027.1	-	-	-	sequence difference, not a curated resistance mutation
+KP2_I_04.fna	Protein change	uhpB	-	blast	insAS@421	50%	RHTG01000027.1	-	-	-	sequence difference, not a curated resistance mutation

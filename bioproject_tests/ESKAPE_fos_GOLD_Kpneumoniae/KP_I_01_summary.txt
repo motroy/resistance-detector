@@ -15,7 +15,7 @@ PREDICTED PHENOTYPES (genotype-based):
     - Metallo-beta-lactamase blaNDM-1 detected (100.00% identity) - avibactam does not inhibit metallo-enzymes, so ceftazidime-avibactam is not active
   Note: Genotype-based prediction only; not a substitute for phenotypic antimicrobial susceptibility testing (AST).
 
-Total genes detected: 10
+Total genes detected: 19
 Method: BLAST+ with codon-aware variant calling
 
 ACQUIRED RESISTANCE GENES:
@@ -29,15 +29,24 @@ ACQUIRED RESISTANCE GENES:
 CHROMOSOMAL TARGET GENES:
 --------------------------------------------------
   acrB (copy number 1): 99.87% identity, 100.00% coverage
+  cyaA (copy number 1): 99.65% identity, 100.00% coverage
   ftsI (copy number 1): 99.66% identity, 100.00% coverage
+  ptsI (copy number 1): 99.77% identity, 100.00% coverage
+  uhpB (copy number 1): 98.78% identity, 100.00% coverage
+  uhpT (copy number 1): 99.57% identity, 100.00% coverage
   envZ (copy number 1): 99.48% identity, 100.00% coverage
+  glpT (copy number 1): 99.63% identity, 100.00% coverage
+  uhpC (copy number 1): 99.32% identity, 100.00% coverage
+  murA (copy number 1): 99.60% identity, 100.00% coverage
   ompK35 (copy number 1): 99.44% identity, 100.00% coverage
     Loss of function: premature stop at residue 73 (72/359 aa)
   ompK36 (copy number 1): 94.81% identity, 100.00% coverage
+  galU (copy number 1): 99.89% identity, 100.00% coverage
+  uhpA (copy number 1): 99.50% identity, 100.00% coverage
   fosAKP (copy number 1): 99.52% identity, 100.00% coverage
 
 PROTEIN CHANGES (BLAST caller cross-checked with GAMMA):
-  9 of 26 changes were reported by both callers
+  12 of 30 changes were reported by both callers
 ----------------------------------------------------------------------
 
   Gene: blaSHV-12
@@ -77,4 +86,14 @@ PROTEIN CHANGES (BLAST caller cross-checked with GAMMA):
     Y210W                confidence  50%  [blast]  (not a curated resistance mutation)
     insGD@133            confidence  50%  [blast]  (not a curated resistance mutation)
     insR@308             confidence  50%  [blast]  (not a curated resistance mutation)
+
+  Gene: ptsI
+    K174N                confidence 100%  [blast+gamma]  (not a curated resistance mutation)
+
+  Gene: uhpB
+    L65F                 confidence 100%  [blast+gamma]  (not a curated resistance mutation)
+    insAS@421            confidence  50%  [blast]  (not a curated resistance mutation)
+
+  Gene: uhpC
+    L336M                confidence 100%  [blast+gamma]  (not a curated resistance mutation)
 

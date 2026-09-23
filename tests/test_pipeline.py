@@ -172,6 +172,74 @@ class TestFosfomycin:
         assert any('contig boundary' in item for item in prediction['evidence'])
 
 
+class TestKlebsiellaPneumoniaeFosfomycinTransportGenes:
+    """K. pneumoniae-specific references for the fosfomycin transport genes.
+
+    The E. coli-sourced uhpT/uhpA/uhpB/uhpC/glpT/cyaA/ptsI/galU/murA
+    references are only 84-89% identical to the K. pneumoniae ortholog -
+    below the 90% default detection threshold - so these genes were
+    previously invisible to the detector for this species (see
+    bioproject_tests/ESKAPE_fos_GOLD_Kpneumoniae/RESULTS_SUMMARY.md). A
+    second, K. pneumoniae-specific reference is stored under its own name
+    (``uhpT_Kpn`` etc.) and mapped back to the canonical gene name
+    (fos_cazavi.references.GENE_ALIASES) so every check downstream - the
+    Gene column, FOS_TRANSPORT_GENES membership, loss-of-function reporting -
+    behaves exactly as it does for the E. coli reference.
+    """
+
+    def test_intact_kp_uhpt_is_reported_under_the_canonical_name(
+            self, tmp_path, database, reference_cds):
+        _, results = run(tmp_path, database,
+                         {'contig1': embed(reference_cds['uhpT_Kpn'])},
+                         organism='Klebsiella_pneumoniae')
+        gene = find(results, 'uhpT')
+        assert gene is not None
+        assert gene['identity'] == '100.00'
+        assert not gene['loss_of_function']
+        assert predict_phenotypes(
+            results, organism='Klebsiella_pneumoniae')['fosfomycin']['phenotype'] == 'Susceptible'
+
+    def test_nonsense_mutation_in_kp_uhpb_is_resistant(
+            self, tmp_path, database, reference_cds):
+        # Mirrors the real finding in KP_R_02/KP_R_05 (ESKAPE-fosfomycin GOLD
+        # validation set): a premature stop truncating UhpB, the sensor
+        # kinase that induces uhpT expression, independently confirmed by
+        # GAMMA in both isolates.
+        broken = substitute(reference_cds['uhpB_Kpn'], 100, '*')
+        _, results = run(tmp_path, database, {'contig1': embed(broken)},
+                         organism='Klebsiella_pneumoniae')
+        gene = find(results, 'uhpB')
+        assert gene is not None and gene['loss_of_function']
+        prediction = predict_phenotypes(results, organism='Klebsiella_pneumoniae')['fosfomycin']
+        assert prediction['phenotype'] == 'Resistant'
+        assert any('uhpB' in item for item in prediction['evidence'])
+
+    def test_nonsense_mutation_in_kp_glpt_is_resistant(
+            self, tmp_path, database, reference_cds):
+        # Mirrors the real finding in GCA_027152445.1 (PRJNA781811 set).
+        broken = substitute(reference_cds['glpT_Kpn'], 100, '*')
+        _, results = run(tmp_path, database, {'contig1': embed(broken)},
+                         organism='Klebsiella_pneumoniae')
+        gene = find(results, 'glpT')
+        assert gene is not None and gene['loss_of_function']
+        prediction = predict_phenotypes(results, organism='Klebsiella_pneumoniae')['fosfomycin']
+        assert prediction['phenotype'] == 'Resistant'
+        assert any('glpT' in item for item in prediction['evidence'])
+
+    def test_ec_and_kp_references_do_not_double_count_the_same_locus(
+            self, tmp_path, database, reference_cds):
+        # A genome only ever carries one copy of uhpT; whichever reference
+        # matches best should be the only one reported; the redundancy filter
+        # (by bitscore, before the alias mapping is even applied) already
+        # guarantees this; this test guards it staying true now that a locus
+        # can match two differently-named references instead of one.
+        _, results = run(tmp_path, database,
+                         {'contig1': embed(reference_cds['uhpT_Kpn'])},
+                         organism='Klebsiella_pneumoniae')
+        matches = [r for r in results if r['gene'] == 'uhpT']
+        assert len(matches) == 1
+
+
 class TestOutputs:
     def test_summary_files_are_written_and_parsable(
             self, tmp_path, database, reference_cds):
@@ -459,6 +527,44 @@ class TestAlleleNamingHonesty:
         _, results = run(tmp_path, database, {'contig1': embed(altered)})
         hit = next(r for r in results if r['gene'].startswith('blaIMP'))
         assert hit['allele'] == 'blaIMP-like'
+
+
+class TestCtxMAndVebFamilyCoverage:
+    """blaCTX-M was previously represented by one group-1 reference
+    (CTX-M-15); a real isolate in the ESKAPE-fosfomycin GOLD set carries
+    CTX-M-65 (group 9, ~80% nucleotide identity to CTX-M-15) and was
+    invisible to this tool until cross-checked against Kleborate's
+    independent CARD-based calls (see
+    bioproject_tests/Kleborate_cross_check/RESULTS_SUMMARY.md). blaVEB was
+    entirely absent, found the same way (VEB-1).
+    """
+
+    def test_group9_ctx_m_is_detected_and_named_exactly(
+            self, tmp_path, database, reference_cds):
+        _, results = run(tmp_path, database, {'contig1': embed(reference_cds['blaCTX-M-65'])})
+        hit = find(results, 'blaCTX-M-65')
+        assert hit is not None
+        assert hit['allele'] == 'blaCTX-M-65'
+
+    def test_group9_ctx_m_amplifies_porin_loss_same_as_group1(
+            self, tmp_path, database, reference_cds):
+        # PERMEABILITY_AMPLIFIED_FAMILIES keys on gene_family(), which strips
+        # the allele number regardless of phylogenetic group - CTX-M-65 must
+        # contribute contributory CAZ/AVI evidence exactly like CTX-M-15 does.
+        broken_porin = substitute(reference_cds['ompK36'], 60, '*')
+        _, results = run(tmp_path, database, {
+            'contig1': embed(reference_cds['blaCTX-M-65']),
+            'contig2': embed(broken_porin),
+        }, organism='Klebsiella_pneumoniae')
+        prediction = predict_phenotypes(
+            results, organism='Klebsiella_pneumoniae')['ceftazidime_avibactam']
+        assert prediction['phenotype'] == 'Indeterminate'
+        assert any('ompK36' in item for item in prediction['evidence'])
+
+    def test_veb_is_detected(self, tmp_path, database, reference_cds):
+        _, results = run(tmp_path, database, {'contig1': embed(reference_cds['blaVEB-1'])})
+        hit = find(results, 'blaVEB-1')
+        assert hit is not None
 
 
 class TestPorinAmplification:

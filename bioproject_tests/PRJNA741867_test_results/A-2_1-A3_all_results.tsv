@@ -1,12 +1,21 @@
 Sample	Type	Gene	Allele	Method	Result_Details	Identity_Confidence	Contig	Start	End	Copy_Number	Notes
 A-2_1-A3.fna	Chromosomal gene	acrB	acrB	BLAST	Coverage: 100.00%	99.94%	JAHUYZ010000002.1	252618	255764	1	no protein changes vs reference
+A-2_1-A3.fna	Chromosomal gene	cyaA	cyaA	BLAST	Coverage: 100.00%	99.77%	JAHUYZ010000024.1	43569	46121	1	no protein changes vs reference
 A-2_1-A3.fna	Chromosomal gene	ftsI	ftsI	BLAST	Coverage: 100.00%	99.77%	JAHUYZ010000004.1	135170	136936	1	protein changes: V375A
+A-2_1-A3.fna	Chromosomal gene	ptsI	ptsI	BLAST	Coverage: 100.00%	99.88%	JAHUYZ010000012.1	168983	170710	1	no protein changes vs reference
+A-2_1-A3.fna	Chromosomal gene	uhpB	uhpB	BLAST	Coverage: 100.00%	98.92%	JAHUYZ010000005.1	181768	183249	1	protein changes: L65F;insAS@421
+A-2_1-A3.fna	Chromosomal gene	uhpT	uhpT	BLAST	Coverage: 100.00%	99.42%	JAHUYZ010000005.1	178891	180282	1	no protein changes vs reference
+A-2_1-A3.fna	Chromosomal gene	glpT	glpT	BLAST	Coverage: 100.00%	99.56%	JAHUYZ010000008.1	92324	93670	1	no protein changes vs reference
 A-2_1-A3.fna	Chromosomal gene	envZ	envZ	BLAST	Coverage: 100.00%	99.04%	JAHUYZ010000009.1	153951	155306	1	protein changes: I15T;I258M
+A-2_1-A3.fna	Chromosomal gene	uhpC	uhpC	BLAST	Coverage: 100.00%	99.40%	JAHUYZ010000005.1	180428	181756	1	no protein changes vs reference
+A-2_1-A3.fna	Chromosomal gene	murA	murA	BLAST	Coverage: 100.00%	99.60%	JAHUYZ010000003.1	236088	237347	1	no protein changes vs reference
 A-2_1-A3.fna	Chromosomal gene	ompK35	ompK35	BLAST	Coverage: 100.00%	99.35%	JAHUYZ010000007.1	41172	42251	1	no protein changes vs reference
+A-2_1-A3.fna	Chromosomal gene	galU	galU	BLAST	Coverage: 100.00%	99.78%	JAHUYZ010000006.1	239029	239931	1	protein changes: R9T
 A-2_1-A3.fna	Acquired gene	blaCTX-M-15	blaCTX-M-15	BLAST	Coverage: 100.00%	100.00%	JAHUYZ010000038.1	654	1529	1	no protein changes vs reference
 A-2_1-A3.fna	Acquired gene	blaKPC-2	blaKPC-46	BLAST	Coverage: 100.00%	99.77%	JAHUYZ010000039.1	13052	13933	1	protein changes: L169P;H274Y
 A-2_1-A3.fna	Chromosomal gene	ompK36	ompK36	BLAST	Coverage: 100.00%	92.62%	JAHUYZ010000008.1	74925	76043	1	protein changes: A183T;L184del;T192G;Y201F;N221H;L225N;S230del;K231R;A233D;L234K;insF@268;A269S;S271N;insGESDSI@271;L272S;L307I;I315L;D344E;S346D;H349R;N350R
 A-2_1-A3.fna	Acquired gene	blaSHV-12	blaSHV-like	BLAST	Coverage: 100.00%	98.95%	JAHUYZ010000001.1	272420	273280	1	protein changes: Y3F;Q31L;S235G;K236E
+A-2_1-A3.fna	Chromosomal gene	uhpA	uhpA	BLAST	Coverage: 100.00%	99.33%	JAHUYZ010000005.1	183267	183860	1	no protein changes vs reference
 A-2_1-A3.fna	Chromosomal gene	fosAKP	fosAKP	BLAST	Coverage: 100.00%	99.76%	JAHUYZ010000021.1	22809	23228	1	protein changes: Q130P
 A-2_1-A3.fna	Protein change	blaKPC-2	-	blast+gamma	H274Y	100%	JAHUYZ010000039.1	-	-	-	reported as resistance mutation
 A-2_1-A3.fna	Protein change	blaKPC-2	-	blast+gamma	L169P	100%	JAHUYZ010000039.1	-	-	-	reported as resistance mutation
@@ -18,6 +27,7 @@ A-2_1-A3.fna	Protein change	envZ	-	blast+gamma	I15T	100%	JAHUYZ010000009.1	-	-	-
 A-2_1-A3.fna	Protein change	envZ	-	blast+gamma	I258M	100%	JAHUYZ010000009.1	-	-	-	sequence difference, not a curated resistance mutation
 A-2_1-A3.fna	Protein change	fosAKP	-	blast+gamma	Q130P	100%	JAHUYZ010000021.1	-	-	-	sequence difference, not a curated resistance mutation
 A-2_1-A3.fna	Protein change	ftsI	-	blast+gamma	V375A	100%	JAHUYZ010000004.1	-	-	-	sequence difference, not a curated resistance mutation
+A-2_1-A3.fna	Protein change	galU	-	blast+gamma	R9T	100%	JAHUYZ010000006.1	-	-	-	sequence difference, not a curated resistance mutation
 A-2_1-A3.fna	Protein change	ompK36	-	blast	A183T	50%	JAHUYZ010000008.1	-	-	-	sequence difference, not a curated resistance mutation
 A-2_1-A3.fna	Protein change	ompK36	-	blast	A233D	50%	JAHUYZ010000008.1	-	-	-	sequence difference, not a curated resistance mutation
 A-2_1-A3.fna	Protein change	ompK36	-	blast	A269S	50%	JAHUYZ010000008.1	-	-	-	sequence difference, not a curated resistance mutation
@@ -39,4 +49,6 @@ A-2_1-A3.fna	Protein change	ompK36	-	blast	T192G	50%	JAHUYZ010000008.1	-	-	-	seq
 A-2_1-A3.fna	Protein change	ompK36	-	blast	Y201F	50%	JAHUYZ010000008.1	-	-	-	sequence difference, not a curated resistance mutation
 A-2_1-A3.fna	Protein change	ompK36	-	blast	insF@268	50%	JAHUYZ010000008.1	-	-	-	sequence difference, not a curated resistance mutation
 A-2_1-A3.fna	Protein change	ompK36	-	blast	insGESDSI@271	50%	JAHUYZ010000008.1	-	-	-	sequence difference, not a curated resistance mutation
+A-2_1-A3.fna	Protein change	uhpB	-	blast+gamma	L65F	100%	JAHUYZ010000005.1	-	-	-	sequence difference, not a curated resistance mutation
+A-2_1-A3.fna	Protein change	uhpB	-	blast	insAS@421	50%	JAHUYZ010000005.1	-	-	-	sequence difference, not a curated resistance mutation
 A-2_1-A3.fna	Amplicon	blaKPC_ver	-	SeqKit/amplicon	Length: 882bp	-	JAHUYZ010000039.1	13051	13933	-	Genes in region: blaKPC-46: L169P;H274Y

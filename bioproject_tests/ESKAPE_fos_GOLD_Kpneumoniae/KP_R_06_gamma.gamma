@@ -1,9 +1,19 @@
 Gene	Contig	Start	Stop	Match_Type	Description	Codon_Changes	BP_Changes	Transversions	Codon_Percent	BP_Percent	Percent_Length	Match_Length	Target_Length	Strand
 acrB	NZ_LXNB01000002.1	234425	237572	Native	No coding mutations	0	4	1	1	0.9987	1	3147	3147	-
 ompK35	NZ_LXNB01000003.1	130214	131295	Indel Truncation	1 bp Insertion at 123,truncation at codon 89 (of 360 codons),312 coding mutations	312	7	0	0.1333	0.9935	1.001	1081	1080	-
+murA_Kpn	NZ_LXNB01000005.1	86239	87499	Native	No coding mutations	0	0	0	1	1	1	1260	1260	+
 ftsI	NZ_LXNB01000006.1	219987	221754	Mutant	V375A,	1	10	1	0.9983	0.9943	1	1767	1767	+
 fosAKP	NZ_LXNB01000006.1	14076	14496	Mutant	I91V,Q130P,D138E,	3	5	3	0.9786	0.9881	1	420	420	+
 ompK36	NZ_LXNB01000008.1	197833	198943	Indel	6 bp Insertion at 406,	2	7	0	0.9946	0.9937	1.005	1110	1104	-
+glpT_Kpn	NZ_LXNB01000008.1	215222	216070	Contig Edge (truncation)	93 SNPs in 500-1347,39 coding mutations,truncation at codon 178 (of 282 codons)	206	592	61	0.5412	0.5605	0.6295	848	1347	-
+galU_Kpn	NZ_LXNB01000010.1	148208	149111	Native	No coding mutations	0	2	0	1	0.9978	1	903	903	-
 envZ	NZ_LXNB01000011.1	153894	155250	Mutant	I15T,I258M,	2	2	1	0.9956	0.9985	1	1356	1356	+
+ptsI_Kpn	NZ_LXNB01000012.1	119382	121110	Native	No coding mutations	0	0	0	1	1	1	1728	1728	+
+uhpT_Kpn	NZ_LXNB01000021.1	10493	11885	Native	No coding mutations	0	0	0	1	1	1	1392	1392	-
+uhpC_Kpn	NZ_LXNB01000021.1	12030	13359	Native	No coding mutations	0	0	0	1	1	1	1329	1329	-
+uhpB_Kpn	NZ_LXNB01000021.1	13370	14852	Indel	6 bp Insertion at 1272,	2	6	0	0.9959	0.9959	1.004	1482	1476	-
+uhpA_Kpn	NZ_LXNB01000021.1	14869	15463	Native	No coding mutations	0	0	0	1	1	1	594	594	-
+cyaA_Kpn	NZ_LXNB01000027.1	26428	28981	Native	No coding mutations	0	0	0	1	1	1	2553	2553	+
 blaKPC-2	NZ_LXNB01000034.1	27617	28499	Native	No coding mutations	0	0	0	1	1	1	882	882	+
+blaVEB-1	NZ_LXNB01000063.1	4847	5747	Native	No coding mutations	0	0	0	1	1	1	900	900	-
 blaSHV-12	NZ_LXNB01000133.1	23	722	Contig Edge	1 SNPs in 1-699,	54	163	0	0.8118	0.8107	0.8118	699	861	+

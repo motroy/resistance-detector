@@ -1,11 +1,20 @@
 Sample	Type	Gene	Allele	Method	Result_Details	Identity_Confidence	Contig	Start	End	Copy_Number	Notes
 KP2_R_10.fna	Chromosomal gene	acrB	acrB	BLAST	Coverage: 100.00%	99.81%	CACSEH010000001.1	452211	455357	1	no protein changes vs reference
+KP2_R_10.fna	Chromosomal gene	cyaA	cyaA	BLAST	Coverage: 100.00%	99.53%	CACSEH010000016.1	40495	43047	1	no protein changes vs reference
 KP2_R_10.fna	Chromosomal gene	ftsI	ftsI	BLAST	Coverage: 100.00%	99.49%	CACSEH010000008.1	203673	205439	1	protein changes: V375A
+KP2_R_10.fna	Chromosomal gene	ptsI	ptsI	BLAST	Coverage: 100.00%	99.71%	CACSEH010000010.1	223392	225119	1	no protein changes vs reference
+KP2_R_10.fna	Chromosomal gene	uhpB	uhpB	BLAST	Coverage: 100.00%	99.06%	CACSEH010000014.1	86550	88031	1	protein changes: L65F;I77M;insAS@421
+KP2_R_10.fna	Chromosomal gene	uhpT	uhpT	BLAST	Coverage: 100.00%	99.50%	CACSEH010000014.1	89517	90908	1	no protein changes vs reference
 KP2_R_10.fna	Chromosomal gene	envZ	envZ	BLAST	Coverage: 100.00%	99.56%	CACSEH010000007.1	48755	50110	1	protein changes: I15T;I258M
+KP2_R_10.fna	Chromosomal gene	glpT	glpT	BLAST	Coverage: 100.00%	99.56%	CACSEH010000003.1	357482	358828	1	no protein changes vs reference
+KP2_R_10.fna	Chromosomal gene	uhpC	uhpC	BLAST	Coverage: 100.00%	99.40%	CACSEH010000014.1	88043	89371	1	protein changes: G309S
+KP2_R_10.fna	Chromosomal gene	murA	murA	BLAST	Coverage: 100.00%	99.44%	CACSEH010000006.1	307106	308365	1	no protein changes vs reference
 KP2_R_10.fna	Chromosomal gene	ompK35	ompK35	BLAST	Coverage: 100.00%	99.35%	CACSEH010000002.1	420857	421935	1	protein changes: G62A;L63_F359del; premature stop at residue 63 (62/359 aa)
 KP2_R_10.fna	Chromosomal gene	ompK36	ompK36	BLAST	Coverage: 100.00%	95.32%	CACSEH010000003.1	340119	341216	1	protein changes: L184_P186del;T192G;A193W;L194S;Y201F;Y210W;N221H;L225T;G226D;D227E;K231V;L232P;T258S;insR@308;H349R
+KP2_R_10.fna	Chromosomal gene	galU	galU	BLAST	Coverage: 100.00%	99.67%	CACSEH010000009.1	144114	145016	1	no protein changes vs reference
 KP2_R_10.fna	Acquired gene	blaVIM-1	blaVIM-1	BLAST	Coverage: 100.00%	100.00%	CACSEH010000028.1	3684	4484	1	no protein changes vs reference
 KP2_R_10.fna	Acquired gene	blaSHV-12	blaSHV-like	BLAST	Coverage: 89.31%	99.09%	CACSEH010000054.1	1	769	1	protein changes: M1K;Y3_R57del;A59_T178del;T179K;S182_V213del;A214V;L217R;I218R;R219H;S220_A229del;K231R;T232N;A234S;S235G;K236Q;G238_G247del;N249H;N250_K251del;E254D;I256L;V257A;V258_W286del;Q287R; premature stop at residue 29 (28/286 aa); gene incomplete (contig boundary)
+KP2_R_10.fna	Chromosomal gene	uhpA	uhpA	BLAST	Coverage: 100.00%	98.99%	CACSEH010000014.1	85939	86532	1	no protein changes vs reference
 KP2_R_10.fna	Chromosomal gene	fosAKP	fosAKP	BLAST	Coverage: 100.00%	95.71%	CACSEH010000008.1	13283	13702	1	protein changes: A86V;I91V;Q130P;Q139E
 KP2_R_10.fna	Protein change	blaSHV-12	-	blast	A214V	50%	CACSEH010000054.1	-	-	-	reported as resistance mutation
 KP2_R_10.fna	Protein change	blaSHV-12	-	blast	A234S	50%	CACSEH010000054.1	-	-	-	reported as resistance mutation
@@ -56,3 +65,7 @@ KP2_R_10.fna	Protein change	ompK36	-	blast	T258S	50%	CACSEH010000003.1	-	-	-	seq
 KP2_R_10.fna	Protein change	ompK36	-	blast	Y201F	50%	CACSEH010000003.1	-	-	-	sequence difference, not a curated resistance mutation
 KP2_R_10.fna	Protein change	ompK36	-	blast	Y210W	50%	CACSEH010000003.1	-	-	-	sequence difference, not a curated resistance mutation
 KP2_R_10.fna	Protein change	ompK36	-	blast	insR@308	50%	CACSEH010000003.1	-	-	-	sequence difference, not a curated resistance mutation
+KP2_R_10.fna	Protein change	uhpB	-	blast+gamma	I77M	100%	CACSEH010000014.1	-	-	-	sequence difference, not a curated resistance mutation
+KP2_R_10.fna	Protein change	uhpB	-	blast+gamma	L65F	100%	CACSEH010000014.1	-	-	-	sequence difference, not a curated resistance mutation
+KP2_R_10.fna	Protein change	uhpB	-	blast	insAS@421	50%	CACSEH010000014.1	-	-	-	sequence difference, not a curated resistance mutation
+KP2_R_10.fna	Protein change	uhpC	-	blast+gamma	G309S	100%	CACSEH010000014.1	-	-	-	sequence difference, not a curated resistance mutation

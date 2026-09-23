@@ -10,6 +10,7 @@ E1923.fna	Chromosomal gene	murA	murA	BLAST	Coverage: 100.00%	98.81%	NZ_JAWWVL010
 E1923.fna	Chromosomal gene	ompF	ompF	BLAST	Coverage: 100.00%	100.00%	NZ_JAWWVL010000006.1	106650	107738	1	no protein changes vs reference
 E1923.fna	Chromosomal gene	ompC	ompC	BLAST	Coverage: 100.00%	94.98%	NZ_JAWWVL010000001.1	211348	212451	1	protein changes: N176S;P177V;G181_S184del;V186M;G216A;I218V;L296V;insGVIN@306;G309N
 E1923.fna	Chromosomal gene	galU	galU	BLAST	Coverage: 100.00%	99.67%	NZ_JAWWVL010000002.1	180028	180936	1	no protein changes vs reference
+E1923.fna	Acquired gene	blaCTX-M-65	blaCTX-M-65	BLAST	Coverage: 100.00%	100.00%	NZ_JAWWVL010000077.1	2810	3685	1	no protein changes vs reference
 E1923.fna	Acquired gene	blaNDM-9	blaNDM-9	BLAST	Coverage: 100.00%	100.00%	NZ_JAWWVL010000069.1	4862	5674	1	no protein changes vs reference
 E1923.fna	Chromosomal gene	uhpA	uhpA	BLAST	Coverage: 100.00%	97.29%	NZ_JAWWVL010000017.1	20247	20837	1	no protein changes vs reference
 E1923.fna	Acquired gene	fosA3	fosA3	BLAST	Coverage: 100.00%	100.00%	NZ_JAWWVL010000085.1	1869	2285	1	no protein changes vs reference

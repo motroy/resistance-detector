@@ -15,31 +15,36 @@ PREDICTED PHENOTYPES (genotype-based):
     - No ceftazidime-avibactam resistance mechanism detected (no metallo-beta-lactamase, no blaKPC escape variant, no contributory porin/PBP3/EnvZ change)
   Note: Genotype-based prediction only; not a substitute for phenotypic antimicrobial susceptibility testing (AST).
 
-Total genes detected: 8
+Total genes detected: 17
 Method: BLAST+ with codon-aware variant calling
 
 ACQUIRED RESISTANCE GENES:
 --------------------------------------------------
-  blaCTX-M-like (gene blaCTX-M-15, copy number 1): 99.89% identity, 100.00% coverage
-    Protein changes vs blaCTX-M-15: G243D
+  blaCTX-M-3 (gene blaCTX-M-3, copy number 1): 100.00% identity, 100.00% coverage
   blaSHV-like (gene blaSHV-12, copy number 1): 99.30% identity, 100.00% coverage
     Protein changes vs blaSHV-12: S235G, K236E
 
 CHROMOSOMAL TARGET GENES:
 --------------------------------------------------
   acrB (copy number 1): 99.87% identity, 100.00% coverage
+  cyaA (copy number 1): 99.61% identity, 100.00% coverage
   ftsI (copy number 1): 99.49% identity, 100.00% coverage
+  ptsI (copy number 1): 99.83% identity, 100.00% coverage
+  uhpB (copy number 1): 98.99% identity, 100.00% coverage
+  uhpT (copy number 1): 99.64% identity, 100.00% coverage
   envZ (copy number 1): 99.41% identity, 100.00% coverage
+  glpT (copy number 1): 99.56% identity, 100.00% coverage
+  uhpC (copy number 1): 99.40% identity, 100.00% coverage
+  murA (copy number 1): 99.68% identity, 100.00% coverage
   ompK35 (copy number 1): 99.63% identity, 100.00% coverage
+  galU (copy number 1): 99.67% identity, 100.00% coverage
   ompK36 (copy number 1): 92.80% identity, 100.00% coverage
+  uhpA (copy number 1): 98.82% identity, 100.00% coverage
   fosAKP (copy number 1): 95.71% identity, 100.00% coverage
 
 PROTEIN CHANGES (BLAST caller cross-checked with GAMMA):
-  6 of 33 changes were reported by both callers
+  7 of 35 changes were reported by both callers
 ----------------------------------------------------------------------
-
-  Gene: blaCTX-M-15
-    G243D                confidence 100%  [blast+gamma]
 
   Gene: blaSHV-12
     K236E                confidence 100%  [blast+gamma]
@@ -84,4 +89,9 @@ PROTEIN CHANGES (BLAST caller cross-checked with GAMMA):
     Y201F                confidence  50%  [blast]  (not a curated resistance mutation)
     insF@268             confidence  50%  [blast]  (not a curated resistance mutation)
     insGESDSI@271        confidence  50%  [blast]  (not a curated resistance mutation)
+
+  Gene: uhpB
+    D383G                confidence 100%  [blast+gamma]  (not a curated resistance mutation)
+    L65S                 confidence 100%  [blast+gamma]  (not a curated resistance mutation)
+    insAS@421            confidence  50%  [blast]  (not a curated resistance mutation)
 

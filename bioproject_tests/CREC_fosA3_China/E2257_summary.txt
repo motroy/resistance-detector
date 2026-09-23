@@ -12,7 +12,7 @@ PREDICTED PHENOTYPES (genotype-based):
   Fosfomycin (FOS): Resistant
     - Acquired fosfomycin-modifying enzyme fosA3 (100.00% identity, 100.00% coverage)
   Ceftazidime-Avibactam (CAZ/AVI): Indeterminate
-    - Loss of function in porin ompF (premature stop at residue 257 (256/362 aa)) alongside blaCMY-2, blaCTX-M-15: reduced drug entry combined with beta-lactamase activity is a documented route to raised ceftazidime-avibactam MICs, though it is not on its own established as conferring resistance
+    - Loss of function in porin ompF (premature stop at residue 257 (256/362 aa)) alongside blaCMY-2, blaCTX-M-55: reduced drug entry combined with beta-lactamase activity is a documented route to raised ceftazidime-avibactam MICs, though it is not on its own established as conferring resistance
   Note: Genotype-based prediction only; not a substitute for phenotypic antimicrobial susceptibility testing (AST).
 
 Total genes detected: 14
@@ -21,8 +21,7 @@ Method: BLAST+ with codon-aware variant calling
 ACQUIRED RESISTANCE GENES:
 --------------------------------------------------
   blaCMY-2 (gene blaCMY-2, copy number 1): 100.00% identity, 100.00% coverage
-  blaCTX-M-like (gene blaCTX-M-15, copy number 1): 99.89% identity, 100.00% coverage
-    Protein changes vs blaCTX-M-15: A81V
+  blaCTX-M-55 (gene blaCTX-M-55, copy number 1): 100.00% identity, 100.00% coverage
   fosA3 (gene fosA3, copy number 1): 100.00% identity, 100.00% coverage
 
 CHROMOSOMAL TARGET GENES:
@@ -41,11 +40,8 @@ CHROMOSOMAL TARGET GENES:
   uhpA (copy number 1): 97.80% identity, 100.00% coverage
 
 PROTEIN CHANGES (BLAST caller cross-checked with GAMMA):
-  12 of 75 changes were reported by both callers
+  11 of 74 changes were reported by both callers
 ----------------------------------------------------------------------
-
-  Gene: blaCTX-M-15
-    A81V                 confidence 100%  [blast+gamma]
 
   Gene: cyaA
     37 SNPs in 1-1511    confidence  50%  [gamma]  (not a curated resistance mutation)

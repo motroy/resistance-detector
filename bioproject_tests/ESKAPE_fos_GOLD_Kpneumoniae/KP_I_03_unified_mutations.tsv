@@ -30,3 +30,6 @@ ompK36	Y201F	50	blast	RHUB01000003.1	no
 ompK36	insDT@134	50	blast	RHUB01000003.1	no
 ompK36	insF@268	50	blast	RHUB01000003.1	no
 ompK36	insGESDSI@271	50	blast	RHUB01000003.1	no
+uhpB	L65F	100	blast+gamma	RHUB01000016.1	no
+uhpB	insAS@421	50	blast	RHUB01000016.1	no
+uhpT	V434I	100	blast+gamma	RHUB01000016.1	no

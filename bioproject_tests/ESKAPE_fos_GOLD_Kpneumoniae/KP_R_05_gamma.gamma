@@ -1,9 +1,18 @@
 Gene	Contig	Start	Stop	Match_Type	Description	Codon_Changes	BP_Changes	Transversions	Codon_Percent	BP_Percent	Percent_Length	Match_Length	Target_Length	Strand
+ptsI_Kpn	CACSBN010000001.1	339895	341623	Native	No coding mutations	0	0	0	1	1	1	1728	1728	+
 ompK36	CACSBN010000001.1	202533	203643	Indel	6 bp Insertion at 406,	2	7	0	0.9946	0.9937	1.005	1110	1104	-
+glpT_Kpn	CACSBN010000001.1	219922	221269	Native	No coding mutations	0	0	0	1	1	1	1347	1347	-
+murA_Kpn	CACSBN010000002.1	455382	456642	Native	No coding mutations	0	0	0	1	1	1	1260	1260	-
+galU_Kpn	CACSBN010000003.1	60090	60993	Native	No coding mutations	0	2	0	1	0.9978	1	903	903	+
 ompK35	CACSBN010000004.1	130224	131305	Indel Truncation	1 bp Insertion at 123,truncation at codon 89 (of 360 codons),312 coding mutations	312	7	0	0.1333	0.9935	1.001	1081	1080	-
 acrB	CACSBN010000006.1	87409	90556	Native	No coding mutations	0	4	1	1	0.9987	1	3147	3147	+
+uhpT_Kpn	CACSBN010000008.1	188872	190264	Native	No coding mutations	0	0	0	1	1	1	1392	1392	-
+uhpC_Kpn	CACSBN010000008.1	190409	191738	Native	No coding mutations	0	0	0	1	1	1	1329	1329	-
+uhpB_Kpn	CACSBN010000008.1	191749	193232	Indel Truncation	1 bp Insertion at 1049,6 bp Insertion at 1272,truncation at codon 353 (of 492 codons),137 coding mutations	137	7	0	0.7215	0.9953	1.005	1483	1476	-
+uhpA_Kpn	CACSBN010000008.1	193249	193843	Native	No coding mutations	0	0	0	1	1	1	594	594	-
 ftsI	CACSBN010000009.1	48696	50463	Mutant	V375A,	1	10	1	0.9983	0.9943	1	1767	1767	-
 fosAKP	CACSBN010000009.1	255953	256373	Mutant	I91V,Q130P,D138E,	3	5	3	0.9786	0.9881	1	420	420	-
 envZ	CACSBN010000011.1	153899	155255	Mutant	I15T,I258M,	2	2	1	0.9956	0.9985	1	1356	1356	+
+cyaA_Kpn	CACSBN010000023.1	26447	29000	Native	No coding mutations	0	0	0	1	1	1	2553	2553	+
 blaKPC-2	CACSBN010000035.1	10833	11715	Mutant	H272Y,	1	1	0	0.9966	0.9989	1	882	882	+
 blaSHV-12	CACSBN010000063.1	23	884	Mutant	S234G,K235E,	2	5	0	0.9930	0.9942	1	861	861	+

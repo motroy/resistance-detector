@@ -1,12 +1,21 @@
 Sample	Type	Gene	Allele	Method	Result_Details	Identity_Confidence	Contig	Start	End	Copy_Number	Notes
 B-2_2-C6.fna	Chromosomal gene	acrB	acrB	BLAST	Coverage: 100.00%	99.94%	JAHUYX010000002.1	252180	255326	1	no protein changes vs reference
+B-2_2-C6.fna	Chromosomal gene	cyaA	cyaA	BLAST	Coverage: 100.00%	99.77%	JAHUYX010000022.1	40269	42821	1	no protein changes vs reference
 B-2_2-C6.fna	Chromosomal gene	ftsI	ftsI	BLAST	Coverage: 100.00%	99.77%	JAHUYX010000004.1	135170	136936	1	protein changes: V375A
+B-2_2-C6.fna	Chromosomal gene	ptsI	ptsI	BLAST	Coverage: 100.00%	99.88%	JAHUYX010000011.1	8359	10086	1	no protein changes vs reference
+B-2_2-C6.fna	Chromosomal gene	uhpB	uhpB	BLAST	Coverage: 100.00%	98.92%	JAHUYX010000005.1	86406	87887	1	protein changes: L65F;insAS@421
+B-2_2-C6.fna	Chromosomal gene	uhpT	uhpT	BLAST	Coverage: 100.00%	99.42%	JAHUYX010000005.1	89373	90764	1	no protein changes vs reference
+B-2_2-C6.fna	Chromosomal gene	glpT	glpT	BLAST	Coverage: 100.00%	99.56%	JAHUYX010000009.1	92324	93670	1	no protein changes vs reference
 B-2_2-C6.fna	Chromosomal gene	envZ	envZ	BLAST	Coverage: 100.00%	99.04%	JAHUYX010000010.1	153951	155306	1	protein changes: I15T;I258M
+B-2_2-C6.fna	Chromosomal gene	uhpC	uhpC	BLAST	Coverage: 100.00%	99.40%	JAHUYX010000005.1	87899	89227	1	no protein changes vs reference
+B-2_2-C6.fna	Chromosomal gene	murA	murA	BLAST	Coverage: 100.00%	99.60%	JAHUYX010000007.1	86702	87961	1	no protein changes vs reference
 B-2_2-C6.fna	Chromosomal gene	ompK35	ompK35	BLAST	Coverage: 100.00%	99.35%	JAHUYX010000008.1	41275	42354	1	no protein changes vs reference
+B-2_2-C6.fna	Chromosomal gene	galU	galU	BLAST	Coverage: 100.00%	99.78%	JAHUYX010000006.1	4173	5075	1	protein changes: R9T
 B-2_2-C6.fna	Acquired gene	blaCTX-M-15	blaCTX-M-15	BLAST	Coverage: 100.00%	100.00%	JAHUYX010000045.1	654	1529	1	no protein changes vs reference
 B-2_2-C6.fna	Chromosomal gene	ompK36	ompK36	BLAST	Coverage: 100.00%	92.62%	JAHUYX010000009.1	74925	76043	1	protein changes: A183T;L184del;T192G;Y201F;N221H;L225N;S230del;K231R;A233D;L234K;insF@268;A269S;S271N;insGESDSI@271;L272S;L307I;I315L;D344E;S346D;H349R;N350R
 B-2_2-C6.fna	Acquired gene	blaKPC-2	blaKPC-66	BLAST	Coverage: 100.00%	99.21%	JAHUYX010000038.1	5812	6687	1	protein changes: E166_L167del;H274Y
 B-2_2-C6.fna	Acquired gene	blaSHV-12	blaSHV-like	BLAST	Coverage: 100.00%	98.95%	JAHUYX010000001.1	386007	386867	1	protein changes: Y3F;Q31L;S235G;K236E
+B-2_2-C6.fna	Chromosomal gene	uhpA	uhpA	BLAST	Coverage: 100.00%	99.33%	JAHUYX010000005.1	85795	86388	1	no protein changes vs reference
 B-2_2-C6.fna	Chromosomal gene	fosAKP	fosAKP	BLAST	Coverage: 100.00%	99.76%	JAHUYX010000020.1	22809	23228	1	protein changes: Q130P
 B-2_2-C6.fna	Protein change	blaKPC-2	-	blast	E166_L167del	50%	JAHUYX010000038.1	-	-	-	reported as resistance mutation
 B-2_2-C6.fna	Protein change	blaKPC-2	-	blast+gamma	H274Y	100%	JAHUYX010000038.1	-	-	-	reported as resistance mutation
@@ -18,6 +27,7 @@ B-2_2-C6.fna	Protein change	envZ	-	blast+gamma	I15T	100%	JAHUYX010000010.1	-	-	-
 B-2_2-C6.fna	Protein change	envZ	-	blast+gamma	I258M	100%	JAHUYX010000010.1	-	-	-	sequence difference, not a curated resistance mutation
 B-2_2-C6.fna	Protein change	fosAKP	-	blast+gamma	Q130P	100%	JAHUYX010000020.1	-	-	-	sequence difference, not a curated resistance mutation
 B-2_2-C6.fna	Protein change	ftsI	-	blast+gamma	V375A	100%	JAHUYX010000004.1	-	-	-	sequence difference, not a curated resistance mutation
+B-2_2-C6.fna	Protein change	galU	-	blast+gamma	R9T	100%	JAHUYX010000006.1	-	-	-	sequence difference, not a curated resistance mutation
 B-2_2-C6.fna	Protein change	ompK36	-	blast	A183T	50%	JAHUYX010000009.1	-	-	-	sequence difference, not a curated resistance mutation
 B-2_2-C6.fna	Protein change	ompK36	-	blast	A233D	50%	JAHUYX010000009.1	-	-	-	sequence difference, not a curated resistance mutation
 B-2_2-C6.fna	Protein change	ompK36	-	blast	A269S	50%	JAHUYX010000009.1	-	-	-	sequence difference, not a curated resistance mutation
@@ -39,4 +49,6 @@ B-2_2-C6.fna	Protein change	ompK36	-	blast	T192G	50%	JAHUYX010000009.1	-	-	-	seq
 B-2_2-C6.fna	Protein change	ompK36	-	blast	Y201F	50%	JAHUYX010000009.1	-	-	-	sequence difference, not a curated resistance mutation
 B-2_2-C6.fna	Protein change	ompK36	-	blast	insF@268	50%	JAHUYX010000009.1	-	-	-	sequence difference, not a curated resistance mutation
 B-2_2-C6.fna	Protein change	ompK36	-	blast	insGESDSI@271	50%	JAHUYX010000009.1	-	-	-	sequence difference, not a curated resistance mutation
+B-2_2-C6.fna	Protein change	uhpB	-	blast+gamma	L65F	100%	JAHUYX010000005.1	-	-	-	sequence difference, not a curated resistance mutation
+B-2_2-C6.fna	Protein change	uhpB	-	blast	insAS@421	50%	JAHUYX010000005.1	-	-	-	sequence difference, not a curated resistance mutation
 B-2_2-C6.fna	Amplicon	blaKPC_ver	-	SeqKit/amplicon	Length: 876bp	-	JAHUYX010000038.1	5811	6687	-	Genes in region: blaKPC-66: E166_L167del;H274Y

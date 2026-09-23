@@ -13,16 +13,16 @@ PREDICTED PHENOTYPES (genotype-based):
     - Acquired fosfomycin-modifying enzyme fosA3 (100.00% identity, 100.00% coverage)
   Ceftazidime-Avibactam (CAZ/AVI): Resistant
     - Metallo-beta-lactamase blaNDM-5 detected (100.00% identity) - avibactam does not inhibit metallo-enzymes, so ceftazidime-avibactam is not active
-    - Loss of function in porin ompF (premature stop at residue 83 (82/362 aa)) alongside blaCTX-M-15: reduced drug entry combined with beta-lactamase activity is a documented route to raised ceftazidime-avibactam MICs, though it is not on its own established as conferring resistance
+    - Loss of function in porin ompF (premature stop at residue 83 (82/362 aa)) alongside blaCTX-M-55, blaCTX-M-65: reduced drug entry combined with beta-lactamase activity is a documented route to raised ceftazidime-avibactam MICs, though it is not on its own established as conferring resistance
   Note: Genotype-based prediction only; not a substitute for phenotypic antimicrobial susceptibility testing (AST).
 
-Total genes detected: 15
+Total genes detected: 16
 Method: BLAST+ with codon-aware variant calling
 
 ACQUIRED RESISTANCE GENES:
 --------------------------------------------------
-  blaCTX-M-like (gene blaCTX-M-15, copy number 1): 99.89% identity, 100.00% coverage
-    Protein changes vs blaCTX-M-15: A81V
+  blaCTX-M-55 (gene blaCTX-M-55, copy number 1): 100.00% identity, 100.00% coverage
+  blaCTX-M-65 (gene blaCTX-M-65, copy number 1): 100.00% identity, 100.00% coverage
   blaNDM-5 (gene blaNDM-5, copy number 1): 100.00% identity, 100.00% coverage
   fosA3 (gene fosA3, copy number 1): 100.00% identity, 100.00% coverage
 
@@ -43,11 +43,8 @@ CHROMOSOMAL TARGET GENES:
   uhpA (copy number 1): 97.29% identity, 100.00% coverage
 
 PROTEIN CHANGES (BLAST caller cross-checked with GAMMA):
-  8 of 18 changes were reported by both callers
+  7 of 17 changes were reported by both callers
 ----------------------------------------------------------------------
-
-  Gene: blaCTX-M-15
-    A81V                 confidence 100%  [blast+gamma]
 
   Gene: cyaA
     N142S                confidence 100%  [blast+gamma]  (not a curated resistance mutation)

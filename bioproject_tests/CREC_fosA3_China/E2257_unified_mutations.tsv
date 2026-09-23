@@ -1,5 +1,4 @@
 Gene	Mutation	Confidence(%)	Methods	Contig	Reported_As_Resistance_Mutation
-blaCTX-M-15	A81V	100	blast+gamma	NZ_JAWWVD010000373.1	yes
 cyaA	37 SNPs in 1-1511	50	gamma	NZ_JAWWVD010000182.1	no
 cyaA	A349E	50	gamma	NZ_JAWWVD010000182.1	no
 cyaA	E362D	50	gamma	NZ_JAWWVD010000182.1	no

@@ -1,11 +1,20 @@
 Sample	Type	Gene	Allele	Method	Result_Details	Identity_Confidence	Contig	Start	End	Copy_Number	Notes
 KP2_R_03.fna	Chromosomal gene	acrB	acrB	BLAST	Coverage: 100.00%	99.87%	CACSBW010000005.1	153410	156556	1	no protein changes vs reference
+KP2_R_03.fna	Chromosomal gene	cyaA	cyaA	BLAST	Coverage: 100.00%	100.00%	CACSBW010000036.1	26430	28982	1	no protein changes vs reference
 KP2_R_03.fna	Chromosomal gene	ftsI	ftsI	BLAST	Coverage: 100.00%	99.43%	CACSBW010000011.1	206514	208280	1	protein changes: V375A
+KP2_R_03.fna	Chromosomal gene	ptsI	ptsI	BLAST	Coverage: 100.00%	100.00%	CACSBW010000003.1	203412	205139	1	no protein changes vs reference
+KP2_R_03.fna	Chromosomal gene	uhpB	uhpB	BLAST	Coverage: 100.00%	99.59%	CACSBW010000030.1	86464	87945	1	protein changes: insAS@421
+KP2_R_03.fna	Chromosomal gene	uhpT	uhpT	BLAST	Coverage: 100.00%	100.00%	CACSBW010000030.1	89431	90822	1	no protein changes vs reference
 KP2_R_03.fna	Chromosomal gene	envZ	envZ	BLAST	Coverage: 100.00%	99.85%	CACSBW010000017.1	153900	155255	1	protein changes: I15T;I258M
+KP2_R_03.fna	Chromosomal gene	glpT	glpT	BLAST	Coverage: 100.00%	100.00%	CACSBW010000003.1	323766	325112	1	no protein changes vs reference
+KP2_R_03.fna	Chromosomal gene	uhpC	uhpC	BLAST	Coverage: 100.00%	100.00%	CACSBW010000030.1	87957	89285	1	no protein changes vs reference
+KP2_R_03.fna	Chromosomal gene	murA	murA	BLAST	Coverage: 100.00%	100.00%	CACSBW010000013.1	55208	56467	1	no protein changes vs reference
 KP2_R_03.fna	Chromosomal gene	ompK36	ompK36	BLAST	Coverage: 100.00%	99.91%	CACSBW010000003.1	341392	342495	1	no protein changes vs reference
 KP2_R_03.fna	Chromosomal gene	ompK35	ompK35	BLAST	Coverage: 100.00%	99.35%	CACSBW010000007.1	209741	210821	1	protein changes: E42R;H43_Y58del;I61L;G62D;L63_Y76del;G77H;E80R;Y81H;N82Q;M83Q;D84_G114del;N116R;G118_N139del;Y140H;T141L;D142C;N143P;M145R;T146P;G147E;T149_Y155del;F160_S212del;N213Q;V216A;Q218R;K219_G279del;S283_A352del;V356Q;Y357H;insGRV@357;F359C; premature stop at residue 89 (88/359 aa)
+KP2_R_03.fna	Chromosomal gene	galU	galU	BLAST	Coverage: 100.00%	99.78%	CACSBW010000016.1	148800	149702	1	no protein changes vs reference
 KP2_R_03.fna	Acquired gene	blaKPC-2	blaKPC-2	BLAST	Coverage: 100.00%	100.00%	CACSBW010000037.1	58286	59167	1	no protein changes vs reference
 KP2_R_03.fna	Acquired gene	blaSHV-12	blaSHV-like	BLAST	Coverage: 100.00%	99.42%	CACSBW010000069.1	24	884	1	protein changes: S235G;K236E
+KP2_R_03.fna	Chromosomal gene	uhpA	uhpA	BLAST	Coverage: 100.00%	100.00%	CACSBW010000030.1	85853	86446	1	no protein changes vs reference
 KP2_R_03.fna	Chromosomal gene	fosAKP	fosAKP	BLAST	Coverage: 100.00%	98.81%	CACSBW010000011.1	603	1022	1	protein changes: I91V;Q130P;D138E
 KP2_R_03.fna	Protein change	blaSHV-12	-	blast+gamma	K236E	100%	CACSBW010000069.1	-	-	-	reported as resistance mutation
 KP2_R_03.fna	Protein change	blaSHV-12	-	blast+gamma	S235G	100%	CACSBW010000069.1	-	-	-	reported as resistance mutation
@@ -46,4 +55,5 @@ KP2_R_03.fna	Protein change	ompK35	-	blast	Y140H	50%	CACSBW010000007.1	-	-	-	seq
 KP2_R_03.fna	Protein change	ompK35	-	blast	Y357H	50%	CACSBW010000007.1	-	-	-	sequence difference, not a curated resistance mutation
 KP2_R_03.fna	Protein change	ompK35	-	blast	Y81H	50%	CACSBW010000007.1	-	-	-	sequence difference, not a curated resistance mutation
 KP2_R_03.fna	Protein change	ompK35	-	blast	insGRV@357	50%	CACSBW010000007.1	-	-	-	sequence difference, not a curated resistance mutation
+KP2_R_03.fna	Protein change	uhpB	-	blast	insAS@421	50%	CACSBW010000030.1	-	-	-	sequence difference, not a curated resistance mutation
 KP2_R_03.fna	Amplicon	blaKPC_ver	-	SeqKit/amplicon	Length: 882bp	-	CACSBW010000037.1	58285	59167	-	Genes in region: blaKPC-2: no changes

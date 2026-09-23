@@ -1,10 +1,19 @@
 Sample	Type	Gene	Allele	Method	Result_Details	Identity_Confidence	Contig	Start	End	Copy_Number	Notes
 KP_S_04.fna	Chromosomal gene	acrB	acrB	BLAST	Coverage: 100.00%	99.84%	NZ_LUVR01000012.1	1730	4876	1	protein changes: R716L
+KP_S_04.fna	Chromosomal gene	cyaA	cyaA	BLAST	Coverage: 100.00%	100.00%	NZ_LUVR01000024.1	43873	46425	1	no protein changes vs reference
 KP_S_04.fna	Chromosomal gene	ftsI	ftsI	BLAST	Coverage: 100.00%	99.38%	NZ_LUVR01000004.1	145778	147544	1	protein changes: V375A
+KP_S_04.fna	Chromosomal gene	ptsI	ptsI	BLAST	Coverage: 100.00%	100.00%	NZ_LUVR01000006.1	187305	189032	1	no protein changes vs reference
+KP_S_04.fna	Chromosomal gene	uhpB	uhpB	BLAST	Coverage: 100.00%	99.59%	NZ_LUVR01000034.1	12829	14310	1	protein changes: insAS@421
+KP_S_04.fna	Chromosomal gene	uhpT	uhpT	BLAST	Coverage: 100.00%	100.00%	NZ_LUVR01000034.1	9952	11343	1	no protein changes vs reference
 KP_S_04.fna	Chromosomal gene	envZ	envZ	BLAST	Coverage: 100.00%	99.93%	NZ_KV391936.1	88478	89833	1	protein changes: I258M
+KP_S_04.fna	Chromosomal gene	glpT	glpT	BLAST	Coverage: 100.00%	100.00%	NZ_LUVR01000006.1	67331	68677	1	no protein changes vs reference
+KP_S_04.fna	Chromosomal gene	uhpC	uhpC	BLAST	Coverage: 100.00%	100.00%	NZ_LUVR01000034.1	11489	12817	1	no protein changes vs reference
+KP_S_04.fna	Chromosomal gene	murA	murA	BLAST	Coverage: 100.00%	100.00%	NZ_LUVR01000003.1	292931	294190	1	no protein changes vs reference
 KP_S_04.fna	Chromosomal gene	ompK35	ompK35	BLAST	Coverage: 100.00%	99.35%	NZ_LUVR01000005.1	193628	194706	1	protein changes: N29T;G30A;N31T;K32N;L33_V44del;T47S;N48_K226del;A227M;A229K;A231S;T232A;A234_Q288del;K290S;K292P;D293P;L294M;Q295A;S296_Y339del;K341P;G344T;V345I;A346P;T347P;D348M;D349P;Q350V;A351S;V353_F359del; premature stop at residue 63 (62/359 aa)
+KP_S_04.fna	Chromosomal gene	galU	galU	BLAST	Coverage: 100.00%	100.00%	NZ_LUVR01000011.1	147001	147903	1	no protein changes vs reference
 KP_S_04.fna	Acquired gene	blaKPC-2	blaKPC-2	BLAST	Coverage: 100.00%	100.00%	NZ_LUVR01000044.1	7695	8576	1	no protein changes vs reference
 KP_S_04.fna	Chromosomal gene	ompK36	ompK36	BLAST	Coverage: 100.00%	92.22%	NZ_LUVR01000006.1	49926	51050	1	protein changes: insGD@133;A183T;L184del;T192G;Y201F;N221H;L225N;S230del;K231R;A233D;L234K;insF@268;A269S;S271N;insGESDSI@271;L272S;L307I;I315L;D344E;S346D;H349R;N350R
+KP_S_04.fna	Chromosomal gene	uhpA	uhpA	BLAST	Coverage: 100.00%	100.00%	NZ_LUVR01000034.1	14328	14921	1	no protein changes vs reference
 KP_S_04.fna	Chromosomal gene	fosAKP	fosAKP	BLAST	Coverage: 100.00%	98.81%	NZ_LUVR01000004.1	353036	353455	1	protein changes: I91V;Q130P;D138E
 KP_S_04.fna	Protein change	acrB	-	blast+gamma	R716L	100%	NZ_LUVR01000012.1	-	-	-	sequence difference, not a curated resistance mutation
 KP_S_04.fna	Protein change	envZ	-	blast+gamma	I258M	100%	NZ_KV391936.1	-	-	-	sequence difference, not a curated resistance mutation
@@ -62,4 +71,5 @@ KP_S_04.fna	Protein change	ompK36	-	blast	Y201F	50%	NZ_LUVR01000006.1	-	-	-	sequ
 KP_S_04.fna	Protein change	ompK36	-	blast	insF@268	50%	NZ_LUVR01000006.1	-	-	-	sequence difference, not a curated resistance mutation
 KP_S_04.fna	Protein change	ompK36	-	blast	insGD@133	50%	NZ_LUVR01000006.1	-	-	-	sequence difference, not a curated resistance mutation
 KP_S_04.fna	Protein change	ompK36	-	blast	insGESDSI@271	50%	NZ_LUVR01000006.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_S_04.fna	Protein change	uhpB	-	blast	insAS@421	50%	NZ_LUVR01000034.1	-	-	-	sequence difference, not a curated resistance mutation
 KP_S_04.fna	Amplicon	blaKPC_ver	-	SeqKit/amplicon	Length: 882bp	-	NZ_LUVR01000044.1	7694	8576	-	Genes in region: blaKPC-2: no changes

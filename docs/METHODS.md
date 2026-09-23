@@ -287,25 +287,34 @@ inferred from amplicon presence.
 * **Chromosomal point mutations for other species.** Only the three organisms
   above have curated positions. Other species get acquired-gene and KPC results
   only.
-* **Fosfomycin transport-gene detection is *E. coli*-only.** `murA`, `uhpT`,
-  `uhpA`, `uhpB`, `uhpC`, `glpT`, `cyaA`, `ptsI` and `galU` in the bundled
-  nucleotide database are all sourced from *E. coli* K-12. Direct BLAST search
-  confirms *K. pneumoniae*'s own orthologs are present and full-length in real
-  assemblies, but only 84–89% nucleotide identity to the *E. coli* reference —
-  below the 90% default detection threshold. The genes are not absent from a
-  *K. pneumoniae* genome; they are invisible to this detector. A validation run
-  against 21 real, MIC-tested *K. pneumoniae* isolates (11 fosfomycin-resistant
-  or -intermediate) found **zero** of these genes flagged for loss of function
-  or a curated mutation in any of them — consistent with this gap, not with a
-  clean genotype. A second, independent 24-genome sample (18 resistant or
-  intermediate, disjoint accessions from the same source) replicated this
-  exactly: zero flagged there too, **0/29 combined** — ruling out sampling
-  noise as the explanation. See
+* **Fosfomycin transport-gene detection in *K. pneumoniae* — fixed, with an
+  honest result.** `murA`, `uhpT`, `uhpA`, `uhpB`, `uhpC`, `glpT`, `cyaA`,
+  `ptsI` and `galU` were previously sourced from *E. coli* K-12 only. Direct
+  BLAST search had confirmed *K. pneumoniae*'s own orthologs are present and
+  full-length in real assemblies, but only 84–89% nucleotide identity to the
+  *E. coli* reference — below the 90% default detection threshold, so the
+  genes were invisible to this detector for that species (`0/29`
+  resistant/intermediate isolates flagged across two independent validation
+  rounds). A second, *K. pneumoniae*-specific reference for each of these 9
+  genes (from *K. pneumoniae* subsp. *pneumoniae* HS11286, RefSeq
+  `NC_016845.1`) was added under its own name (`<gene>_Kpn`) and mapped back
+  to the canonical gene name everywhere else in the tool
+  (`fos_cazavi.references.GENE_ALIASES`) — the same mechanism a BLAST
+  nucleotide database needs whenever one gene name must hold two different
+  species' sequences, since a database entry's ID has to be unique. All 9 now
+  match real *K. pneumoniae* assemblies at 98.6–100% identity, confirmed
+  against isolates spanning Resistant, Intermediate and Susceptible.
+  Re-running the two validation rounds found two real, GAMMA-confirmed
+  premature stops in `uhpB` (isolates KP_R_02, KP_R_05 — both lab-confirmed
+  Resistant) that were previously invisible, moving sensitivity from `0/11`
+  to `2/11` in round 1; round 2 (18 isolates) still found none. Read plainly:
+  the detection gap is closed, and closing it recovered some, but not most, of
+  the missing sensitivity — most fosfomycin resistance in this data set is not
+  explained by a coding-sequence change in these genes at all, consistent with
+  the literature on promoter/IS-element-driven `uhpT` regulation, which no
+  CDS-level tool can see. See
   [`bioproject_tests/ESKAPE_fos_GOLD_Kpneumoniae/RESULTS_SUMMARY.md`](../bioproject_tests/ESKAPE_fos_GOLD_Kpneumoniae/RESULTS_SUMMARY.md)
-  and [`bioproject_tests/ESKAPE_fos_Kpneumoniae_round2/RESULTS_SUMMARY.md`](../bioproject_tests/ESKAPE_fos_Kpneumoniae_round2/RESULTS_SUMMARY.md).
-  Fixing this needs species-specific chromosomal references for these 9 genes,
-  the same approach already used for `ompC`/`ompF` in *E. coli* and
-  `ftsI`/`ompK36`/`ompK35`/`envZ` in *K. pneumoniae* — not yet done.
+  for the full before/after account.
 * **P. aeruginosa ceftazidime-avibactam.** PDC/AmpC derepression, PDC variants
   and OprD loss are not assessed, so any call not driven by a
   metallo-beta-lactamase is `Indeterminate`. The tool is not currently
@@ -319,7 +328,14 @@ inferred from amplicon presence.
   susceptible isolates. See
   [`bioproject_tests/ESKAPE_fos_GOLD_Paeruginosa/RESULTS_SUMMARY.md`](../bioproject_tests/ESKAPE_fos_GOLD_Paeruginosa/RESULTS_SUMMARY.md).
 * **Acquired class D oxacillinases** other than the OXA-48-like group
-  (e.g. OXA-2, OXA-4, OXA-21) are not in the database.
+  (e.g. OXA-2, OXA-4, OXA-21, OXA-23-like) are not in the database. A
+  cross-check against Kleborate found a real instance (`KP2_R_03` carries
+  OXA-23) — see
+  [`bioproject_tests/Kleborate_cross_check/RESULTS_SUMMARY.md`](../bioproject_tests/Kleborate_cross_check/RESULTS_SUMMARY.md).
+  Not yet added: unlike the OXA-48-like family, avibactam does not uniformly
+  inhibit these families, so adding them needs the same literature check
+  this tool's other phenotype rules were built on, not a database-only
+  change.
 * **Novel mechanisms.** Anything not in the reference data cannot be found.
 * **This is a genotypic prediction.** It is not a substitute for phenotypic
   antimicrobial susceptibility testing.

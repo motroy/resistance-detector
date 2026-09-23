@@ -15,26 +15,36 @@ PREDICTED PHENOTYPES (genotype-based):
     - blaKPC-179 on u87: blaKPC-179 is curated by NCBI as "inhibitor-resistant extended-spectrum class A beta-lactamase KPC-179" (subclass CEPHALOSPORIN)
   Note: Genotype-based prediction only; not a substitute for phenotypic antimicrobial susceptibility testing (AST).
 
-Total genes detected: 7
+Total genes detected: 17
 Method: BLAST+ with codon-aware variant calling
 
 ACQUIRED RESISTANCE GENES:
 --------------------------------------------------
+  blaCTX-M-65 (gene blaCTX-M-65, copy number 1): 100.00% identity, 100.00% coverage
   blaKPC-179 (gene blaKPC-2, copy number 1): 99.55% identity, 100.00% coverage
     Protein changes vs blaKPC-2: A133T, insS@180
 
 CHROMOSOMAL TARGET GENES:
 --------------------------------------------------
   acrB (copy number 1): 99.84% identity, 100.00% coverage
+  cyaA (copy number 1): 100.00% identity, 100.00% coverage
   ftsI (copy number 1): 99.32% identity, 100.00% coverage
+  ptsI (copy number 1): 100.00% identity, 100.00% coverage
+  uhpB (copy number 1): 99.59% identity, 100.00% coverage
+  uhpT (copy number 1): 100.00% identity, 100.00% coverage
   envZ (copy number 1): 99.93% identity, 100.00% coverage
+  glpT (copy number 1): 100.00% identity, 100.00% coverage
+  uhpC (copy number 1): 100.00% identity, 100.00% coverage
+  murA (copy number 1): 100.00% identity, 100.00% coverage
   ompK35 (copy number 1): 99.35% identity, 100.00% coverage
     Loss of function: premature stop at residue 63 (62/359 aa)
+  galU (copy number 1): 100.00% identity, 100.00% coverage
   ompK36 (copy number 1): 92.22% identity, 100.00% coverage
+  uhpA (copy number 1): 100.00% identity, 100.00% coverage
   fosAKP (copy number 1): 98.81% identity, 100.00% coverage
 
 PROTEIN CHANGES (BLAST caller cross-checked with GAMMA):
-  8 of 59 changes were reported by both callers
+  8 of 60 changes were reported by both callers
 ----------------------------------------------------------------------
 
   Gene: acrB
@@ -109,6 +119,9 @@ PROTEIN CHANGES (BLAST caller cross-checked with GAMMA):
     insF@268             confidence  50%  [blast]  (not a curated resistance mutation)
     insGD@133            confidence  50%  [blast]  (not a curated resistance mutation)
     insGESDSI@271        confidence  50%  [blast]  (not a curated resistance mutation)
+
+  Gene: uhpB
+    insAS@421            confidence  50%  [blast]  (not a curated resistance mutation)
 
 
 DETECTED AMPLICONS (coordinates only):

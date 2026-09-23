@@ -15,7 +15,7 @@ PREDICTED PHENOTYPES (genotype-based):
     - Loss of function in porin ompK36 (premature stop at residue 125 (124/367 aa)) alongside blaKPC-2, blaSHV-12: reduced drug entry combined with beta-lactamase activity is a documented route to raised ceftazidime-avibactam MICs, though it is not on its own established as conferring resistance
   Note: Genotype-based prediction only; not a substitute for phenotypic antimicrobial susceptibility testing (AST).
 
-Total genes detected: 8
+Total genes detected: 17
 Method: BLAST+ with codon-aware variant calling
 
 ACQUIRED RESISTANCE GENES:
@@ -26,16 +26,25 @@ ACQUIRED RESISTANCE GENES:
 CHROMOSOMAL TARGET GENES:
 --------------------------------------------------
   acrB (copy number 1): 99.87% identity, 100.00% coverage
+  cyaA (copy number 1): 100.00% identity, 100.00% coverage
   ftsI (copy number 1): 99.43% identity, 100.00% coverage
+  ptsI (copy number 1): 100.00% identity, 100.00% coverage
+  uhpB (copy number 1): 99.59% identity, 100.00% coverage
+  uhpT (copy number 1): 100.00% identity, 100.00% coverage
   envZ (copy number 1): 99.85% identity, 100.00% coverage
+  glpT (copy number 1): 100.00% identity, 100.00% coverage
+  uhpC (copy number 1): 100.00% identity, 100.00% coverage
+  murA (copy number 1): 100.00% identity, 100.00% coverage
   ompK36 (copy number 1): 99.82% identity, 100.00% coverage
     Loss of function: premature stop at residue 125 (124/367 aa)
   ompK35 (copy number 1): 99.35% identity, 100.00% coverage
     Loss of function: premature stop at residue 89 (88/359 aa)
+  galU (copy number 1): 99.78% identity, 100.00% coverage
+  uhpA (copy number 1): 100.00% identity, 100.00% coverage
   fosAKP (copy number 1): 98.81% identity, 100.00% coverage
 
 PROTEIN CHANGES (BLAST caller cross-checked with GAMMA):
-  6 of 38 changes were reported by both callers
+  6 of 39 changes were reported by both callers
 ----------------------------------------------------------------------
 
   Gene: envZ
@@ -85,6 +94,9 @@ PROTEIN CHANGES (BLAST caller cross-checked with GAMMA):
 
   Gene: ompK36
     W125_F367del         confidence  50%  [blast]  (not a curated resistance mutation)
+
+  Gene: uhpB
+    insAS@421            confidence  50%  [blast]  (not a curated resistance mutation)
 
 
 DETECTED AMPLICONS (coordinates only):

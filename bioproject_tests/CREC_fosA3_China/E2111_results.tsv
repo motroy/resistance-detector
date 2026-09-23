@@ -11,5 +11,6 @@ NZ_JAWWVH010000003.1	ompC	ompC	99.91	100.00	yes	-	-	R267C	-	BLAST	1
 NZ_JAWWVH010000001.1	ompF	ompF	100.00	100.00	yes	-	-	-	-	BLAST	1
 NZ_JAWWVH010000014.1	galU	galU	100.00	100.00	yes	-	-	-	-	BLAST	1
 NZ_JAWWVH010000078.1	blaNDM-5	blaNDM-5	100.00	100.00	yes	-	-	-	-	BLAST	1
+NZ_JAWWVH010000030.1	blaCTX-M-199	blaCTX-M-like	100.00	89.61	no (contig boundary)	L264_L293del	-	L264_L293del	frameshift (2 bp out of frame relative to the reference coding sequence)	BLAST	1
 NZ_JAWWVH010000013.1	uhpA	uhpA	100.00	100.00	yes	-	-	-	-	BLAST	1
 NZ_JAWWVH010000105.1	fosA3	fosA3	100.00	100.00	yes	-	-	-	-	BLAST	1

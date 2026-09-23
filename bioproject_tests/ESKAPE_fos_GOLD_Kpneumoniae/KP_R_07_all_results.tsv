@@ -1,10 +1,19 @@
 Sample	Type	Gene	Allele	Method	Result_Details	Identity_Confidence	Contig	Start	End	Copy_Number	Notes
 KP_R_07.fna	Chromosomal gene	acrB	acrB	BLAST	Coverage: 100.00%	99.68%	FBRB01000025.1	234162	237314	1	protein changes: insVX@1022
+KP_R_07.fna	Chromosomal gene	cyaA	cyaA	BLAST	Coverage: 100.00%	100.00%	FBRB01000018.1	40468	43020	1	no protein changes vs reference
 KP_R_07.fna	Chromosomal gene	ftsI	ftsI	BLAST	Coverage: 100.00%	99.43%	FBRB01000004.1	48598	50364	1	protein changes: V375A
+KP_R_07.fna	Chromosomal gene	ptsI	ptsI	BLAST	Coverage: 100.00%	100.00%	FBRB01000027.1	203341	205068	1	no protein changes vs reference
+KP_R_07.fna	Chromosomal gene	uhpB	uhpB	BLAST	Coverage: 100.00%	99.59%	FBRB01000023.1	60130	61611	1	protein changes: insAS@421
+KP_R_07.fna	Chromosomal gene	uhpT	uhpT	BLAST	Coverage: 100.00%	100.00%	FBRB01000023.1	57253	58644	1	no protein changes vs reference
+KP_R_07.fna	Chromosomal gene	glpT	glpT	BLAST	Coverage: 100.00%	100.00%	FBRB01000027.1	323695	325041	1	no protein changes vs reference
 KP_R_07.fna	Chromosomal gene	envZ	envZ	BLAST	Coverage: 100.00%	99.78%	FBRB01000005.1	48584	49939	1	protein changes: I15T;A193T;I258M
+KP_R_07.fna	Chromosomal gene	uhpC	uhpC	BLAST	Coverage: 100.00%	100.00%	FBRB01000023.1	58790	60118	1	no protein changes vs reference
+KP_R_07.fna	Chromosomal gene	murA	murA	BLAST	Coverage: 100.00%	100.00%	FBRB01000026.1	86142	87401	1	no protein changes vs reference
 KP_R_07.fna	Chromosomal gene	ompK35	ompK35	BLAST	Coverage: 100.00%	99.35%	FBRB01000016.1	130113	131193	1	protein changes: E42R;H43_Y58del;I61L;G62D;L63_Y76del;G77H;E80R;Y81H;N82Q;M83Q;D84_G114del;N116R;G118_N139del;Y140H;T141L;D142C;N143P;M145R;T146P;G147E;T149_Y155del;F160_S212del;N213Q;V216A;Q218R;K219_G279del;S283_A352del;V356Q;Y357H;insGRV@357;F359C; premature stop at residue 89 (88/359 aa)
+KP_R_07.fna	Chromosomal gene	galU	galU	BLAST	Coverage: 100.00%	99.78%	FBRB01000017.1	59972	60874	1	no protein changes vs reference
 KP_R_07.fna	Acquired gene	blaKPC-2	blaKPC-2	BLAST	Coverage: 100.00%	100.00%	FBRB01000045.1	8700	9581	1	no protein changes vs reference
 KP_R_07.fna	Acquired gene	blaSHV-12	blaSHV-12	BLAST	Coverage: 100.00%	100.00%	FBRB01000038.1	24	884	1	no protein changes vs reference
+KP_R_07.fna	Chromosomal gene	uhpA	uhpA	BLAST	Coverage: 100.00%	100.00%	FBRB01000023.1	61629	62222	1	no protein changes vs reference
 KP_R_07.fna	Chromosomal gene	fosAKP	fosAKP	BLAST	Coverage: 100.00%	98.81%	FBRB01000004.1	255856	256275	1	protein changes: I91V;Q130P;D138E
 KP_R_07.fna	Protein change	acrB	-	blast	insVX@1022	50%	FBRB01000025.1	-	-	-	sequence difference, not a curated resistance mutation
 KP_R_07.fna	Protein change	envZ	-	blast+gamma	A193T	100%	FBRB01000005.1	-	-	-	sequence difference, not a curated resistance mutation
@@ -45,4 +54,5 @@ KP_R_07.fna	Protein change	ompK35	-	blast	Y140H	50%	FBRB01000016.1	-	-	-	sequenc
 KP_R_07.fna	Protein change	ompK35	-	blast	Y357H	50%	FBRB01000016.1	-	-	-	sequence difference, not a curated resistance mutation
 KP_R_07.fna	Protein change	ompK35	-	blast	Y81H	50%	FBRB01000016.1	-	-	-	sequence difference, not a curated resistance mutation
 KP_R_07.fna	Protein change	ompK35	-	blast	insGRV@357	50%	FBRB01000016.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_R_07.fna	Protein change	uhpB	-	blast	insAS@421	50%	FBRB01000023.1	-	-	-	sequence difference, not a curated resistance mutation
 KP_R_07.fna	Amplicon	blaKPC_ver	-	SeqKit/amplicon	Length: 882bp	-	FBRB01000045.1	8699	9581	-	Genes in region: blaKPC-2: no changes

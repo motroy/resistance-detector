@@ -1,11 +1,20 @@
 Sample	Type	Gene	Allele	Method	Result_Details	Identity_Confidence	Contig	Start	End	Copy_Number	Notes
 KP_S_09.fna	Chromosomal gene	acrB	acrB	BLAST	Coverage: 100.00%	99.87%	FBRS01000021.1	62423	65569	1	no protein changes vs reference
+KP_S_09.fna	Chromosomal gene	cyaA	cyaA	BLAST	Coverage: 100.00%	100.00%	FBRS01000057.1	40468	43020	1	no protein changes vs reference
 KP_S_09.fna	Chromosomal gene	ftsI	ftsI	BLAST	Coverage: 100.00%	99.43%	FBRS01000001.1	48601	50367	1	protein changes: V375A
+KP_S_09.fna	Chromosomal gene	ptsI	ptsI	BLAST	Coverage: 100.00%	100.00%	FBRS01000012.1	23673	25400	1	no protein changes vs reference
+KP_S_09.fna	Chromosomal gene	uhpB	uhpB	BLAST	Coverage: 100.00%	99.59%	FBRS01000013.1	160251	161732	1	protein changes: insAS@421
+KP_S_09.fna	Chromosomal gene	uhpT	uhpT	BLAST	Coverage: 100.00%	100.00%	FBRS01000013.1	157374	158765	1	no protein changes vs reference
 KP_S_09.fna	Chromosomal gene	envZ	envZ	BLAST	Coverage: 100.00%	99.85%	FBRS01000040.1	153769	155124	1	protein changes: I15T;I258M
+KP_S_09.fna	Chromosomal gene	glpT	glpT	BLAST	Coverage: 100.00%	100.00%	FBRS01000012.1	144027	145373	1	no protein changes vs reference
+KP_S_09.fna	Chromosomal gene	uhpC	uhpC	BLAST	Coverage: 100.00%	100.00%	FBRS01000013.1	158911	160239	1	no protein changes vs reference
+KP_S_09.fna	Chromosomal gene	murA	murA	BLAST	Coverage: 100.00%	100.00%	FBRS01000015.1	240365	241624	1	no protein changes vs reference
 KP_S_09.fna	Chromosomal gene	ompK36	ompK36	BLAST	Coverage: 100.00%	99.91%	FBRS01000012.1	161653	162756	1	no protein changes vs reference
 KP_S_09.fna	Chromosomal gene	ompK35	ompK35	BLAST	Coverage: 100.00%	99.35%	FBRS01000016.1	130114	131194	1	protein changes: E42R;H43_Y58del;I61L;G62D;L63_Y76del;G77H;E80R;Y81H;N82Q;M83Q;D84_G114del;N116R;G118_N139del;Y140H;T141L;D142C;N143P;M145R;T146P;G147E;T149_Y155del;F160_S212del;N213Q;V216A;Q218R;K219_G279del;S283_A352del;V356Q;Y357H;insGRV@357;F359C; premature stop at residue 89 (88/359 aa)
+KP_S_09.fna	Chromosomal gene	galU	galU	BLAST	Coverage: 100.00%	99.78%	FBRS01000025.1	25046	25948	1	no protein changes vs reference
 KP_S_09.fna	Acquired gene	blaKPC-2	blaKPC-2	BLAST	Coverage: 100.00%	100.00%	FBRS01000072.1	10738	11619	1	no protein changes vs reference
 KP_S_09.fna	Acquired gene	blaSHV-12	blaSHV-12	BLAST	Coverage: 100.00%	100.00%	FBRS01000024.1	7090	7950	1	no protein changes vs reference
+KP_S_09.fna	Chromosomal gene	uhpA	uhpA	BLAST	Coverage: 100.00%	100.00%	FBRS01000013.1	161750	162343	1	no protein changes vs reference
 KP_S_09.fna	Chromosomal gene	fosAKP	fosAKP	BLAST	Coverage: 100.00%	98.81%	FBRS01000001.1	255859	256278	1	protein changes: I91V;Q130P;D138E
 KP_S_09.fna	Protein change	envZ	-	blast+gamma	I15T	100%	FBRS01000040.1	-	-	-	sequence difference, not a curated resistance mutation
 KP_S_09.fna	Protein change	envZ	-	blast+gamma	I258M	100%	FBRS01000040.1	-	-	-	sequence difference, not a curated resistance mutation
@@ -44,4 +53,5 @@ KP_S_09.fna	Protein change	ompK35	-	blast	Y140H	50%	FBRS01000016.1	-	-	-	sequenc
 KP_S_09.fna	Protein change	ompK35	-	blast	Y357H	50%	FBRS01000016.1	-	-	-	sequence difference, not a curated resistance mutation
 KP_S_09.fna	Protein change	ompK35	-	blast	Y81H	50%	FBRS01000016.1	-	-	-	sequence difference, not a curated resistance mutation
 KP_S_09.fna	Protein change	ompK35	-	blast	insGRV@357	50%	FBRS01000016.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_S_09.fna	Protein change	uhpB	-	blast	insAS@421	50%	FBRS01000013.1	-	-	-	sequence difference, not a curated resistance mutation
 KP_S_09.fna	Amplicon	blaKPC_ver	-	SeqKit/amplicon	Length: 882bp	-	FBRS01000072.1	10737	11619	-	Genes in region: blaKPC-2: no changes

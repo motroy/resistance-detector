@@ -1,10 +1,9 @@
 Sample	Type	Gene	Allele	Method	Result_Details	Identity_Confidence	Contig	Start	End	Copy_Number	Notes
 PA_S_09.fna	Acquired gene	blaPDC-1	blaPDC-like	BLAST	Coverage: 100.00%	99.16%	RHTA01000011.1	88609	89802	1	protein changes: G27D;A97V;T105A;D113A;V205L;G391A
-PA_S_09.fna	Acquired gene	blaCTX-M-15	blaCTX-M-like	BLAST	Coverage: 100.00%	99.89%	RHTA01000064.1	1990	2865	1	protein changes: G243D
+PA_S_09.fna	Acquired gene	blaCTX-M-3	blaCTX-M-3	BLAST	Coverage: 100.00%	100.00%	RHTA01000064.1	1990	2865	1	no protein changes vs reference
 PA_S_09.fna	Chromosomal gene	nalD	nalD	BLAST	Coverage: 100.00%	99.06%	RHTA01000002.1	322518	323156	1	protein changes: A162E
 PA_S_09.fna	Chromosomal gene	mexR	mexR	BLAST	Coverage: 100.00%	98.87%	RHTA01000003.1	230403	230846	1	protein changes: V126E
 PA_S_09.fna	Chromosomal gene	fosA_PA1129	fosA_PA1129	BLAST	Coverage: 100.00%	99.02%	RHTA01000012.1	25420	25827	1	protein changes: D135N
-PA_S_09.fna	Protein change	blaCTX-M-15	-	blast+gamma	G243D	100%	RHTA01000064.1	-	-	-	reported as resistance mutation
 PA_S_09.fna	Protein change	blaPDC-1	-	blast+gamma	A97V	100%	RHTA01000011.1	-	-	-	reported as resistance mutation
 PA_S_09.fna	Protein change	blaPDC-1	-	blast+gamma	D113A	100%	RHTA01000011.1	-	-	-	reported as resistance mutation
 PA_S_09.fna	Protein change	blaPDC-1	-	blast+gamma	G27D	100%	RHTA01000011.1	-	-	-	reported as resistance mutation

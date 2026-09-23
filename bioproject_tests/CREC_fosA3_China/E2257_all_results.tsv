@@ -8,12 +8,11 @@ E2257.fna	Chromosomal gene	murA	murA	BLAST	Coverage: 100.00%	98.89%	NZ_JAWWVD010
 E2257.fna	Chromosomal gene	uhpC	uhpC	BLAST	Coverage: 100.00%	97.35%	NZ_JAWWVD010000019.1	27919	29238	1	protein changes: Y18H;S417A
 E2257.fna	Acquired gene	blaCMY-2	blaCMY-2	BLAST	Coverage: 100.00%	100.00%	NZ_JAWWVD010000198.1	950	2095	1	no protein changes vs reference
 E2257.fna	Chromosomal gene	galU	galU	BLAST	Coverage: 100.00%	99.01%	NZ_JAWWVD010000012.1	21670	22578	1	no protein changes vs reference
-E2257.fna	Acquired gene	blaCTX-M-15	blaCTX-M-like	BLAST	Coverage: 100.00%	99.89%	NZ_JAWWVD010000373.1	392	1267	1	protein changes: A81V
+E2257.fna	Acquired gene	blaCTX-M-55	blaCTX-M-55	BLAST	Coverage: 100.00%	100.00%	NZ_JAWWVD010000373.1	392	1267	1	no protein changes vs reference
 E2257.fna	Chromosomal gene	ompC	ompC	BLAST	Coverage: 100.00%	90.35%	NZ_JAWWVD010000024.1	31775	32869	1	protein changes: V24I;K48D;D49S;V50K;Q54K;S85E;A86P;N88S;E89D;N91S;G137D;N165D;N176S;P177A;S178H;G181_S184del;V186M;N188T;insD@191;A193V;L194F;R195E;D208N;G216A;I218V;D225W;A226D;T229N;A230T;A231G;Y232L;N235T;Q346R;N357D
 E2257.fna	Chromosomal gene	ompF	ompF	BLAST	Coverage: 100.00%	90.33%	NZ_JAWWVD010000083.1	5016	6093	1	protein changes: G48D;E51V;M60K;T99K;Y112F;V115A;F118I;insA@185;D186G;T187I;A188P;R189E;Y204F;N220D;L221A;Q225E;P226F;L227R;N229Q;Y253_G254del;T256L;N258_F362del; premature stop at residue 257 (256/362 aa)
 E2257.fna	Chromosomal gene	uhpA	uhpA	BLAST	Coverage: 100.00%	97.80%	NZ_JAWWVD010000019.1	30750	31340	1	no protein changes vs reference
 E2257.fna	Acquired gene	fosA3	fosA3	BLAST	Coverage: 100.00%	100.00%	NZ_JAWWVD010000257.1	1868	2284	1	no protein changes vs reference
-E2257.fna	Protein change	blaCTX-M-15	-	blast+gamma	A81V	100%	NZ_JAWWVD010000373.1	-	-	-	reported as resistance mutation
 E2257.fna	Protein change	cyaA	-	gamma	37 SNPs in 1-1511	50%	NZ_JAWWVD010000182.1	-	-	-	sequence difference, not a curated resistance mutation
 E2257.fna	Protein change	cyaA	-	gamma	A349E	50%	NZ_JAWWVD010000182.1	-	-	-	sequence difference, not a curated resistance mutation
 E2257.fna	Protein change	cyaA	-	gamma	E362D	50%	NZ_JAWWVD010000182.1	-	-	-	sequence difference, not a curated resistance mutation

@@ -15,11 +15,12 @@ PREDICTED PHENOTYPES (genotype-based):
     - blaKPC detected but carrying no Omega-loop, 237-243 or insertion-loop change associated with avibactam escape, and no contributory porin/PBP3/EnvZ change; avibactam is expected to inhibit it
   Note: Genotype-based prediction only; not a substitute for phenotypic antimicrobial susceptibility testing (AST).
 
-Total genes detected: 8
+Total genes detected: 17
 Method: BLAST+ with codon-aware variant calling
 
 ACQUIRED RESISTANCE GENES:
 --------------------------------------------------
+  blaVEB-1 (gene blaVEB-1, copy number 1): 100.00% identity, 100.00% coverage
   blaKPC-2 (gene blaKPC-2, copy number 1): 100.00% identity, 100.00% coverage
   blaSHV-like (gene blaSHV-12, copy number 1): 99.86% identity, 81.18% coverage
     Protein changes vs blaSHV-12: S235_A252del, E254_R288del
@@ -28,15 +29,23 @@ ACQUIRED RESISTANCE GENES:
 CHROMOSOMAL TARGET GENES:
 --------------------------------------------------
   acrB (copy number 1): 99.87% identity, 100.00% coverage
+  cyaA (copy number 1): 100.00% identity, 100.00% coverage
   ftsI (copy number 1): 99.43% identity, 100.00% coverage
+  ptsI (copy number 1): 100.00% identity, 100.00% coverage
+  uhpB (copy number 1): 99.59% identity, 100.00% coverage
+  uhpT (copy number 1): 100.00% identity, 100.00% coverage
   envZ (copy number 1): 99.85% identity, 100.00% coverage
+  uhpC (copy number 1): 100.00% identity, 100.00% coverage
+  murA (copy number 1): 100.00% identity, 100.00% coverage
   ompK36 (copy number 1): 99.37% identity, 100.00% coverage
   ompK35 (copy number 1): 99.35% identity, 100.00% coverage
     Loss of function: premature stop at residue 89 (88/359 aa)
+  galU (copy number 1): 99.78% identity, 100.00% coverage
+  uhpA (copy number 1): 100.00% identity, 100.00% coverage
   fosAKP (copy number 1): 98.81% identity, 100.00% coverage
 
 PROTEIN CHANGES (BLAST caller cross-checked with GAMMA):
-  6 of 40 changes were reported by both callers
+  6 of 44 changes were reported by both callers
 ----------------------------------------------------------------------
 
   Gene: blaSHV-12
@@ -54,6 +63,11 @@ PROTEIN CHANGES (BLAST caller cross-checked with GAMMA):
 
   Gene: ftsI
     V375A                confidence 100%  [blast+gamma]  (not a curated resistance mutation)
+
+  Gene: glpT
+    39 coding mutations  confidence  50%  [gamma]  (not a curated resistance mutation)
+    93 SNPs in 500-1347  confidence  50%  [gamma]  (not a curated resistance mutation)
+    truncation at codon 178 (of 282 codons) confidence  50%  [gamma]  (not a curated resistance mutation)
 
   Gene: ompK35
     D142C                confidence  50%  [blast]  (not a curated resistance mutation)
@@ -90,6 +104,9 @@ PROTEIN CHANGES (BLAST caller cross-checked with GAMMA):
 
   Gene: ompK36
     insGD@133            confidence  50%  [blast]  (not a curated resistance mutation)
+
+  Gene: uhpB
+    insAS@421            confidence  50%  [blast]  (not a curated resistance mutation)
 
 
 DETECTED AMPLICONS (coordinates only):

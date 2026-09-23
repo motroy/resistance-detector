@@ -191,23 +191,19 @@
       ]
     },
     {
-      "gene": "blaCTX-M-15",
+      "gene": "blaCTX-M-55",
       "copy_number": 1,
       "loci": [
         {
           "contig": "NZ_JAWWVF010000109.1",
           "start": 2753,
           "end": 3628,
-          "allele": "blaCTX-M-like",
-          "identity": "99.89",
+          "allele": "blaCTX-M-55",
+          "identity": "100.00",
           "coverage": "100.00",
           "complete": true,
-          "changes": [
-            "A81V"
-          ],
-          "reported_mutations": [
-            "A81V"
-          ],
+          "changes": [],
+          "reported_mutations": [],
           "loss_of_function": null
         }
       ]
@@ -365,30 +361,6 @@
     }
   ],
   "protein_changes": [
-    {
-      "gene": "blaCTX-M-15",
-      "family": "blaCTX-M",
-      "mutation": "A81V",
-      "confidence": 100,
-      "methods": [
-        "blast",
-        "gamma"
-      ],
-      "reported": true,
-      "gamma_detail": {
-        "protein": "blaCTX-M-15",
-        "contig": "NZ_JAWWVF010000109.1",
-        "contig_start": 2752,
-        "contig_end": 3628,
-        "identity": 99.66000000000001,
-        "coverage": 100.0,
-        "match_type": "Mutant",
-        "mutations": [
-          "A81V"
-        ]
-      },
-      "contig": "NZ_JAWWVF010000109.1"
-    },
     {
       "gene": "cyaA",
       "family": "cyaA",
@@ -1726,15 +1698,15 @@
       ]
     },
     {
-      "protein": "blaCTX-M-15",
+      "protein": "blaCTX-M-55",
       "contig": "NZ_JAWWVF010000109.1",
       "contig_start": 2752,
       "contig_end": 3628,
-      "identity": 99.66000000000001,
+      "identity": 100.0,
       "coverage": 100.0,
-      "match_type": "Mutant",
+      "match_type": "Native",
       "mutations": [
-        "A81V"
+        "No coding mutations"
       ]
     },
     {
@@ -1832,7 +1804,7 @@
       "phenotype": "Resistant",
       "evidence": [
         "Metallo-beta-lactamase blaNDM-5 detected (100.00% identity) - avibactam does not inhibit metallo-enzymes, so ceftazidime-avibactam is not active",
-        "Loss of function in porin ompF (premature stop at residue 241 (240/362 aa)) alongside blaCTX-M-15: reduced drug entry combined with beta-lactamase activity is a documented route to raised ceftazidime-avibactam MICs, though it is not on its own established as conferring resistance"
+        "Loss of function in porin ompF (premature stop at residue 241 (240/362 aa)) alongside blaCTX-M-55: reduced drug entry combined with beta-lactamase activity is a documented route to raised ceftazidime-avibactam MICs, though it is not on its own established as conferring resistance"
       ]
     },
     "disclaimer": "Genotype-based prediction only; not a substitute for phenotypic antimicrobial susceptibility testing (AST)."

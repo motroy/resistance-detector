@@ -15,7 +15,7 @@ PREDICTED PHENOTYPES (genotype-based):
     - No ceftazidime-avibactam resistance mechanism detected (no metallo-beta-lactamase, no blaKPC escape variant, no contributory porin/PBP3/EnvZ change)
   Note: Genotype-based prediction only; not a substitute for phenotypic antimicrobial susceptibility testing (AST).
 
-Total genes detected: 7
+Total genes detected: 16
 Method: BLAST+ with codon-aware variant calling
 
 ACQUIRED RESISTANCE GENES:
@@ -26,14 +26,23 @@ ACQUIRED RESISTANCE GENES:
 CHROMOSOMAL TARGET GENES:
 --------------------------------------------------
   acrB (copy number 1): 99.75% identity, 100.00% coverage
+  cyaA (copy number 1): 99.61% identity, 100.00% coverage
   ftsI (copy number 1): 99.49% identity, 100.00% coverage
+  ptsI (copy number 1): 99.88% identity, 100.00% coverage
+  uhpB (copy number 1): 98.85% identity, 100.00% coverage
+  uhpT (copy number 1): 99.42% identity, 100.00% coverage
   envZ (copy number 1): 99.34% identity, 100.00% coverage
+  glpT (copy number 1): 99.33% identity, 100.00% coverage
+  uhpC (copy number 1): 99.40% identity, 100.00% coverage
+  murA (copy number 1): 99.76% identity, 100.00% coverage
   ompK35 (copy number 1): 99.35% identity, 100.00% coverage
+  galU (copy number 1): 99.89% identity, 100.00% coverage
   ompK36 (copy number 1): 93.43% identity, 100.00% coverage
+  uhpA (copy number 1): 96.80% identity, 100.00% coverage
   fosAKP (copy number 1): 96.19% identity, 100.00% coverage
 
 PROTEIN CHANGES (BLAST caller cross-checked with GAMMA):
-  6 of 33 changes were reported by both callers
+  10 of 38 changes were reported by both callers
 ----------------------------------------------------------------------
 
   Gene: acrB
@@ -82,4 +91,15 @@ PROTEIN CHANGES (BLAST caller cross-checked with GAMMA):
     Y201F                confidence  50%  [blast]  (not a curated resistance mutation)
     Y210W                confidence  50%  [blast]  (not a curated resistance mutation)
     insNNFTGV@308        confidence  50%  [blast]  (not a curated resistance mutation)
+
+  Gene: uhpA
+    A116V                confidence 100%  [blast+gamma]  (not a curated resistance mutation)
+    T75I                 confidence 100%  [blast+gamma]  (not a curated resistance mutation)
+
+  Gene: uhpB
+    L65F                 confidence 100%  [blast+gamma]  (not a curated resistance mutation)
+    insAS@421            confidence  50%  [blast]  (not a curated resistance mutation)
+
+  Gene: uhpC
+    F114L                confidence 100%  [blast+gamma]  (not a curated resistance mutation)
 

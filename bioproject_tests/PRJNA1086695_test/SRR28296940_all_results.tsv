@@ -1,10 +1,20 @@
 Sample	Type	Gene	Allele	Method	Result_Details	Identity_Confidence	Contig	Start	End	Copy_Number	Notes
 SRR28296940.fna	Chromosomal gene	acrB	acrB	BLAST	Coverage: 100.00%	99.84%	u12	171239	174385	1	protein changes: R716L
+SRR28296940.fna	Chromosomal gene	cyaA	cyaA	BLAST	Coverage: 100.00%	100.00%	u38	43737	46289	1	no protein changes vs reference
 SRR28296940.fna	Chromosomal gene	ftsI	ftsI	BLAST	Coverage: 100.00%	99.32%	u79	186809	188575	1	protein changes: V375A;A433V
+SRR28296940.fna	Chromosomal gene	ptsI	ptsI	BLAST	Coverage: 100.00%	100.00%	u57	78059	79786	1	no protein changes vs reference
+SRR28296940.fna	Chromosomal gene	uhpB	uhpB	BLAST	Coverage: 100.00%	99.59%	u33	23476	24957	1	protein changes: insAS@421
+SRR28296940.fna	Chromosomal gene	uhpT	uhpT	BLAST	Coverage: 100.00%	100.00%	u33	26443	27834	1	no protein changes vs reference
 SRR28296940.fna	Chromosomal gene	envZ	envZ	BLAST	Coverage: 100.00%	99.93%	u1	48666	50021	1	protein changes: I258M
+SRR28296940.fna	Chromosomal gene	glpT	glpT	BLAST	Coverage: 100.00%	100.00%	u57	198414	199760	1	no protein changes vs reference
+SRR28296940.fna	Chromosomal gene	uhpC	uhpC	BLAST	Coverage: 100.00%	100.00%	u33	24969	26297	1	no protein changes vs reference
+SRR28296940.fna	Chromosomal gene	murA	murA	BLAST	Coverage: 100.00%	100.00%	u23	95238	96497	1	no protein changes vs reference
 SRR28296940.fna	Chromosomal gene	ompK35	ompK35	BLAST	Coverage: 100.00%	99.35%	u46	46602	47680	1	protein changes: N29T;G30A;N31T;K32N;L33_V44del;T47S;N48_K226del;A227M;A229K;A231S;T232A;A234_Q288del;K290S;K292P;D293P;L294M;Q295A;S296_Y339del;K341P;G344T;V345I;A346P;T347P;D348M;D349P;Q350V;A351S;V353_F359del; premature stop at residue 63 (62/359 aa)
+SRR28296940.fna	Chromosomal gene	galU	galU	BLAST	Coverage: 100.00%	100.00%	u112	147019	147921	1	no protein changes vs reference
 SRR28296940.fna	Acquired gene	blaKPC-2	blaKPC-2	BLAST	Coverage: 100.00%	100.00%	u93	6026	6907	1	no protein changes vs reference
+SRR28296940.fna	Acquired gene	blaCTX-M-65	blaCTX-M-65	BLAST	Coverage: 100.00%	100.00%	u113	154	1029	1	no protein changes vs reference
 SRR28296940.fna	Chromosomal gene	ompK36	ompK36	BLAST	Coverage: 100.00%	92.22%	u57	216041	217165	1	protein changes: insGD@133;A183T;L184del;T192G;Y201F;N221H;L225N;S230del;K231R;A233D;L234K;insF@268;A269S;S271N;insGESDSI@271;L272S;L307I;I315L;D344E;S346D;H349R;N350R
+SRR28296940.fna	Chromosomal gene	uhpA	uhpA	BLAST	Coverage: 100.00%	100.00%	u33	22865	23458	1	no protein changes vs reference
 SRR28296940.fna	Chromosomal gene	fosAKP	fosAKP	BLAST	Coverage: 100.00%	98.81%	u60	14061	14480	1	protein changes: I91V;Q130P;D138E
 SRR28296940.fna	Protein change	acrB	-	blast+gamma	R716L	100%	u12	-	-	-	sequence difference, not a curated resistance mutation
 SRR28296940.fna	Protein change	envZ	-	blast+gamma	I258M	100%	u1	-	-	-	sequence difference, not a curated resistance mutation
@@ -63,4 +73,5 @@ SRR28296940.fna	Protein change	ompK36	-	blast	Y201F	50%	u57	-	-	-	sequence diffe
 SRR28296940.fna	Protein change	ompK36	-	blast	insF@268	50%	u57	-	-	-	sequence difference, not a curated resistance mutation
 SRR28296940.fna	Protein change	ompK36	-	blast	insGD@133	50%	u57	-	-	-	sequence difference, not a curated resistance mutation
 SRR28296940.fna	Protein change	ompK36	-	blast	insGESDSI@271	50%	u57	-	-	-	sequence difference, not a curated resistance mutation
+SRR28296940.fna	Protein change	uhpB	-	blast	insAS@421	50%	u33	-	-	-	sequence difference, not a curated resistance mutation
 SRR28296940.fna	Amplicon	blaKPC_ver	-	SeqKit/amplicon	Length: 882bp	-	u93	6025	6907	-	Genes in region: blaKPC-2: no changes

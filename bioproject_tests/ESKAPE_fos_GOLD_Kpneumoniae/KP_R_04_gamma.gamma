@@ -1,9 +1,18 @@
 Gene	Contig	Start	Stop	Match_Type	Description	Codon_Changes	BP_Changes	Transversions	Codon_Percent	BP_Percent	Percent_Length	Match_Length	Target_Length	Strand
 blaSHV-12	FBSV01000003.1	145252	146113	Native	No coding mutations	0	0	0	1	1	1	861	861	+
+galU_Kpn	FBSV01000007.1	360718	361621	Native	No coding mutations	0	2	0	1	0.9978	1	903	903	-
+murA_Kpn	FBSV01000011.1	224769	226029	Native	No coding mutations	0	0	0	1	1	1	1260	1260	-
 acrB	FBSV01000014.1	62422	65569	Native	No coding mutations	0	4	1	1	0.9987	1	3147	3147	+
 envZ	FBSV01000018.1	153768	155124	Mutant	I15T,I258M,	2	2	1	0.9956	0.9985	1	1356	1356	+
 ftsI	FBSV01000021.1	48600	50367	Mutant	V375A,	1	10	1	0.9983	0.9943	1	1767	1767	-
 fosAKP	FBSV01000021.1	255858	256278	Mutant	I91V,Q130P,D138E,	3	5	3	0.9786	0.9881	1	420	420	-
+cyaA_Kpn	FBSV01000028.1	26325	28878	Native	No coding mutations	0	0	0	1	1	1	2553	2553	+
+uhpT_Kpn	FBSV01000030.1	57223	58615	Native	No coding mutations	0	0	0	1	1	1	1392	1392	-
+uhpC_Kpn	FBSV01000030.1	58760	60089	Native	No coding mutations	0	0	0	1	1	1	1329	1329	-
+uhpB_Kpn	FBSV01000030.1	60100	61582	Indel	6 bp Insertion at 1272,	2	6	0	0.9959	0.9959	1.004	1482	1476	-
+uhpA_Kpn	FBSV01000030.1	61599	62193	Native	No coding mutations	0	0	0	1	1	1	594	594	-
 ompK36	FBSV01000032.1	213478	214582	Truncation	truncation at codon 125 (of 368 codons),1 coding mutations	1	2	0	0.9973	0.9982	1	1104	1104	+
+glpT_Kpn	FBSV01000032.1	195852	197199	Native	No coding mutations	0	0	0	1	1	1	1347	1347	+
+ptsI_Kpn	FBSV01000032.1	75498	77226	Native	No coding mutations	0	0	0	1	1	1	1728	1728	-
 ompK35	FBSV01000034.1	209320	210401	Indel Truncation	1 bp Insertion at 123,truncation at codon 89 (of 360 codons),312 coding mutations	312	7	0	0.1333	0.9935	1.001	1081	1080	+
 blaKPC-2	FBSV01000042.1	10737	11619	Native	No coding mutations	0	0	0	1	1	1	882	882	+

@@ -1,10 +1,19 @@
 Sample	Type	Gene	Allele	Method	Result_Details	Identity_Confidence	Contig	Start	End	Copy_Number	Notes
 GCA_027151795.1.fna	Chromosomal gene	acrB	acrB	BLAST	Coverage: 100.00%	99.62%	JAJOCN010000009.1	88621	91767	1	protein changes: S1036T
+GCA_027151795.1.fna	Chromosomal gene	cyaA	cyaA	BLAST	Coverage: 100.00%	99.69%	JAJOCN010000018.1	40354	42906	1	no protein changes vs reference
 GCA_027151795.1.fna	Chromosomal gene	ftsI	ftsI	BLAST	Coverage: 100.00%	99.72%	JAJOCN010000003.1	230547	232313	1	protein changes: V375A
+GCA_027151795.1.fna	Chromosomal gene	ptsI	ptsI	BLAST	Coverage: 100.00%	99.71%	JAJOCN010000012.1	177990	179717	1	protein changes: V40I
+GCA_027151795.1.fna	Chromosomal gene	uhpB	uhpB	BLAST	Coverage: 100.00%	99.19%	JAJOCN010000016.1	86468	87949	1	protein changes: insAS@421
+GCA_027151795.1.fna	Chromosomal gene	uhpT	uhpT	BLAST	Coverage: 100.00%	99.35%	JAJOCN010000016.1	89435	90826	1	no protein changes vs reference
+GCA_027151795.1.fna	Chromosomal gene	glpT	glpT	BLAST	Coverage: 100.00%	99.70%	JAJOCN010000008.1	110139	111485	1	no protein changes vs reference
 GCA_027151795.1.fna	Chromosomal gene	envZ	envZ	BLAST	Coverage: 100.00%	99.48%	JAJOCN010000002.1	342398	343753	1	protein changes: I15T;I258M
+GCA_027151795.1.fna	Chromosomal gene	uhpC	uhpC	BLAST	Coverage: 100.00%	99.32%	JAJOCN010000016.1	87961	89289	1	protein changes: A126V
+GCA_027151795.1.fna	Chromosomal gene	murA	murA	BLAST	Coverage: 100.00%	99.60%	JAJOCN010000007.1	229829	231088	1	no protein changes vs reference
 GCA_027151795.1.fna	Chromosomal gene	ompK35	ompK35	BLAST	Coverage: 100.00%	99.81%	JAJOCN010000010.1	225328	226407	1	no protein changes vs reference
+GCA_027151795.1.fna	Chromosomal gene	galU	galU	BLAST	Coverage: 100.00%	99.89%	JAJOCN010000001.1	244535	245437	1	no protein changes vs reference
 GCA_027151795.1.fna	Chromosomal gene	ompK36	ompK36	BLAST	Coverage: 100.00%	92.69%	JAJOCN010000008.1	127766	128860	1	protein changes: T86V;S88G;S89T;S90D;D91K;A93S;G182_L184del;S185D;P186M;T192G;L194Q;Y201F;L205V;Y210W;N221H;L225T;G226D;S230N;K231del;A233V;N239D;T258S;insR@308;H349R
 GCA_027151795.1.fna	Acquired gene	blaSHV-12	blaSHV-like	BLAST	Coverage: 99.77%	99.30%	JAJOCN010000013.1	106693	107551	1	protein changes: M1K;Q31L;S235G;K236E
+GCA_027151795.1.fna	Chromosomal gene	uhpA	uhpA	BLAST	Coverage: 100.00%	100.00%	JAJOCN010000016.1	85857	86450	1	no protein changes vs reference
 GCA_027151795.1.fna	Chromosomal gene	fosAKP	fosAKP	BLAST	Coverage: 100.00%	99.29%	JAJOCN010000003.1	23022	23441	1	protein changes: Q130P;V135E
 GCA_027151795.1.fna	Protein change	acrB	-	blast+gamma	S1036T	100%	JAJOCN010000009.1	-	-	-	sequence difference, not a curated resistance mutation
 GCA_027151795.1.fna	Protein change	blaSHV-12	-	blast+gamma	K236E	100%	JAJOCN010000013.1	-	-	-	reported as resistance mutation
@@ -40,3 +49,6 @@ GCA_027151795.1.fna	Protein change	ompK36	-	blast	T86V	50%	JAJOCN010000008.1	-	-
 GCA_027151795.1.fna	Protein change	ompK36	-	blast	Y201F	50%	JAJOCN010000008.1	-	-	-	sequence difference, not a curated resistance mutation
 GCA_027151795.1.fna	Protein change	ompK36	-	blast	Y210W	50%	JAJOCN010000008.1	-	-	-	sequence difference, not a curated resistance mutation
 GCA_027151795.1.fna	Protein change	ompK36	-	blast	insR@308	50%	JAJOCN010000008.1	-	-	-	sequence difference, not a curated resistance mutation
+GCA_027151795.1.fna	Protein change	ptsI	-	blast+gamma	V40I	100%	JAJOCN010000012.1	-	-	-	sequence difference, not a curated resistance mutation
+GCA_027151795.1.fna	Protein change	uhpB	-	blast	insAS@421	50%	JAJOCN010000016.1	-	-	-	sequence difference, not a curated resistance mutation
+GCA_027151795.1.fna	Protein change	uhpC	-	blast+gamma	A126V	100%	JAJOCN010000016.1	-	-	-	sequence difference, not a curated resistance mutation

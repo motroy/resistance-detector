@@ -1,8 +1,18 @@
 Gene	Contig	Start	Stop	Match_Type	Description	Codon_Changes	BP_Changes	Transversions	Codon_Percent	BP_Percent	Percent_Length	Match_Length	Target_Length	Strand
 acrB	u1	171238	174385	Mutant	R716L,	1	5	2	0.9990	0.9984	1	3147	3147	-
+murA_Kpn	u12	77059	78319	Native	No coding mutations	0	0	0	1	1	1	1260	1260	+
+uhpT_Kpn	u32	86233	87625	Native	No coding mutations	0	0	0	1	1	1	1392	1392	-
+uhpC_Kpn	u32	87770	89099	Native	No coding mutations	0	0	0	1	1	1	1329	1329	-
+uhpB_Kpn	u32	89110	90592	Indel	6 bp Insertion at 1272,	2	6	0	0.9959	0.9959	1.004	1482	1476	-
+uhpA_Kpn	u32	90609	91203	Native	No coding mutations	0	0	0	1	1	1	594	594	-
+cyaA_Kpn	u38	40571	43124	Native	No coding mutations	0	0	0	1	1	1	2553	2553	-
 ompK35	u44	64641	65720	Indel Truncation	1 bp Deletion at 86,truncation at codon 63 (of 360 codons),322 coding mutations	322	7	0	0.1056	0.9935	0.9991	1079	1080	-
 ompK36	u55	216040	217165	Indel	6 bp Insertion at 406,3 bp Deletion at 546,3 bp Deletion at 673,21 bp Insertion at 798,185 coding mutations	195	109	36	0.4701	0.9013	1.019	1125	1104	+
+glpT_Kpn	u55	198413	199760	Native	No coding mutations	0	0	0	1	1	1	1347	1347	+
+ptsI_Kpn	u55	78058	79786	Native	No coding mutations	0	0	0	1	1	1	1728	1728	-
 fosAKP	u58	14020	14440	Mutant	I91V,Q130P,D138E,	3	5	3	0.9786	0.9881	1	420	420	+
 ftsI	u77	186808	188575	Mutant	V375A,A433V,	2	12	1	0.9966	0.9932	1	1767	1767	+
 blaKPC-2	u87	6025	6910	Indel	3 bp Insertion at 543,A132T,	2	4	0	0.9932	0.9955	1.003	885	882	-
+galU_Kpn	u99	62166	63069	Native	No coding mutations	0	0	0	1	1	1	903	903	+
+blaCTX-M-65	u105	556	1432	Native	No coding mutations	0	0	0	1	1	1	876	876	+
 envZ	u110	48665	50021	Mutant	I258M,	1	1	1	0.9978	0.9993	1	1356	1356	-

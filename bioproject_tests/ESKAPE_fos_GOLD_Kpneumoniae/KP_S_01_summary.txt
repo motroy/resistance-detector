@@ -15,7 +15,7 @@ PREDICTED PHENOTYPES (genotype-based):
     - blaKPC detected but carrying no Omega-loop, 237-243 or insertion-loop change associated with avibactam escape, and no contributory porin/PBP3/EnvZ change; avibactam is expected to inhibit it
   Note: Genotype-based prediction only; not a substitute for phenotypic antimicrobial susceptibility testing (AST).
 
-Total genes detected: 8
+Total genes detected: 17
 Method: BLAST+ with codon-aware variant calling
 
 ACQUIRED RESISTANCE GENES:
@@ -28,15 +28,24 @@ ACQUIRED RESISTANCE GENES:
 CHROMOSOMAL TARGET GENES:
 --------------------------------------------------
   acrB (copy number 1): 99.78% identity, 100.00% coverage
+  cyaA (copy number 1): 99.53% identity, 100.00% coverage
   ftsI (copy number 1): 99.49% identity, 100.00% coverage
+  ptsI (copy number 1): 99.71% identity, 100.00% coverage
+  uhpB (copy number 1): 99.06% identity, 100.00% coverage
+  uhpT (copy number 1): 99.50% identity, 100.00% coverage
   envZ (copy number 1): 99.56% identity, 100.00% coverage
+  glpT (copy number 1): 99.56% identity, 100.00% coverage
+  uhpC (copy number 1): 99.40% identity, 100.00% coverage
+  murA (copy number 1): 99.44% identity, 100.00% coverage
   ompK35 (copy number 1): 99.35% identity, 100.00% coverage
     Loss of function: premature stop at residue 63 (62/359 aa)
   ompK36 (copy number 1): 95.32% identity, 100.00% coverage
+  galU (copy number 1): 99.67% identity, 100.00% coverage
+  uhpA (copy number 1): 98.99% identity, 100.00% coverage
   fosAKP (copy number 1): 95.71% identity, 100.00% coverage
 
 PROTEIN CHANGES (BLAST caller cross-checked with GAMMA):
-  7 of 30 changes were reported by both callers
+  10 of 34 changes were reported by both callers
 ----------------------------------------------------------------------
 
   Gene: blaKPC-2
@@ -84,6 +93,14 @@ PROTEIN CHANGES (BLAST caller cross-checked with GAMMA):
     Y201F                confidence  50%  [blast]  (not a curated resistance mutation)
     Y210W                confidence  50%  [blast]  (not a curated resistance mutation)
     insR@308             confidence  50%  [blast]  (not a curated resistance mutation)
+
+  Gene: uhpB
+    I77M                 confidence 100%  [blast+gamma]  (not a curated resistance mutation)
+    L65F                 confidence 100%  [blast+gamma]  (not a curated resistance mutation)
+    insAS@421            confidence  50%  [blast]  (not a curated resistance mutation)
+
+  Gene: uhpC
+    G309S                confidence 100%  [blast+gamma]  (not a curated resistance mutation)
 
 
 DETECTED AMPLICONS (coordinates only):

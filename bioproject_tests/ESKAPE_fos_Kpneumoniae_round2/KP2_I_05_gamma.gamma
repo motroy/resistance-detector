@@ -1,11 +1,21 @@
 Gene	Contig	Start	Stop	Match_Type	Description	Codon_Changes	BP_Changes	Transversions	Codon_Percent	BP_Percent	Percent_Length	Match_Length	Target_Length	Strand
 blaCTX-M-15	RHTU01000010.1	125	1001	Native	No coding mutations	0	0	0	1	1	1	876	876	+
+ptsI_Kpn	RHTU01000011.1	204561	206289	Native	No coding mutations	0	6	1	1	0.9965	1	1728	1728	-
 ompK35	RHTU01000013.1	0	901	Contig Edge (truncation)	56 SNPs in 1-901,23 coding mutations,truncation at codon 286 (of 300 codons)	83	235	30	0.7694	0.7824	0.8343	901	1080	-
 ftsI	RHTU01000014.1	68756	70523	Mutant	V375A,	1	9	1	0.9983	0.9949	1	1767	1767	+
 fosA10	RHTU01000015.1	14013	14433	Nonstop	A138E,E139D,*140E,	3	16	5	0.9786	0.9619	1	420	420	+
+galU_Kpn	RHTU01000001.1	322823	323726	Native	No coding mutations	0	2	0	1	0.9978	1	903	903	+
+cyaA_Kpn	RHTU01000020.1	43411	45964	Native	No coding mutations	0	4	0	1	0.9984	1	2553	2553	+
+uhpT_Kpn	RHTU01000023.1	10271	11663	Native	No coding mutations	0	6	0	1	0.9957	1	1392	1392	-
+uhpC_Kpn	RHTU01000023.1	11808	13137	Native	No coding mutations	0	8	2	1	0.9940	1	1329	1329	-
+uhpB_Kpn	RHTU01000023.1	13148	14630	Indel	6 bp Insertion at 1272,L65F,	3	13	3	0.9939	0.9912	1.004	1482	1476	-
+uhpA_Kpn	RHTU01000023.1	14647	15241	Native	No coding mutations	0	3	1	1	0.9949	1	594	594	-
 ompK36	RHTU01000002.1	132555	133665	Indel	6 bp Insertion at 409,G176V,V178P,H349R,	5	13	4	0.9864	0.9882	1.005	1110	1104	+
+glpT_Kpn	RHTU01000002.1	114928	116275	Native	No coding mutations	0	5	2	1	0.9963	1	1347	1347	+
 envZ	RHTU01000003.1	48607	49963	Mutant	I15T,I258M,A443T,	3	14	4	0.9934	0.9897	1	1356	1356	-
 blaNDM-5	RHTU01000043.1	2211	3024	Native	No coding mutations	0	0	0	1	1	1	813	813	-
 blaOXA-181	RHTU01000004.1	205	1003	Native	No coding mutations	0	0	0	1	1	1	798	798	+
 acrB	RHTU01000004.1	152823	155970	Native	No coding mutations	0	5	2	1	0.9984	1	3147	3147	-
+murA_Kpn	RHTU01000006.1	259473	260733	Native	No coding mutations	0	5	3	1	0.9960	1	1260	1260	-
 blaSHV-12	RHTU01000007.1	236367	237228	Mutant	S234G,K235E,	2	5	1	0.9930	0.9942	1	861	861	+
+galU_Kpn	RHTU01000009.1	68180	69083	Native	No coding mutations	0	2	0	1	0.9978	1	903	903	+

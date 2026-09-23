@@ -1,11 +1,20 @@
 Sample	Type	Gene	Allele	Method	Result_Details	Identity_Confidence	Contig	Start	End	Copy_Number	Notes
 KP2_S_03.fna	Chromosomal gene	acrB	acrB	BLAST	Coverage: 100.00%	99.94%	CACSCD010000002.1	252911	256057	1	no protein changes vs reference
+KP2_S_03.fna	Chromosomal gene	cyaA	cyaA	BLAST	Coverage: 100.00%	99.77%	CACSCD010000019.1	40319	42871	1	no protein changes vs reference
 KP2_S_03.fna	Chromosomal gene	ftsI	ftsI	BLAST	Coverage: 100.00%	99.77%	CACSCD010000009.1	144217	145983	1	protein changes: V375A
+KP2_S_03.fna	Chromosomal gene	ptsI	ptsI	BLAST	Coverage: 100.00%	99.88%	CACSCD010000010.1	32797	34524	1	no protein changes vs reference
+KP2_S_03.fna	Chromosomal gene	uhpB	uhpB	BLAST	Coverage: 100.00%	98.92%	CACSCD010000017.1	12679	14160	1	protein changes: L65F;insAS@421
+KP2_S_03.fna	Chromosomal gene	uhpT	uhpT	BLAST	Coverage: 100.00%	99.42%	CACSCD010000017.1	9802	11193	1	no protein changes vs reference
+KP2_S_03.fna	Chromosomal gene	glpT	glpT	BLAST	Coverage: 100.00%	99.56%	CACSCD010000007.1	92491	93837	1	no protein changes vs reference
 KP2_S_03.fna	Chromosomal gene	envZ	envZ	BLAST	Coverage: 100.00%	99.04%	CACSCD010000005.1	48656	50011	1	protein changes: I15T;I258M
+KP2_S_03.fna	Chromosomal gene	uhpC	uhpC	BLAST	Coverage: 100.00%	99.40%	CACSCD010000017.1	11339	12667	1	no protein changes vs reference
+KP2_S_03.fna	Chromosomal gene	murA	murA	BLAST	Coverage: 100.00%	99.60%	CACSCD010000006.1	235704	236963	1	no protein changes vs reference
 KP2_S_03.fna	Chromosomal gene	ompK35	ompK35	BLAST	Coverage: 100.00%	99.35%	CACSCD010000004.1	189022	190101	1	no protein changes vs reference
+KP2_S_03.fna	Chromosomal gene	galU	galU	BLAST	Coverage: 100.00%	99.78%	CACSCD010000001.1	272290	273192	1	protein changes: R9T
 KP2_S_03.fna	Acquired gene	blaKPC-2	blaKPC-3	BLAST	Coverage: 100.00%	99.89%	CACSCD010000029.1	5860	6741	1	protein changes: H274Y
 KP2_S_03.fna	Chromosomal gene	ompK36	ompK36	BLAST	Coverage: 100.00%	92.62%	CACSCD010000007.1	75092	76210	1	protein changes: A183T;L184del;T192G;Y201F;N221H;L225N;S230del;K231R;A233D;L234K;insF@268;A269S;S271N;insGESDSI@271;L272S;L307I;I315L;D344E;S346D;H349R;N350R
 KP2_S_03.fna	Acquired gene	blaSHV-12	blaSHV-like	BLAST	Coverage: 100.00%	98.95%	CACSCD010000001.1	898598	899458	1	protein changes: Y3F;Q31L;S235G;K236E
+KP2_S_03.fna	Chromosomal gene	uhpA	uhpA	BLAST	Coverage: 100.00%	99.33%	CACSCD010000017.1	14178	14771	1	no protein changes vs reference
 KP2_S_03.fna	Chromosomal gene	fosAKP	fosAKP	BLAST	Coverage: 100.00%	99.76%	CACSCD010000011.1	137400	137819	1	protein changes: Q130P
 KP2_S_03.fna	Protein change	blaKPC-2	-	blast+gamma	H274Y	100%	CACSCD010000029.1	-	-	-	reported as resistance mutation
 KP2_S_03.fna	Protein change	blaSHV-12	-	blast+gamma	K236E	100%	CACSCD010000001.1	-	-	-	reported as resistance mutation
@@ -16,6 +25,7 @@ KP2_S_03.fna	Protein change	envZ	-	blast+gamma	I15T	100%	CACSCD010000005.1	-	-	-
 KP2_S_03.fna	Protein change	envZ	-	blast+gamma	I258M	100%	CACSCD010000005.1	-	-	-	sequence difference, not a curated resistance mutation
 KP2_S_03.fna	Protein change	fosAKP	-	blast+gamma	Q130P	100%	CACSCD010000011.1	-	-	-	sequence difference, not a curated resistance mutation
 KP2_S_03.fna	Protein change	ftsI	-	blast+gamma	V375A	100%	CACSCD010000009.1	-	-	-	sequence difference, not a curated resistance mutation
+KP2_S_03.fna	Protein change	galU	-	blast+gamma	R9T	100%	CACSCD010000001.1	-	-	-	sequence difference, not a curated resistance mutation
 KP2_S_03.fna	Protein change	ompK36	-	blast	A183T	50%	CACSCD010000007.1	-	-	-	sequence difference, not a curated resistance mutation
 KP2_S_03.fna	Protein change	ompK36	-	blast	A233D	50%	CACSCD010000007.1	-	-	-	sequence difference, not a curated resistance mutation
 KP2_S_03.fna	Protein change	ompK36	-	blast	A269S	50%	CACSCD010000007.1	-	-	-	sequence difference, not a curated resistance mutation
@@ -37,4 +47,6 @@ KP2_S_03.fna	Protein change	ompK36	-	blast	T192G	50%	CACSCD010000007.1	-	-	-	seq
 KP2_S_03.fna	Protein change	ompK36	-	blast	Y201F	50%	CACSCD010000007.1	-	-	-	sequence difference, not a curated resistance mutation
 KP2_S_03.fna	Protein change	ompK36	-	blast	insF@268	50%	CACSCD010000007.1	-	-	-	sequence difference, not a curated resistance mutation
 KP2_S_03.fna	Protein change	ompK36	-	blast	insGESDSI@271	50%	CACSCD010000007.1	-	-	-	sequence difference, not a curated resistance mutation
+KP2_S_03.fna	Protein change	uhpB	-	blast+gamma	L65F	100%	CACSCD010000017.1	-	-	-	sequence difference, not a curated resistance mutation
+KP2_S_03.fna	Protein change	uhpB	-	blast	insAS@421	50%	CACSCD010000017.1	-	-	-	sequence difference, not a curated resistance mutation
 KP2_S_03.fna	Amplicon	blaKPC_ver	-	SeqKit/amplicon	Length: 882bp	-	CACSCD010000029.1	5859	6741	-	Genes in region: blaKPC-3: H274Y

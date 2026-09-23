@@ -21,8 +21,7 @@ Method: BLAST+ with codon-aware variant calling
 ACQUIRED RESISTANCE GENES:
 --------------------------------------------------
   blaCMY-2 (gene blaCMY-2, copy number 1): 100.00% identity, 100.00% coverage
-  blaCTX-M-like (gene blaCTX-M-15, copy number 1): 99.89% identity, 100.00% coverage
-    Protein changes vs blaCTX-M-15: A81V
+  blaCTX-M-55 (gene blaCTX-M-55, copy number 1): 100.00% identity, 100.00% coverage
   blaNDM-5 (gene blaNDM-5, copy number 1): 100.00% identity, 100.00% coverage
   fosA3 (gene fosA3, copy number 1): 100.00% identity, 100.00% coverage
 
@@ -42,11 +41,8 @@ CHROMOSOMAL TARGET GENES:
   uhpA (copy number 1): 96.95% identity, 100.00% coverage
 
 PROTEIN CHANGES (BLAST caller cross-checked with GAMMA):
-  4 of 17 changes were reported by both callers
+  3 of 16 changes were reported by both callers
 ----------------------------------------------------------------------
-
-  Gene: blaCTX-M-15
-    A81V                 confidence 100%  [blast+gamma]
 
   Gene: cyaA
     N142S                confidence 100%  [blast+gamma]  (not a curated resistance mutation)

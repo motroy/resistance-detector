@@ -1,6 +1,5 @@
 Gene	Mutation	Confidence(%)	Methods	Contig	Reported_As_Resistance_Mutation
-blaCTX-M-15	A81V	100	blast+gamma	NZ_JAWWVJ010000088.1	yes
-blaCTX-M-15	G240S	100	blast+gamma	NZ_JAWWVJ010000088.1	yes
+blaCTX-M-55	G240S	50	blast	NZ_JAWWVJ010000088.1	yes
 cyaA	F566L	100	blast+gamma	NZ_JAWWVJ010000016.1	no
 murA	P99S	100	blast+gamma	NZ_JAWWVJ010000017.1	no
 ompC	A193V	50	blast	NZ_JAWWVJ010000003.1	no

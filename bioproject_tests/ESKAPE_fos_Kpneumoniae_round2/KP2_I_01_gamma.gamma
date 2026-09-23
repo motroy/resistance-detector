@@ -1,7 +1,16 @@
 Gene	Contig	Start	Stop	Match_Type	Description	Codon_Changes	BP_Changes	Transversions	Codon_Percent	BP_Percent	Percent_Length	Match_Length	Target_Length	Strand
+ptsI_Kpn	RHTH01000010.1	8558	10286	Native	No coding mutations	0	6	1	1	0.9965	1	1728	1728	+
+murA_Kpn	RHTH01000011.1	35892	37152	Native	No coding mutations	0	5	3	1	0.9960	1	1260	1260	+
 ompK35	RHTH01000012.1	168717	169674	Contig Edge (truncation)	99 SNPs in 1-957,41 coding mutations,truncation at codon 286 (of 319 codons)	82	222	57	0.7722	0.7944	0.8861	957	1080	+
 fosA10	RHTH01000013.1	14208	14628	Nonstop	A138E,E139D,*140E,	3	16	5	0.9786	0.9619	1	420	420	+
+cyaA_Kpn	RHTH01000018.1	40464	43017	Native	No coding mutations	0	4	0	1	0.9984	1	2553	2553	-
+galU_Kpn	RHTH01000001.1	373669	374572	Native	No coding mutations	0	2	0	1	0.9978	1	903	903	-
+uhpT_Kpn	RHTH01000020.1	64725	66117	Native	No coding mutations	0	6	0	1	0.9957	1	1392	1392	+
+uhpC_Kpn	RHTH01000020.1	63251	64580	Native	No coding mutations	0	8	2	1	0.9940	1	1329	1329	+
+uhpB_Kpn	RHTH01000020.1	61758	63240	Indel	6 bp Insertion at 1272,L65F,	3	13	3	0.9939	0.9912	1.004	1482	1476	+
+uhpA_Kpn	RHTH01000020.1	61147	61741	Native	No coding mutations	0	3	1	1	0.9949	1	594	594	+
 ompK36	RHTH01000002.1	179905	181015	Indel	6 bp Insertion at 409,V178P,H349R,	4	12	3	0.9891	0.9891	1.005	1110	1104	+
+glpT_Kpn	RHTH01000002.1	162278	163625	Native	No coding mutations	0	5	2	1	0.9963	1	1347	1347	+
 blaCTX-M-15	RHTH01000031.1	39128	40004	Native	No coding mutations	0	0	0	1	1	1	876	876	-
 envZ	RHTH01000003.1	48607	49963	Mutant	I15T,I258M,A443T,	3	14	4	0.9934	0.9897	1	1356	1356	-
 blaSHV-12	RHTH01000006.1	27936	28797	Mutant	S234G,K235E,	2	5	1	0.9930	0.9942	1	861	861	-

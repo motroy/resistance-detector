@@ -10,11 +10,11 @@ E1892.fna	Chromosomal gene	murA	murA	BLAST	Coverage: 100.00%	98.81%	NZ_JAWWVM010
 E1892.fna	Chromosomal gene	ompF	ompF	BLAST	Coverage: 100.00%	99.91%	NZ_JAWWVM010000006.1	107004	108092	1	protein changes: W83_F362del; premature stop at residue 83 (82/362 aa)
 E1892.fna	Chromosomal gene	ompC	ompC	BLAST	Coverage: 100.00%	94.98%	NZ_JAWWVM010000001.1	234461	235564	1	protein changes: N176S;P177V;G181_S184del;V186M;G216A;I218V;L296V;insGVIN@306;G309N
 E1892.fna	Chromosomal gene	galU	galU	BLAST	Coverage: 100.00%	99.67%	NZ_JAWWVM010000002.1	180147	181055	1	no protein changes vs reference
-E1892.fna	Acquired gene	blaCTX-M-15	blaCTX-M-like	BLAST	Coverage: 100.00%	99.89%	NZ_JAWWVM010000028.1	37448	38323	1	protein changes: A81V
+E1892.fna	Acquired gene	blaCTX-M-55	blaCTX-M-55	BLAST	Coverage: 100.00%	100.00%	NZ_JAWWVM010000028.1	37448	38323	1	no protein changes vs reference
+E1892.fna	Acquired gene	blaCTX-M-65	blaCTX-M-65	BLAST	Coverage: 100.00%	100.00%	NZ_JAWWVM010000036.1	154	1029	1	no protein changes vs reference
 E1892.fna	Acquired gene	blaNDM-5	blaNDM-5	BLAST	Coverage: 100.00%	100.00%	NZ_JAWWVM010000043.1	5971	6783	1	no protein changes vs reference
 E1892.fna	Chromosomal gene	uhpA	uhpA	BLAST	Coverage: 100.00%	97.29%	NZ_JAWWVM010000016.1	96560	97150	1	no protein changes vs reference
 E1892.fna	Acquired gene	fosA3	fosA3	BLAST	Coverage: 100.00%	100.00%	NZ_JAWWVM010000056.1	1868	2284	1	no protein changes vs reference
-E1892.fna	Protein change	blaCTX-M-15	-	blast+gamma	A81V	100%	NZ_JAWWVM010000028.1	-	-	-	reported as resistance mutation
 E1892.fna	Protein change	cyaA	-	blast+gamma	N142S	100%	NZ_JAWWVM010000018.1	-	-	-	sequence difference, not a curated resistance mutation
 E1892.fna	Protein change	glpT	-	blast+gamma	E448K	100%	NZ_JAWWVM010000001.1	-	-	-	sequence difference, not a curated resistance mutation
 E1892.fna	Protein change	ompC	-	blast	G181_S184del	50%	NZ_JAWWVM010000001.1	-	-	-	sequence difference, not a curated resistance mutation

@@ -25,3 +25,7 @@ ompK36	Y201F	50	blast	RHTT01000005.1	no
 ompK36	Y210W	50	blast	RHTT01000005.1	no
 ompK36	insGD@133	50	blast	RHTT01000005.1	no
 ompK36	insR@308	50	blast	RHTT01000005.1	no
+ptsI	K174N	100	blast+gamma	RHTT01000014.1	no
+uhpB	L65F	100	blast+gamma	RHTT01000026.1	no
+uhpB	insAS@421	50	blast	RHTT01000026.1	no
+uhpC	L336M	100	blast+gamma	RHTT01000026.1	no
