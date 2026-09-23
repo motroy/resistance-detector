@@ -20,8 +20,7 @@ Method: BLAST+ with codon-aware variant calling
 
 ACQUIRED RESISTANCE GENES:
 --------------------------------------------------
-  blaCTX-M-like (gene blaCTX-M-15, copy number 1): 99.89% identity, 100.00% coverage
-    Protein changes vs blaCTX-M-15: G243D
+  blaCTX-M-3 (gene blaCTX-M-3, copy number 1): 100.00% identity, 100.00% coverage
   blaSHV-like (gene blaSHV-12, copy number 1): 99.42% identity, 100.00% coverage
     Protein changes vs blaSHV-12: Q31L, A184T, S235G, K236E
 
@@ -44,11 +43,8 @@ CHROMOSOMAL TARGET GENES:
   fosAKP (copy number 1): 98.81% identity, 100.00% coverage
 
 PROTEIN CHANGES (BLAST caller cross-checked with GAMMA):
-  12 of 17 changes were reported by both callers
+  11 of 16 changes were reported by both callers
 ----------------------------------------------------------------------
-
-  Gene: blaCTX-M-15
-    G243D                confidence 100%  [blast+gamma]
 
   Gene: blaSHV-12
     A184T                confidence 100%  [blast+gamma]

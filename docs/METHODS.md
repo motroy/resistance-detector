@@ -328,7 +328,14 @@ inferred from amplicon presence.
   susceptible isolates. See
   [`bioproject_tests/ESKAPE_fos_GOLD_Paeruginosa/RESULTS_SUMMARY.md`](../bioproject_tests/ESKAPE_fos_GOLD_Paeruginosa/RESULTS_SUMMARY.md).
 * **Acquired class D oxacillinases** other than the OXA-48-like group
-  (e.g. OXA-2, OXA-4, OXA-21) are not in the database.
+  (e.g. OXA-2, OXA-4, OXA-21, OXA-23-like) are not in the database. A
+  cross-check against Kleborate found a real instance (`KP2_R_03` carries
+  OXA-23) — see
+  [`bioproject_tests/Kleborate_cross_check/RESULTS_SUMMARY.md`](../bioproject_tests/Kleborate_cross_check/RESULTS_SUMMARY.md).
+  Not yet added: unlike the OXA-48-like family, avibactam does not uniformly
+  inhibit these families, so adding them needs the same literature check
+  this tool's other phenotype rules were built on, not a database-only
+  change.
 * **Novel mechanisms.** Anything not in the reference data cannot be found.
 * **This is a genotypic prediction.** It is not a substitute for phenotypic
   antimicrobial susceptibility testing.

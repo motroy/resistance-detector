@@ -193,7 +193,7 @@
       ]
     },
     {
-      "gene": "blaCTX-M-15",
+      "gene": "blaCTX-M-55",
       "copy_number": 1,
       "loci": [
         {
@@ -201,15 +201,13 @@
           "start": 480,
           "end": 1355,
           "allele": "blaCTX-M-like",
-          "identity": "99.77",
+          "identity": "99.89",
           "coverage": "100.00",
           "complete": true,
           "changes": [
-            "A81V",
             "G240S"
           ],
           "reported_mutations": [
-            "A81V",
             "G240S"
           ],
           "loss_of_function": null
@@ -326,53 +324,15 @@
   ],
   "protein_changes": [
     {
-      "gene": "blaCTX-M-15",
-      "family": "blaCTX-M",
-      "mutation": "A81V",
-      "confidence": 100,
-      "methods": [
-        "blast",
-        "gamma"
-      ],
-      "reported": true,
-      "gamma_detail": {
-        "protein": "blaCTX-M-15",
-        "contig": "NZ_JAWWVJ010000088.1",
-        "contig_start": 479,
-        "contig_end": 1355,
-        "identity": 99.32,
-        "coverage": 100.0,
-        "match_type": "Mutant",
-        "mutations": [
-          "A81V",
-          "G240S"
-        ]
-      },
-      "contig": "NZ_JAWWVJ010000088.1"
-    },
-    {
-      "gene": "blaCTX-M-15",
+      "gene": "blaCTX-M-55",
       "family": "blaCTX-M",
       "mutation": "G240S",
-      "confidence": 100,
+      "confidence": 50,
       "methods": [
-        "blast",
-        "gamma"
+        "blast"
       ],
       "reported": true,
-      "gamma_detail": {
-        "protein": "blaCTX-M-15",
-        "contig": "NZ_JAWWVJ010000088.1",
-        "contig_start": 479,
-        "contig_end": 1355,
-        "identity": 99.32,
-        "coverage": 100.0,
-        "match_type": "Mutant",
-        "mutations": [
-          "A81V",
-          "G240S"
-        ]
-      },
+      "gamma_detail": null,
       "contig": "NZ_JAWWVJ010000088.1"
     },
     {
@@ -1028,16 +988,15 @@
       ]
     },
     {
-      "protein": "blaCTX-M-15",
+      "protein": "blaCTX-M-178",
       "contig": "NZ_JAWWVJ010000088.1",
       "contig_start": 479,
       "contig_end": 1355,
-      "identity": 99.32,
+      "identity": 99.66000000000001,
       "coverage": 100.0,
       "match_type": "Mutant",
       "mutations": [
-        "A81V",
-        "G240S"
+        "A81V"
       ]
     }
   ],

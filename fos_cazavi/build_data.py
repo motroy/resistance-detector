@@ -64,7 +64,8 @@ ACQUIRED_ALLELES = [
     # ESBL / AmpC context.  blaPDC is the P. aeruginosa chromosomal AmpC: every
     # isolate has it, so its presence is context, not a finding - what matters
     # clinically is expression and PDC variant, neither of which is assessed.
-    'blaCTX-M-15', 'blaSHV-12', 'blaCMY-2', 'blaPDC-1',
+    # blaCTX-M-15 itself is carried via the blaCTX-M family below, not here.
+    'blaSHV-12', 'blaCMY-2', 'blaPDC-1',
     # Acquired fosfomycin-modifying enzymes.  fosA6 and fosA_PA1129 are
     # deliberately absent here and listed as intrinsic below.
     'fosA', 'fosA2', 'fosA3', 'fosA4', 'fosA5', 'fosA7', 'fosA8', 'fosA9',
@@ -92,6 +93,22 @@ ACQUIRED_FAMILIES = [
     'blaNDM', 'blaVIM', 'blaIMP', 'blaSPM', 'blaGIM', 'blaSIM',
     # Class A carbapenemases/ESBLs that avibactam does inhibit
     'blaGES',
+    # blaCTX-M was previously represented by a single group-1 reference
+    # (CTX-M-15); a real isolate in the ESKAPE-fosfomycin GOLD set carries
+    # CTX-M-65 (group 9), ~80% nucleotide identity to CTX-M-15 - below even
+    # this tool's relaxed screening threshold - and was invisible until
+    # cross-checked against Kleborate's independent CARD-based calls (see
+    # bioproject_tests/Kleborate_cross_check/RESULTS_SUMMARY.md). Every
+    # phylogenetic group is now included so group-9/-2/-8/-25 variants are
+    # found too; scored identically to CTX-M-15 in the phenotype logic
+    # (avibactam-inhibited ESBL, PERMEABILITY_AMPLIFIED_FAMILIES).
+    'blaCTX-M',
+    # blaVEB is another avibactam-inhibited class A ESBL, found in the same
+    # cross-check (VEB-1, K. pneumoniae) and previously absent entirely.
+    # Added for detection/visibility only - not yet added to
+    # PERMEABILITY_AMPLIFIED_FAMILIES, which would need the same kind of
+    # literature check already done for the other families in that list.
+    'blaVEB',
 ]
 
 

@@ -255,23 +255,19 @@
       ]
     },
     {
-      "gene": "blaCTX-M-15",
+      "gene": "blaCTX-M-3",
       "copy_number": 1,
       "loci": [
         {
           "contig": "RCGL01000054.1",
           "start": 10977,
           "end": 11852,
-          "allele": "blaCTX-M-like",
-          "identity": "99.89",
+          "allele": "blaCTX-M-3",
+          "identity": "100.00",
           "coverage": "100.00",
           "complete": true,
-          "changes": [
-            "G243D"
-          ],
-          "reported_mutations": [
-            "G243D"
-          ],
+          "changes": [],
+          "reported_mutations": [],
           "loss_of_function": null
         }
       ]
@@ -345,30 +341,6 @@
     }
   ],
   "protein_changes": [
-    {
-      "gene": "blaCTX-M-15",
-      "family": "blaCTX-M",
-      "mutation": "G243D",
-      "confidence": 100,
-      "methods": [
-        "blast",
-        "gamma"
-      ],
-      "reported": true,
-      "gamma_detail": {
-        "protein": "blaCTX-M-15",
-        "contig": "RCGL01000054.1",
-        "contig_start": 10976,
-        "contig_end": 11852,
-        "identity": 99.66000000000001,
-        "coverage": 100.0,
-        "match_type": "Mutant",
-        "mutations": [
-          "G243D"
-        ]
-      },
-      "contig": "RCGL01000054.1"
-    },
     {
       "gene": "blaSHV-12",
       "family": "blaSHV",
@@ -878,15 +850,15 @@
       ]
     },
     {
-      "protein": "blaCTX-M-15",
+      "protein": "blaCTX-M-3",
       "contig": "RCGL01000054.1",
       "contig_start": 10976,
       "contig_end": 11852,
-      "identity": 99.66000000000001,
+      "identity": 100.0,
       "coverage": 100.0,
-      "match_type": "Mutant",
+      "match_type": "Native",
       "mutations": [
-        "G243D"
+        "No coding mutations"
       ]
     },
     {

@@ -341,7 +341,7 @@
   ],
   "protein_changes": [
     {
-      "gene": "blaCTX-M-15",
+      "gene": "blaCTX-M-101",
       "family": "blaCTX-M",
       "mutation": "0 SNPs in 390-876",
       "confidence": 50,
@@ -350,7 +350,7 @@
       ],
       "reported": false,
       "gamma_detail": {
-        "protein": "blaCTX-M-15",
+        "protein": "blaCTX-M-101",
         "contig": "RHUD01000139.1",
         "contig_start": 0,
         "contig_end": 487,
@@ -694,7 +694,7 @@
       ]
     },
     {
-      "protein": "blaCTX-M-15",
+      "protein": "blaCTX-M-101",
       "contig": "RHUD01000139.1",
       "contig_start": 0,
       "contig_end": 487,

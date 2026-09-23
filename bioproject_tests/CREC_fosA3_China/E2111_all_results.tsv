@@ -11,10 +11,10 @@ E2111.fna	Chromosomal gene	ompC	ompC	BLAST	Coverage: 100.00%	99.91%	NZ_JAWWVH010
 E2111.fna	Chromosomal gene	ompF	ompF	BLAST	Coverage: 100.00%	100.00%	NZ_JAWWVH010000001.1	295219	296307	1	no protein changes vs reference
 E2111.fna	Chromosomal gene	galU	galU	BLAST	Coverage: 100.00%	100.00%	NZ_JAWWVH010000014.1	41610	42518	1	no protein changes vs reference
 E2111.fna	Acquired gene	blaNDM-5	blaNDM-5	BLAST	Coverage: 100.00%	100.00%	NZ_JAWWVH010000078.1	4862	5674	1	no protein changes vs reference
+E2111.fna	Acquired gene	blaCTX-M-199	blaCTX-M-like	BLAST	Coverage: 89.61%	100.00%	NZ_JAWWVH010000030.1	52320	53104	1	protein changes: L264_L293del; frameshift (2 bp out of frame relative to the reference coding sequence); gene incomplete (contig boundary)
 E2111.fna	Chromosomal gene	uhpA	uhpA	BLAST	Coverage: 100.00%	100.00%	NZ_JAWWVH010000013.1	22199	22789	1	no protein changes vs reference
 E2111.fna	Acquired gene	fosA3	fosA3	BLAST	Coverage: 100.00%	100.00%	NZ_JAWWVH010000105.1	1867	2283	1	no protein changes vs reference
-E2111.fna	Protein change	blaCTX-M-15	-	gamma	1 SNPs in 97-785	50%	NZ_JAWWVH010000165.1	-	-	-	sequence difference, not a curated resistance mutation
-E2111.fna	Protein change	blaCTX-M-15	-	gamma	A81V	50%	NZ_JAWWVH010000165.1	-	-	-	sequence difference, not a curated resistance mutation
+E2111.fna	Protein change	blaCTX-M-199	-	blast	L264_L293del	50%	NZ_JAWWVH010000030.1	-	-	-	reported as resistance mutation
 E2111.fna	Protein change	glpT	-	blast+gamma	E443Q	100%	NZ_JAWWVH010000003.1	-	-	-	sequence difference, not a curated resistance mutation
 E2111.fna	Protein change	glpT	-	blast+gamma	E448K	100%	NZ_JAWWVH010000003.1	-	-	-	sequence difference, not a curated resistance mutation
 E2111.fna	Protein change	glpT	-	blast+gamma	L297F	100%	NZ_JAWWVH010000003.1	-	-	-	sequence difference, not a curated resistance mutation

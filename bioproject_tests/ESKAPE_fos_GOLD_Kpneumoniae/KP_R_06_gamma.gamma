@@ -15,4 +15,5 @@ uhpB_Kpn	NZ_LXNB01000021.1	13370	14852	Indel	6 bp Insertion at 1272,	2	6	0	0.995
 uhpA_Kpn	NZ_LXNB01000021.1	14869	15463	Native	No coding mutations	0	0	0	1	1	1	594	594	-
 cyaA_Kpn	NZ_LXNB01000027.1	26428	28981	Native	No coding mutations	0	0	0	1	1	1	2553	2553	+
 blaKPC-2	NZ_LXNB01000034.1	27617	28499	Native	No coding mutations	0	0	0	1	1	1	882	882	+
+blaVEB-1	NZ_LXNB01000063.1	4847	5747	Native	No coding mutations	0	0	0	1	1	1	900	900	-
 blaSHV-12	NZ_LXNB01000133.1	23	722	Contig Edge	1 SNPs in 1-699,	54	163	0	0.8118	0.8107	0.8118	699	861	+

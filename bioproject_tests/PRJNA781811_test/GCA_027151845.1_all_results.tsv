@@ -12,6 +12,7 @@ GCA_027151845.1.fna	Chromosomal gene	murA	murA	BLAST	Coverage: 100.00%	100.00%	J
 GCA_027151845.1.fna	Chromosomal gene	ompK36	ompK36	BLAST	Coverage: 100.00%	99.91%	JAJOCK010000006.1	47928	49031	1	no protein changes vs reference
 GCA_027151845.1.fna	Chromosomal gene	ompK35	ompK35	BLAST	Coverage: 100.00%	99.35%	JAJOCK010000012.1	42980	44059	1	protein changes: Y113_F359del; premature stop at residue 113 (112/359 aa)
 GCA_027151845.1.fna	Chromosomal gene	galU	galU	BLAST	Coverage: 100.00%	100.00%	JAJOCK010000001.1	438868	439770	1	no protein changes vs reference
+GCA_027151845.1.fna	Acquired gene	blaCTX-M-65	blaCTX-M-65	BLAST	Coverage: 100.00%	100.00%	JAJOCK010000073.1	154	1029	1	no protein changes vs reference
 GCA_027151845.1.fna	Acquired gene	blaSHV-12	blaSHV-like	BLAST	Coverage: 100.00%	99.42%	JAJOCK010000005.1	225934	226794	1	protein changes: S235G;K236E
 GCA_027151845.1.fna	Chromosomal gene	uhpA	uhpA	BLAST	Coverage: 100.00%	100.00%	JAJOCK010000008.1	85822	86415	1	no protein changes vs reference
 GCA_027151845.1.fna	Acquired gene	fosA3	fosA3	BLAST	Coverage: 100.00%	100.00%	JAJOCK010000078.1	432	848	1	no protein changes vs reference

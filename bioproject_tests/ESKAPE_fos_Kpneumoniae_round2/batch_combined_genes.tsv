@@ -161,6 +161,7 @@ KP2_R_03.fna	Klebsiella_pneumoniae	uhpT	uhpT	1	CACSBW010000030.1	89431	90822	100
 KP2_R_04.fna	Klebsiella_pneumoniae	acrB	acrB	1	NZ_LXMG01000003.1	234097	237243	99.87	100.00	yes	-	-
 KP2_R_04.fna	Klebsiella_pneumoniae	blaKPC-2	blaKPC-2	1	NZ_LXMG01000032.1	27618	28499	100.00	100.00	yes	-	-
 KP2_R_04.fna	Klebsiella_pneumoniae	blaSHV-12	blaSHV-like	1	NZ_LXMG01000138.1	24	722	99.86	81.18	no	S235_A252del;E254_R288del	truncated product (233/286 aa)
+KP2_R_04.fna	Klebsiella_pneumoniae	blaVEB-1	blaVEB-1	1	NZ_LXMG01000063.1	4848	5747	100.00	100.00	yes	-	-
 KP2_R_04.fna	Klebsiella_pneumoniae	cyaA	cyaA	1	NZ_LXMG01000027.1	26429	28981	100.00	100.00	yes	-	-
 KP2_R_04.fna	Klebsiella_pneumoniae	envZ	envZ	1	NZ_LXMG01000009.1	153886	155241	99.85	100.00	yes	-	-
 KP2_R_04.fna	Klebsiella_pneumoniae	fosAKP	fosAKP	1	NZ_LXMG01000005.1	255957	256376	98.81	100.00	yes	-	-
@@ -297,7 +298,7 @@ KP2_R_11.fna	Klebsiella_pneumoniae	uhpB	uhpB	1	CACSCR010000015.1	86501	87982	99.
 KP2_R_11.fna	Klebsiella_pneumoniae	uhpC	uhpC	1	CACSCR010000015.1	87994	89322	100.00	100.00	yes	-	-
 KP2_R_11.fna	Klebsiella_pneumoniae	uhpT	uhpT	1	CACSCR010000015.1	89468	90859	100.00	100.00	yes	-	-
 KP2_R_12.fna	Klebsiella_pneumoniae	acrB	acrB	1	RCGJ01000018.1	154622	157768	99.87	100.00	yes	-	-
-KP2_R_12.fna	Klebsiella_pneumoniae	blaCTX-M-15	blaCTX-M-like	1	RCGJ01000057.1	10987	11862	99.89	100.00	yes	G243D	-
+KP2_R_12.fna	Klebsiella_pneumoniae	blaCTX-M-3	blaCTX-M-3	1	RCGJ01000057.1	10987	11862	100.00	100.00	yes	-	-
 KP2_R_12.fna	Klebsiella_pneumoniae	blaSHV-12	blaSHV-like	1	RCGJ01000017.1	27922	28782	99.30	100.00	yes	S235G;K236E	-
 KP2_R_12.fna	Klebsiella_pneumoniae	cyaA	cyaA	1	RCGJ01000026.1	43624	46176	99.61	100.00	yes	-	-
 KP2_R_12.fna	Klebsiella_pneumoniae	envZ	envZ	1	RCGJ01000006.1	70860	72215	99.41	100.00	yes	-	-

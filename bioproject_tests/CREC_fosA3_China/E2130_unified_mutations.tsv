@@ -1,5 +1,4 @@
 Gene	Mutation	Confidence(%)	Methods	Contig	Reported_As_Resistance_Mutation
-blaCTX-M-15	A81V	100	blast+gamma	NZ_JAWWVF010000109.1	yes
 cyaA	A349E	100	blast+gamma	NZ_JAWWVF010000026.1	no
 cyaA	E362D	100	blast+gamma	NZ_JAWWVF010000026.1	no
 cyaA	G359E	100	blast+gamma	NZ_JAWWVF010000026.1	no

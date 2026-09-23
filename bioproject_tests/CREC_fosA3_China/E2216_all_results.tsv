@@ -11,11 +11,10 @@ E2216.fna	Acquired gene	blaCMY-2	blaCMY-2	BLAST	Coverage: 100.00%	100.00%	NZ_JAW
 E2216.fna	Chromosomal gene	ompF	ompF	BLAST	Coverage: 100.00%	100.00%	NZ_JAWWVE010000004.1	106546	107634	1	no protein changes vs reference
 E2216.fna	Chromosomal gene	ompC	ompC	BLAST	Coverage: 100.00%	94.90%	NZ_JAWWVE010000028.1	38574	39677	1	protein changes: N176S;P177V;G181_S184del;V186M;D192G;R195L;A226D;T229S;A230P;A231L;L296V;insGTIA@306;G309N
 E2216.fna	Chromosomal gene	galU	galU	BLAST	Coverage: 100.00%	99.01%	NZ_JAWWVE010000005.1	83929	84837	1	no protein changes vs reference
-E2216.fna	Acquired gene	blaCTX-M-15	blaCTX-M-like	BLAST	Coverage: 100.00%	99.89%	NZ_JAWWVE010000056.1	1632	2507	1	protein changes: A81V
+E2216.fna	Acquired gene	blaCTX-M-55	blaCTX-M-55	BLAST	Coverage: 100.00%	100.00%	NZ_JAWWVE010000056.1	1632	2507	1	no protein changes vs reference
 E2216.fna	Acquired gene	blaNDM-5	blaNDM-5	BLAST	Coverage: 100.00%	100.00%	NZ_JAWWVE010000053.1	278	1090	1	no protein changes vs reference
 E2216.fna	Chromosomal gene	uhpA	uhpA	BLAST	Coverage: 100.00%	96.95%	NZ_JAWWVE010000014.1	96320	96910	1	no protein changes vs reference
 E2216.fna	Acquired gene	fosA3	fosA3	BLAST	Coverage: 100.00%	100.00%	NZ_JAWWVE010000057.1	1868	2284	1	no protein changes vs reference
-E2216.fna	Protein change	blaCTX-M-15	-	blast+gamma	A81V	100%	NZ_JAWWVE010000056.1	-	-	-	reported as resistance mutation
 E2216.fna	Protein change	cyaA	-	blast+gamma	N142S	100%	NZ_JAWWVE010000021.1	-	-	-	sequence difference, not a curated resistance mutation
 E2216.fna	Protein change	glpT	-	blast+gamma	E448K	100%	NZ_JAWWVE010000006.1	-	-	-	sequence difference, not a curated resistance mutation
 E2216.fna	Protein change	ompC	-	blast	A226D	50%	NZ_JAWWVE010000028.1	-	-	-	sequence difference, not a curated resistance mutation

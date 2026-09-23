@@ -22,8 +22,7 @@ ACQUIRED RESISTANCE GENES:
 --------------------------------------------------
   blaPDC-like (gene blaPDC-1, copy number 1): 99.16% identity, 100.00% coverage
     Protein changes vs blaPDC-1: G27D, A97V, T105A, D113A, V205L, G391A
-  blaCTX-M-like (gene blaCTX-M-15, copy number 1): 99.89% identity, 100.00% coverage
-    Protein changes vs blaCTX-M-15: G243D
+  blaCTX-M-3 (gene blaCTX-M-3, copy number 1): 100.00% identity, 100.00% coverage
 
 CHROMOSOMAL TARGET GENES:
 --------------------------------------------------
@@ -32,11 +31,8 @@ CHROMOSOMAL TARGET GENES:
   fosA_PA1129 (copy number 1): 99.02% identity, 100.00% coverage
 
 PROTEIN CHANGES (BLAST caller cross-checked with GAMMA):
-  10 of 10 changes were reported by both callers
+  9 of 9 changes were reported by both callers
 ----------------------------------------------------------------------
-
-  Gene: blaCTX-M-15
-    G243D                confidence 100%  [blast+gamma]
 
   Gene: blaPDC-1
     A97V                 confidence 100%  [blast+gamma]

@@ -8,6 +8,7 @@ E2109.fna	Chromosomal gene	glpT	glpT	BLAST	Coverage: 100.00%	98.38%	NZ_JAWWVI010
 E2109.fna	Chromosomal gene	uhpC	uhpC	BLAST	Coverage: 100.00%	98.94%	NZ_JAWWVI010000009.1	29710	31029	1	no protein changes vs reference
 E2109.fna	Chromosomal gene	murA	murA	BLAST	Coverage: 100.00%	98.89%	NZ_JAWWVI010000014.1	29698	30957	1	no protein changes vs reference
 E2109.fna	Chromosomal gene	ompF	ompF	BLAST	Coverage: 100.00%	99.27%	NZ_JAWWVI010000001.1	62799	63887	1	no protein changes vs reference
+E2109.fna	Acquired gene	blaCTX-M-14	blaCTX-M-14	BLAST	Coverage: 100.00%	100.00%	NZ_JAWWVI010000090.1	1810	2685	1	no protein changes vs reference
 E2109.fna	Chromosomal gene	galU	galU	BLAST	Coverage: 100.00%	98.68%	NZ_JAWWVI010000002.1	170716	171624	1	no protein changes vs reference
 E2109.fna	Acquired gene	blaNDM-5	blaNDM-5	BLAST	Coverage: 100.00%	100.00%	NZ_JAWWVI010000039.1	2299	3111	1	no protein changes vs reference
 E2109.fna	Chromosomal gene	ompC	ompC	BLAST	Coverage: 100.00%	90.90%	NZ_JAWWVI010000004.1	120774	121871	1	protein changes: V24I;K48D;D49S;V50K;Q54K;S85E;A86P;N88S;E89D;N91S;G137D;N165D;N176S;P177A;S178H;F182M;S184_V186del;N189G;G190R;R191N;A193V;L194F;R195E;D208N;G216A;I218V;insN@227;A231D;N235T

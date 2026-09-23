@@ -16,7 +16,7 @@ KP_S_06.fna	Acquired gene	blaSHV-12	blaSHV-12	BLAST	Coverage: 100.00%	100.00%	RH
 KP_S_06.fna	Acquired gene	blaNDM-7	blaNDM-7	BLAST	Coverage: 100.00%	100.00%	RHUD01000063.1	1457	2269	1	no protein changes vs reference
 KP_S_06.fna	Chromosomal gene	uhpA	uhpA	BLAST	Coverage: 100.00%	99.33%	RHUD01000019.1	14135	14728	1	no protein changes vs reference
 KP_S_06.fna	Chromosomal gene	fosAKP	fosAKP	BLAST	Coverage: 100.00%	97.38%	RHUD01000002.1	14213	14632	1	protein changes: I91V;Q130P
-KP_S_06.fna	Protein change	blaCTX-M-15	-	gamma	0 SNPs in 390-876	50%	RHUD01000139.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_S_06.fna	Protein change	blaCTX-M-101	-	gamma	0 SNPs in 390-876	50%	RHUD01000139.1	-	-	-	sequence difference, not a curated resistance mutation
 KP_S_06.fna	Protein change	envZ	-	blast+gamma	I15T	100%	RHUD01000020.1	-	-	-	sequence difference, not a curated resistance mutation
 KP_S_06.fna	Protein change	envZ	-	blast+gamma	I258M	100%	RHUD01000020.1	-	-	-	sequence difference, not a curated resistance mutation
 KP_S_06.fna	Protein change	fosAKP	-	blast+gamma	I91V	100%	RHUD01000002.1	-	-	-	sequence difference, not a curated resistance mutation

@@ -1,6 +1,6 @@
 Gene	Contig	Start	End	Identity	Coverage	Match_Type	Changes	Method
 ptsI_Kpn	RHUD01000011.1	8358	10086	100.00	100.00	Native	No coding mutations	GAMMA
-blaCTX-M-15	RHUD01000139.1	0	487	55.48	55.59	Contig Edge	0 SNPs in 390-876	GAMMA
+blaCTX-M-101	RHUD01000139.1	0	487	55.48	55.59	Contig Edge	0 SNPs in 390-876	GAMMA
 murA_Kpn	RHUD01000013.1	70449	71709	100.00	100.00	Native	No coding mutations	GAMMA
 ompK36	RHUD01000015.1	135177	136275	79.35	99.46	Indel	9bpdeletion@codon183;3bpinsertion@codon308;71 coding mutations	GAMMA
 glpT_Kpn	RHUD01000015.1	110148	111495	100.00	100.00	Native	No coding mutations	GAMMA

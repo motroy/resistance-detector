@@ -10,6 +10,7 @@ KP_R_06.fna	Chromosomal gene	uhpC	uhpC	BLAST	Coverage: 100.00%	100.00%	NZ_LXNB01
 KP_R_06.fna	Chromosomal gene	murA	murA	BLAST	Coverage: 100.00%	100.00%	NZ_LXNB01000005.1	86240	87499	1	no protein changes vs reference
 KP_R_06.fna	Chromosomal gene	ompK36	ompK36	BLAST	Coverage: 100.00%	99.37%	NZ_LXNB01000008.1	197834	198943	1	protein changes: insGD@133
 KP_R_06.fna	Chromosomal gene	ompK35	ompK35	BLAST	Coverage: 100.00%	99.35%	NZ_LXNB01000003.1	130215	131295	1	protein changes: E42R;H43_Y58del;I61L;G62D;L63_Y76del;G77H;E80R;Y81H;N82Q;M83Q;D84_G114del;N116R;G118_N139del;Y140H;T141L;D142C;N143P;M145R;T146P;G147E;T149_Y155del;F160_S212del;N213Q;V216A;Q218R;K219_G279del;S283_A352del;V356Q;Y357H;insGRV@357;F359C; premature stop at residue 89 (88/359 aa)
+KP_R_06.fna	Acquired gene	blaVEB-1	blaVEB-1	BLAST	Coverage: 100.00%	100.00%	NZ_LXNB01000063.1	4848	5747	1	no protein changes vs reference
 KP_R_06.fna	Chromosomal gene	galU	galU	BLAST	Coverage: 100.00%	99.78%	NZ_LXNB01000010.1	148209	149111	1	no protein changes vs reference
 KP_R_06.fna	Acquired gene	blaKPC-2	blaKPC-2	BLAST	Coverage: 100.00%	100.00%	NZ_LXNB01000034.1	27618	28499	1	no protein changes vs reference
 KP_R_06.fna	Acquired gene	blaSHV-12	blaSHV-like	BLAST	Coverage: 81.18%	99.86%	NZ_LXNB01000133.1	24	722	1	protein changes: S235_A252del;E254_R288del; truncated product (233/286 aa); gene incomplete (contig boundary)

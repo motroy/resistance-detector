@@ -100,6 +100,12 @@ the exact blaKPC allele (KPC-46, KPC-66, KPC-92) in each resistant isolate.
 Every genome drawn from the two gold-standard source CSVs, with its measured
 and predicted phenotype, is indexed in
 [`bioproject_tests/GOLD_FOSFOMYCIN_GENOME_PHENOTYPES.tsv`](bioproject_tests/GOLD_FOSFOMYCIN_GENOME_PHENOTYPES.tsv).
+Cross-checked independently against [Kleborate](https://github.com/klebgenomics/Kleborate)
+(a different tool, a different reference database) on 63 genomes: 62/63
+concordant on both fosfomycin and ceftazidime-avibactam-relevant gene calls,
+after that comparison found and fixed two real gaps of its own
+(`blaCTX-M` group-9 variants, `blaVEB`) — see
+[`bioproject_tests/Kleborate_cross_check/RESULTS_SUMMARY.md`](bioproject_tests/Kleborate_cross_check/RESULTS_SUMMARY.md).
 Further sets are included. See
 [docs/VALIDATION.md](docs/VALIDATION.md), and
 [docs/METHODS.md](docs/METHODS.md#9-known-limits) for what the method cannot do.

@@ -45,7 +45,7 @@ PROTEIN CHANGES (BLAST caller cross-checked with GAMMA):
   5 of 22 changes were reported by both callers
 ----------------------------------------------------------------------
 
-  Gene: blaCTX-M-15
+  Gene: blaCTX-M-101
     0 SNPs in 390-876    confidence  50%  [gamma]  (not a curated resistance mutation)
 
   Gene: envZ

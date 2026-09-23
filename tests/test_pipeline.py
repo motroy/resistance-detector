@@ -529,6 +529,44 @@ class TestAlleleNamingHonesty:
         assert hit['allele'] == 'blaIMP-like'
 
 
+class TestCtxMAndVebFamilyCoverage:
+    """blaCTX-M was previously represented by one group-1 reference
+    (CTX-M-15); a real isolate in the ESKAPE-fosfomycin GOLD set carries
+    CTX-M-65 (group 9, ~80% nucleotide identity to CTX-M-15) and was
+    invisible to this tool until cross-checked against Kleborate's
+    independent CARD-based calls (see
+    bioproject_tests/Kleborate_cross_check/RESULTS_SUMMARY.md). blaVEB was
+    entirely absent, found the same way (VEB-1).
+    """
+
+    def test_group9_ctx_m_is_detected_and_named_exactly(
+            self, tmp_path, database, reference_cds):
+        _, results = run(tmp_path, database, {'contig1': embed(reference_cds['blaCTX-M-65'])})
+        hit = find(results, 'blaCTX-M-65')
+        assert hit is not None
+        assert hit['allele'] == 'blaCTX-M-65'
+
+    def test_group9_ctx_m_amplifies_porin_loss_same_as_group1(
+            self, tmp_path, database, reference_cds):
+        # PERMEABILITY_AMPLIFIED_FAMILIES keys on gene_family(), which strips
+        # the allele number regardless of phylogenetic group - CTX-M-65 must
+        # contribute contributory CAZ/AVI evidence exactly like CTX-M-15 does.
+        broken_porin = substitute(reference_cds['ompK36'], 60, '*')
+        _, results = run(tmp_path, database, {
+            'contig1': embed(reference_cds['blaCTX-M-65']),
+            'contig2': embed(broken_porin),
+        }, organism='Klebsiella_pneumoniae')
+        prediction = predict_phenotypes(
+            results, organism='Klebsiella_pneumoniae')['ceftazidime_avibactam']
+        assert prediction['phenotype'] == 'Indeterminate'
+        assert any('ompK36' in item for item in prediction['evidence'])
+
+    def test_veb_is_detected(self, tmp_path, database, reference_cds):
+        _, results = run(tmp_path, database, {'contig1': embed(reference_cds['blaVEB-1'])})
+        hit = find(results, 'blaVEB-1')
+        assert hit is not None
+
+
 class TestPorinAmplification:
     """Porin loss alongside a beta-lactamase avibactam inhibits is a documented
     route to resistance without any carbapenemase (E. coli E2257 in the CREC

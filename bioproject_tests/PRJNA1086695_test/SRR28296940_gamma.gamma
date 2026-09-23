@@ -15,3 +15,4 @@ fosAKP	u60	14060	14480	Mutant	I91V,Q130P,D138E,	3	5	3	0.9786	0.9881	1	420	420	+
 ftsI	u79	186808	188575	Mutant	V375A,A433V,	2	12	1	0.9966	0.9932	1	1767	1767	+
 blaKPC-2	u93	6025	6907	Native	No coding mutations	0	0	0	1	1	1	882	882	-
 galU_Kpn	u112	147018	147921	Native	No coding mutations	0	0	0	1	1	1	903	903	-
+blaCTX-M-65	u113	153	1029	Native	No coding mutations	0	0	0	1	1	1	876	876	+

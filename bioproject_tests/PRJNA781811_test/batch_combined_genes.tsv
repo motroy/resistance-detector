@@ -49,6 +49,7 @@ GCA_027151835.1.fna	Klebsiella_pneumoniae	uhpB	uhpB	1	JAJOCJ010000019.1	12811	14
 GCA_027151835.1.fna	Klebsiella_pneumoniae	uhpC	uhpC	1	JAJOCJ010000019.1	11471	12799	100.00	100.00	yes	-	-
 GCA_027151835.1.fna	Klebsiella_pneumoniae	uhpT	uhpT	1	JAJOCJ010000019.1	9934	11325	100.00	100.00	yes	-	-
 GCA_027151845.1.fna	Klebsiella_pneumoniae	acrB	acrB	1	JAJOCK010000003.1	174164	177310	99.87	100.00	yes	-	-
+GCA_027151845.1.fna	Klebsiella_pneumoniae	blaCTX-M-65	blaCTX-M-65	1	JAJOCK010000073.1	154	1029	100.00	100.00	yes	-	-
 GCA_027151845.1.fna	Klebsiella_pneumoniae	blaSHV-12	blaSHV-like	1	JAJOCK010000005.1	225934	226794	99.42	100.00	yes	S235G;K236E	-
 GCA_027151845.1.fna	Klebsiella_pneumoniae	cyaA	cyaA	1	JAJOCK010000018.1	43714	46266	100.00	100.00	yes	-	-
 GCA_027151845.1.fna	Klebsiella_pneumoniae	envZ	envZ	1	JAJOCK010000014.1	58721	60076	99.85	100.00	yes	-	-

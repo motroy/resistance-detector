@@ -53,7 +53,7 @@ PA_S_08.fna	Pseudomonas_aeruginosa	blaPDC-1	blaPDC-like	1	RHSM01000016.1	90081	9
 PA_S_08.fna	Pseudomonas_aeruginosa	fosA_PA1129	fosA_PA1129	1	RHSM01000001.1	415740	416147	99.02	100.00	yes	-	-
 PA_S_08.fna	Pseudomonas_aeruginosa	mexR	mexR	1	RHSM01000007.1	240810	241253	100.00	100.00	yes	-	-
 PA_S_08.fna	Pseudomonas_aeruginosa	nalD	nalD	1	RHSM01000006.1	403965	404603	100.00	100.00	yes	-	-
-PA_S_09.fna	Pseudomonas_aeruginosa	blaCTX-M-15	blaCTX-M-like	1	RHTA01000064.1	1990	2865	99.89	100.00	yes	G243D	-
+PA_S_09.fna	Pseudomonas_aeruginosa	blaCTX-M-3	blaCTX-M-3	1	RHTA01000064.1	1990	2865	100.00	100.00	yes	-	-
 PA_S_09.fna	Pseudomonas_aeruginosa	blaPDC-1	blaPDC-like	1	RHTA01000011.1	88609	89802	99.16	100.00	yes	G27D;A97V;T105A;D113A;V205L;G391A	-
 PA_S_09.fna	Pseudomonas_aeruginosa	fosA_PA1129	fosA_PA1129	1	RHTA01000012.1	25420	25827	99.02	100.00	yes	-	-
 PA_S_09.fna	Pseudomonas_aeruginosa	mexR	mexR	1	RHTA01000003.1	230403	230846	98.87	100.00	yes	-	-

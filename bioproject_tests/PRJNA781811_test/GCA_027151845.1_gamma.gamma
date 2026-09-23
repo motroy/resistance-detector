@@ -15,4 +15,5 @@ murA_Kpn	JAJOCK010000010.1	132489	133749	Native	No coding mutations	0	0	0	1	1	1	
 ompK35	JAJOCK010000012.1	42979	44059	Truncation	truncation at codon 113 (of 360 codons),1 coding mutations	1	7	1	0.9972	0.9935	1	1080	1080	+
 envZ	JAJOCK010000014.1	58720	60076	Mutant	I15T,I258M,	2	2	1	0.9956	0.9985	1	1356	1356	+
 cyaA_Kpn	JAJOCK010000018.1	43713	46266	Native	No coding mutations	0	0	0	1	1	1	2553	2553	+
+blaCTX-M-65	JAJOCK010000073.1	153	1029	Native	No coding mutations	0	0	0	1	1	1	876	876	+
 fosA3	JAJOCK010000078.1	431	848	Native	No coding mutations	0	0	0	1	1	1	417	417	+

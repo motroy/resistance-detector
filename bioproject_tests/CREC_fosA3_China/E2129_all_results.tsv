@@ -10,6 +10,7 @@ E2129.fna	Chromosomal gene	murA	murA	BLAST	Coverage: 100.00%	98.81%	NZ_JAWWVG010
 E2129.fna	Chromosomal gene	ompF	ompF	BLAST	Coverage: 100.00%	99.91%	NZ_JAWWVG010000004.1	106649	107737	1	protein changes: W83_F362del; premature stop at residue 83 (82/362 aa)
 E2129.fna	Chromosomal gene	ompC	ompC	BLAST	Coverage: 100.00%	94.89%	NZ_JAWWVG010000018.1	43604	44707	1	protein changes: G137D;N176S;P177V;G181_S184del;V186M;G216A;I218V;L296V;insGVIN@306;G309N
 E2129.fna	Chromosomal gene	galU	galU	BLAST	Coverage: 100.00%	99.67%	NZ_JAWWVG010000001.1	180148	181056	1	no protein changes vs reference
+E2129.fna	Acquired gene	blaCTX-M-65	blaCTX-M-65	BLAST	Coverage: 100.00%	100.00%	NZ_JAWWVG010000065.1	1013	1888	1	no protein changes vs reference
 E2129.fna	Acquired gene	blaNDM-5	blaNDM-5	BLAST	Coverage: 100.00%	100.00%	NZ_JAWWVG010000071.1	2298	3110	1	no protein changes vs reference
 E2129.fna	Chromosomal gene	uhpA	uhpA	BLAST	Coverage: 100.00%	97.29%	NZ_JAWWVG010000036.1	13723	14313	1	no protein changes vs reference
 E2129.fna	Acquired gene	fosA3	fosA3	BLAST	Coverage: 100.00%	100.00%	NZ_JAWWVG010000081.1	432	848	1	no protein changes vs reference

@@ -17,6 +17,7 @@ with the current code and the current reference data (AMRFinderPlus
 | `PRJNA1086695_test/` | 2 long-read assemblies | Assembly + detection | blaKPC-179 identified in one isolate |
 | `PRJNA781811_test/` | 18 *K. pneumoniae* / *K. variicola* | Bacteraemia isolate collection | Genotype-only comparison; 1 unambiguous acquired fosA, 1 genuinely ambiguous (*K. variicola*, Indeterminate), 2 new transport-gene LOF calls from the reference-data fix |
 | `Paeruginosa_ML_subset/` | 12 *P. aeruginosa* | ML AMR-prediction dataset (Noman *et al.*) | Scope/robustness test on a new species; gene-level concordance, not phenotype |
+| `Kleborate_cross_check/` | 63 *K. pneumoniae* / *K. variicola* (reuses the sets above) | Independent third-party tool comparison, not a published study | 62/63 concordant on acquired fosA-gene presence and CAZ/AVI-relevant beta-lactamase families; found and fixed two real gaps (blaCTX-M group-9 variants, blaVEB) |
 
 ## CREC fosA3 — the first set with measured MICs
 
@@ -183,6 +184,35 @@ was previously this tool's biggest untested gap:
 * Two curated mutations sitting in fosfomycin genes but belonging to *other*
   drugs — `cyaA_S352T` (fosmidomycin) and `galU_R101C` (cephalosporin) — have
   explicit regression tests asserting they do **not** produce a fosfomycin call.
+
+## A second opinion from an unrelated tool
+
+Every validation above compares this tool against a study's own reported
+genotype or a measured MIC. As a different kind of check, the 63
+*K. pneumoniae*/*K. variicola* genomes in the two measured-phenotype
+fosfomycin sets and PRJNA781811 were also run through
+[Kleborate](https://github.com/klebgenomics/Kleborate), the
+community-standard *K. pneumoniae* genotyping tool, independently built and
+maintained, using a different reference database (CARD) entirely.
+
+Kleborate's acquired-gene screen does cover both drugs relevantly: fosfomycin
+(`Fcyn_acquired` — acquired fosA-family enzymes, though notably *no*
+chromosomal transport-gene tracking at all) and ceftazidime-avibactam
+(`Bla_Carb_acquired`/`Bla_ESBL_acquired` — KPC, OXA-48-like, NDM, VIM, IMP,
+CTX-M, SHV-ESBL, VEB and more), though it reports gene presence rather than
+predicting a phenotype the way this tool does.
+
+Result: **62/63 concordant** on acquired-fosA-gene presence (the one
+disagreement is this tool's own already-flagged ambiguous *K. variicola*
+isolate — Kleborate independently agreeing there's no confident acquired
+call corroborates that `Indeterminate`, it doesn't contradict it) and,
+after this cross-check found and this tool fixed two real gaps
+(`blaCTX-M` group-9 variants, `blaVEB` — both previously entirely absent),
+**62/63 concordant** on CAZ/AVI-relevant beta-lactamase families too. See
+[`Kleborate_cross_check/RESULTS_SUMMARY.md`](../bioproject_tests/Kleborate_cross_check/RESULTS_SUMMARY.md)
+for the full methodology, including how Kleborate was installed (it is not
+a dependency of this project) and a CLI bug that had to be worked around to
+get complete results.
 
 ## How far this goes
 
