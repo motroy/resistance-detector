@@ -39,8 +39,8 @@ class TestAssemblyDiscovery:
 @requires_blast
 class TestBatchRun:
     @pytest.fixture(scope='class')
-    @staticmethod
-    def batch_output(tmp_path_factory, database, reference_cds):
+    @classmethod
+    def batch_output(cls, tmp_path_factory, database, reference_cds):
         genomes = tmp_path_factory.mktemp('genomes')
         write_genome(genomes / 'resistant.fasta',
                      {'c1': embed(reference_cds['blaNDM-1']),
