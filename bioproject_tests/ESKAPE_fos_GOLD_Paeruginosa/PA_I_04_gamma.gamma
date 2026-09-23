@@ -1,0 +1,5 @@
+Gene	Contig	Start	Stop	Match_Type	Description	Codon_Changes	BP_Changes	Transversions	Codon_Percent	BP_Percent	Percent_Length	Match_Length	Target_Length	Strand
+blaPDC-1	RHSL01000016.1	28414	29608	Mutant	R79Q,T105A,	2	6	1	0.9950	0.9950	1	1194	1194	-
+fosA_PA1129	RHSL01000001.1	499396	499804	Native	No coding mutations	0	4	0	1	0.9902	1	408	408	+
+nalD	RHSL01000005.1	404065	404704	Native	No coding mutations	0	0	0	1	1	1	639	639	+
+mexR	RHSL01000007.1	240809	241253	Native	No coding mutations	0	0	0	1	1	1	444	444	+

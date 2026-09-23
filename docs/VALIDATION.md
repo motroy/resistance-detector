@@ -9,18 +9,22 @@ with the current code and the current reference data (AMRFinderPlus
 | Folder | Genomes | Study | Outcome |
 |---|---|---|---|
 | `CREC_fosA3_China/` | 10 *E. coli* | fosA3 in carbapenem-resistant *E. coli* (Zhang *et al.* 2025) | **Measured MICs for both drugs**: fosfomycin 10/10, CAZ/AVI 9/10 resistant + 1 indeterminate, 0 wrong |
+| `ESKAPE_fos_GOLD_Kpneumoniae/` | 21 *K. pneumoniae* | Gold-standard ESKAPE fosfomycin AST set | **Measured MICs**: specificity 10/10, sensitivity 0/11 — found and fixed a real detection bug, and a real unfixed reference-database gap |
+| `ESKAPE_fos_GOLD_Paeruginosa/` | 15 *P. aeruginosa* | Gold-standard ESKAPE fosfomycin AST set | **Measured MICs**; falsified the tool's prior "always Resistant" rule on 10/15 isolates and drove the fix |
 | `PRJNA741867_test_results/` | 6 *K. pneumoniae* ST307 | Clinical ceftazidime-avibactam-selected KPC variants | **6/6 concordant**, exact allele assignment for all three resistant isolates |
 | `PRJNA595047_test/` | 4 *K. pneumoniae* | In vitro selection of KPC Omega-loop deletion mutants | **4/4 concordant** with the study's own strain naming |
 | `PRJNA1086695_test/` | 2 long-read assemblies | Assembly + detection | blaKPC-179 identified in one isolate |
-| `PRJNA781811_test/` | 18 *K. pneumoniae* / *K. variicola* | Bacteraemia isolate collection | Genotype-only comparison; 1 unambiguous acquired fosA, 3 ambiguous (Indeterminate) |
+| `PRJNA781811_test/` | 18 *K. pneumoniae* / *K. variicola* | Bacteraemia isolate collection | Genotype-only comparison; 1 unambiguous acquired fosA, 1 genuinely ambiguous (*K. variicola*, Indeterminate) |
 | `Paeruginosa_ML_subset/` | 12 *P. aeruginosa* | ML AMR-prediction dataset (Noman *et al.*) | Scope/robustness test on a new species; gene-level concordance, not phenotype |
 
-## CREC fosA3 — the only set with measured MICs
+## CREC fosA3 — the first set with measured MICs
 
 Ten carbapenem-resistant *E. coli* with broth MICs for **both** drugs (Zhang
 *et al.*, J Glob Antimicrob Resist 42 (2025) 80–87, Table 1; accessions from
-Table S4). Every other set here compares genotype with a study's reported
-genotype or narrative phenotype.
+Table S4). At the time this was the only measured-MIC set here; the two
+ESKAPE-GOLD sets below (*K. pneumoniae*, *P. aeruginosa*) added fosfomycin
+MICs, including real susceptible isolates. Every other set compares genotype
+with a study's reported genotype or narrative phenotype.
 
 * **Fosfomycin 10/10 correct.** All carry `fosA3` (FOS MIC 256–>256). *E. coli*
   has no intrinsic chromosomal fosA, so there is none of the ambiguity that
@@ -130,30 +134,54 @@ names asserted more precisely than 99.7%-identical references can support. See
 
 ## The fosfomycin side
 
-The fosfomycin half is now validated against measured MICs in the CREC set
-above (10/10), and by mechanism elsewhere:
+The fosfomycin half is now validated against measured MICs across two species,
+including — for the first time — real **susceptible** isolates, closing what
+was previously this tool's biggest untested gap:
 
-* Acquired enzyme detection was exercised on the 18-genome PRJNA781811 set,
-  where it separates one unambiguous acquired fosA3 from 14 intrinsic-only
-  isolates and three that cannot be resolved by sequence alone.
-* Loss-of-function detection (nonsense, frameshift, truncation in the uptake and
-  regulatory genes) and the curated fosfomycin mutations are covered by the
-  synthetic scenarios, which declare their expected result up front.
+* **CREC (*E. coli*), 10 resistant isolates:** 10/10 correct (all carry
+  `fosA3`).
+* **ESKAPE-GOLD (*K. pneumoniae*), 21 isolates, 10 susceptible:**
+  **specificity 10/10** — no false Resistant call anywhere. **Sensitivity
+  0/11** on the resistant/intermediate isolates, which is a real and
+  significant finding, not noise: it traces to (a) a genuine detection bug
+  that this run found and fixed (four genomes had their single, native `fosA`
+  copy mis-named as an ambiguous acquired allele — see
+  [`ESKAPE_fos_GOLD_Kpneumoniae/RESULTS_SUMMARY.md`](../bioproject_tests/ESKAPE_fos_GOLD_Kpneumoniae/RESULTS_SUMMARY.md))
+  and (b) a genuine, still-open gap — the fosfomycin transport genes this tool
+  checks are *E. coli*-only references, and *K. pneumoniae*'s own orthologs
+  sit below the detection threshold, so those genes are not actually being
+  checked for this species at all (see
+  [METHODS.md](METHODS.md#9-known-limits)).
+* **ESKAPE-GOLD (*P. aeruginosa*), 15 isolates, 10 susceptible, 1 resistant:**
+  this run is what caught and fixed an outright wrong assumption — the tool
+  previously asserted fosfomycin `Resistant` for every *P. aeruginosa* isolate
+  unconditionally, and this real data contradicted that on all 10 susceptible
+  isolates on the first run. See
+  [`ESKAPE_fos_GOLD_Paeruginosa/RESULTS_SUMMARY.md`](../bioproject_tests/ESKAPE_fos_GOLD_Paeruginosa/RESULTS_SUMMARY.md).
+* Acquired enzyme detection was also exercised on the 18-genome PRJNA781811
+  set, where it separates one unambiguous acquired fosA3 from 14
+  intrinsic-only isolates and three that cannot be resolved by sequence alone.
 * Two curated mutations sitting in fosfomycin genes but belonging to *other*
   drugs — `cyaA_S352T` (fosmidomycin) and `galU_R101C` (cephalosporin) — have
   explicit regression tests asserting they do **not** produce a fosfomycin call.
 
 ## How far this goes
 
-About fifty genomes across four species, of which ten have measured MICs for
-both drugs and the rest are genotype-to-reported-genotype or
-genotype-to-narrative-phenotype comparisons.
+About 88 genomes across four species (*E. coli*, *K. pneumoniae*,
+*K. variicola*, *P. aeruginosa*), of which 46 have measured MICs for at least
+one of the two drugs, spanning both resistant and susceptible isolates.
 
-The biggest remaining gap is **specificity**. Almost every validation isolate is
-resistant to something: there is no fosfomycin-susceptible and no
-CAZ/AVI-susceptible clinical isolate with a measured MIC in any of these sets,
-so the false-positive rate is untested against real data. The synthetic
-scenarios cover the susceptible logic paths, but a synthetic genome only tests
-that the code does what it was designed to do — not that the design matches
-biology. Treat the tool accordingly, and see
-[METHODS.md](METHODS.md#9-known-limits).
+**Specificity is now well tested for fosfomycin**: 20 real, lab-confirmed
+susceptible isolates (10 *K. pneumoniae*, 10 *P. aeruginosa*) produce zero
+false Resistant calls — 10/10 correctly `Susceptible` for *K. pneumoniae*,
+10/10 honestly `Indeterminate` (never `Resistant`) for *P. aeruginosa*, where
+no clinical breakpoint exists to be susceptible *against*.
+**Sensitivity for fosfomycin in species other than *E. coli* is not yet
+established** — the *K. pneumoniae* result above (0/11) is
+confounded by the known reference-database gap, so it cannot be read as a
+clean measurement of the phenotype logic; re-running it after that gap is
+fixed is the highest-value next validation step. Ceftazidime-avibactam
+susceptible-isolate testing (as opposed to fosfomycin) is still untested
+against real MICs — the CREC and gold sets above are fosfomycin-only datasets.
+See [METHODS.md](METHODS.md#9-known-limits) for the complete, current list of
+known limits.

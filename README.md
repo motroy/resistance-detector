@@ -79,10 +79,17 @@ PREDICTED PHENOTYPES (genotype-based):
 
 Against **measured MICs** in ten carbapenem-resistant *E. coli*: fosfomycin
 10/10 correct, ceftazidime-avibactam 9/10 resistant with the tenth reported
-`Indeterminate` rather than wrong. On six *K. pneumoniae* ST307 assemblies from
-a study of CAZ/AVI resistance emerging on therapy, it reproduced all six
-reported phenotypes and assigned the exact blaKPC allele (KPC-46, KPC-66,
-KPC-92) in each resistant isolate. Five further sets are included. See
+`Indeterminate` rather than wrong. Against a further 36 real, MIC-tested
+*K. pneumoniae* and *P. aeruginosa* isolates (a gold-standard ESKAPE
+fosfomycin set, 20 of them genuinely susceptible), fosfomycin specificity held
+at 20/20 with zero false Resistant calls — and that run caught two real bugs
+along the way: a hit-selection error that mis-named some genomes' own
+chromosomal gene as an ambiguous acquired one, and an outright wrong
+assumption (that *P. aeruginosa* is unconditionally fosfomycin-resistant),
+both now fixed. On six *K. pneumoniae* ST307 assemblies from a study of CAZ/AVI
+resistance emerging on therapy, it reproduced all six reported phenotypes and
+assigned the exact blaKPC allele (KPC-46, KPC-66, KPC-92) in each resistant
+isolate. Further sets are included. See
 [docs/VALIDATION.md](docs/VALIDATION.md), and
 [docs/METHODS.md](docs/METHODS.md#9-known-limits) for what the method cannot do.
 

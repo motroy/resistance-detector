@@ -1,0 +1,4 @@
+Gene	Mutation	Confidence(%)	Methods	Contig	Reported_As_Resistance_Mutation
+blaPDC-1	L176R	100	blast+gamma	RHSZ01000025.1	yes
+mexR	V126E	100	blast+gamma	RHSZ01000002.1	no
+nalD	S8C	100	blast+gamma	RHSZ01000003.1	no

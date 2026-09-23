@@ -1,0 +1,16 @@
+sample	organism	true_phenotype	assembly_accession	strain	measurement	measurement_unit	laboratory_typing_method	testing_standard	source	pmid	genome_status	geo_loc_name	strict_eskape
+PA_S_01	Pseudomonas aeruginosa	Susceptible	GCA_003936975.1	Pseudomonas aeruginosa strain PA_011			Disk diffusion	CLSI	GOLD	31594927.0	WGS		True
+PA_S_02	Pseudomonas aeruginosa	Susceptible	GCA_003936245.1	Pseudomonas aeruginosa strain PA_182			Disk diffusion	CLSI	GOLD	31594927.0	WGS		True
+PA_S_03	Pseudomonas aeruginosa	Susceptible	GCA_003939105.1	Pseudomonas aeruginosa strain PA_178			Disk diffusion	CLSI	GOLD	31594927.0	WGS		True
+PA_S_04	Pseudomonas aeruginosa	Susceptible	GCA_003936225.1	Pseudomonas aeruginosa strain PA_286			Disk diffusion	CLSI	GOLD	31594927.0	WGS		True
+PA_S_05	Pseudomonas aeruginosa	Susceptible	GCA_003940625.1	Pseudomonas aeruginosa strain PA_289			Disk diffusion	CLSI	GOLD	31594927.0	WGS		True
+PA_S_06	Pseudomonas aeruginosa	Susceptible	GCA_003936925.1	Pseudomonas aeruginosa strain PA_064			Disk diffusion	CLSI	GOLD	31594927.0	WGS		True
+PA_S_07	Pseudomonas aeruginosa	Susceptible	GCA_003936235.1	Pseudomonas aeruginosa strain PA_298			Disk diffusion	CLSI	GOLD	31594927.0	WGS		True
+PA_S_08	Pseudomonas aeruginosa	Susceptible	GCA_003939685.1	Pseudomonas aeruginosa strain PA_179			Disk diffusion	CLSI	GOLD	31594927.0	WGS		True
+PA_S_09	Pseudomonas aeruginosa	Susceptible	GCA_003940675.1	Pseudomonas aeruginosa strain PA_032			Disk diffusion	CLSI	GOLD	31594927.0	WGS		True
+PA_S_10	Pseudomonas aeruginosa	Susceptible	GCA_003940635.1	Pseudomonas aeruginosa strain PA_059			Disk diffusion	CLSI	GOLD	31594927.0	WGS		True
+PA_I_01	Pseudomonas aeruginosa	Intermediate	GCA_003936865.1	Pseudomonas aeruginosa strain PA_187			Disk diffusion	CLSI	GOLD	31594927.0	WGS		True
+PA_I_02	Pseudomonas aeruginosa	Intermediate	GCA_003936385.1	Pseudomonas aeruginosa strain PA_038			Disk diffusion	CLSI	GOLD	31594927.0	WGS		True
+PA_I_03	Pseudomonas aeruginosa	Intermediate	GCA_003936965.1	Pseudomonas aeruginosa strain PA_041			Disk diffusion	CLSI	GOLD	31594927.0	WGS		True
+PA_I_04	Pseudomonas aeruginosa	Intermediate	GCA_003936295.1	Pseudomonas aeruginosa strain PA_180			Disk diffusion	CLSI	GOLD	31594927.0	WGS		True
+PA_R_01	Pseudomonas aeruginosa	Resistant	GCA_003936325.1	Pseudomonas aeruginosa strain PA_112			Disk diffusion	CLSI	GOLD	31594927.0	WGS		True

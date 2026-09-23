@@ -1,0 +1,5 @@
+Gene	Contig	Start	End	Identity	Coverage	Match_Type	Changes	Method
+blaPDC-1	RHSL01000016.1	28414	29608	99.50	100.00	Mutant	R79Q;T105A	GAMMA
+fosA_PA1129	RHSL01000001.1	499396	499804	100.00	100.00	Native	No coding mutations	GAMMA
+nalD	RHSL01000005.1	404065	404704	100.00	100.00	Native	No coding mutations	GAMMA
+mexR	RHSL01000007.1	240809	241253	100.00	100.00	Native	No coding mutations	GAMMA

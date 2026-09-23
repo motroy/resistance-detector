@@ -1,0 +1,3 @@
+Gene	Mutation	Confidence(%)	Methods	Contig	Reported_As_Resistance_Mutation
+blaPDC-1	R79Q	100	blast+gamma	RHSS01000017.1	yes
+blaPDC-1	T105A	100	blast+gamma	RHSS01000017.1	yes

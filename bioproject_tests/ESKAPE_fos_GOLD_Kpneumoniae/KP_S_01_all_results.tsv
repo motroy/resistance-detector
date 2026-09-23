@@ -1,0 +1,40 @@
+Sample	Type	Gene	Allele	Method	Result_Details	Identity_Confidence	Contig	Start	End	Copy_Number	Notes
+KP_S_01.fna	Chromosomal gene	acrB	acrB	BLAST	Coverage: 100.00%	99.78%	CACSFW010000002.1	451859	455005	1	no protein changes vs reference
+KP_S_01.fna	Chromosomal gene	ftsI	ftsI	BLAST	Coverage: 100.00%	99.49%	CACSFW010000005.1	204471	206237	1	protein changes: V375A
+KP_S_01.fna	Chromosomal gene	envZ	envZ	BLAST	Coverage: 100.00%	99.56%	CACSFW010000004.1	48649	50004	1	protein changes: I15T;I258M
+KP_S_01.fna	Chromosomal gene	ompK35	ompK35	BLAST	Coverage: 100.00%	99.35%	CACSFW010000008.1	170977	172055	1	protein changes: G62A;L63_F359del; premature stop at residue 63 (62/359 aa)
+KP_S_01.fna	Chromosomal gene	ompK36	ompK36	BLAST	Coverage: 100.00%	95.32%	CACSFW010000003.1	368031	369128	1	protein changes: L184_P186del;T192G;A193W;L194S;Y201F;Y210W;N221H;L225T;G226D;D227E;K231V;L232P;T258S;insR@308;H349R
+KP_S_01.fna	Acquired gene	blaKPC-2	blaKPC-3	BLAST	Coverage: 100.00%	99.89%	CACSFW010000024.1	3966	4847	1	protein changes: H274Y
+KP_S_01.fna	Acquired gene	blaSHV-12	blaSHV-like	BLAST	Coverage: 100.00%	99.07%	CACSFW010000006.1	115135	115995	1	protein changes: Q31L;S235G;K236E
+KP_S_01.fna	Chromosomal gene	fosAKP	fosAKP	BLAST	Coverage: 100.00%	95.71%	CACSFW010000005.1	14081	14500	1	protein changes: A86V;I91V;Q130P;Q139E
+KP_S_01.fna	Protein change	blaKPC-2	-	blast+gamma	H274Y	100%	CACSFW010000024.1	-	-	-	reported as resistance mutation
+KP_S_01.fna	Protein change	blaSHV-12	-	blast+gamma	K236E	100%	CACSFW010000006.1	-	-	-	reported as resistance mutation
+KP_S_01.fna	Protein change	blaSHV-12	-	blast+gamma	Q31L	100%	CACSFW010000006.1	-	-	-	reported as resistance mutation
+KP_S_01.fna	Protein change	blaSHV-12	-	blast+gamma	S235G	100%	CACSFW010000006.1	-	-	-	reported as resistance mutation
+KP_S_01.fna	Protein change	envZ	-	blast+gamma	I15T	100%	CACSFW010000004.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_S_01.fna	Protein change	envZ	-	blast+gamma	I258M	100%	CACSFW010000004.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_S_01.fna	Protein change	fosA9	-	gamma	A138D	50%	CACSFW010000005.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_S_01.fna	Protein change	fosA9	-	gamma	I57V	50%	CACSFW010000005.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_S_01.fna	Protein change	fosAKP	-	blast	A86V	50%	CACSFW010000005.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_S_01.fna	Protein change	fosAKP	-	blast	I91V	50%	CACSFW010000005.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_S_01.fna	Protein change	fosAKP	-	blast	Q130P	50%	CACSFW010000005.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_S_01.fna	Protein change	fosAKP	-	blast	Q139E	50%	CACSFW010000005.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_S_01.fna	Protein change	ftsI	-	blast+gamma	V375A	100%	CACSFW010000005.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_S_01.fna	Protein change	ompK35	-	blast	G62A	50%	CACSFW010000008.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_S_01.fna	Protein change	ompK35	-	blast	L63_F359del	50%	CACSFW010000008.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_S_01.fna	Protein change	ompK36	-	blast	A193W	50%	CACSFW010000003.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_S_01.fna	Protein change	ompK36	-	blast	D227E	50%	CACSFW010000003.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_S_01.fna	Protein change	ompK36	-	blast	G226D	50%	CACSFW010000003.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_S_01.fna	Protein change	ompK36	-	blast	H349R	50%	CACSFW010000003.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_S_01.fna	Protein change	ompK36	-	blast	K231V	50%	CACSFW010000003.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_S_01.fna	Protein change	ompK36	-	blast	L184_P186del	50%	CACSFW010000003.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_S_01.fna	Protein change	ompK36	-	blast	L194S	50%	CACSFW010000003.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_S_01.fna	Protein change	ompK36	-	blast	L225T	50%	CACSFW010000003.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_S_01.fna	Protein change	ompK36	-	blast	L232P	50%	CACSFW010000003.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_S_01.fna	Protein change	ompK36	-	blast	N221H	50%	CACSFW010000003.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_S_01.fna	Protein change	ompK36	-	blast	T192G	50%	CACSFW010000003.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_S_01.fna	Protein change	ompK36	-	blast	T258S	50%	CACSFW010000003.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_S_01.fna	Protein change	ompK36	-	blast	Y201F	50%	CACSFW010000003.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_S_01.fna	Protein change	ompK36	-	blast	Y210W	50%	CACSFW010000003.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_S_01.fna	Protein change	ompK36	-	blast	insR@308	50%	CACSFW010000003.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_S_01.fna	Amplicon	blaKPC_ver	-	SeqKit/amplicon	Length: 882bp	-	CACSFW010000024.1	3965	4847	-	Genes in region: blaKPC-3: H274Y

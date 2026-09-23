@@ -1,0 +1,11 @@
+Sample	Type	Gene	Allele	Method	Result_Details	Identity_Confidence	Contig	Start	End	Copy_Number	Notes
+PA_S_07.fna	Acquired gene	blaPDC-1	blaPDC-like	BLAST	Coverage: 100.00%	99.16%	RHSA01000022.1	32786	33979	1	protein changes: T21A;L60R;T105A;V205L
+PA_S_07.fna	Chromosomal gene	nalD	nalD	BLAST	Coverage: 100.00%	100.00%	RHSA01000002.1	92927	93565	1	no protein changes vs reference
+PA_S_07.fna	Chromosomal gene	mexR	mexR	BLAST	Coverage: 100.00%	100.00%	RHSA01000011.1	106117	106560	1	no protein changes vs reference
+PA_S_07.fna	Chromosomal gene	fosA_PA1129	fosA_PA1129	BLAST	Coverage: 100.00%	98.53%	RHSA01000003.1	247801	248208	1	protein changes: Y55C;A70D
+PA_S_07.fna	Protein change	blaPDC-1	-	blast+gamma	L60R	100%	RHSA01000022.1	-	-	-	reported as resistance mutation
+PA_S_07.fna	Protein change	blaPDC-1	-	blast+gamma	T105A	100%	RHSA01000022.1	-	-	-	reported as resistance mutation
+PA_S_07.fna	Protein change	blaPDC-1	-	blast+gamma	T21A	100%	RHSA01000022.1	-	-	-	reported as resistance mutation
+PA_S_07.fna	Protein change	blaPDC-1	-	blast+gamma	V205L	100%	RHSA01000022.1	-	-	-	reported as resistance mutation
+PA_S_07.fna	Protein change	fosA_PA1129	-	blast+gamma	A70D	100%	RHSA01000003.1	-	-	-	sequence difference, not a curated resistance mutation
+PA_S_07.fna	Protein change	fosA_PA1129	-	blast+gamma	Y55C	100%	RHSA01000003.1	-	-	-	sequence difference, not a curated resistance mutation

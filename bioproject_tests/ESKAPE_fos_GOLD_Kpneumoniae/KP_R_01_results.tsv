@@ -1,0 +1,9 @@
+Contig	Gene	Allele	Identity%	Coverage%	Complete	Reported_Mutations	Other_Drug_Mutations	All_Protein_Changes	Loss_Of_Function	Method	Copy_Number
+RCGL01000020.1	acrB	acrB	99.71	100.00	yes	-	-	-	-	BLAST	1
+RCGL01000029.1	ftsI	ftsI	99.55	100.00	yes	-	-	V375A	-	BLAST	1
+RCGL01000004.1	envZ	envZ	99.41	100.00	yes	-	-	I15T;I258M	-	BLAST	1
+RCGL01000023.1	ompK35	ompK35	99.63	100.00	yes	-	-	-	-	BLAST	1
+RCGL01000007.1	ompK36	ompK36	98.64	100.00	yes	-	-	V178P;T258S;insR@308;H349R	-	BLAST	1
+RCGL01000054.1	blaCTX-M-15	blaCTX-M-like	99.89	100.00	yes	G243D	-	G243D	-	BLAST	1
+RCGL01000024.1	blaSHV-12	blaSHV-like	99.42	100.00	yes	Q31L,A184T,S235G,K236E	-	Q31L;A184T;S235G;K236E	-	BLAST	1
+RCGL01000029.1	fosAKP	fosAKP	98.81	100.00	yes	-	-	Q130P;Q139E	-	BLAST	1

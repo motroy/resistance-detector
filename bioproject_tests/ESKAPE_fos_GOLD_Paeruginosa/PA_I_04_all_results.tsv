@@ -1,0 +1,7 @@
+Sample	Type	Gene	Allele	Method	Result_Details	Identity_Confidence	Contig	Start	End	Copy_Number	Notes
+PA_I_04.fna	Acquired gene	blaPDC-1	blaPDC-like	BLAST	Coverage: 100.00%	99.50%	RHSL01000016.1	28415	29608	1	protein changes: R79Q;T105A
+PA_I_04.fna	Chromosomal gene	nalD	nalD	BLAST	Coverage: 100.00%	100.00%	RHSL01000005.1	404066	404704	1	no protein changes vs reference
+PA_I_04.fna	Chromosomal gene	mexR	mexR	BLAST	Coverage: 100.00%	100.00%	RHSL01000007.1	240810	241253	1	no protein changes vs reference
+PA_I_04.fna	Chromosomal gene	fosA_PA1129	fosA_PA1129	BLAST	Coverage: 100.00%	99.02%	RHSL01000001.1	499397	499804	1	no protein changes vs reference
+PA_I_04.fna	Protein change	blaPDC-1	-	blast+gamma	R79Q	100%	RHSL01000016.1	-	-	-	reported as resistance mutation
+PA_I_04.fna	Protein change	blaPDC-1	-	blast+gamma	T105A	100%	RHSL01000016.1	-	-	-	reported as resistance mutation

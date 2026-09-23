@@ -40,18 +40,23 @@ detection, KPC in a non-*Enterobacterales* host, and the intrinsic-gene logic.
 
 | Strain | Beta-lactamases detected | Predicted FOS | Predicted CAZ/AVI |
 |---|---|---|---|
-| ST773 | blaPDC-like, **blaNDM-1** | Resistant (intrinsic) | **Resistant** |
-| CDN118 | blaPDC-like, **blaVIM-2** | Resistant (intrinsic) | **Resistant** |
-| PA99 | blaPDC-like, **blaIMP-1 ×2, blaIMP-like** | Resistant (intrinsic) | **Resistant** |
-| AG1 | blaPDC-like, **blaVIM-2, blaIMP-like** | Resistant (intrinsic) | **Resistant** |
-| R31 | blaPDC-like, blaKPC-2 | Resistant (intrinsic) | Indeterminate |
-| P23 | blaPDC-like, blaKPC-2 | Resistant (intrinsic) | Indeterminate |
-| SE5331 | blaPDC-like, blaGES-like | Resistant (intrinsic) | Indeterminate |
-| SE5352 | blaPDC-like, blaGES-like | Resistant (intrinsic) | Indeterminate |
-| AR_0360 | blaPDC-like | Resistant (intrinsic) | Indeterminate |
-| AR_0440 | blaPDC-like | Resistant (intrinsic) | Indeterminate |
-| AR442 | blaPDC-like | Resistant (intrinsic) | Indeterminate |
-| AR_0095 | blaPDC-like | Resistant (intrinsic) | Indeterminate |
+| ST773 | blaPDC-like, **blaNDM-1** | Indeterminate | **Resistant** |
+| CDN118 | blaPDC-like, **blaVIM-2** | Indeterminate | **Resistant** |
+| PA99 | blaPDC-like, **blaIMP-1 ×2, blaIMP-like** | Indeterminate | **Resistant** |
+| AG1 | blaPDC-like, **blaVIM-2, blaIMP-like** | Indeterminate | **Resistant** |
+| R31 | blaPDC-like, blaKPC-2 | Indeterminate | Indeterminate |
+| P23 | blaPDC-like, blaKPC-2 | Indeterminate | Indeterminate |
+| SE5331 | blaPDC-like, blaGES-like | Indeterminate | Indeterminate |
+| SE5352 | blaPDC-like, blaGES-like | Indeterminate | Indeterminate |
+| AR_0360 | blaPDC-like | Indeterminate | Indeterminate |
+| AR_0440 | blaPDC-like | Indeterminate | Indeterminate |
+| AR442 | blaPDC-like | Indeterminate | Indeterminate |
+| AR_0095 | blaPDC-like | Indeterminate | Indeterminate |
+
+Fosfomycin is `Indeterminate` for all 12: none carries an acquired fosA-family
+enzyme beyond the intrinsic chromosomal copy, and — as the gold-standard set
+below establishes — genotype alone cannot support a categorical call for this
+species/drug pair regardless. See "What this set changed" below.
 
 Gene-level concordance with the paper, for genes in this tool's scope: the
 chromosomal AmpC (`blaPAO` / `blaPDC`) and chromosomal `fosA` were found in
@@ -67,13 +72,13 @@ Not detected, and out of this tool's scope: the acquired class D oxacillinases
 
 ## What this set changed in the tool
 
-Running it exposed four real problems, all now fixed:
+Running it exposed four real problems, fixed at the time:
 
 1. **Fosfomycin was reported Susceptible for every *P. aeruginosa*.** The
-   species is intrinsically fosfomycin-resistant and has no fosfomycin
-   breakpoints; the rule that intrinsic `fosA` is not scored as *acquired*
-   resistance had been wrongly letting the species-level call come out
-   susceptible. Intrinsic species resistance now takes precedence.
+   rule that intrinsic `fosA` is not scored as *acquired* resistance had been
+   wrongly letting the species-level call come out susceptible. The fix made
+   it unconditionally `Resistant` instead, treating *P. aeruginosa* as
+   intrinsically fosfomycin-resistant.
 2. **Ceftazidime-avibactam was reported Susceptible when the dominant mechanism
    had not been looked at.** In *P. aeruginosa*, PDC/AmpC derepression and PDC
    variants drive most CAZ/AVI resistance, and neither is assessed here. A
@@ -90,6 +95,20 @@ Running it exposed four real problems, all now fixed:
    (`blaIMP-like`), with the closest reference still shown in the `Gene`
    column.
 
+That fosfomycin fix (item 1) looked right at the time but was itself wrong: it
+asserted `Resistant` on species grounds ("intrinsically resistant, no
+breakpoints defined") for every isolate regardless of genotype. A gold-standard
+set of 24 real, MIC-tested *P. aeruginosa* isolates — 19 lab-Susceptible, 4
+Intermediate, 1 Resistant — showed that call contradicting the lab phenotype on
+every single susceptible isolate; see
+[../ESKAPE_fos_GOLD_Paeruginosa/RESULTS_SUMMARY.md](../ESKAPE_fos_GOLD_Paeruginosa/RESULTS_SUMMARY.md).
+Neither EUCAST nor CLSI publish a validated clinical breakpoint for fosfomycin
+against *P. aeruginosa* (EUCAST publishes only an ECOFF, explicitly not a
+clinical breakpoint), so the correct default is `Indeterminate`, not a guess in
+either direction — which is what the table above now shows. A concrete
+mechanism (an acquired fosA-family enzyme, a transport-gene knockout) still
+produces `Resistant`, as it does everywhere else in the tool.
+
 ## Reproducing
 
 ```bash
@@ -104,6 +123,9 @@ fos-cazavi fos-cazavi-all -a <strain>.fna -o <strain> \
 ## Limits
 
 Every CAZ/AVI call for *P. aeruginosa* that is not driven by an MBL is
-`Indeterminate`, which is honest but not very useful. Making the tool actually
-informative for this species would need PDC variant typing and some proxy for
-expression — see [../../docs/METHODS.md](../../docs/METHODS.md#9-known-limits).
+`Indeterminate`, and so is every fosfomycin call absent an acquired enzyme —
+honest, but not very actionable. Making the tool actually informative for this
+species would need PDC variant typing, some proxy for expression, and a better
+understanding of what actually drives fosfomycin MIC in *P. aeruginosa* beyond
+the intrinsic FosA — see
+[../../docs/METHODS.md](../../docs/METHODS.md#9-known-limits).

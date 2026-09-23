@@ -19,8 +19,8 @@ antimicrobial susceptibility testing.
 from . import betalactamase
 from .references import (
     AVIBACTAM_COMBINATION_SCOPE, CAZAVI_CONTRIBUTORY_GENES, CAZAVI_SCOPE,
-    FOSA_FAMILIES, FOS_SCOPE, FOS_TRANSPORT_GENES, INTRINSIC_FOSA_ORGANISMS,
-    INTRINSIC_FOS_RESISTANT_ORGANISMS, INTRINSIC_GENES,
+    FOSA_FAMILIES, FOS_SCOPE, FOS_TRANSPORT_GENES, FOS_UNDEFINED_BREAKPOINT_ORGANISMS,
+    INTRINSIC_FOSA_ORGANISMS, INTRINSIC_GENES,
     PERMEABILITY_AMPLIFIED_FAMILIES, PORIN_GENES, UNASSESSED_CAZAVI_MECHANISM,
     gene_family, is_mbl, mutation_scope,
 )
@@ -102,15 +102,19 @@ def predict_fos_phenotype(blast_results, unified_results=None, organism=None):
                         f"Curated fosfomycin-resistance mutation(s) in {gene}: "
                         f"{', '.join(fosfomycin_mutations)}")
 
-    if organism in INTRINSIC_FOS_RESISTANT_ORGANISMS:
-        # Species-level intrinsic resistance outranks the acquired-mechanism
-        # search: reporting "susceptible" here would be wrong whatever the
-        # genotype shows.
+    if organism in FOS_UNDEFINED_BREAKPOINT_ORGANISMS and not resistant:
+        # No validated clinical breakpoint exists for this organism/drug pair
+        # (EUCAST publishes only an ECOFF for Pseudomonas, explicitly not a
+        # clinical breakpoint; CLSI does not cover it at all). Without a
+        # concrete mechanism in hand, neither Susceptible nor Resistant is
+        # supportable from genotype alone - asserting either would overstate
+        # the evidence, so this is Indeterminate rather than a guess.
         species = organism.replace('_', ' ')
-        resistant.insert(0, (
-            f"{species} is intrinsically resistant to fosfomycin (chromosomal "
-            f"FosA; no fosfomycin breakpoints are defined for this species). "
-            f"This is species-level intrinsic resistance, not an acquired mechanism"))
+        uncertain.append(
+            f"No validated clinical breakpoint for fosfomycin exists for "
+            f"{species} (EUCAST publishes only an epidemiological cut-off, "
+            f"not a clinical breakpoint, for Pseudomonas spp.); genotype alone "
+            f"cannot support a Susceptible or Resistant call for this species")
 
     return _resolve(
         resistant, uncertain,

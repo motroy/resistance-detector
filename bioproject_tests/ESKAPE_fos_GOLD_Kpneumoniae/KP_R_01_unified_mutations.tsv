@@ -1,0 +1,16 @@
+Gene	Mutation	Confidence(%)	Methods	Contig	Reported_As_Resistance_Mutation
+blaCTX-M-15	G243D	100	blast+gamma	RCGL01000054.1	yes
+blaSHV-12	A184T	100	blast+gamma	RCGL01000024.1	yes
+blaSHV-12	K236E	100	blast+gamma	RCGL01000024.1	yes
+blaSHV-12	Q31L	100	blast+gamma	RCGL01000024.1	yes
+blaSHV-12	S235G	100	blast+gamma	RCGL01000024.1	yes
+envZ	I15T	100	blast+gamma	RCGL01000004.1	no
+envZ	I258M	100	blast+gamma	RCGL01000004.1	no
+fosA10	A138D	50	gamma	RCGL01000029.1	no
+fosAKP	Q130P	50	blast	RCGL01000029.1	no
+fosAKP	Q139E	50	blast	RCGL01000029.1	no
+ftsI	V375A	100	blast+gamma	RCGL01000029.1	no
+ompK36	H349R	100	blast+gamma	RCGL01000007.1	no
+ompK36	T258S	100	blast+gamma	RCGL01000007.1	no
+ompK36	V178P	100	blast+gamma	RCGL01000007.1	no
+ompK36	insR@308	50	blast	RCGL01000007.1	no
