@@ -90,13 +90,19 @@ unconditionally fosfomycin-resistant), both now fixed. Fosfomycin sensitivity
 in resistant/intermediate *K. pneumoniae* started at 0/29 across two
 independent samples, tracing to a reference-database gap that made 9
 fosfomycin transport genes undetectable in this species — also now fixed (a
-K. pneumoniae-specific reference added for each), recovering 2 real,
-GAMMA-confirmed resistant calls (2/29); see
-[docs/METHODS.md](docs/METHODS.md#9-known-limits) for why 2/29, not more, is
+K. pneumoniae-specific reference added for each), recovering real,
+GAMMA-confirmed resistant calls; a third independent real-MIC set
+(PRJNA781811, Arena *et al.* 2022) replicated the same pattern, bringing
+combined sensitivity to 5/38 — see
+[docs/METHODS.md](docs/METHODS.md#9-known-limits) for why that, not more, is
 the expected result. On six *K. pneumoniae* ST307 assemblies from a study of
 CAZ/AVI resistance
 emerging on therapy, it reproduced all six reported phenotypes and assigned
 the exact blaKPC allele (KPC-46, KPC-66, KPC-92) in each resistant isolate.
+Against PRJNA781811's own measured MICs for **both** drugs, ceftazidime-avibactam
+held at 17/18 — the one miss is three isolates sharing an identical detectable
+genotype split 2 susceptible/1 resistant, a real instance of the
+expression-level effects genotype alone cannot resolve.
 Every genome drawn from the two gold-standard source CSVs, with its measured
 and predicted phenotype, is indexed in
 [`bioproject_tests/GOLD_FOSFOMYCIN_GENOME_PHENOTYPES.tsv`](bioproject_tests/GOLD_FOSFOMYCIN_GENOME_PHENOTYPES.tsv).

@@ -1,0 +1,19 @@
+sample	organism	gmr_strain	ST	true_phenotype_fosfomycin	fosfomycin_MIC_mg_L	true_phenotype_ceftazidime_avibactam	ceftazidime_avibactam_MIC_mg_L	assembly_accession	source	doi
+GCA_027152445.1	Klebsiella_pneumoniae	GMR132	ST512	Resistant	>64	Susceptible	2/4	GCA_027152445.1	Arena et al. 2022, Front. Microbiol. 13:983294, Table 3	10.3389/fmicb.2022.983294
+GCA_027152495.1	Klebsiella_variicola	GMR133	ST475	Susceptible	32	Susceptible	≤1 /4	GCA_027152495.1	Arena et al. 2022, Front. Microbiol. 13:983294, Table 3	10.3389/fmicb.2022.983294
+GCA_027152405.1	Klebsiella_pneumoniae	GMR134	ST35	Resistant	>64	Susceptible	≤1 /4	GCA_027152405.1	Arena et al. 2022, Front. Microbiol. 13:983294, Table 3	10.3389/fmicb.2022.983294
+GCA_027152245.1	Klebsiella_pneumoniae	GMR135	ST307	Susceptible	≤8	Susceptible	≤1 /4	GCA_027152245.1	Arena et al. 2022, Front. Microbiol. 13:983294, Table 3	10.3389/fmicb.2022.983294
+GCA_027152225.1	Klebsiella_pneumoniae	GMR136	ST307	Resistant	64	Susceptible	≤1 /4	GCA_027152225.1	Arena et al. 2022, Front. Microbiol. 13:983294, Table 3	10.3389/fmicb.2022.983294
+GCA_027152185.1	Klebsiella_pneumoniae	GMR139	ST8	Resistant	64	Susceptible	≤1 /4	GCA_027152185.1	Arena et al. 2022, Front. Microbiol. 13:983294, Table 3	10.3389/fmicb.2022.983294
+GCA_027152065.1	Klebsiella_pneumoniae	GMR140	ST512	Resistant	>64	Resistant	>8/4	GCA_027152065.1	Arena et al. 2022, Front. Microbiol. 13:983294, Table 3	10.3389/fmicb.2022.983294
+GCA_027152215.1	Klebsiella_pneumoniae	GMR141	ST5	Susceptible	≤8	Susceptible	≤1 /4	GCA_027152215.1	Arena et al. 2022, Front. Microbiol. 13:983294, Table 3	10.3389/fmicb.2022.983294
+GCA_027152205.1	Klebsiella_pneumoniae	GMR142	ST37-1LV	Resistant	64	Susceptible	≤1 /4	GCA_027152205.1	Arena et al. 2022, Front. Microbiol. 13:983294, Table 3	10.3389/fmicb.2022.983294
+GCA_027152005.1	Klebsiella_pneumoniae	GMR144	ST307	Susceptible	≤8	Susceptible	≤1 /4	GCA_027152005.1	Arena et al. 2022, Front. Microbiol. 13:983294, Table 3	10.3389/fmicb.2022.983294
+GCA_027151995.1	Klebsiella_pneumoniae	GMR145	ST307	Susceptible	32	Susceptible	≤1 /4	GCA_027151995.1	Arena et al. 2022, Front. Microbiol. 13:983294, Table 3	10.3389/fmicb.2022.983294
+GCA_027152105.1	Klebsiella_pneumoniae	GMR146	ST307	Susceptible	32	Susceptible	≤1 /4	GCA_027152105.1	Arena et al. 2022, Front. Microbiol. 13:983294, Table 3	10.3389/fmicb.2022.983294
+GCA_027151795.1	Klebsiella_pneumoniae	GMR147	ST29	Susceptible	16	Susceptible	≤1 /4	GCA_027151795.1	Arena et al. 2022, Front. Microbiol. 13:983294, Table 3	10.3389/fmicb.2022.983294
+GCA_027151985.1	Klebsiella_pneumoniae	GMR148	ST198	Susceptible	≤8	Susceptible	≤1 /4	GCA_027151985.1	Arena et al. 2022, Front. Microbiol. 13:983294, Table 3	10.3389/fmicb.2022.983294
+GCA_027151785.1	Klebsiella_pneumoniae	GMR149	ST29	Resistant	>64	Susceptible	≤1 /4	GCA_027151785.1	Arena et al. 2022, Front. Microbiol. 13:983294, Table 3	10.3389/fmicb.2022.983294
+GCA_027151845.1	Klebsiella_pneumoniae	GMR150	ST11	Resistant	>64	Susceptible	≤1 /4	GCA_027151845.1	Arena et al. 2022, Front. Microbiol. 13:983294, Table 3	10.3389/fmicb.2022.983294
+GCA_027151835.1	Klebsiella_pneumoniae	GMR152	ST512	Resistant	>64	Susceptible	4/4	GCA_027151835.1	Arena et al. 2022, Front. Microbiol. 13:983294, Table 3	10.3389/fmicb.2022.983294
+GCA_027151875.1	Klebsiella_pneumoniae	GMR153	ST307	Susceptible	32	Susceptible	≤1 /4	GCA_027151875.1	Arena et al. 2022, Front. Microbiol. 13:983294, Table 3	10.3389/fmicb.2022.983294
