@@ -40,6 +40,7 @@ SETS=(
     "CREC_fosA3_China|Escherichia|CREC_fosA3_China"
     "ESKAPE_fos_GOLD_Kpneumoniae|Klebsiella_pneumoniae|ESKAPE_fos_GOLD_Kpneumoniae"
     "ESKAPE_fos_GOLD_Paeruginosa|Pseudomonas_aeruginosa|ESKAPE_fos_GOLD_Paeruginosa"
+    "ESKAPE_fos_Kpneumoniae_round2|Klebsiella_pneumoniae|ESKAPE_fos_Kpneumoniae_round2"
 )
 
 fos_cazavi() {

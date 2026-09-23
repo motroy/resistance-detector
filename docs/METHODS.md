@@ -297,8 +297,12 @@ inferred from amplicon presence.
   against 21 real, MIC-tested *K. pneumoniae* isolates (11 fosfomycin-resistant
   or -intermediate) found **zero** of these genes flagged for loss of function
   or a curated mutation in any of them — consistent with this gap, not with a
-  clean genotype. See
-  [`bioproject_tests/ESKAPE_fos_GOLD_Kpneumoniae/RESULTS_SUMMARY.md`](../bioproject_tests/ESKAPE_fos_GOLD_Kpneumoniae/RESULTS_SUMMARY.md).
+  clean genotype. A second, independent 24-genome sample (18 resistant or
+  intermediate, disjoint accessions from the same source) replicated this
+  exactly: zero flagged there too, **0/29 combined** — ruling out sampling
+  noise as the explanation. See
+  [`bioproject_tests/ESKAPE_fos_GOLD_Kpneumoniae/RESULTS_SUMMARY.md`](../bioproject_tests/ESKAPE_fos_GOLD_Kpneumoniae/RESULTS_SUMMARY.md)
+  and [`bioproject_tests/ESKAPE_fos_Kpneumoniae_round2/RESULTS_SUMMARY.md`](../bioproject_tests/ESKAPE_fos_Kpneumoniae_round2/RESULTS_SUMMARY.md).
   Fixing this needs species-specific chromosomal references for these 9 genes,
   the same approach already used for `ompC`/`ompF` in *E. coli* and
   `ftsI`/`ompK36`/`ompK35`/`envZ` in *K. pneumoniae* — not yet done.

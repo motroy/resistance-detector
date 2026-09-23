@@ -79,17 +79,24 @@ PREDICTED PHENOTYPES (genotype-based):
 
 Against **measured MICs** in ten carbapenem-resistant *E. coli*: fosfomycin
 10/10 correct, ceftazidime-avibactam 9/10 resistant with the tenth reported
-`Indeterminate` rather than wrong. Against a further 36 real, MIC-tested
-*K. pneumoniae* and *P. aeruginosa* isolates (a gold-standard ESKAPE
-fosfomycin set, 20 of them genuinely susceptible), fosfomycin specificity held
-at 20/20 with zero false Resistant calls — and that run caught two real bugs
-along the way: a hit-selection error that mis-named some genomes' own
-chromosomal gene as an ambiguous acquired one, and an outright wrong
-assumption (that *P. aeruginosa* is unconditionally fosfomycin-resistant),
-both now fixed. On six *K. pneumoniae* ST307 assemblies from a study of CAZ/AVI
-resistance emerging on therapy, it reproduced all six reported phenotypes and
-assigned the exact blaKPC allele (KPC-46, KPC-66, KPC-92) in each resistant
-isolate. Further sets are included. See
+`Indeterminate` rather than wrong. Against a further 60 real, MIC-tested
+*K. pneumoniae* and *P. aeruginosa* isolates (two gold-standard ESKAPE
+fosfomycin sets plus an independent replication set, 26 of them genuinely
+susceptible), fosfomycin specificity held at 26/26 with zero false Resistant
+calls — and that work caught two real bugs along the way: a hit-selection
+error that mis-named some genomes' own chromosomal gene as an ambiguous
+acquired one, and an outright wrong assumption (that *P. aeruginosa* is
+unconditionally fosfomycin-resistant), both now fixed. Fosfomycin sensitivity
+in resistant/intermediate *K. pneumoniae* is 0/29 across two independent
+samples, which replicates rather than removes a real, documented
+reference-database gap (see [docs/METHODS.md](docs/METHODS.md#9-known-limits)).
+On six *K. pneumoniae* ST307 assemblies from a study of CAZ/AVI resistance
+emerging on therapy, it reproduced all six reported phenotypes and assigned
+the exact blaKPC allele (KPC-46, KPC-66, KPC-92) in each resistant isolate.
+Every genome drawn from the two gold-standard source CSVs, with its measured
+and predicted phenotype, is indexed in
+[`bioproject_tests/GOLD_FOSFOMYCIN_GENOME_PHENOTYPES.tsv`](bioproject_tests/GOLD_FOSFOMYCIN_GENOME_PHENOTYPES.tsv).
+Further sets are included. See
 [docs/VALIDATION.md](docs/VALIDATION.md), and
 [docs/METHODS.md](docs/METHODS.md#9-known-limits) for what the method cannot do.
 
@@ -99,11 +106,12 @@ isolate. Further sets are included. See
 scripts/run_validation.sh -j 6
 ```
 
-All 52 assemblies across six published sets, ~35 s on six cores. The committed
-results come from a run logged with
+All 112 assemblies across nine published/curated sets. The committed results
+for the first six come from a run logged with
 [dochist](https://github.com/motroy/dochist-docs) — see
 [docs/PROVENANCE.md](docs/PROVENANCE.md) for the FAIR report (every command,
-every artifact checksummed) and [demo/](demo/README.md) for a recording of it.
+every artifact checksummed) and [demo/](demo/README.md) for a recording of it
+(recorded before the three newest sets were added — see the note there).
 
 ![Validation run](demo/validation-run.gif)
 

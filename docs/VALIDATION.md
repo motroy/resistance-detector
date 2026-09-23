@@ -11,6 +11,7 @@ with the current code and the current reference data (AMRFinderPlus
 | `CREC_fosA3_China/` | 10 *E. coli* | fosA3 in carbapenem-resistant *E. coli* (Zhang *et al.* 2025) | **Measured MICs for both drugs**: fosfomycin 10/10, CAZ/AVI 9/10 resistant + 1 indeterminate, 0 wrong |
 | `ESKAPE_fos_GOLD_Kpneumoniae/` | 21 *K. pneumoniae* | Gold-standard ESKAPE fosfomycin AST set | **Measured MICs**: specificity 10/10, sensitivity 0/11 — found and fixed a real detection bug, and a real unfixed reference-database gap |
 | `ESKAPE_fos_GOLD_Paeruginosa/` | 15 *P. aeruginosa* | Gold-standard ESKAPE fosfomycin AST set | **Measured MICs**; falsified the tool's prior "always Resistant" rule on 10/15 isolates and drove the fix |
+| `ESKAPE_fos_Kpneumoniae_round2/` | 24 *K. pneumoniae* | Same source, disjoint accessions | **Measured MICs**: specificity 6/6, sensitivity 0/18 — replicates round 1's finding on an independent sample (combined: 0/29) |
 | `PRJNA741867_test_results/` | 6 *K. pneumoniae* ST307 | Clinical ceftazidime-avibactam-selected KPC variants | **6/6 concordant**, exact allele assignment for all three resistant isolates |
 | `PRJNA595047_test/` | 4 *K. pneumoniae* | In vitro selection of KPC Omega-loop deletion mutants | **4/4 concordant** with the study's own strain naming |
 | `PRJNA1086695_test/` | 2 long-read assemblies | Assembly + detection | blaKPC-179 identified in one isolate |
@@ -152,6 +153,13 @@ was previously this tool's biggest untested gap:
   sit below the detection threshold, so those genes are not actually being
   checked for this species at all (see
   [METHODS.md](METHODS.md#9-known-limits)).
+* **ESKAPE-GOLD (*K. pneumoniae*) round 2, 24 more isolates, disjoint
+  accessions, 6 susceptible:** a replication run, weighted toward
+  resistant/intermediate isolates specifically to test whether 0/11 was
+  sampling noise. It wasn't: **specificity 6/6, sensitivity 0/18**, combining
+  to **0/29** non-susceptible isolates called correctly across both rounds.
+  No new detection bug — the intrinsic-naming fix held on all 24 genomes. See
+  [`ESKAPE_fos_Kpneumoniae_round2/RESULTS_SUMMARY.md`](../bioproject_tests/ESKAPE_fos_Kpneumoniae_round2/RESULTS_SUMMARY.md).
 * **ESKAPE-GOLD (*P. aeruginosa*), 15 isolates, 10 susceptible, 1 resistant:**
   this run is what caught and fixed an outright wrong assumption — the tool
   previously asserted fosfomycin `Resistant` for every *P. aeruginosa* isolate
@@ -167,21 +175,30 @@ was previously this tool's biggest untested gap:
 
 ## How far this goes
 
-About 88 genomes across four species (*E. coli*, *K. pneumoniae*,
-*K. variicola*, *P. aeruginosa*), of which 46 have measured MICs for at least
+About 112 genomes across four species (*E. coli*, *K. pneumoniae*,
+*K. variicola*, *P. aeruginosa*), of which 70 have measured MICs for at least
 one of the two drugs, spanning both resistant and susceptible isolates.
 
-**Specificity is now well tested for fosfomycin**: 20 real, lab-confirmed
-susceptible isolates (10 *K. pneumoniae*, 10 *P. aeruginosa*) produce zero
-false Resistant calls — 10/10 correctly `Susceptible` for *K. pneumoniae*,
+**Specificity is now well tested for fosfomycin**: 26 real, lab-confirmed
+susceptible isolates (16 *K. pneumoniae*, 10 *P. aeruginosa*) produce zero
+false Resistant calls — 16/16 correctly `Susceptible` for *K. pneumoniae*,
 10/10 honestly `Indeterminate` (never `Resistant`) for *P. aeruginosa*, where
 no clinical breakpoint exists to be susceptible *against*.
-**Sensitivity for fosfomycin in species other than *E. coli* is not yet
-established** — the *K. pneumoniae* result above (0/11) is
-confounded by the known reference-database gap, so it cannot be read as a
-clean measurement of the phenotype logic; re-running it after that gap is
-fixed is the highest-value next validation step. Ceftazidime-avibactam
+**Sensitivity for fosfomycin in *K. pneumoniae* is now a replicated, not just
+single-sample, finding**: 0/29 resistant/intermediate isolates called
+correctly across two independent, non-overlapping draws (0/11, then 0/18).
+This rules out sampling noise as the explanation — the known reference-database
+gap (fosfomycin transport genes are *E. coli*-only references) is the
+confounder, and re-running this measurement after that gap is closed remains
+the single highest-value next validation step; see
+[METHODS.md](METHODS.md#9-known-limits). Ceftazidime-avibactam
 susceptible-isolate testing (as opposed to fosfomycin) is still untested
 against real MICs — the CREC and gold sets above are fosfomycin-only datasets.
-See [METHODS.md](METHODS.md#9-known-limits) for the complete, current list of
-known limits.
+
+A single master lookup table,
+[`bioproject_tests/GOLD_FOSFOMYCIN_GENOME_PHENOTYPES.tsv`](../bioproject_tests/GOLD_FOSFOMYCIN_GENOME_PHENOTYPES.tsv),
+records every genome drawn from the two source CSVs across all three
+fosfomycin-GOLD runs above (60 rows: accession, measured phenotype and
+testing method, predicted FOS/CAZ-AVI phenotype, fosA locus, concordance),
+so future work can look up a genome's result without re-running the
+pipeline or re-deriving it from each set's `RESULTS_SUMMARY.md`.

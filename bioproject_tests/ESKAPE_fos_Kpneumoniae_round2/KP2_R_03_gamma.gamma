@@ -1,0 +1,9 @@
+Gene	Contig	Start	Stop	Match_Type	Description	Codon_Changes	BP_Changes	Transversions	Codon_Percent	BP_Percent	Percent_Length	Match_Length	Target_Length	Strand
+ompK36	CACSBW010000003.1	341391	342495	Native	No coding mutations	0	1	0	1	0.9991	1	1104	1104	+
+acrB	CACSBW010000005.1	153409	156556	Native	No coding mutations	0	4	1	1	0.9987	1	3147	3147	+
+ompK35	CACSBW010000007.1	209740	210821	Indel Truncation	1 bp Insertion at 123,truncation at codon 89 (of 360 codons),312 coding mutations	312	7	0	0.1333	0.9935	1.001	1081	1080	+
+ftsI	CACSBW010000011.1	206513	208280	Mutant	V375A,	1	10	1	0.9983	0.9943	1	1767	1767	+
+fosAKP	CACSBW010000011.1	602	1022	Mutant	I91V,Q130P,D138E,	3	5	3	0.9786	0.9881	1	420	420	+
+envZ	CACSBW010000017.1	153899	155255	Mutant	I15T,I258M,	2	2	1	0.9956	0.9985	1	1356	1356	+
+blaKPC-2	CACSBW010000037.1	58285	59167	Native	No coding mutations	0	0	0	1	1	1	882	882	+
+blaSHV-12	CACSBW010000069.1	23	884	Mutant	S234G,K235E,	2	5	0	0.9930	0.9942	1	861	861	+

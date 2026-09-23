@@ -1,0 +1,49 @@
+Sample	Type	Gene	Allele	Method	Result_Details	Identity_Confidence	Contig	Start	End	Copy_Number	Notes
+KP2_R_08.fna	Chromosomal gene	acrB	acrB	BLAST	Coverage: 100.00%	99.87%	NZ_LXMW01000006.1	234097	237243	1	no protein changes vs reference
+KP2_R_08.fna	Chromosomal gene	ftsI	ftsI	BLAST	Coverage: 100.00%	99.38%	NZ_LXMW01000007.1	219988	221754	1	protein changes: V375A
+KP2_R_08.fna	Chromosomal gene	envZ	envZ	BLAST	Coverage: 100.00%	99.85%	NZ_LXMW01000010.1	153895	155250	1	protein changes: I15T;I258M
+KP2_R_08.fna	Chromosomal gene	ompK36	ompK36	BLAST	Coverage: 100.00%	99.91%	NZ_LXMW01000011.1	197834	198937	1	no protein changes vs reference
+KP2_R_08.fna	Chromosomal gene	ompK35	ompK35	BLAST	Coverage: 100.00%	99.35%	NZ_LXMW01000004.1	130215	131295	1	protein changes: E42R;H43_Y58del;I61L;G62D;L63_Y76del;G77H;E80R;Y81H;N82Q;M83Q;D84_G114del;N116R;G118_N139del;Y140H;T141L;D142C;N143P;M145R;T146P;G147E;T149_Y155del;F160_S212del;N213Q;V216A;Q218R;K219_G279del;S283_A352del;V356Q;Y357H;insGRV@357;F359C; premature stop at residue 89 (88/359 aa)
+KP2_R_08.fna	Acquired gene	blaKPC-2	blaKPC-2	BLAST	Coverage: 100.00%	100.00%	NZ_LXMW01000027.1	8909	9790	1	no protein changes vs reference
+KP2_R_08.fna	Acquired gene	blaSHV-12	blaSHV-like	BLAST	Coverage: 81.18%	100.00%	NZ_LXMW01000092.1	24	722	1	protein changes: S235_A252del;E254_R288del; truncated product (233/286 aa); gene incomplete (contig boundary)
+KP2_R_08.fna	Chromosomal gene	fosAKP	fosAKP	BLAST	Coverage: 100.00%	98.81%	NZ_LXMW01000007.1	14077	14496	1	protein changes: I91V;Q130P;D138E
+KP2_R_08.fna	Protein change	blaSHV-12	-	blast	E254_R288del	50%	NZ_LXMW01000092.1	-	-	-	reported as resistance mutation
+KP2_R_08.fna	Protein change	blaSHV-12	-	blast	S235_A252del	50%	NZ_LXMW01000092.1	-	-	-	reported as resistance mutation
+KP2_R_08.fna	Protein change	envZ	-	blast+gamma	I15T	100%	NZ_LXMW01000010.1	-	-	-	sequence difference, not a curated resistance mutation
+KP2_R_08.fna	Protein change	envZ	-	blast+gamma	I258M	100%	NZ_LXMW01000010.1	-	-	-	sequence difference, not a curated resistance mutation
+KP2_R_08.fna	Protein change	fosAKP	-	blast+gamma	D138E	100%	NZ_LXMW01000007.1	-	-	-	sequence difference, not a curated resistance mutation
+KP2_R_08.fna	Protein change	fosAKP	-	blast+gamma	I91V	100%	NZ_LXMW01000007.1	-	-	-	sequence difference, not a curated resistance mutation
+KP2_R_08.fna	Protein change	fosAKP	-	blast+gamma	Q130P	100%	NZ_LXMW01000007.1	-	-	-	sequence difference, not a curated resistance mutation
+KP2_R_08.fna	Protein change	ftsI	-	blast+gamma	V375A	100%	NZ_LXMW01000007.1	-	-	-	sequence difference, not a curated resistance mutation
+KP2_R_08.fna	Protein change	ompK35	-	blast	D142C	50%	NZ_LXMW01000004.1	-	-	-	sequence difference, not a curated resistance mutation
+KP2_R_08.fna	Protein change	ompK35	-	blast	D84_G114del	50%	NZ_LXMW01000004.1	-	-	-	sequence difference, not a curated resistance mutation
+KP2_R_08.fna	Protein change	ompK35	-	blast	E42R	50%	NZ_LXMW01000004.1	-	-	-	sequence difference, not a curated resistance mutation
+KP2_R_08.fna	Protein change	ompK35	-	blast	E80R	50%	NZ_LXMW01000004.1	-	-	-	sequence difference, not a curated resistance mutation
+KP2_R_08.fna	Protein change	ompK35	-	blast	F160_S212del	50%	NZ_LXMW01000004.1	-	-	-	sequence difference, not a curated resistance mutation
+KP2_R_08.fna	Protein change	ompK35	-	blast	F359C	50%	NZ_LXMW01000004.1	-	-	-	sequence difference, not a curated resistance mutation
+KP2_R_08.fna	Protein change	ompK35	-	blast	G118_N139del	50%	NZ_LXMW01000004.1	-	-	-	sequence difference, not a curated resistance mutation
+KP2_R_08.fna	Protein change	ompK35	-	blast	G147E	50%	NZ_LXMW01000004.1	-	-	-	sequence difference, not a curated resistance mutation
+KP2_R_08.fna	Protein change	ompK35	-	blast	G62D	50%	NZ_LXMW01000004.1	-	-	-	sequence difference, not a curated resistance mutation
+KP2_R_08.fna	Protein change	ompK35	-	blast	G77H	50%	NZ_LXMW01000004.1	-	-	-	sequence difference, not a curated resistance mutation
+KP2_R_08.fna	Protein change	ompK35	-	blast	H43_Y58del	50%	NZ_LXMW01000004.1	-	-	-	sequence difference, not a curated resistance mutation
+KP2_R_08.fna	Protein change	ompK35	-	blast	I61L	50%	NZ_LXMW01000004.1	-	-	-	sequence difference, not a curated resistance mutation
+KP2_R_08.fna	Protein change	ompK35	-	blast	K219_G279del	50%	NZ_LXMW01000004.1	-	-	-	sequence difference, not a curated resistance mutation
+KP2_R_08.fna	Protein change	ompK35	-	blast	L63_Y76del	50%	NZ_LXMW01000004.1	-	-	-	sequence difference, not a curated resistance mutation
+KP2_R_08.fna	Protein change	ompK35	-	blast	M145R	50%	NZ_LXMW01000004.1	-	-	-	sequence difference, not a curated resistance mutation
+KP2_R_08.fna	Protein change	ompK35	-	blast	M83Q	50%	NZ_LXMW01000004.1	-	-	-	sequence difference, not a curated resistance mutation
+KP2_R_08.fna	Protein change	ompK35	-	blast	N116R	50%	NZ_LXMW01000004.1	-	-	-	sequence difference, not a curated resistance mutation
+KP2_R_08.fna	Protein change	ompK35	-	blast	N143P	50%	NZ_LXMW01000004.1	-	-	-	sequence difference, not a curated resistance mutation
+KP2_R_08.fna	Protein change	ompK35	-	blast	N213Q	50%	NZ_LXMW01000004.1	-	-	-	sequence difference, not a curated resistance mutation
+KP2_R_08.fna	Protein change	ompK35	-	blast	N82Q	50%	NZ_LXMW01000004.1	-	-	-	sequence difference, not a curated resistance mutation
+KP2_R_08.fna	Protein change	ompK35	-	blast	Q218R	50%	NZ_LXMW01000004.1	-	-	-	sequence difference, not a curated resistance mutation
+KP2_R_08.fna	Protein change	ompK35	-	blast	S283_A352del	50%	NZ_LXMW01000004.1	-	-	-	sequence difference, not a curated resistance mutation
+KP2_R_08.fna	Protein change	ompK35	-	blast	T141L	50%	NZ_LXMW01000004.1	-	-	-	sequence difference, not a curated resistance mutation
+KP2_R_08.fna	Protein change	ompK35	-	blast	T146P	50%	NZ_LXMW01000004.1	-	-	-	sequence difference, not a curated resistance mutation
+KP2_R_08.fna	Protein change	ompK35	-	blast	T149_Y155del	50%	NZ_LXMW01000004.1	-	-	-	sequence difference, not a curated resistance mutation
+KP2_R_08.fna	Protein change	ompK35	-	blast	V216A	50%	NZ_LXMW01000004.1	-	-	-	sequence difference, not a curated resistance mutation
+KP2_R_08.fna	Protein change	ompK35	-	blast	V356Q	50%	NZ_LXMW01000004.1	-	-	-	sequence difference, not a curated resistance mutation
+KP2_R_08.fna	Protein change	ompK35	-	blast	Y140H	50%	NZ_LXMW01000004.1	-	-	-	sequence difference, not a curated resistance mutation
+KP2_R_08.fna	Protein change	ompK35	-	blast	Y357H	50%	NZ_LXMW01000004.1	-	-	-	sequence difference, not a curated resistance mutation
+KP2_R_08.fna	Protein change	ompK35	-	blast	Y81H	50%	NZ_LXMW01000004.1	-	-	-	sequence difference, not a curated resistance mutation
+KP2_R_08.fna	Protein change	ompK35	-	blast	insGRV@357	50%	NZ_LXMW01000004.1	-	-	-	sequence difference, not a curated resistance mutation
+KP2_R_08.fna	Amplicon	blaKPC_ver	-	SeqKit/amplicon	Length: 882bp	-	NZ_LXMW01000027.1	8908	9790	-	Genes in region: blaKPC-2: no changes
