@@ -1,6 +1,4 @@
 Gene	Mutation	Confidence(%)	Methods	Contig	Reported_As_Resistance_Mutation
-blaSHV-12	E254_R288del	50	blast	NZ_LXMG01000138.1	yes
-blaSHV-12	S235_A252del	50	blast	NZ_LXMG01000138.1	yes
 envZ	I15T	100	blast+gamma	NZ_LXMG01000009.1	no
 envZ	I258M	100	blast+gamma	NZ_LXMG01000009.1	no
 fosAKP	D138E	100	blast+gamma	NZ_LXMG01000005.1	no

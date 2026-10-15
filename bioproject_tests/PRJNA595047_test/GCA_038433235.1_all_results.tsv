@@ -10,7 +10,7 @@ GCA_038433235.1.fna	Chromosomal gene	glpT	glpT	BLAST	Coverage: 100.00%	100.00%	J
 GCA_038433235.1.fna	Chromosomal gene	uhpC	uhpC	BLAST	Coverage: 100.00%	100.00%	JBCEBJ010000027.1	56593	57921	1	no protein changes vs reference
 GCA_038433235.1.fna	Chromosomal gene	murA	murA	BLAST	Coverage: 100.00%	100.00%	JBCEBJ010000002.1	201168	202427	1	no protein changes vs reference
 GCA_038433235.1.fna	Chromosomal gene	ompK35	ompK35	BLAST	Coverage: 100.00%	99.44%	JBCEBJ010000004.1	258287	259366	1	no protein changes vs reference
-GCA_038433235.1.fna	Chromosomal gene	ompK36	ompK36	BLAST	Coverage: 91.58%	99.90%	JBCEBJ010000036.1	1	1011	1	protein changes: M1_K31del; premature stop at residue 337 (336/367 aa); gene incomplete (contig boundary)
+GCA_038433235.1.fna	Chromosomal gene	ompK36	ompK36	BLAST	Coverage: 91.58%	99.90%	JBCEBJ010000036.1	1	1011	1	gene incomplete (contig boundary)
 GCA_038433235.1.fna	Chromosomal gene	galU	galU	BLAST	Coverage: 100.00%	100.00%	JBCEBJ010000006.1	61461	62363	1	no protein changes vs reference
 GCA_038433235.1.fna	Acquired gene	blaCTX-M-15	blaCTX-M-15	BLAST	Coverage: 100.00%	100.00%	JBCEBJ010000075.1	2638	3513	1	no protein changes vs reference
 GCA_038433235.1.fna	Acquired gene	blaSHV-12	blaSHV-like	BLAST	Coverage: 100.00%	99.42%	JBCEBJ010000013.1	128677	129537	1	protein changes: S235G;K236E
@@ -26,6 +26,5 @@ GCA_038433235.1.fna	Protein change	fosAKP	-	blast+gamma	D138E	100%	JBCEBJ0100000
 GCA_038433235.1.fna	Protein change	fosAKP	-	blast+gamma	I91V	100%	JBCEBJ010000023.1	-	-	-	sequence difference, not a curated resistance mutation
 GCA_038433235.1.fna	Protein change	fosAKP	-	blast+gamma	Q130P	100%	JBCEBJ010000023.1	-	-	-	sequence difference, not a curated resistance mutation
 GCA_038433235.1.fna	Protein change	ftsI	-	blast+gamma	V375A	100%	JBCEBJ010000012.1	-	-	-	sequence difference, not a curated resistance mutation
-GCA_038433235.1.fna	Protein change	ompK36	-	blast	M1_K31del	50%	JBCEBJ010000036.1	-	-	-	sequence difference, not a curated resistance mutation
 GCA_038433235.1.fna	Protein change	uhpB	-	blast	insAS@421	50%	JBCEBJ010000027.1	-	-	-	sequence difference, not a curated resistance mutation
 GCA_038433235.1.fna	Amplicon	blaKPC_ver	-	SeqKit/amplicon	Length: 852bp	-	JBCEBJ010000045.1	14085	14937	-	Genes in region: novel blaKPC variant (R164_I173del): R164_I173del

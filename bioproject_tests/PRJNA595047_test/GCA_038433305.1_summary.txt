@@ -39,14 +39,13 @@ CHROMOSOMAL TARGET GENES:
   murA (copy number 1): 100.00% identity, 100.00% coverage
   ompK35 (copy number 1): 99.44% identity, 100.00% coverage
   ompK36 (copy number 1): 99.90% identity, 91.58% coverage
-    Loss of function: premature stop at residue 337 (336/367 aa)
     WARNING: gene runs off a contig boundary
   galU (copy number 1): 100.00% identity, 100.00% coverage
   uhpA (copy number 1): 100.00% identity, 100.00% coverage
   fosAKP (copy number 1): 98.81% identity, 100.00% coverage
 
 PROTEIN CHANGES (BLAST caller cross-checked with GAMMA):
-  8 of 10 changes were reported by both callers
+  8 of 9 changes were reported by both callers
 ----------------------------------------------------------------------
 
   Gene: blaSHV-12
@@ -64,9 +63,6 @@ PROTEIN CHANGES (BLAST caller cross-checked with GAMMA):
 
   Gene: ftsI
     V375A                confidence 100%  [blast+gamma]  (not a curated resistance mutation)
-
-  Gene: ompK36
-    M1_K31del            confidence  50%  [blast]  (not a curated resistance mutation)
 
   Gene: uhpB
     insAS@421            confidence  50%  [blast]  (not a curated resistance mutation)

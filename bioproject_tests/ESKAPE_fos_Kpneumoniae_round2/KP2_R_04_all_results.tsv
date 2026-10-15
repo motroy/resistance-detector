@@ -14,11 +14,9 @@ KP2_R_04.fna	Chromosomal gene	ompK35	ompK35	BLAST	Coverage: 100.00%	99.35%	NZ_LX
 KP2_R_04.fna	Acquired gene	blaVEB-1	blaVEB-1	BLAST	Coverage: 100.00%	100.00%	NZ_LXMG01000063.1	4848	5747	1	no protein changes vs reference
 KP2_R_04.fna	Chromosomal gene	galU	galU	BLAST	Coverage: 100.00%	99.78%	NZ_LXMG01000008.1	148208	149110	1	no protein changes vs reference
 KP2_R_04.fna	Acquired gene	blaKPC-2	blaKPC-2	BLAST	Coverage: 100.00%	100.00%	NZ_LXMG01000032.1	27618	28499	1	no protein changes vs reference
-KP2_R_04.fna	Acquired gene	blaSHV-12	blaSHV-like	BLAST	Coverage: 81.18%	99.86%	NZ_LXMG01000138.1	24	722	1	protein changes: S235_A252del;E254_R288del; truncated product (233/286 aa); gene incomplete (contig boundary)
+KP2_R_04.fna	Acquired gene	blaSHV-12	blaSHV-12	BLAST	Coverage: 81.18%	99.86%	NZ_LXMG01000138.1	24	722	1	gene incomplete (contig boundary)
 KP2_R_04.fna	Chromosomal gene	uhpA	uhpA	BLAST	Coverage: 100.00%	100.00%	NZ_LXMG01000019.1	14360	14953	1	no protein changes vs reference
 KP2_R_04.fna	Chromosomal gene	fosAKP	fosAKP	BLAST	Coverage: 100.00%	98.81%	NZ_LXMG01000005.1	255957	256376	1	protein changes: I91V;Q130P;D138E
-KP2_R_04.fna	Protein change	blaSHV-12	-	blast	E254_R288del	50%	NZ_LXMG01000138.1	-	-	-	reported as resistance mutation
-KP2_R_04.fna	Protein change	blaSHV-12	-	blast	S235_A252del	50%	NZ_LXMG01000138.1	-	-	-	reported as resistance mutation
 KP2_R_04.fna	Protein change	envZ	-	blast+gamma	I15T	100%	NZ_LXMG01000009.1	-	-	-	sequence difference, not a curated resistance mutation
 KP2_R_04.fna	Protein change	envZ	-	blast+gamma	I258M	100%	NZ_LXMG01000009.1	-	-	-	sequence difference, not a curated resistance mutation
 KP2_R_04.fna	Protein change	fosAKP	-	blast+gamma	D138E	100%	NZ_LXMG01000005.1	-	-	-	sequence difference, not a curated resistance mutation

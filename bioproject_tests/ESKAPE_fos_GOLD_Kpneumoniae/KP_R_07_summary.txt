@@ -46,7 +46,7 @@ PROTEIN CHANGES (BLAST caller cross-checked with GAMMA):
 ----------------------------------------------------------------------
 
   Gene: acrB
-    insVX@1022           confidence  50%  [blast]  (not a curated resistance mutation)
+    insV@1022            confidence  50%  [blast]  (not a curated resistance mutation)
 
   Gene: envZ
     A193T                confidence 100%  [blast+gamma]  (not a curated resistance mutation)

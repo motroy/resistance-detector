@@ -325,19 +325,13 @@
           "contig": "NZ_LXMG01000138.1",
           "start": 24,
           "end": 722,
-          "allele": "blaSHV-like",
+          "allele": "blaSHV-12",
           "identity": "99.86",
           "coverage": "81.18",
           "complete": false,
-          "changes": [
-            "S235_A252del",
-            "E254_R288del"
-          ],
-          "reported_mutations": [
-            "S235_A252del",
-            "E254_R288del"
-          ],
-          "loss_of_function": "truncated product (233/286 aa)"
+          "changes": [],
+          "reported_mutations": [],
+          "loss_of_function": null
         }
       ]
     },
@@ -383,30 +377,6 @@
     }
   ],
   "protein_changes": [
-    {
-      "gene": "blaSHV-12",
-      "family": "blaSHV",
-      "mutation": "E254_R288del",
-      "confidence": 50,
-      "methods": [
-        "blast"
-      ],
-      "reported": true,
-      "gamma_detail": null,
-      "contig": "NZ_LXMG01000138.1"
-    },
-    {
-      "gene": "blaSHV-12",
-      "family": "blaSHV",
-      "mutation": "S235_A252del",
-      "confidence": 50,
-      "methods": [
-        "blast"
-      ],
-      "reported": true,
-      "gamma_detail": null,
-      "contig": "NZ_LXMG01000138.1"
-    },
     {
       "gene": "envZ",
       "family": "envZ",

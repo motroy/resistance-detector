@@ -74,7 +74,8 @@ E2109.fna	Escherichia	uhpA	uhpA	1	NZ_JAWWVI010000009.1	32541	33131	100.00	100.00
 E2109.fna	Escherichia	uhpB	uhpB	1	NZ_JAWWVI010000009.1	31039	32541	99.73	100.00	yes	-	-
 E2109.fna	Escherichia	uhpC	uhpC	1	NZ_JAWWVI010000009.1	29710	31029	98.94	100.00	yes	-	-
 E2109.fna	Escherichia	uhpT	uhpT	1	NZ_JAWWVI010000009.1	28181	29572	99.93	100.00	yes	-	-
-E2111.fna	Escherichia	blaCTX-M-199	blaCTX-M-like	1	NZ_JAWWVH010000030.1	52320	53104	100.00	89.61	no	L264_L293del	frameshift (2 bp out of frame relative to the reference coding sequence)
+E2111.fna	Escherichia	blaCTX-M-199	blaCTX-M-199	1	NZ_JAWWVH010000030.1	52320	53104	100.00	89.61	no	-	-
+E2111.fna	Escherichia	blaCTX-M-79	blaCTX-M-79	1	NZ_JAWWVH010000165.1	1	689	100.00	78.65	no	-	-
 E2111.fna	Escherichia	blaNDM-5	blaNDM-5	1	NZ_JAWWVH010000078.1	4862	5674	100.00	100.00	yes	-	-
 E2111.fna	Escherichia	cyaA	cyaA	1	NZ_JAWWVH010000019.1	41485	44031	99.96	100.00	yes	-	-
 E2111.fna	Escherichia	fosA3	fosA3	1	NZ_JAWWVH010000105.1	1867	2283	100.00	100.00	yes	-	-

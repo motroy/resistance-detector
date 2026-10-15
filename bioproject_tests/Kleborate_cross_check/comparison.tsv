@@ -43,7 +43,7 @@ KP2_S_05	ESKAPE_fos_Kpneumoniae_round2	Susceptible	Susceptible	-	No	No	Yes	KPC	K
 KP2_S_06	ESKAPE_fos_Kpneumoniae_round2	Susceptible	Susceptible	-	No	No	Yes	CTX-M;KPC	CTX-M;KPC;SHV	-
 KP_I_01	ESKAPE_fos_GOLD_Kpneumoniae	Intermediate	Susceptible	-	No	No	Yes	CTX-M;NDM;OXA	CTX-M;NDM;OXA;SHV	-
 KP_I_02	ESKAPE_fos_GOLD_Kpneumoniae	Intermediate	Susceptible	-	No	No	Yes	OXA;SHV	CTX-M;OXA;SHV	-
-KP_I_03	ESKAPE_fos_GOLD_Kpneumoniae	Intermediate	Susceptible	-	No	No	Yes	OXA	CTX-M;OXA	-
+KP_I_03	ESKAPE_fos_GOLD_Kpneumoniae	Intermediate	Susceptible	-	No	No	Yes	OXA	CTX-M;OXA;SHV	-
 KP_R_01	ESKAPE_fos_GOLD_Kpneumoniae	Resistant	Susceptible	-	No	No	Yes	CTX-M	CTX-M;SHV	-
 KP_R_02	ESKAPE_fos_GOLD_Kpneumoniae	Resistant	Resistant	-	No	No	Yes	CTX-M;KPC	CTX-M;KPC;SHV	-
 KP_R_03	ESKAPE_fos_GOLD_Kpneumoniae	Resistant	Susceptible	-	No	No	Yes	KPC	KPC;SHV	-
@@ -57,7 +57,7 @@ KP_S_02	ESKAPE_fos_GOLD_Kpneumoniae	Susceptible	Susceptible	-	No	No	Yes	CTX-M;KP
 KP_S_03	ESKAPE_fos_GOLD_Kpneumoniae	Susceptible	Susceptible	-	No	No	Yes	KPC	KPC;SHV	-
 KP_S_04	ESKAPE_fos_GOLD_Kpneumoniae	Susceptible	Susceptible	-	No	No	Yes	KPC	KPC	-
 KP_S_05	ESKAPE_fos_GOLD_Kpneumoniae	Susceptible	Susceptible	-	No	No	Yes	KPC	KPC;SHV	-
-KP_S_06	ESKAPE_fos_GOLD_Kpneumoniae	Susceptible	Susceptible	-	No	No	Yes	NDM;SHV	NDM;SHV	-
+KP_S_06	ESKAPE_fos_GOLD_Kpneumoniae	Susceptible	Susceptible	-	No	No	Yes	NDM;SHV	CTX-M;NDM;SHV	-
 KP_S_07	ESKAPE_fos_GOLD_Kpneumoniae	Susceptible	Susceptible	-	No	No	Yes	KPC	KPC;SHV	-
 KP_S_08	ESKAPE_fos_GOLD_Kpneumoniae	Susceptible	Susceptible	-	No	No	Yes	CTX-M;KPC	CTX-M;KPC;SHV	-
 KP_S_09	ESKAPE_fos_GOLD_Kpneumoniae	Susceptible	Susceptible	-	No	No	Yes	KPC;SHV	KPC;SHV	-

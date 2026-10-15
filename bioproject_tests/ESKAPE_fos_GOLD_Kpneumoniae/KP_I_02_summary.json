@@ -248,7 +248,7 @@
           "complete": false,
           "changes": [],
           "reported_mutations": [],
-          "loss_of_function": "premature stop at residue 1 (0/291 aa)"
+          "loss_of_function": null
         }
       ]
     },

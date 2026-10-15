@@ -301,56 +301,14 @@
           "coverage": "89.31",
           "complete": false,
           "changes": [
-            "M1K",
-            "Y3_R57del",
-            "A59_T178del",
-            "T179K",
-            "S182_V213del",
-            "A214V",
-            "L217R",
-            "I218R",
-            "R219H",
-            "S220_A229del",
-            "K231R",
-            "T232N",
-            "A234S",
             "S235G",
-            "K236Q",
-            "G238_G247del",
-            "N249H",
-            "N250_K251del",
-            "E254D",
-            "I256L",
-            "V257A",
-            "V258_W286del",
-            "Q287R"
+            "K236E"
           ],
           "reported_mutations": [
-            "M1K",
-            "Y3_R57del",
-            "A59_T178del",
-            "T179K",
-            "S182_V213del",
-            "A214V",
-            "L217R",
-            "I218R",
-            "R219H",
-            "S220_A229del",
-            "K231R",
-            "T232N",
-            "A234S",
             "S235G",
-            "K236Q",
-            "G238_G247del",
-            "N249H",
-            "N250_K251del",
-            "E254D",
-            "I256L",
-            "V257A",
-            "V258_W286del",
-            "Q287R"
+            "K236E"
           ],
-          "loss_of_function": "premature stop at residue 29 (28/286 aa)"
+          "loss_of_function": null
         }
       ]
     },
@@ -400,205 +358,27 @@
     {
       "gene": "blaSHV-12",
       "family": "blaSHV",
-      "mutation": "A214V",
-      "confidence": 50,
+      "mutation": "K236E",
+      "confidence": 100,
       "methods": [
-        "blast"
+        "blast",
+        "gamma"
       ],
       "reported": true,
-      "gamma_detail": null,
-      "contig": "CACSEH010000054.1"
-    },
-    {
-      "gene": "blaSHV-12",
-      "family": "blaSHV",
-      "mutation": "A234S",
-      "confidence": 50,
-      "methods": [
-        "blast"
-      ],
-      "reported": true,
-      "gamma_detail": null,
-      "contig": "CACSEH010000054.1"
-    },
-    {
-      "gene": "blaSHV-12",
-      "family": "blaSHV",
-      "mutation": "A59_T178del",
-      "confidence": 50,
-      "methods": [
-        "blast"
-      ],
-      "reported": true,
-      "gamma_detail": null,
-      "contig": "CACSEH010000054.1"
-    },
-    {
-      "gene": "blaSHV-12",
-      "family": "blaSHV",
-      "mutation": "E254D",
-      "confidence": 50,
-      "methods": [
-        "blast"
-      ],
-      "reported": true,
-      "gamma_detail": null,
-      "contig": "CACSEH010000054.1"
-    },
-    {
-      "gene": "blaSHV-12",
-      "family": "blaSHV",
-      "mutation": "G238_G247del",
-      "confidence": 50,
-      "methods": [
-        "blast"
-      ],
-      "reported": true,
-      "gamma_detail": null,
-      "contig": "CACSEH010000054.1"
-    },
-    {
-      "gene": "blaSHV-12",
-      "family": "blaSHV",
-      "mutation": "I218R",
-      "confidence": 50,
-      "methods": [
-        "blast"
-      ],
-      "reported": true,
-      "gamma_detail": null,
-      "contig": "CACSEH010000054.1"
-    },
-    {
-      "gene": "blaSHV-12",
-      "family": "blaSHV",
-      "mutation": "I256L",
-      "confidence": 50,
-      "methods": [
-        "blast"
-      ],
-      "reported": true,
-      "gamma_detail": null,
-      "contig": "CACSEH010000054.1"
-    },
-    {
-      "gene": "blaSHV-12",
-      "family": "blaSHV",
-      "mutation": "K231R",
-      "confidence": 50,
-      "methods": [
-        "blast"
-      ],
-      "reported": true,
-      "gamma_detail": null,
-      "contig": "CACSEH010000054.1"
-    },
-    {
-      "gene": "blaSHV-12",
-      "family": "blaSHV",
-      "mutation": "K236Q",
-      "confidence": 50,
-      "methods": [
-        "blast"
-      ],
-      "reported": true,
-      "gamma_detail": null,
-      "contig": "CACSEH010000054.1"
-    },
-    {
-      "gene": "blaSHV-12",
-      "family": "blaSHV",
-      "mutation": "L217R",
-      "confidence": 50,
-      "methods": [
-        "blast"
-      ],
-      "reported": true,
-      "gamma_detail": null,
-      "contig": "CACSEH010000054.1"
-    },
-    {
-      "gene": "blaSHV-12",
-      "family": "blaSHV",
-      "mutation": "M1K",
-      "confidence": 50,
-      "methods": [
-        "blast"
-      ],
-      "reported": true,
-      "gamma_detail": null,
-      "contig": "CACSEH010000054.1"
-    },
-    {
-      "gene": "blaSHV-12",
-      "family": "blaSHV",
-      "mutation": "N249H",
-      "confidence": 50,
-      "methods": [
-        "blast"
-      ],
-      "reported": true,
-      "gamma_detail": null,
-      "contig": "CACSEH010000054.1"
-    },
-    {
-      "gene": "blaSHV-12",
-      "family": "blaSHV",
-      "mutation": "N250_K251del",
-      "confidence": 50,
-      "methods": [
-        "blast"
-      ],
-      "reported": true,
-      "gamma_detail": null,
-      "contig": "CACSEH010000054.1"
-    },
-    {
-      "gene": "blaSHV-12",
-      "family": "blaSHV",
-      "mutation": "Q287R",
-      "confidence": 50,
-      "methods": [
-        "blast"
-      ],
-      "reported": true,
-      "gamma_detail": null,
-      "contig": "CACSEH010000054.1"
-    },
-    {
-      "gene": "blaSHV-12",
-      "family": "blaSHV",
-      "mutation": "R219H",
-      "confidence": 50,
-      "methods": [
-        "blast"
-      ],
-      "reported": true,
-      "gamma_detail": null,
-      "contig": "CACSEH010000054.1"
-    },
-    {
-      "gene": "blaSHV-12",
-      "family": "blaSHV",
-      "mutation": "S182_V213del",
-      "confidence": 50,
-      "methods": [
-        "blast"
-      ],
-      "reported": true,
-      "gamma_detail": null,
-      "contig": "CACSEH010000054.1"
-    },
-    {
-      "gene": "blaSHV-12",
-      "family": "blaSHV",
-      "mutation": "S220_A229del",
-      "confidence": 50,
-      "methods": [
-        "blast"
-      ],
-      "reported": true,
-      "gamma_detail": null,
+      "gamma_detail": {
+        "protein": "blaSHV-12",
+        "contig": "CACSEH010000054.1",
+        "contig_start": 0,
+        "contig_end": 769,
+        "identity": 88.5,
+        "coverage": 89.31,
+        "match_type": "Contig Edge",
+        "mutations": [
+          "7 SNPs in 93-861",
+          "S235G",
+          "K236E"
+        ]
+      },
       "contig": "CACSEH010000054.1"
     },
     {
@@ -625,66 +405,6 @@
           "K236E"
         ]
       },
-      "contig": "CACSEH010000054.1"
-    },
-    {
-      "gene": "blaSHV-12",
-      "family": "blaSHV",
-      "mutation": "T179K",
-      "confidence": 50,
-      "methods": [
-        "blast"
-      ],
-      "reported": true,
-      "gamma_detail": null,
-      "contig": "CACSEH010000054.1"
-    },
-    {
-      "gene": "blaSHV-12",
-      "family": "blaSHV",
-      "mutation": "T232N",
-      "confidence": 50,
-      "methods": [
-        "blast"
-      ],
-      "reported": true,
-      "gamma_detail": null,
-      "contig": "CACSEH010000054.1"
-    },
-    {
-      "gene": "blaSHV-12",
-      "family": "blaSHV",
-      "mutation": "V257A",
-      "confidence": 50,
-      "methods": [
-        "blast"
-      ],
-      "reported": true,
-      "gamma_detail": null,
-      "contig": "CACSEH010000054.1"
-    },
-    {
-      "gene": "blaSHV-12",
-      "family": "blaSHV",
-      "mutation": "V258_W286del",
-      "confidence": 50,
-      "methods": [
-        "blast"
-      ],
-      "reported": true,
-      "gamma_detail": null,
-      "contig": "CACSEH010000054.1"
-    },
-    {
-      "gene": "blaSHV-12",
-      "family": "blaSHV",
-      "mutation": "Y3_R57del",
-      "confidence": 50,
-      "methods": [
-        "blast"
-      ],
-      "reported": true,
-      "gamma_detail": null,
       "contig": "CACSEH010000054.1"
     },
     {

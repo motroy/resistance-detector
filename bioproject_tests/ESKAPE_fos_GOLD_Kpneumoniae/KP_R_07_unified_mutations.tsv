@@ -1,5 +1,5 @@
 Gene	Mutation	Confidence(%)	Methods	Contig	Reported_As_Resistance_Mutation
-acrB	insVX@1022	50	blast	FBRB01000025.1	no
+acrB	insV@1022	50	blast	FBRB01000025.1	no
 envZ	A193T	100	blast+gamma	FBRB01000005.1	no
 envZ	I15T	100	blast+gamma	FBRB01000005.1	no
 envZ	I258M	100	blast+gamma	FBRB01000005.1	no
