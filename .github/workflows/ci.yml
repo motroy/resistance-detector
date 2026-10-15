@@ -5,6 +5,8 @@ on:
     branches: [main, master, "claude/**"]
   pull_request:
     branches: [main, master]
+  # Run on demand from the Actions tab, on any branch.
+  workflow_dispatch:
 
 jobs:
   # ── Job 1: Pure-Python unit tests (no external bioinformatics tools needed) ──
