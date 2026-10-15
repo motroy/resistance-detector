@@ -66,6 +66,26 @@ occur: there is no spurious `D179T` call on KPNIH1, and `glpT` is detected.
     of kb (coordinates only; the primer pair matches multiple rRNA operons).
     These are not used for any call.
 
+## Independent cross-check with Kleborate
+
+Kleborate 3.2.4 (`kpsc` preset for the *Klebsiella* genomes, `escherichia`
+for K-12; AMRFinderPlus database 2026-08-07.1, installed as described in
+`bioproject_tests/Kleborate_cross_check/RESULTS_SUMMARY.md`) was run on the
+same three assemblies.
+
+| Genome | Kleborate | fos-cazavi | Agree |
+|---|---|---|---|
+| KPNIH1 | ST258; acquired carbapenemase `KPC-3`; chromosomal `SHV-11`; OmpK35 `p.Glu42fs`, OmpK36 `p.134_135insGlyAsp`; no fosA | `blaKPC-3`; `ompK35` loss of function; `ompK36` `insGD@133`; `fosAKP` only | Yes |
+| MGH 78578 | ST38; acquired ESBL `SHV-12`; chromosomal `SHV-11`; OmpK35 `p.Gly299fs`; no carbapenemase, no fosA | `blaSHV-12`; `ompK35` loss of function; no `blaKPC`, no acquired fosA | Yes |
+| K-12 MG1655 | ST10, O16:H48 (the `escherichia` preset has no AMR module) | No acquired genes | Not comparable for AMR |
+
+Kleborate also reports the same ompK35 frameshifts as the loss-of-function
+calls above, which supports reading the extra 50%-confidence `ompK35` changes
+as downstream of that single truncation. Kleborate does not make
+fosfomycin or CAZ/AVI phenotype calls, so this compares genes and
+mechanisms only. Kleborate also reports other classes (aminoglycoside,
+fluoroquinolone `gyrA`/`parC`) that are outside this tool's two drugs.
+
 ## Conclusion
 
 The tool installs from `environment.yaml`, runs end-to-end, and gives
