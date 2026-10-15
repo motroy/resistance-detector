@@ -2,7 +2,22 @@
 
 ## Executive Summary
 
-The `fos-cazavi` tool was installed and tested successfully using the recommended real genomes. The installation via `conda` (simulated with `miniconda` and manual channel configuration) and `pip install -e .` worked correctly. The full analysis pipeline (`fos-cazavi-all`) ran without errors on all three validation genomes, producing expected output files.
+> **Status (updated 2026-10-15):** the per-genome results below (Results
+> sections 1-3) are the original February 2026 installation check and were
+> **not re-run** with the current pipeline. Since then detection and phenotype
+> logic was rebuilt (AMRFinderPlus 2026-08-07.1 reference data, allele
+> assignment by bitscore ranking, mechanism-based CAZ/AVI calls, fosfomycin
+> transport-gene fixes), so the specific calls, the `D179T` discussion and the
+> `glpT` fallback warning below describe the old version and should not be read
+> as current behaviour.
+
+The `fos-cazavi` tool was installed and run end-to-end on three reference
+genomes (KPNIH1, MGH 78578, K-12 MG1655) and produced the expected output
+files. Current, regenerated validation against published genomes with measured
+MICs (CREC fosA3, ESKAPE-GOLD, PRJNA781811, PRJNA741867 and others, plus a
+Kleborate cross-check with 62/63 concordant) is in
+[../docs/VALIDATION.md](../docs/VALIDATION.md). Current example output is
+`multi_mechanism_summary.txt` in this folder.
 
 ## Methodology
 
@@ -55,4 +70,9 @@ The `fos-cazavi` tool was installed and tested successfully using the recommende
 
 ## Conclusion
 
-The tool is functioning correctly. The results align with expectations, with the known caveat regarding `blaKPC` reference sequence numbering (D179T) which requires upstream database adjustment or specific handling in the tool to avoid confusion.
+At the time of this check the installation and pipeline ran without errors on
+all three genomes. The `blaKPC` D179T caveat and the `glpT` fallback warning
+are specific to that earlier version. For the current tool's accuracy,
+including known limitations such as low fosfomycin sensitivity on the
+ESKAPE-GOLD sets, see [../docs/VALIDATION.md](../docs/VALIDATION.md). Re-run
+the three genomes to refresh Results sections 1-3.
