@@ -1,78 +1,75 @@
 # Validation Report
 
+Re-run on 2026-10-15 with the current pipeline (AMRFinderPlus reference data
+2026-08-07.1, bundled database).
+
 ## Executive Summary
 
-> **Status (updated 2026-10-15):** the per-genome results below (Results
-> sections 1-3) are the original February 2026 installation check and were
-> **not re-run** with the current pipeline. Since then detection and phenotype
-> logic was rebuilt (AMRFinderPlus 2026-08-07.1 reference data, allele
-> assignment by bitscore ranking, mechanism-based CAZ/AVI calls, fosfomycin
-> transport-gene fixes), so the specific calls, the `D179T` discussion and the
-> `glpT` fallback warning below describe the old version and should not be read
-> as current behaviour.
+`fos-cazavi fos-cazavi-all` ran without errors on all three reference genomes
+and the calls match what is known about each strain:
 
-The `fos-cazavi` tool was installed and run end-to-end on three reference
-genomes (KPNIH1, MGH 78578, K-12 MG1655) and produced the expected output
-files. Current, regenerated validation against published genomes with measured
-MICs (CREC fosA3, ESKAPE-GOLD, PRJNA781811, PRJNA741867 and others, plus a
-Kleborate cross-check with 62/63 concordant) is in
-[../docs/VALIDATION.md](../docs/VALIDATION.md). Current example output is
-`multi_mechanism_summary.txt` in this folder.
+| Genome | Fosfomycin | CAZ/AVI | Key finding |
+|---|---|---|---|
+| *K. pneumoniae* KPNIH1 | Susceptible | Susceptible | `blaKPC-3` found at 99.89% identity with only the defining `H274Y` change (no Omega-loop change, so no avibactam escape) |
+| *K. pneumoniae* MGH 78578 | Susceptible | Susceptible | No `blaKPC`; chromosomal `blaSHV-like` only; no `fosA3` |
+| *E. coli* K-12 MG1655 | Susceptible | Susceptible | All 12 chromosomal targets found, including `glpT`; no acquired genes |
+
+The two issues recorded in the February version of this report no longer
+occur: there is no spurious `D179T` call on KPNIH1, and `glpT` is detected.
 
 ## Methodology
 
-1.  **Installation**:
-    -   Created conda environment `resistance_detector` with dependencies: `python`, `blast`, `biopython`, `seqkit`, `gamma`, `pytest`.
-    -   Installed `fos-cazavi` in editable mode.
-2.  **Genomes**:
-    -   `GCA_000281535.1` (*K. pneumoniae* KPNIH1) - CAZAVI Positive Control (KPC-3).
-    -   `GCF_000016305.1` (*K. pneumoniae* MGH 78578) - Negative Control.
-    -   `GCF_000005845.2` (*E. coli* K-12 MG1655) - Chromosomal FOS targets.
-3.  **Database**:
-    -   Created reference database `resistance_db` using `fos-cazavi create-db`.
-4.  **Analysis**:
-    -   Ran `fos-cazavi fos-cazavi-all` on each genome.
+1.  **Environment**: micromamba env with `blast`, `biopython`, `seqkit>=2.8`,
+    `gamma`, `pytest` (as in `environment.yaml`); `pip install -e .`.
+2.  **Genomes** (NCBI RefSeq/GenBank FTP):
+    -   `GCA_000281535.2` (*K. pneumoniae* KPNIH1), the KPC-3 positive
+        control. **Note:** `GCA_000281535.1`, used in the earlier report, has
+        no sequence file on NCBI; `.2` is the same KPNIH1 strain.
+    -   `GCF_000016305.1` (*K. pneumoniae* MGH 78578), negative control.
+    -   `GCF_000005845.2` (*E. coli* K-12 MG1655), chromosomal targets.
+3.  **Analysis**: `fos-cazavi fos-cazavi-all -a <fasta> -o <prefix>
+    --organism <Klebsiella_pneumoniae|Escherichia> -t 4`, using the bundled
+    reference data (`create-db` needs NCBI Entrez access and was not used).
 
 ## Results
 
-### 1. *K. pneumoniae* KPNIH1 (`GCA_000281535.1`)
+### 1. *K. pneumoniae* KPNIH1 (`GCA_000281535.2`)
 
--   **Expected**: `blaKPC-3` at ≥99% identity.
+-   **Expected**: `blaKPC-3`, no avibactam-escape change.
 -   **Observed**:
-    -   `blaKPC-3` detected at 100.00% identity and 100.00% coverage.
-    -   BLAST reported mutations: `D179T,V240Y,T243A`.
-    -   GAMMA reported: "Native" (no coding mutations relative to reference).
--   **Analysis**:
-    -   The detection of `blaKPC-3` confirms the positive control status.
-    -   The reported mutation `D179T` is a known artifact. The AMRfinderPlus reference sequence for `blaKPC-3` contains T179, whereas the tool's internal logic or standard wildtype assumes D179. Since KPNIH1 matches the reference (T179), GAMMA sees no mutation ("Native"), but the mutation reporter flags `D179T` (Ref D -> Obs T).
-    -   This matches the "known discrepancy" noted in project documentation.
+    -   `blaKPC-3` (allele assigned against `blaKPC-2`): 99.89% identity,
+        100% coverage; only protein change `H274Y` (BLAST and GAMMA agree).
+        `H274Y` is what makes a KPC a KPC-3 and is not a resistance marker.
+    -   `blaSHV-like` (S235G, K236E) also present.
+    -   Calls: fosfomycin Susceptible, CAZ/AVI Susceptible.
+    -   `ompK35` has a premature stop at residue 89 (loss of function). It is
+        reported but does not trigger a CAZ/AVI resistant call on its own.
+-   **Caveat**: the many 50%-confidence `ompK35` changes (BLAST only, not
+    confirmed by GAMMA) are downstream effects of the frameshift/truncation,
+    not independent mutations.
 
 ### 2. *K. pneumoniae* MGH 78578 (`GCF_000016305.1`)
 
--   **Expected**: Negative control (no KPC, no FosA).
--   **Observed**:
-    -   Detected: `acrB`, `ftsI`, `envZ`, `blaSHV-12`.
-    -   No `blaKPC` or `fosA` genes detected.
--   **Analysis**:
-    -   Confirmed as negative control for target resistance genes. `blaSHV-12` is a common ESBL but not the primary target for CAZAVI/FOS detection in this context (though relevant).
+-   **Expected**: no KPC, no `fosA3`.
+-   **Observed**: no `blaKPC` and no acquired fosfomycin enzyme. A `blaSHV-12`
+    exact match and a `blaSHV-like` copy (S235G, K236E) were detected, plus the
+    chromosomal targets. `ompK35` has a premature stop at residue 309.
+    Both drugs called Susceptible.
 
 ### 3. *E. coli* K-12 MG1655 (`GCF_000005845.2`)
 
--   **Expected**: Chromosomal FOS targets (`murA`, `uhpT`, `glpT`).
--   **Observed**:
-    -   Detected: `cyaA`, `lon`, `ptsI`, `uhpB`, `uhpT`.
-    -   `glpT` was not detected by BLAST (likely due to low identity or absence in this specific assembly region/version, or fallback issue). Wait, `glpT` is a chromosomal gene.
-    -   Detected `uhpT` with mutation `E350T`.
--   **Analysis**:
-    -   Chromosomal targets detected.
-    -   `glpT` absence might be due to the specific assembly or database fallback. The `create-db` log showed: "WARNING: glpT not found in catalog, using fallback".
-    -   `uhpT` mutation `E350T` detected.
+-   **Expected**: chromosomal fosfomycin/CAZ-AVI targets, nothing acquired.
+-   **Observed**: `cyaA`, `lon`, `ptsI`, `uhpA/B/C/T`, `glpT`, `murA`, `ompC`,
+    `ompF`, `galU` all found at 98.8-100% identity and 100% coverage with no
+    protein changes reported. No acquired genes. Both drugs Susceptible.
+-   **Caveat**: the amplicon table lists two `RT_rrsA` hits spanning hundreds
+    of kb (coordinates only; the primer pair matches multiple rRNA operons).
+    These are not used for any call.
 
 ## Conclusion
 
-At the time of this check the installation and pipeline ran without errors on
-all three genomes. The `blaKPC` D179T caveat and the `glpT` fallback warning
-are specific to that earlier version. For the current tool's accuracy,
-including known limitations such as low fosfomycin sensitivity on the
-ESKAPE-GOLD sets, see [../docs/VALIDATION.md](../docs/VALIDATION.md). Re-run
-the three genomes to refresh Results sections 1-3.
+The tool installs from `environment.yaml`, runs end-to-end, and gives
+biologically correct results on the three reference genomes. These are
+reference strains, so this is a sanity check rather than an accuracy
+measurement; for accuracy against measured MICs see
+[../docs/VALIDATION.md](../docs/VALIDATION.md).
