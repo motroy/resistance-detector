@@ -28,6 +28,9 @@ _ABL_GAPS = (58, 253)
 # differ slightly in length, while still catching real nonsense mutations.
 TRUNCATION_TOLERANCE = 0.05
 
+# Translation of a codon with an ambiguous or missing base.
+UNOBSERVED = 'X'
+
 
 def sequential_to_ambler(position):
     """Map a 1-based sequential residue index in a class A beta-lactamase to
@@ -120,12 +123,16 @@ def compare_proteins(reference_protein, query_protein, numbering='sequential'):
 
     for reference_aa, query_aa in zip(reference_row, query_row):
         if reference_aa == '-':
-            insertion.append(query_aa)
+            if query_aa != UNOBSERVED:
+                insertion.append(query_aa)
             continue
         flush_insertion()
         reference_position += 1
         insertion_after = reference_position
-        if query_aa == reference_aa:
+        if query_aa == reference_aa or query_aa == UNOBSERVED:
+            # X is a codon containing an ambiguous or missing base (e.g. the
+            # padding past a contig end): the residue was not observed, which
+            # is not evidence of a change.
             continue
         position = renumber(reference_position)
         if query_aa == '-':
@@ -271,10 +278,19 @@ def extract_gene_span(contig_sequence, qstart, qend, sstart, send, reference_len
         end = query_high + missing_left
 
     complete = start >= 0 and end <= len(contig_sequence)
+    # Bases the contig does not contain are padded with N rather than dropped,
+    # so the reading frame is kept: a gene that starts 5 bp before the contig
+    # does would otherwise be translated out of frame and reported as a
+    # premature stop at residue 1. The padding translates to X, which is
+    # treated as "not observed" rather than as a change.
+    pad_before = max(0, -start)
+    pad_after = max(0, end - len(contig_sequence))
     start = max(start, 0)
     end = min(end, len(contig_sequence))
 
-    sequence = contig_sequence[start:end]
+    # Padding is in contig orientation; it is reverse-complemented with the
+    # rest when the gene is on the minus strand.
+    sequence = 'N' * pad_before + str(contig_sequence[start:end]) + 'N' * pad_after
     if not same_strand:
-        sequence = str(Seq(str(sequence)).reverse_complement())
-    return str(sequence), complete
+        sequence = str(Seq(sequence).reverse_complement())
+    return sequence, complete

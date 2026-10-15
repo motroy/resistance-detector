@@ -18,11 +18,14 @@ Two things are deliberately *not* done here:
 
 import csv
 import re
+import shutil
 import subprocess
 import sys
+import tempfile
 from collections import defaultdict
 from pathlib import Path
 
+from .inputs import stage_file
 from .references import canonical_gene_name, gene_family
 from .utils import load_primers
 from .variants import sequential_to_ambler
@@ -59,19 +62,37 @@ class MutationDetector:
         print("Running GAMMA for independent codon-level mutation analysis...")
         output_prefix = f"{self.output_prefix}_gamma"
         output_file = f"{output_prefix}.gamma"
+        # A previous run's output must never be read back as this run's.
+        for extension in ('gamma', 'psl'):
+            stale = Path(f"{output_prefix}.{extension}")
+            if stale.exists():
+                stale.unlink()
 
-        try:
-            subprocess.run(['GAMMA.py', self.assembly, self.genes_file, output_prefix],
-                           capture_output=True, text=True, check=True)
-        except FileNotFoundError:
-            print("WARNING: GAMMA not found, skipping the second-opinion analysis")
-            return
-        except subprocess.CalledProcessError as error:
-            print(f"WARNING: GAMMA failed: {error.stderr}", file=sys.stderr)
-            return
+        # GAMMA runs blat through a shell command built from its arguments, so
+        # it is given fixed, safe file names in a private directory: a space in
+        # a user's path would otherwise break it, and a ';' would be executed.
+        with tempfile.TemporaryDirectory(prefix='fos-cazavi-gamma-') as work:
+            assembly = stage_file(self.assembly, work, 'assembly.fasta')
+            genes = stage_file(self.genes_file, work, 'genes.fasta')
+            try:
+                subprocess.run(['GAMMA.py', assembly, genes, 'gamma'], cwd=work,
+                               capture_output=True, text=True, check=True)
+            except FileNotFoundError:
+                print("WARNING: GAMMA not found, skipping the second-opinion analysis",
+                      file=sys.stderr)
+                return
+            except subprocess.CalledProcessError as error:
+                print(f"WARNING: GAMMA failed, skipping the second-opinion analysis: "
+                      f"{error.stderr}", file=sys.stderr)
+                return
+            for extension in ('gamma', 'psl'):
+                produced = Path(work) / f"gamma.{extension}"
+                if produced.exists():
+                    shutil.copyfile(produced, f"{output_prefix}.{extension}")
 
         if not Path(output_file).exists():
-            print("WARNING: GAMMA output file not found")
+            print("WARNING: GAMMA produced no output, skipping the second-opinion "
+                  "analysis", file=sys.stderr)
             return
 
         with open(output_file) as handle:

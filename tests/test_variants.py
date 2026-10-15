@@ -153,3 +153,32 @@ class TestExtractGeneSpan:
             contig, qstart=1, qend=len(contig), sstart=31, send=len(gene),
             reference_length=len(gene))
         assert not complete
+
+
+class TestContigBoundaryPadding:
+    def test_missing_start_is_padded_in_frame(self):
+        gene = cds('MKTAYIAKQRQISFVKSHFSRQ')
+        contig = gene[7:] + 'GGGGGG'      # 7 bp of the gene are off the contig
+        sequence, complete = extract_gene_span(contig, 1, len(gene) - 7, 8, len(gene),
+                                               len(gene))
+        assert complete is False
+        assert sequence == 'N' * 7 + gene[7:]
+        call = call_variants('MKTAYIAKQRQISFVKSHFSRQ', sequence)
+        assert call['changes'] == []
+        assert not call['loss_of_function']
+
+    def test_missing_end_on_the_reverse_strand_is_padded(self):
+        gene = cds('MKTAYIAKQRQISFVKSHFSRQ')
+        observed = gene[:-10]
+        contig = str(Seq(observed).reverse_complement())
+        sequence, complete = extract_gene_span(contig, len(contig), 1, 1, len(observed),
+                                               len(gene))
+        assert complete is False
+        assert sequence == observed + 'N' * 10
+
+    def test_unobserved_residue_is_not_a_change(self):
+        assert compare_proteins('MKTAYIAK', 'MKXAYIAK') == []
+
+    def test_real_change_next_to_unobserved_residue_is_kept(self):
+        labels = [c['label'] for c in compare_proteins('MKTAYIAK', 'MKXAWIAK')]
+        assert labels == ['Y5W']

@@ -4,7 +4,6 @@ check that the reported genotype and phenotype are the ones that were planted.
 
 import json
 
-import pytest
 from Bio.Seq import Seq
 
 from fos_cazavi.acquired import BlastDetector
@@ -12,7 +11,7 @@ from fos_cazavi.cli import write_summary
 from fos_cazavi.phenotype import predict_phenotypes
 from fos_cazavi.variants import ambler_to_sequential
 
-from .conftest import embed, requires_blast, write_genome
+from .conftest import FILLER, embed, requires_blast, write_genome
 
 pytestmark = requires_blast
 
@@ -610,3 +609,128 @@ class TestPorinAmplification:
                          organism='Escherichia')
         prediction = predict_phenotypes(results, organism='Escherichia')['fosfomycin']
         assert prediction['phenotype'] == 'Resistant'
+
+
+def stop_codon_at(cds_sequence, position):
+    index = (position - 1) * 3
+    return cds_sequence[:index] + 'TAA' + cds_sequence[index + 3:]
+
+
+class TestDisruptedEnzymesAreNotCountedAsFunctional:
+    """A premature stop or frameshift in an acquired enzyme used to be scored
+    as if the enzyme were intact - and for blaKPC, the missing tail aligned as
+    one long 'in-frame Omega-loop deletion', which was read as an avibactam
+    escape mechanism. A disrupted enzyme is probably not made, but an assembly
+    error looks identical, so the honest call is Indeterminate."""
+
+    def test_kpc_with_premature_stop_is_indeterminate_not_resistant(
+            self, tmp_path, database, reference_cds):
+        sequence = stop_codon_at(reference_cds['blaKPC-2'], ambler_to_sequential(100))
+        _, results = run(tmp_path, database, {'contig1': embed(sequence)})
+        kpc = find(results, 'blaKPC-2')
+        assert kpc['loss_of_function']
+        assert kpc['allele'] == 'blaKPC (disrupted)'
+        assert kpc['reported_mutations'] == []
+        prediction = predict_phenotypes(results)['ceftazidime_avibactam']
+        assert prediction['phenotype'] == 'Indeterminate'
+        assert 'disrupting change' in prediction['evidence'][0]
+
+    def test_kpc_with_frameshift_is_indeterminate_not_resistant(
+            self, tmp_path, database, reference_cds):
+        sequence = reference_cds['blaKPC-2'][:300] + reference_cds['blaKPC-2'][301:]
+        _, results = run(tmp_path, database, {'contig1': embed(sequence)})
+        assert predict_phenotypes(results)['ceftazidime_avibactam']['phenotype'] == \
+            'Indeterminate'
+
+    def test_disrupted_ndm_is_indeterminate(self, tmp_path, database, reference_cds):
+        sequence = stop_codon_at(reference_cds['blaNDM-1'], 60)
+        _, results = run(tmp_path, database, {'contig1': embed(sequence)})
+        assert predict_phenotypes(results)['ceftazidime_avibactam']['phenotype'] == \
+            'Indeterminate'
+
+    def test_disrupted_ndm_does_not_hide_an_intact_one(self, tmp_path, database, reference_cds):
+        _, results = run(tmp_path, database, {
+            'contig1': embed(stop_codon_at(reference_cds['blaNDM-1'], 60)),
+            'contig2': embed(reference_cds['blaNDM-1'])})
+        assert predict_phenotypes(results)['ceftazidime_avibactam']['phenotype'] == 'Resistant'
+
+    def test_disrupted_fosa3_is_indeterminate(self, tmp_path, database, reference_cds):
+        sequence = stop_codon_at(reference_cds['fosA3'], 40)
+        _, results = run(tmp_path, database, {'contig1': embed(sequence)},
+                         organism='Escherichia')
+        prediction = predict_phenotypes(results, None, 'Escherichia')['fosfomycin']
+        assert prediction['phenotype'] == 'Indeterminate'
+
+
+class TestGenesCutByAContigBoundary:
+    def test_reading_frame_is_kept_when_a_contig_cuts_mid_codon(
+            self, tmp_path, database, reference_cds):
+        # The contig starts 151 bp into the gene - not a whole number of
+        # codons. This used to be translated out of frame and the garbage read
+        # as an Omega-loop deletion (Resistant). The D179Y planted here is in
+        # the observed part and must be typed exactly.
+        d179y = ambler_substitute_kpc(reference_cds['blaKPC-2'], 179, 'Y')
+        _, results = run(tmp_path, database, {'contig1': d179y[151:] + FILLER})
+        kpc = find(results, 'blaKPC-2')
+        assert kpc['complete'] is False
+        assert kpc['changes'] == ['D179Y']
+        assert kpc['allele'] == 'blaKPC-33'
+
+    def test_unobserved_start_is_not_a_premature_stop(self, tmp_path, database, reference_cds):
+        # Real case: blaCTX-M-15 five bases short of a contig start was being
+        # reported as "premature stop at residue 1 (0/291 aa)".
+        _, results = run(tmp_path, database,
+                         {'contig1': reference_cds['blaCTX-M-15'][5:] + FILLER})
+        ctxm = find(results, 'blaCTX-M-15')
+        assert ctxm['complete'] is False
+        assert ctxm['changes'] == []
+        assert not ctxm['loss_of_function']
+
+    def test_kpc_split_across_two_contigs_is_not_missed(self, tmp_path, database, reference_cds):
+        # Neither piece reaches the 80% coverage threshold, so the carbapenemase
+        # used to vanish and the sample was called Susceptible.
+        kpc = reference_cds['blaKPC-2']
+        middle = len(kpc) // 2 - 6
+        _, results = run(tmp_path, database, {'contig1': FILLER + kpc[:middle],
+                                              'contig2': kpc[middle:] + FILLER})
+        kpc_hits = [r for r in results if r['family'] == 'blaKPC']
+        assert kpc_hits and all(hit['partial'] for hit in kpc_hits)
+        prediction = predict_phenotypes(results)['ceftazidime_avibactam']
+        assert prediction['phenotype'] == 'Indeterminate'
+        assert 'only partly present' in ' '.join(prediction['evidence'])
+
+    def test_internal_partial_match_is_still_filtered(self, tmp_path, database, reference_cds):
+        # A fragment in the middle of a contig is not a boundary artefact and
+        # stays below the reporting threshold, as before.
+        kpc = reference_cds['blaKPC-2']
+        _, results = run(tmp_path, database, {'contig1': embed(kpc[:len(kpc) * 6 // 10])})
+        assert not [r for r in results if r['family'] == 'blaKPC']
+
+    def test_partial_chromosomal_genes_are_not_reported(self, tmp_path, database, reference_cds):
+        uhpt = reference_cds['uhpT']
+        _, results = run(tmp_path, database, {'contig1': FILLER + uhpt[:len(uhpt) * 6 // 10]},
+                         organism='Escherichia')
+        assert find(results, 'uhpT') is None
+
+    def test_kpc_split_on_the_reverse_strand_is_not_missed(
+            self, tmp_path, database, reference_cds):
+        kpc = reference_cds['blaKPC-2']
+        middle = len(kpc) // 2 + 6
+        contig = FILLER + kpc[:middle]
+        _, results = run(tmp_path, database,
+                         {'contig1': str(Seq(contig).reverse_complement())})
+        kpc_hits = [r for r in results if r['family'] == 'blaKPC']
+        assert len(kpc_hits) == 1 and kpc_hits[0]['partial']
+        assert predict_phenotypes(results)['ceftazidime_avibactam']['phenotype'] == \
+            'Indeterminate'
+
+    def test_escape_mutation_in_the_observed_part_of_a_partial_kpc_still_counts(
+            self, tmp_path, database, reference_cds):
+        # Only ~60% of this KPC-33 is on the contig, but D179Y is in that part.
+        d179y = ambler_substitute_kpc(reference_cds['blaKPC-2'], 179, 'Y')
+        _, results = run(tmp_path, database, {'contig1': d179y[350:] + FILLER})
+        kpc = next(r for r in results if r['family'] == 'blaKPC')
+        assert kpc['partial'] and kpc['changes'] == ['D179Y']
+        prediction = predict_phenotypes(results)['ceftazidime_avibactam']
+        assert prediction['phenotype'] == 'Resistant'
+        assert any('contig boundary' in item for item in prediction['evidence'])

@@ -33,6 +33,25 @@ DISCLAIMER = ('Genotype-based prediction only; not a substitute for phenotypic '
               'antimicrobial susceptibility testing (AST).')
 
 
+def _disruption(result):
+    """Why an acquired enzyme cannot be counted as functional, or None.
+
+    A premature stop, frameshift or truncation usually means the enzyme is not
+    made - but a homopolymer error in the assembly looks exactly the same, so
+    neither Resistant nor Susceptible is supportable. A gene cut by a contig
+    boundary below the normal coverage threshold is likewise present but
+    unassessable.
+    """
+    if result.get('loss_of_function'):
+        return (f"carries a disrupting change ({result['lof_description']}): the "
+                f"enzyme is probably not functional, but this cannot be told apart "
+                f"from an assembly error")
+    if result.get('partial'):
+        return (f"is only partly present ({result['coverage']}% of the gene) because "
+                f"it runs off a contig boundary, so it could not be assessed")
+    return None
+
+
 def _resolve(resistant_evidence, uncertain_evidence, nothing_found_message):
     if resistant_evidence:
         return {'phenotype': RESISTANT,
@@ -64,7 +83,10 @@ def predict_fos_phenotype(blast_results, unified_results=None, organism=None):
             continue
 
         if family in FOSA_FAMILIES:
-            if intrinsic_expected and not intrinsic_found:
+            disruption = _disruption(result)
+            if disruption:
+                uncertain.append(f"fosA-family enzyme {result['allele']} {disruption}")
+            elif intrinsic_expected and not intrinsic_found:
                 uncertain.append(
                     f"fosA-family enzyme {result['allele']} detected "
                     f"({result['identity']}% identity), but no intrinsic "
@@ -78,7 +100,13 @@ def predict_fos_phenotype(blast_results, unified_results=None, organism=None):
             continue
 
         if gene in FOS_TRANSPORT_GENES or gene == 'murA':
-            if result.get('loss_of_function'):
+            if not result.get('complete', True) and not result.get('loss_of_function'):
+                # The part of the gene beyond the contig end was not seen, so
+                # a loss of function there cannot be ruled out.
+                uncertain.append(
+                    f"{gene} runs off a contig boundary, so it could not be fully "
+                    f"checked for loss of function")
+            elif result.get('loss_of_function'):
                 if result.get('complete'):
                     resistant.append(
                         f"Loss of function in fosfomycin uptake/regulatory gene {gene}: "
@@ -174,6 +202,7 @@ def predict_cazavi_phenotype(blast_results, unified_results=None, organism=None)
     amplifiable_enzymes = {
         result['gene'] for result in blast_results or []
         if gene_family(result['gene']) in PERMEABILITY_AMPLIFIED_FAMILIES
+        and not _disruption(result)
     }
 
     for result in blast_results or []:
@@ -181,6 +210,10 @@ def predict_cazavi_phenotype(blast_results, unified_results=None, organism=None)
         family = gene_family(gene)
 
         if is_mbl(gene):
+            disruption = _disruption(result)
+            if disruption:
+                uncertain.append(f"Metallo-beta-lactamase {result['allele']} {disruption}")
+                continue
             resistant.append(
                 f"Metallo-beta-lactamase {result['allele']} detected "
                 f"({result['identity']}% identity) - avibactam does not inhibit "
@@ -191,11 +224,23 @@ def predict_cazavi_phenotype(blast_results, unified_results=None, organism=None)
             continue
 
         kpc_seen = True
+        if result.get('loss_of_function'):
+            # A truncated or frameshifted KPC's "changes" are an artefact of the
+            # disruption, so it is not assessed for escape mutations. A KPC that
+            # is merely cut by a contig boundary is: its observed part is read
+            # in frame, and the boundary is noted below.
+            uncertain.append(f"{result['allele']} on {result['contig']} {_disruption(result)}")
+            continue
         assessment = betalactamase.assess_kpc_changes(
             result.get('changes', []), result.get('allele_row'))
         prefix = f"{result['allele']} on {result['contig']}"
 
-        if not result.get('complete'):
+        if result.get('partial'):
+            uncertain.append(
+                f"{prefix}: only partly present ({result['coverage']}% of the gene) "
+                f"because it runs off a contig boundary, so its variant content "
+                f"could not be fully assessed")
+        elif not result.get('complete'):
             uncertain.append(
                 f"{prefix}: gene runs off a contig boundary, so its variant "
                 f"content could not be fully assessed")

@@ -10,20 +10,40 @@ stops, frameshifts and truncations - rather than a lookup at fixed positions.
 import subprocess
 import sys
 from collections import Counter
-from pathlib import Path
 
 from Bio import SeqIO
 from Bio.Seq import Seq
 from Bio.SeqRecord import SeqRecord
 
 from . import betalactamase
+from .inputs import ToolError, ensure_blast_db
 from .references import (
-    ACQUIRED_PREFIXES, INTRINSIC_GENES, IN_SCOPE_DRUGS, canonical_gene_name,
+    INTRINSIC_GENES, IN_SCOPE_DRUGS, canonical_gene_name,
     gene_family, is_acquired_gene, load_point_mutations, load_reference_proteins,
     mutation_lookup_key, mutation_scope,
 )
 from .utils import check_dependencies
 from .variants import call_variants, extract_gene_span, loss_of_function_label
+
+# Minimum reference coverage for reporting an acquired gene that is cut by a
+# contig boundary (as AMRFinderPlus does). A gene split in two always leaves at
+# least one piece at or above this.
+PARTIAL_MIN_COVERAGE = 50.0
+
+
+def _runs_off_contig(qstart, qend, sstart, send, subject_length, contig_length):
+    """True when the unaligned part of the reference would lie beyond the end
+    of the contig, i.e. the gene is incomplete because the contig is."""
+    missing_low = min(sstart, send) - 1
+    missing_high = subject_length - max(sstart, send)
+    if (qstart <= qend) == (sstart <= send):
+        room_before, room_after = min(qstart, qend) - 1, contig_length - max(qstart, qend)
+    else:
+        room_before, room_after = contig_length - max(qstart, qend), min(qstart, qend) - 1
+    # 10 bp of slack: alignments often stop a few bases short of a contig end.
+    return ((missing_low > 0 and room_before <= 10)
+            or (missing_high > 0 and room_after <= 10))
+
 
 # BLAST output columns, in the order requested below.
 _BLAST_FIELDS = ('qseqid sseqid pident length mismatch gapopen qstart qend '
@@ -59,20 +79,11 @@ class BlastDetector:
     # ------------------------------------------------------------------ BLAST
 
     def prepare_database(self):
-        db_files = [f"{self.database}.{extension}" for extension in ('nhr', 'nin', 'nsq')]
-        if all(Path(path).exists() for path in db_files):
-            return
-        print(f"Creating BLAST database from {self.database}...")
-        try:
-            subprocess.run(['makeblastdb', '-in', self.database, '-dbtype', 'nucl'],
-                           check=True, capture_output=True)
-        except subprocess.CalledProcessError as error:
-            print(f"ERROR creating database: {error.stderr.decode()}", file=sys.stderr)
-            sys.exit(1)
+        self.blast_db = ensure_blast_db(self.database)
 
     def run_blast(self):
         if not check_dependencies(['blastn', 'makeblastdb']):
-            sys.exit(1)
+            raise ToolError('BLAST+ (blastn, makeblastdb) is required but was not found on PATH')
         self.prepare_database()
 
         print(f"Running BLAST search (min_id={self.min_identity}%, "
@@ -81,7 +92,7 @@ class BlastDetector:
         command = [
             'blastn',
             '-query', self.assembly,
-            '-db', self.database,
+            '-db', self.blast_db,
             '-outfmt', f'6 {_BLAST_FIELDS}',
             '-evalue', '1e-20',
             # One reference gene can have many near-identical relatives in the
@@ -95,8 +106,7 @@ class BlastDetector:
         try:
             completed = subprocess.run(command, capture_output=True, text=True, check=True)
         except subprocess.CalledProcessError as error:
-            print(f"ERROR running BLAST: {error.stderr}", file=sys.stderr)
-            sys.exit(1)
+            raise ToolError(f"blastn failed: {error.stderr.strip()}") from error
 
         with open(f"{self.output_prefix}_blast.txt", 'w') as handle:
             handle.write(completed.stdout)
@@ -114,13 +124,25 @@ class BlastDetector:
             if len(fields) < 14:
                 continue
             (query_id, subject_id, identity, length, _mismatch, _gapopen,
-             qstart, qend, sstart, send, _evalue, bitscore, slen, _qlen) = fields[:14]
+             qstart, qend, sstart, send, _evalue, bitscore, slen, qlen) = fields[:14]
 
             subject_length = int(slen)
             coverage = (abs(int(send) - int(sstart)) + 1) / subject_length * 100
 
-            if float(identity) < self.min_identity or coverage < self.min_coverage:
+            if float(identity) < self.min_identity:
                 continue
+            partial = False
+            if coverage < self.min_coverage:
+                # An acquired gene broken by a contig boundary is still
+                # evidence the gene is there (AMRFinderPlus reports these as
+                # PARTIAL_CONTIG_END). Dropping it would let a carbapenemase
+                # split across two contigs vanish from the report entirely.
+                partial = (coverage >= PARTIAL_MIN_COVERAGE
+                           and is_acquired_gene(canonical_gene_name(subject_id))
+                           and _runs_off_contig(int(qstart), int(qend), int(sstart),
+                                                int(send), subject_length, int(qlen)))
+                if not partial:
+                    continue
 
             hits.append({
                 'query_id': query_id,
@@ -134,6 +156,7 @@ class BlastDetector:
                 'send': int(send),
                 'slen': subject_length,
                 'bitscore': float(bitscore),
+                'partial': partial,
             })
 
         print(f"Found {len(hits)} gene hits passing thresholds")
@@ -263,6 +286,12 @@ class BlastDetector:
             contig = self.contigs.get(hit['query_id'], '')
             reference_cds = self.reference_cds.get(raw_gene, '')
             if not contig or not reference_cds:
+                # Should not happen: BLAST reported a contig or reference this
+                # run did not load. Dropping it silently would be a false
+                # negative, so say so.
+                print(f"WARNING: skipping BLAST hit {hit['query_id']} -> {raw_gene}: "
+                      f"{'contig' if not contig else 'reference'} not found in the "
+                      f"loaded sequences", file=sys.stderr)
                 continue
 
             reference_protein = str(Seq(reference_cds).translate()).rstrip('*')
@@ -276,7 +305,12 @@ class BlastDetector:
 
             allele_row = None
             allele_name = gene
-            if family == 'blaKPC':
+            if family == 'blaKPC' and call['loss_of_function']:
+                # The changes of a truncated or frameshifted protein are an
+                # artefact of the disruption (the missing tail aligns as one
+                # long deletion), so they are neither typed nor assessed.
+                allele_name = 'blaKPC (disrupted)'
+            elif family == 'blaKPC':
                 allele_row = betalactamase.identify_kpc_allele(change_labels)
                 allele_name = betalactamase.describe_kpc_result(change_labels, allele_row)
             elif is_acquired_gene(gene) and change_labels:
@@ -309,6 +343,7 @@ class BlastDetector:
                 'identity': f"{hit['identity']:.2f}",
                 'coverage': f"{hit['coverage']:.2f}",
                 'complete': complete,
+                'partial': hit.get('partial', False),
                 'acquired': is_acquired_gene(gene),
                 'changes': change_labels,
                 'reported_mutations': reported,
@@ -356,6 +391,9 @@ class BlastDetector:
         say, a tigecycline one.
         """
         labels = [change['label'] for change in call['changes']]
+
+        if family == 'blaKPC' and call['loss_of_function']:
+            return [], labels, []
 
         if family == 'blaKPC':
             # Only the changes the ceftazidime-avibactam assessor recognises are

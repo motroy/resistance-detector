@@ -88,6 +88,47 @@ pipeline changed several calls. Each change is a correction:
   numbered against an organism-matched reference protein and only reported for
   curated positions.
 
+## Production hardening (October 2026)
+
+All 112 assemblies were re-downloaded from NCBI into an empty cache and re-run
+twice: once with the code as it stood, and once after the fixes below.
+
+* **Reproducibility.** The first run matched the committed results on every
+  field of every sample: phenotypes, evidence, genes, alleles and changes.
+* **No phenotype call changed** with the fixes, in any of the 112 genomes, for
+  either drug. What did change is listed in full here, because each one is an
+  artefact removed or a real gene made visible:
+  * *Frame artefacts at contig ends removed (10 genomes).* A gene starting a
+    few bases before its contig was translated out of frame. `blaCTX-M-15` in
+    KP_I_02, KP_I_03 and KP2_I_03 was reported as "premature stop at residue
+    1 (0/291 aa)"; `ompK36` in all four PRJNA595047 genomes as a premature
+    stop at residue 336-337; `blaSHV-12` in KP_R_06, KP2_R_04 and KP2_R_08 as
+    truncated, and in KP2_R_10 with 23 fabricated "mutations" in place of its
+    real `S235G;K236E`. These are now read in frame, and the SHV alleles are
+    named exactly again (`blaSHV-12` instead of `blaSHV-like`).
+  * *Partial genes at contig ends now reported (5 genomes).* `blaCTX-M-79`
+    (E2111), `blaOXA-48` alongside `blaOXA-181` (KP2_I_06), `blaSHV` (KP_I_03)
+    and `blaCTX-M-82` (KP_S_06) are acquired genes cut by a contig boundary
+    below the 80% coverage threshold. They were previously dropped silently.
+  * *A disrupted enzyme no longer counts as a working one.* PA99 carries two
+    intact `blaIMP-1` copies and a third with a stop at residue 58; it stays
+    Resistant on the intact copies, and the broken one is now listed as
+    uncertain evidence instead of a third reason for resistance.
+  * *`Carbapenemases` column.* OXA-48-like enzymes (OXA-181, OXA-232) are now
+    listed there (10 genomes); they were missing.
+* **Synthetic cases the real sets do not happen to contain** are covered by
+  regression tests (see [TESTING.md](TESTING.md)). The important ones: a
+  blaKPC with a premature stop or frameshift was called CAZ/AVI *Resistant*
+  (its missing tail looked like an Omega-loop deletion), as was a disrupted
+  NDM; a KPC split across two contigs, neither piece reaching 80% coverage,
+  vanished and the sample was called *Susceptible*. All now give
+  `Indeterminate`.
+
+The same round made the tool fail safely on bad input (an empty file used to
+produce a clean "Susceptible / Susceptible" report), work from a read-only
+installation, accept gzipped assemblies, and stop GAMMA from executing shell
+metacharacters in file names. See [USAGE.md](USAGE.md#input-checks-and-exit-codes).
+
 ## Reproducing this
 
 Every set, end to end, with one command. Assemblies are fetched from NCBI on
@@ -97,10 +138,10 @@ first run (accessions are in each set's `accessions.tsv`) and cached:
 scripts/run_validation.sh -j 6
 ```
 
-That analyses all 52 assemblies and writes
+That analyses all 112 assemblies and writes
 `bioproject_tests/all_validation_combined_summary.tsv` — one row per sample
-across every set — plus the per-gene table beside it. It takes about 35 seconds
-on six cores once the assemblies are cached.
+across every set — plus the per-gene table beside it. It takes about 100
+seconds on seven cores once the assemblies are cached.
 
 ### Provenance
 

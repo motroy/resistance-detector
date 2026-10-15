@@ -8,8 +8,7 @@ from pathlib import Path
 import pytest
 
 from fos_cazavi.batch import (
-    ASSEMBLY_SUFFIXES, COMBINED_COLUMNS, GENE_COLUMNS, default_jobs,
-    find_assemblies, find_summaries, summarise, write_combined,
+    COMBINED_COLUMNS, GENE_COLUMNS, default_jobs, find_assemblies, find_summaries,
 )
 
 from .conftest import embed, requires_blast, write_genome
@@ -165,3 +164,17 @@ class TestThreads:
                 check=True, capture_output=True, cwd=ROOT)
             results[threads] = Path(f'{prefix}_results.tsv').read_text()
         assert results[1] == results[4]
+
+
+class TestCarbapenemaseColumn:
+    def test_oxa48_like_enzymes_are_listed_as_carbapenemases(self, tmp_path):
+        import json
+        summary = tmp_path / 's_summary.json'
+        locus = {'allele': None, 'loss_of_function': None, 'reported_mutations': [],
+                 'complete': True}
+        summary.write_text(json.dumps({'sample': 's', 'genes': [
+            {'gene': gene, 'copy_number': 1, 'loci': [dict(locus, allele=gene)]}
+            for gene in ('blaOXA-232', 'blaKPC-2', 'blaNDM-1', 'blaCTX-M-15')]}))
+        from fos_cazavi.batch import summarise
+        row = summarise(summary)
+        assert row['Carbapenemases'] == 'blaKPC-2;blaNDM-1;blaOXA-232'
