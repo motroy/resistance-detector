@@ -16,13 +16,13 @@ import contextlib
 import csv
 import json
 import os
-import subprocess
 import sys
 import traceback
 from concurrent.futures import ProcessPoolExecutor, as_completed
 from pathlib import Path
 
-from .references import gene_family, is_mbl
+from .inputs import InputError, ToolError, ensure_blast_db, staged_assembly
+from .references import is_carbapenemase
 
 # One row per sample.
 COMBINED_COLUMNS = [
@@ -60,7 +60,7 @@ def find_assemblies(inputs):
         if path.is_dir():
             assemblies.extend(
                 sorted(child for child in path.iterdir()
-                       if child.suffix.lower() in ASSEMBLY_SUFFIXES))
+                       if child.is_file() and _is_assembly_name(child.name)))
         elif path.exists():
             assemblies.append(path)
         else:
@@ -68,21 +68,17 @@ def find_assemblies(inputs):
     return assemblies
 
 
-def prepare_blast_database(database):
-    """Build the BLAST index once, before any worker starts.
-
-    Workers would otherwise race to create it and corrupt each other's index.
-    """
-    index_files = [f"{database}.{extension}" for extension in ('nhr', 'nin', 'nsq')]
-    if all(Path(path).exists() for path in index_files):
-        return
-    print(f"Creating BLAST database from {database}...")
-    subprocess.run(['makeblastdb', '-in', str(database), '-dbtype', 'nucl'],
-                   check=True, capture_output=True)
+def _is_assembly_name(name):
+    name = name.lower()
+    if name.endswith('.gz'):
+        name = name[:-3]
+    return name.endswith(ASSEMBLY_SUFFIXES)
 
 
 def _sample_name(assembly):
     name = Path(assembly).name
+    if name.lower().endswith('.gz'):
+        name = name[:-3]
     for suffix in ASSEMBLY_SUFFIXES:
         if name.lower().endswith(suffix):
             return name[:-len(suffix)]
@@ -110,6 +106,9 @@ def run_one(task):
 
         with redirect:
             return _analyse(task, assembly, prefix)
+    except (InputError, ToolError) as error:
+        return {'sample': _sample_name(assembly), 'prefix': prefix,
+                'error': str(error), 'fos': '-', 'cazavi': '-'}
     except Exception:                                    # noqa: BLE001
         return {'sample': _sample_name(assembly), 'prefix': prefix,
                 'error': traceback.format_exc(), 'fos': '-', 'cazavi': '-'}
@@ -131,14 +130,15 @@ def _analyse(task, assembly, prefix):
     setup_logger(prefix, argparse.Namespace(**task),
                  console=task.get('verbose', False))
 
-    blast_results = run_acquired_detection(
-        assembly, task['database'], prefix, task['min_id'], task['min_cov'],
-        task['mutations'], task['organism'], task['threads'])
+    with staged_assembly(assembly) as staged:
+        blast_results = run_acquired_detection(
+            staged, task['database'], prefix, task['min_id'], task['min_cov'],
+            task['mutations'], task['organism'], task['threads'])
 
-    gamma_results, amplicon_results, _, unified_results = run_mutation_detection(
-        assembly, prefix, task['genes'], task['primers'],
-        blast_results=blast_results, mutation_db_file=task['mutations'],
-        organism=task['organism'], threads=task['threads'])
+        gamma_results, amplicon_results, _, unified_results = run_mutation_detection(
+            staged, prefix, task['genes'], task['primers'],
+            blast_results=blast_results, mutation_db_file=task['mutations'],
+            organism=task['organism'], threads=task['threads'])
 
     write_summary(prefix, assembly, blast_results, gamma_results,
                   amplicon_results, None, unified_results,
@@ -173,7 +173,7 @@ def summarise(summary_json):
             allele = locus.get('allele') or entry['gene']
             if entry['gene'].startswith('bla'):
                 acquired.append(allele)
-                if is_mbl(entry['gene']) or gene_family(entry['gene']) == 'blaKPC':
+                if is_carbapenemase(entry['gene']):
                     carbapenemases.append(allele)
             elif entry['gene'].lower().startswith('fos'):
                 acquired.append(allele)
@@ -279,7 +279,18 @@ def run_batch(assemblies, output_dir, database, genes, primers, mutations,
     output_dir = Path(output_dir)
     output_dir.mkdir(parents=True, exist_ok=True)
 
-    prepare_blast_database(database)
+    names = {}
+    for assembly in assemblies:
+        names.setdefault(_sample_name(assembly), []).append(str(assembly))
+    clashes = {name: paths for name, paths in names.items() if len(paths) > 1}
+    if clashes:
+        for name, paths in sorted(clashes.items()):
+            print(f"ERROR: several assemblies would be written as sample '{name}': "
+                  f"{', '.join(paths)}", file=sys.stderr)
+        return 2
+
+    # Built once, before any worker starts, so workers never race to create it.
+    database = ensure_blast_db(database)
 
     tasks = []
     for assembly in assemblies:

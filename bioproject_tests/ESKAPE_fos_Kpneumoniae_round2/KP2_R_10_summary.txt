@@ -22,7 +22,7 @@ ACQUIRED RESISTANCE GENES:
 --------------------------------------------------
   blaVIM-1 (gene blaVIM-1, copy number 1): 100.00% identity, 100.00% coverage
   blaSHV-like (gene blaSHV-12, copy number 1): 99.09% identity, 89.31% coverage
-    Protein changes vs blaSHV-12: M1K, Y3_R57del, A59_T178del, T179K, S182_V213del, A214V, L217R, I218R, R219H, S220_A229del, K231R, T232N, A234S, S235G, K236Q, G238_G247del, N249H, N250_K251del, E254D, I256L, V257A, V258_W286del, Q287R
+    Protein changes vs blaSHV-12: S235G, K236E
     WARNING: gene runs off a contig boundary
 
 CHROMOSOMAL TARGET GENES:
@@ -45,33 +45,12 @@ CHROMOSOMAL TARGET GENES:
   fosAKP (copy number 1): 95.71% identity, 100.00% coverage
 
 PROTEIN CHANGES (BLAST caller cross-checked with GAMMA):
-  7 of 53 changes were reported by both callers
+  8 of 32 changes were reported by both callers
 ----------------------------------------------------------------------
 
   Gene: blaSHV-12
-    A214V                confidence  50%  [blast]
-    A234S                confidence  50%  [blast]
-    A59_T178del          confidence  50%  [blast]
-    E254D                confidence  50%  [blast]
-    G238_G247del         confidence  50%  [blast]
-    I218R                confidence  50%  [blast]
-    I256L                confidence  50%  [blast]
-    K231R                confidence  50%  [blast]
-    K236Q                confidence  50%  [blast]
-    L217R                confidence  50%  [blast]
-    M1K                  confidence  50%  [blast]
-    N249H                confidence  50%  [blast]
-    N250_K251del         confidence  50%  [blast]
-    Q287R                confidence  50%  [blast]
-    R219H                confidence  50%  [blast]
-    S182_V213del         confidence  50%  [blast]
-    S220_A229del         confidence  50%  [blast]
+    K236E                confidence 100%  [blast+gamma]
     S235G                confidence 100%  [blast+gamma]
-    T179K                confidence  50%  [blast]
-    T232N                confidence  50%  [blast]
-    V257A                confidence  50%  [blast]
-    V258_W286del         confidence  50%  [blast]
-    Y3_R57del            confidence  50%  [blast]
 
   Gene: envZ
     I15T                 confidence 100%  [blast+gamma]  (not a curated resistance mutation)

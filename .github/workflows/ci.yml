@@ -85,6 +85,32 @@ jobs:
       - name: Run full test suite
         run: python -m pytest tests/ -v --tb=short
 
+      # The tests run from the source tree. This checks what a user actually
+      # gets: a built wheel, installed non-editable and read-only (as in a
+      # shared or system-wide environment), run from an unrelated directory.
+      - name: Smoke-test the installed wheel (read-only install)
+        run: |
+          pip install build
+          python -m build --wheel --outdir dist .
+          python -m venv --system-site-packages /tmp/wheel_env
+          /tmp/wheel_env/bin/pip install --no-deps dist/*.whl
+          mkdir -p /tmp/smoke && cp test_data/kpn_wildtype.fasta "/tmp/smoke/sample one.fasta"
+          # Outside the checkout, so the source tree cannot shadow the wheel.
+          cd /tmp/smoke
+          PKG=$(/tmp/wheel_env/bin/python -c "import fos_cazavi, os; print(os.path.dirname(fos_cazavi.__file__))")
+          case "$PKG" in /tmp/wheel_env/*) ;; *) echo "wheel not used: $PKG"; exit 1;; esac
+          chmod -R a-w "$PKG"
+          /tmp/wheel_env/bin/fos-cazavi --version
+          /tmp/wheel_env/bin/fos-cazavi fos-cazavi-all -a "sample one.fasta" \
+              -o results/sample --organism Klebsiella_pneumoniae
+          grep -q "Fosfomycin (FOS): Susceptible" results/sample_summary.txt
+          test -s results/sample_gamma.gamma
+          # A bad input must fail, not report a clean result.
+          : > empty.fasta
+          if /tmp/wheel_env/bin/fos-cazavi fos-cazavi-all -a empty.fasta -o bad; then
+            echo "empty assembly was accepted"; exit 1
+          fi
+
   # ── Job 3: Lint / code style ─────────────────────────────────────────────────
   lint:
     name: Lint
@@ -105,7 +131,8 @@ jobs:
 
       - name: Lint with flake8
         run: |
-          # Fail on syntax errors or undefined names
-          flake8 fos_cazavi/ --count --select=E9,F63,F7,F82 --show-source --statistics
+          # Fail on syntax errors and on every pyflakes finding (undefined
+          # names, unused imports/variables, redefinitions)
+          flake8 fos_cazavi/ tests/ --count --select=E9,F --show-source --statistics
           # Report style issues without failing the build
           flake8 fos_cazavi/ --count --max-line-length=100 --statistics --exit-zero

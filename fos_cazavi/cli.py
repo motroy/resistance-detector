@@ -4,11 +4,13 @@ import sys
 from collections import Counter
 from pathlib import Path
 
+from . import __version__
 from .acquired import run_acquired_detection
 from .batch import (
     default_jobs, find_assemblies, find_summaries, run_batch, write_combined,
 )
 from .db import create_db
+from .inputs import InputError, ToolError, staged_assembly
 from .mutations import run_mutation_detection
 from .phenotype import predict_phenotypes
 from .references import (
@@ -298,9 +300,10 @@ def handle_create_db(args):
 def handle_acquired(args):
     logger = setup_logger(args.output, args)
     log_tool_versions(logger)
-    blast_results = run_acquired_detection(
-        args.assembly, args.database, args.output, args.min_id, args.min_cov,
-        args.mutations, getattr(args, 'organism', None), args.threads)
+    with staged_assembly(args.assembly) as assembly:
+        blast_results = run_acquired_detection(
+            assembly, args.database, args.output, args.min_id, args.min_cov,
+            args.mutations, getattr(args, 'organism', None), args.threads)
     write_summary(args.output, args.assembly, blast_results, None, None,
                   organism=getattr(args, 'organism', None))
 
@@ -308,10 +311,11 @@ def handle_acquired(args):
 def handle_mutations(args):
     logger = setup_logger(args.output, args)
     log_tool_versions(logger)
-    gamma_results, amplicon_results, _, unified_results = run_mutation_detection(
-        args.assembly, args.output, args.genes, args.primers,
-        blast_results=None, mutation_db_file=getattr(args, 'mutations', None),
-        organism=getattr(args, 'organism', None), threads=args.threads)
+    with staged_assembly(args.assembly) as assembly:
+        gamma_results, amplicon_results, _, unified_results = run_mutation_detection(
+            assembly, args.output, args.genes, args.primers,
+            blast_results=None, mutation_db_file=getattr(args, 'mutations', None),
+            organism=getattr(args, 'organism', None), threads=args.threads)
     write_summary(args.output, args.assembly, None, gamma_results, amplicon_results,
                   None, unified_results, organism=getattr(args, 'organism', None))
 
@@ -329,14 +333,15 @@ def handle_all(args):
               "variants are organism independent and are still reported.",
               file=sys.stderr)
 
-    blast_results = run_acquired_detection(
-        args.assembly, args.database, args.output, args.min_id, args.min_cov,
-        args.mutations, args.organism, args.threads)
+    with staged_assembly(args.assembly) as assembly:
+        blast_results = run_acquired_detection(
+            assembly, args.database, args.output, args.min_id, args.min_cov,
+            args.mutations, args.organism, args.threads)
 
-    gamma_results, amplicon_results, _, unified_results = run_mutation_detection(
-        args.assembly, args.output, args.genes, args.primers,
-        blast_results=blast_results, mutation_db_file=args.mutations,
-        organism=args.organism, threads=args.threads)
+        gamma_results, amplicon_results, _, unified_results = run_mutation_detection(
+            assembly, args.output, args.genes, args.primers,
+            blast_results=blast_results, mutation_db_file=args.mutations,
+            organism=args.organism, threads=args.threads)
 
     write_summary(args.output, args.assembly, blast_results, gamma_results,
                   amplicon_results, None, unified_results, organism=args.organism)
@@ -369,8 +374,10 @@ def handle_combine(args):
     return 0
 
 
-def main():
+def main(argv=None):
     parser = argparse.ArgumentParser(description='FOS-CAZAVI Resistance Detector CLI')
+    parser.add_argument('--version', action='version',
+                        version=f'%(prog)s {__version__} ({data_version().splitlines()[0]})')
     subparsers = parser.add_subparsers(dest='command', required=True)
 
     parser_db = subparsers.add_parser('create-db', help='Create reference database')
@@ -464,8 +471,18 @@ def main():
                                 help='Output prefix for the combined tables')
     parser_combine.set_defaults(func=handle_combine)
 
-    args = parser.parse_args()
-    return args.func(args) or 0
+    args = parser.parse_args(argv)
+
+    output = getattr(args, 'output', None)
+    if output and args.command not in ('create-db', 'batch'):
+        # -o is a prefix; make sure the directory it lives in exists.
+        Path(output).parent.mkdir(parents=True, exist_ok=True)
+
+    try:
+        return args.func(args) or 0
+    except (InputError, ToolError) as error:
+        print(f"ERROR: {error}", file=sys.stderr)
+        return 2
 
 
 if __name__ == '__main__':

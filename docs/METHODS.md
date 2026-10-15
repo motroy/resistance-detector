@@ -38,6 +38,16 @@ search keeps a large number of target sequences rather than the BLAST default,
 because a locus legitimately hits every allele of its family and capping the
 list would hide the true best match.
 
+**Genes broken by a contig boundary.** An acquired gene (`bla*`, `fos*`) whose
+alignment stops at the end of a contig is kept at ≥50% coverage even when it
+is below the coverage threshold, and is flagged `partial` (AMRFinderPlus's
+`PARTIAL_CONTIG_END`). Without this, a carbapenemase split across two contigs
+in a short-read assembly - neither piece reaching 80% - disappeared from the
+report and the sample came out Susceptible. A gene split in two always leaves
+one piece at ≥50%; the other piece, and partial hits in the middle of a contig,
+are still discarded. A gene split in two whose pieces are both reported counts
+as two copies. Partial chromosomal genes are not reported.
+
 ## 3. Calling variants
 
 For each retained hit:
@@ -45,12 +55,18 @@ For each retained hit:
 1. The **full gene span** is recovered from the contig. BLAST reports only the
    aligned region, so the assembly bases upstream and downstream that
    correspond to the rest of the reference gene are added back. If the contig
-   ends first, the gene is flagged `Complete = no (contig boundary)`.
+   ends first, the gene is flagged `Complete = no (contig boundary)` and the
+   missing bases are filled with `N`, so the observed part is still read in
+   the right frame. (Before this, a gene starting five bases before its contig
+   was translated out of frame and reported as a premature stop at residue 1.)
 2. The span is translated in the reference's reading frame and orientation.
 3. The translated protein is aligned to the reference protein, and the
    differences are read off the alignment: substitutions, in-frame deletions
    (adjacent ones merged, e.g. `E166_L167del`), insertions (`insPNK@267`),
    premature stop codons, frameshifts and truncations.
+
+A residue whose codon contains an `N` or another ambiguity code translates to
+`X` and is treated as **not observed**: it is never reported as a change.
 
 Because the comparison walks a real alignment, an indel does not shift the
 calls after it. Because it reports the residue actually observed, a call is
@@ -258,6 +274,31 @@ pass `--organism` when analysing *Klebsiella*.
 
 `Indeterminate` exists so that "we do not know" is never silently rendered as
 "susceptible".
+
+### Disrupted or partial resistance enzymes
+
+A blaKPC, metallo-beta-lactamase or acquired fosA-family gene that carries a
+premature stop, a frameshift or a truncation is **not** counted as a working
+enzyme, and neither is one that is only partly present at a contig end. Each
+gives `Indeterminate`, with the reason in the evidence:
+
+* A disrupted enzyme is usually not made at all - but a homopolymer error in
+  the assembly produces exactly the same signal, so neither Resistant nor
+  Susceptible is supportable from the sequence.
+* For blaKPC the distinction matters doubly: the missing tail of a truncated
+  KPC aligns as one long deletion running through the Omega loop, which the
+  KPC assessor would otherwise read as an avibactam-escape deletion.
+* An intact copy elsewhere in the genome still decides the call. PA99 in the
+  *P. aeruginosa* validation set carries two intact blaIMP-1 copies and a
+  third with a stop at residue 58; it is Resistant on the intact copies, with
+  the broken one listed as uncertain evidence.
+
+A disrupted or partial enzyme also does not count toward porin-loss
+amplification (`PERMEABILITY_AMPLIFIED_FAMILIES`).
+
+A fosfomycin uptake/regulatory gene that runs off a contig boundary gives
+`Indeterminate` too, since a loss of function in the unseen part cannot be
+ruled out.
 
 ## 8. The second opinion: GAMMA
 

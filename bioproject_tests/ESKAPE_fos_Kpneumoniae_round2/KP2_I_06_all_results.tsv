@@ -16,6 +16,7 @@ KP2_I_06.fna	Acquired gene	blaSHV-12	blaSHV-like	BLAST	Coverage: 100.00%	99.30%	
 KP2_I_06.fna	Acquired gene	blaNDM-5	blaNDM-5	BLAST	Coverage: 100.00%	100.00%	RHTF01000052.1	5725	6537	1	no protein changes vs reference
 KP2_I_06.fna	Acquired gene	blaOXA-181	blaOXA-181	BLAST	Coverage: 100.00%	100.00%	RHTF01000004.1	281255	282052	1	no protein changes vs reference
 KP2_I_06.fna	Chromosomal gene	uhpA	uhpA	BLAST	Coverage: 100.00%	99.50%	RHTF01000024.1	61148	61741	1	no protein changes vs reference
+KP2_I_06.fna	Acquired gene	blaOXA-48	blaOXA-48	BLAST	Coverage: 72.18%	100.00%	RHTF01000067.1	1	576	1	gene incomplete (contig boundary)
 KP2_I_06.fna	Chromosomal gene	fosAKP	fosAKP	BLAST	Coverage: 98.33%	97.34%	RHTF01000014.1	144321	144733	1	protein changes: Q130P;insE@137;Q139E
 KP2_I_06.fna	Protein change	blaSHV-12	-	blast+gamma	K236E	100%	RHTF01000005.1	-	-	-	reported as resistance mutation
 KP2_I_06.fna	Protein change	blaSHV-12	-	blast+gamma	S182R	100%	RHTF01000005.1	-	-	-	reported as resistance mutation

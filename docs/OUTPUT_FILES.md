@@ -30,6 +30,10 @@
 `Incomplete_Genes` is the QC column: it lists genes that ran off a contig
 boundary and so could not be fully assessed in that sample.
 
+`Carbapenemases` lists KPC, metallo-beta-lactamases and the OXA-48-like
+enzymes (OXA-48, -181, -232). OXA-48-like enzymes are inhibited by avibactam,
+so they appear here without driving a ceftazidime-avibactam call.
+
 ## Key columns in `*_results.tsv`
 
 | Column | Meaning |

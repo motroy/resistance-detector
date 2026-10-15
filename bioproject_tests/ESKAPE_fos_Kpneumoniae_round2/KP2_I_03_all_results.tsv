@@ -11,7 +11,7 @@ KP2_I_03.fna	Chromosomal gene	uhpC	uhpC	BLAST	Coverage: 100.00%	99.32%	RHUI01000
 KP2_I_03.fna	Chromosomal gene	murA	murA	BLAST	Coverage: 100.00%	99.44%	RHUI01000009.1	70291	71550	1	no protein changes vs reference
 KP2_I_03.fna	Chromosomal gene	ompK35	ompK35	BLAST	Coverage: 100.00%	98.43%	RHUI01000001.1	517744	518812	1	protein changes: Y108_F359del; premature stop at residue 108 (107/359 aa)
 KP2_I_03.fna	Chromosomal gene	galU	galU	BLAST	Coverage: 100.00%	99.89%	RHUI01000006.1	104777	105679	1	no protein changes vs reference
-KP2_I_03.fna	Acquired gene	blaCTX-M-15	blaCTX-M-15	BLAST	Coverage: 99.43%	100.00%	RHUI01000094.1	212	1082	1	premature stop at residue 1 (0/291 aa); gene incomplete (contig boundary)
+KP2_I_03.fna	Acquired gene	blaCTX-M-15	blaCTX-M-15	BLAST	Coverage: 99.43%	100.00%	RHUI01000094.1	212	1082	1	gene incomplete (contig boundary)
 KP2_I_03.fna	Chromosomal gene	ompK36	ompK36	BLAST	Coverage: 100.00%	92.13%	RHUI01000007.1	127757	128881	1	protein changes: insDT@134;A183T;L184del;T192G;Y201F;N221H;L225N;S230del;K231R;A233D;L234K;insF@268;A269S;S271N;insGESDSI@271;L272S;L307I;I315L;D344E;S346D;H349R;N350R
 KP2_I_03.fna	Acquired gene	blaSHV-12	blaSHV-like	BLAST	Coverage: 100.00%	99.07%	RHUI01000001.1	451652	452512	1	protein changes: Q31L;S235G;K236E
 KP2_I_03.fna	Acquired gene	blaOXA-232	blaOXA-232	BLAST	Coverage: 100.00%	100.00%	RHUI01000063.1	2205	3002	1	no protein changes vs reference

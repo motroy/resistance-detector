@@ -36,6 +36,12 @@ SUPPORTED_ORGANISMS = (
 # is sufficient for ceftazidime-avibactam resistance regardless of any KPC.
 MBL_FAMILIES = ('blaNDM', 'blaVIM', 'blaIMP', 'blaSPM', 'blaGIM', 'blaSIM')
 
+# OXA-48-like class D carbapenemases in the reference database. Avibactam
+# inhibits them, so they do not drive a ceftazidime-avibactam call, but they
+# are carbapenemases and are reported as such. Listed by reference name, not by
+# family: the blaOXA family as a whole also contains non-carbapenemases.
+OXA48_LIKE_GENES = ('blaOXA-48', 'blaOXA-181', 'blaOXA-232')
+
 # Chromosomal genes where a curated mutation can *contribute* to
 # ceftazidime-avibactam resistance without being sufficient on its own: the
 # porin OmpK36, the PBP3 transpeptidase FtsI, and the EnvZ sensor kinase that
@@ -189,6 +195,11 @@ def is_acquired_gene(gene_name):
     if gene_name in INTRINSIC_GENES:
         return False
     return gene_name.startswith(ACQUIRED_PREFIXES)
+
+
+def is_carbapenemase(gene_name):
+    return (is_mbl(gene_name) or gene_family(gene_name) == 'blaKPC'
+            or gene_name in OXA48_LIKE_GENES)
 
 
 def is_mbl(gene_name):

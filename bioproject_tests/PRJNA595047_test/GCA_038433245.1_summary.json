@@ -223,11 +223,9 @@
           "identity": "99.90",
           "coverage": "91.30",
           "complete": false,
-          "changes": [
-            "M1_L32del"
-          ],
+          "changes": [],
           "reported_mutations": [],
-          "loss_of_function": "premature stop at residue 336 (335/367 aa)"
+          "loss_of_function": null
         }
       ]
     },
@@ -568,18 +566,6 @@
         ]
       },
       "contig": "JBCEBK010000001.1"
-    },
-    {
-      "gene": "ompK36",
-      "family": "ompK36",
-      "mutation": "M1_L32del",
-      "confidence": 50,
-      "methods": [
-        "blast"
-      ],
-      "reported": false,
-      "gamma_detail": null,
-      "contig": "JBCEBK010000033.1"
     },
     {
       "gene": "uhpB",

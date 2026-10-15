@@ -1,5 +1,5 @@
 Sample	Type	Gene	Allele	Method	Result_Details	Identity_Confidence	Contig	Start	End	Copy_Number	Notes
-KP_R_07.fna	Chromosomal gene	acrB	acrB	BLAST	Coverage: 100.00%	99.68%	FBRB01000025.1	234162	237314	1	protein changes: insVX@1022
+KP_R_07.fna	Chromosomal gene	acrB	acrB	BLAST	Coverage: 100.00%	99.68%	FBRB01000025.1	234162	237314	1	protein changes: insV@1022
 KP_R_07.fna	Chromosomal gene	cyaA	cyaA	BLAST	Coverage: 100.00%	100.00%	FBRB01000018.1	40468	43020	1	no protein changes vs reference
 KP_R_07.fna	Chromosomal gene	ftsI	ftsI	BLAST	Coverage: 100.00%	99.43%	FBRB01000004.1	48598	50364	1	protein changes: V375A
 KP_R_07.fna	Chromosomal gene	ptsI	ptsI	BLAST	Coverage: 100.00%	100.00%	FBRB01000027.1	203341	205068	1	no protein changes vs reference
@@ -15,7 +15,7 @@ KP_R_07.fna	Acquired gene	blaKPC-2	blaKPC-2	BLAST	Coverage: 100.00%	100.00%	FBRB
 KP_R_07.fna	Acquired gene	blaSHV-12	blaSHV-12	BLAST	Coverage: 100.00%	100.00%	FBRB01000038.1	24	884	1	no protein changes vs reference
 KP_R_07.fna	Chromosomal gene	uhpA	uhpA	BLAST	Coverage: 100.00%	100.00%	FBRB01000023.1	61629	62222	1	no protein changes vs reference
 KP_R_07.fna	Chromosomal gene	fosAKP	fosAKP	BLAST	Coverage: 100.00%	98.81%	FBRB01000004.1	255856	256275	1	protein changes: I91V;Q130P;D138E
-KP_R_07.fna	Protein change	acrB	-	blast	insVX@1022	50%	FBRB01000025.1	-	-	-	sequence difference, not a curated resistance mutation
+KP_R_07.fna	Protein change	acrB	-	blast	insV@1022	50%	FBRB01000025.1	-	-	-	sequence difference, not a curated resistance mutation
 KP_R_07.fna	Protein change	envZ	-	blast+gamma	A193T	100%	FBRB01000005.1	-	-	-	sequence difference, not a curated resistance mutation
 KP_R_07.fna	Protein change	envZ	-	blast+gamma	I15T	100%	FBRB01000005.1	-	-	-	sequence difference, not a curated resistance mutation
 KP_R_07.fna	Protein change	envZ	-	blast+gamma	I258M	100%	FBRB01000005.1	-	-	-	sequence difference, not a curated resistance mutation

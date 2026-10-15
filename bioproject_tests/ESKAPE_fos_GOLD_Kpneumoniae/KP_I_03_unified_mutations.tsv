@@ -1,6 +1,5 @@
 Gene	Mutation	Confidence(%)	Methods	Contig	Reported_As_Resistance_Mutation
-blaSHV-12	2 SNPs in 1-632	50	gamma	RHUB01000084.1	no
-blaSHV-12	Q31L	50	gamma	RHUB01000084.1	no
+blaSHV-12	Q31L	100	blast+gamma	RHUB01000084.1	yes
 envZ	I15T	100	blast+gamma	RHUB01000006.1	no
 envZ	I258M	100	blast+gamma	RHUB01000006.1	no
 fosAKP	A86V	100	blast+gamma	RHUB01000005.1	no

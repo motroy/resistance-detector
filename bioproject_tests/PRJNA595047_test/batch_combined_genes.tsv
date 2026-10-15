@@ -11,7 +11,7 @@ GCA_038433235.1.fna	Klebsiella_pneumoniae	galU	galU	1	JBCEBJ010000006.1	61461	62
 GCA_038433235.1.fna	Klebsiella_pneumoniae	glpT	glpT	1	JBCEBJ010000017.1	107053	108399	100.00	100.00	yes	-	-
 GCA_038433235.1.fna	Klebsiella_pneumoniae	murA	murA	1	JBCEBJ010000002.1	201168	202427	100.00	100.00	yes	-	-
 GCA_038433235.1.fna	Klebsiella_pneumoniae	ompK35	ompK35	1	JBCEBJ010000004.1	258287	259366	99.44	100.00	yes	-	-
-GCA_038433235.1.fna	Klebsiella_pneumoniae	ompK36	ompK36	1	JBCEBJ010000036.1	1	1011	99.90	91.58	no	-	premature stop at residue 337 (336/367 aa)
+GCA_038433235.1.fna	Klebsiella_pneumoniae	ompK36	ompK36	1	JBCEBJ010000036.1	1	1011	99.90	91.58	no	-	-
 GCA_038433235.1.fna	Klebsiella_pneumoniae	ptsI	ptsI	1	JBCEBJ010000010.1	162371	164098	100.00	100.00	yes	-	-
 GCA_038433235.1.fna	Klebsiella_pneumoniae	uhpA	uhpA	1	JBCEBJ010000027.1	54489	55082	100.00	100.00	yes	-	-
 GCA_038433235.1.fna	Klebsiella_pneumoniae	uhpB	uhpB	1	JBCEBJ010000027.1	55100	56581	99.59	100.00	yes	-	-
@@ -29,7 +29,7 @@ GCA_038433245.1.fna	Klebsiella_pneumoniae	galU	galU	1	JBCEBK010000005.1	140703	1
 GCA_038433245.1.fna	Klebsiella_pneumoniae	glpT	glpT	1	JBCEBK010000019.1	1380	2726	100.00	100.00	yes	-	-
 GCA_038433245.1.fna	Klebsiella_pneumoniae	murA	murA	1	JBCEBK010000003.1	201005	202264	100.00	100.00	yes	-	-
 GCA_038433245.1.fna	Klebsiella_pneumoniae	ompK35	ompK35	1	JBCEBK010000040.1	18	1097	99.44	100.00	yes	-	-
-GCA_038433245.1.fna	Klebsiella_pneumoniae	ompK36	ompK36	1	JBCEBK010000033.1	49379	50386	99.90	91.30	no	-	premature stop at residue 336 (335/367 aa)
+GCA_038433245.1.fna	Klebsiella_pneumoniae	ompK36	ompK36	1	JBCEBK010000033.1	49379	50386	99.90	91.30	no	-	-
 GCA_038433245.1.fna	Klebsiella_pneumoniae	ptsI	ptsI	1	JBCEBK010000009.1	8279	10006	100.00	100.00	yes	-	-
 GCA_038433245.1.fna	Klebsiella_pneumoniae	uhpA	uhpA	1	JBCEBK010000021.1	14265	14858	100.00	100.00	yes	-	-
 GCA_038433245.1.fna	Klebsiella_pneumoniae	uhpB	uhpB	1	JBCEBK010000021.1	12766	14247	99.59	100.00	yes	-	-
@@ -47,7 +47,7 @@ GCA_038433285.1.fna	Klebsiella_pneumoniae	galU	galU	1	JBCEBI010000007.1	184866	1
 GCA_038433285.1.fna	Klebsiella_pneumoniae	glpT	glpT	1	JBCEBI010000015.1	16377	17723	100.00	100.00	yes	-	-
 GCA_038433285.1.fna	Klebsiella_pneumoniae	murA	murA	1	JBCEBI010000002.1	86027	87286	100.00	100.00	yes	-	-
 GCA_038433285.1.fna	Klebsiella_pneumoniae	ompK35	ompK35	1	JBCEBI010000004.1	258287	259366	99.44	100.00	yes	-	-
-GCA_038433285.1.fna	Klebsiella_pneumoniae	ompK36	ompK36	1	JBCEBI010000038.1	1	1011	99.90	91.58	no	-	premature stop at residue 337 (336/367 aa)
+GCA_038433285.1.fna	Klebsiella_pneumoniae	ompK36	ompK36	1	JBCEBI010000038.1	1	1011	99.90	91.58	no	-	-
 GCA_038433285.1.fna	Klebsiella_pneumoniae	ptsI	ptsI	1	JBCEBI010000010.1	162371	164098	100.00	100.00	yes	-	-
 GCA_038433285.1.fna	Klebsiella_pneumoniae	uhpA	uhpA	1	JBCEBI010000021.1	15733	16326	100.00	100.00	yes	-	-
 GCA_038433285.1.fna	Klebsiella_pneumoniae	uhpB	uhpB	1	JBCEBI010000021.1	14234	15715	99.59	100.00	yes	-	-
@@ -65,7 +65,7 @@ GCA_038433305.1.fna	Klebsiella_pneumoniae	galU	galU	1	JBCEBH010000013.1	3819	472
 GCA_038433305.1.fna	Klebsiella_pneumoniae	glpT	glpT	1	JBCEBH010000018.1	1440	2786	100.00	100.00	yes	-	-
 GCA_038433305.1.fna	Klebsiella_pneumoniae	murA	murA	1	JBCEBH010000002.1	86027	87286	100.00	100.00	yes	-	-
 GCA_038433305.1.fna	Klebsiella_pneumoniae	ompK35	ompK35	1	JBCEBH010000004.1	258287	259366	99.44	100.00	yes	-	-
-GCA_038433305.1.fna	Klebsiella_pneumoniae	ompK36	ompK36	1	JBCEBH010000038.1	49353	50363	99.90	91.58	no	-	premature stop at residue 337 (336/367 aa)
+GCA_038433305.1.fna	Klebsiella_pneumoniae	ompK36	ompK36	1	JBCEBH010000038.1	49353	50363	99.90	91.58	no	-	-
 GCA_038433305.1.fna	Klebsiella_pneumoniae	ptsI	ptsI	1	JBCEBH010000009.1	162371	164098	100.00	100.00	yes	-	-
 GCA_038433305.1.fna	Klebsiella_pneumoniae	uhpA	uhpA	1	JBCEBH010000021.1	15733	16326	100.00	100.00	yes	-	-
 GCA_038433305.1.fna	Klebsiella_pneumoniae	uhpB	uhpB	1	JBCEBH010000021.1	14234	15715	99.59	100.00	yes	-	-

@@ -22,8 +22,7 @@ ACQUIRED RESISTANCE GENES:
 --------------------------------------------------
   blaVEB-1 (gene blaVEB-1, copy number 1): 100.00% identity, 100.00% coverage
   blaKPC-2 (gene blaKPC-2, copy number 1): 100.00% identity, 100.00% coverage
-  blaSHV-like (gene blaSHV-12, copy number 1): 99.86% identity, 81.18% coverage
-    Protein changes vs blaSHV-12: S235_A252del, E254_R288del
+  blaSHV-12 (gene blaSHV-12, copy number 1): 99.86% identity, 81.18% coverage
     WARNING: gene runs off a contig boundary
 
 CHROMOSOMAL TARGET GENES:
@@ -46,12 +45,8 @@ CHROMOSOMAL TARGET GENES:
   fosAKP (copy number 1): 98.81% identity, 100.00% coverage
 
 PROTEIN CHANGES (BLAST caller cross-checked with GAMMA):
-  6 of 41 changes were reported by both callers
+  6 of 39 changes were reported by both callers
 ----------------------------------------------------------------------
-
-  Gene: blaSHV-12
-    E254_R288del         confidence  50%  [blast]
-    S235_A252del         confidence  50%  [blast]
 
   Gene: envZ
     I15T                 confidence 100%  [blast+gamma]  (not a curated resistance mutation)

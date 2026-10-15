@@ -15,13 +15,15 @@ PREDICTED PHENOTYPES (genotype-based):
     - Metallo-beta-lactamase blaNDM-7 detected (100.00% identity) - avibactam does not inhibit metallo-enzymes, so ceftazidime-avibactam is not active
   Note: Genotype-based prediction only; not a substitute for phenotypic antimicrobial susceptibility testing (AST).
 
-Total genes detected: 17
+Total genes detected: 18
 Method: BLAST+ with codon-aware variant calling
 
 ACQUIRED RESISTANCE GENES:
 --------------------------------------------------
   blaSHV-12 (gene blaSHV-12, copy number 1): 100.00% identity, 100.00% coverage
   blaNDM-7 (gene blaNDM-7, copy number 1): 100.00% identity, 100.00% coverage
+  blaCTX-M-82 (gene blaCTX-M-82, copy number 1): 100.00% identity, 55.59% coverage
+    WARNING: gene runs off a contig boundary
 
 CHROMOSOMAL TARGET GENES:
 --------------------------------------------------
@@ -42,11 +44,8 @@ CHROMOSOMAL TARGET GENES:
   fosAKP (copy number 1): 97.38% identity, 100.00% coverage
 
 PROTEIN CHANGES (BLAST caller cross-checked with GAMMA):
-  5 of 22 changes were reported by both callers
+  5 of 21 changes were reported by both callers
 ----------------------------------------------------------------------
-
-  Gene: blaCTX-M-101
-    0 SNPs in 390-876    confidence  50%  [gamma]  (not a curated resistance mutation)
 
   Gene: envZ
     I15T                 confidence 100%  [blast+gamma]  (not a curated resistance mutation)

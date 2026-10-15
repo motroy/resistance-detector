@@ -19,7 +19,7 @@
           "coverage": "100.00",
           "complete": true,
           "changes": [
-            "insVX@1022"
+            "insV@1022"
           ],
           "reported_mutations": [],
           "loss_of_function": null
@@ -345,7 +345,7 @@
     {
       "gene": "acrB",
       "family": "acrB",
-      "mutation": "insVX@1022",
+      "mutation": "insV@1022",
       "confidence": 50,
       "methods": [
         "blast"

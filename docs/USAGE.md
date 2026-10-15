@@ -114,8 +114,8 @@ to drop. (`-e/--email` is kept for backwards compatibility and is not used.)
 
 | Option | Default | Meaning |
 |---|---|---|
-| `-a, --assembly` | required | Input assembly (FASTA) |
-| `-o, --output` | required | Output prefix |
+| `-a, --assembly` | required | Input assembly (FASTA, optionally gzip-compressed) |
+| `-o, --output` | required | Output prefix; its directory is created if needed |
 | `--organism` | none | Sample organism; enables curated chromosomal point mutations |
 | `-d, --database` | bundled | Nucleotide reference database |
 | `--genes` | bundled | Nucleotide CDS database for GAMMA |
@@ -142,6 +142,44 @@ Total CPU use is roughly `jobs × threads`, so keep the product at or below your
 core count. Results are identical either way — parallelism is a performance
 knob, and the test suite asserts that serial and parallel runs produce
 byte-identical tables.
+
+## Input checks and exit codes
+
+Every assembly is checked before anything runs. Each of these stops the run
+with a one-line `ERROR:` message and **exit code 2**, and writes no result
+files - so a failed upload can never come back looking like a clean
+"Susceptible" report:
+
+* the file is missing, empty, or not FASTA (including FASTQ reads);
+* it is not nucleotide (e.g. a protein FASTA);
+* it contains no called bases (only `N`);
+* two contigs share a name.
+
+Gzip-compressed FASTA, Windows line endings, lower-case bases and IUPAC
+ambiguity codes are all accepted. File names may contain spaces or any other
+character.
+
+| Exit code | Meaning |
+|---|---|
+| 0 | Success |
+| 1 | `batch`: at least one sample failed (the others are still analysed and tabulated) |
+| 2 | Bad input, a missing or failing required tool, or a usage error |
+
+In `batch`, a sample that fails is reported as `FAILED` with its reason and left
+out of the combined tables; the rest of the batch continues. Two inputs that
+would produce the same sample name (`s1.fasta` and `s1.fna`) are refused up
+front rather than allowed to overwrite each other.
+
+## The BLAST index
+
+`makeblastdb` indexes the reference database on first use. If a current index
+is not already next to the database file, it is built in a cache directory:
+`$FOS_CAZAVI_CACHE` if set, otherwise `$XDG_CACHE_HOME/fos-cazavi` or
+`~/.cache/fos-cazavi`, falling back to the system temp directory. This makes a
+read-only installation (system-wide, admin-owned environment, container)
+work. The cache is keyed by the database's content, so editing a custom
+database never matches it against a stale index, and concurrent runs build it
+safely.
 
 ## Required external tools
 

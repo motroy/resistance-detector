@@ -14,7 +14,7 @@ PREDICTED PHENOTYPES (genotype-based):
   Ceftazidime-Avibactam (CAZ/AVI): Resistant
     - Metallo-beta-lactamase blaIMP-1 detected (100.00% identity) - avibactam does not inhibit metallo-enzymes, so ceftazidime-avibactam is not active
     - Metallo-beta-lactamase blaIMP-1 detected (100.00% identity) - avibactam does not inhibit metallo-enzymes, so ceftazidime-avibactam is not active
-    - Metallo-beta-lactamase blaIMP-like detected (99.86% identity) - avibactam does not inhibit metallo-enzymes, so ceftazidime-avibactam is not active
+    - Metallo-beta-lactamase blaIMP-like carries a disrupting change (premature stop at residue 58 (57/246 aa)): the enzyme is probably not functional, but this cannot be told apart from an assembly error
   Note: Genotype-based prediction only; not a substitute for phenotypic antimicrobial susceptibility testing (AST).
 
 Total genes detected: 7
